@@ -1,0 +1,35 @@
+# Customise this file, documentation can be found here:
+# https://github.com/fastlane/fastlane/tree/master/fastlane/docs
+# All available actions: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Actions.md
+# can also be listed using the `fastlane actions` command
+
+# Change the syntax highlighting to Ruby
+# All lines starting with a # are ignored when running `fastlane`
+
+# This is the minimum version number required.
+# Update this, if you use features of a newer version
+fastlane_version "1.95.0"
+
+import_from_git(url: 'https://github.com/KogiMobileSAS/fastlane.git')
+
+default_platform :ios
+
+platform :ios do
+  
+	desc "Create a new build in test environment, upload it to Fabric and send it to Kogi group"
+	lane :testing do
+	    fabric(configuration: "AdHoc", environment: "Test", groups: ['kogi'])
+	end
+
+	desc "Create a new build in production environment, upload it to Fabric and send it to Kogi group"
+	lane :production do
+	    fabric(configuration: "Release", environment: "Production", groups: ['kogi'])
+	end
+end
+
+
+# More information about multiple platforms in fastlane: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Platforms.md
+# All available actions: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Actions.md
+
+# fastlane reports which actions are used
+# No personal data is recorded. Learn more at https://github.com/fastlane/enhancer

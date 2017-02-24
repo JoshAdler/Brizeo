@@ -1,0 +1,144 @@
+/*
+  Localizable.strings
+  Brizeo
+
+  Created by Giovanny Orozco on 4/14/16.
+  Copyright © 2016 Kogi Mobile. All rights reserved.
+*/
+
+//MARK: - Common
+"Back" = "Back";
+"Delete" = "Delete";
+"Cancel" = "Cancel";
+"Success" = "Success";
+"Ok" = "Ok";
+"Could not send email" = "Could not send email";
+"Please try again" = "Please try again";
+"Brizeo" = "Brizeo";
+"Error" = "Error";
+"Dismiss" = "Dismiss";
+"Block" = "Block";
+
+//MARK: - Menu
+"Invite Friends" = "Invite Friends";
+"Profile" = "Profile";
+"Moments" = "Moments";
+"Chats" = "Chats";
+
+// MARK: InviteFriends
+"friends successfully invited" = "friends successfully invited";
+"Invite friends from facebook" = "Invite friends from facebook";
+"Share with friends" = "Share with friends";
+"Invite friends by email" = "Invite friends by email";
+"SEND" = "SEND";
+"See rewards for inviting your friends" = "See rewards for inviting your friends";
+"Try Brizeo!" = "Try Brizeo!";
+//"Hey, check out Brizeo! It's a new activity-based social app to connect people with similar interests at home and abroad." = "Hey, check out Brizeo! It's a new activity-based social app to connect people with similar interests at home and abroad.";
+"Hey, check out Brizeo! \n\nIt's a new social app for people who have a passion for travel and new experiences - packed with cool features, including a Moments wall where you can share your favorite travel pics and match with people worldwide. \n\nJoin a community that lives life to its fullest!";
+"Check it out at %@" = "Check it out at %@";
+"Check it out <a href = %@>here</p>" = "Check it out <a href = %@>here</p>";
+
+//MARK: - Moments
+"All" = "All";
+"My Matches" = "My Matches";
+"My Moments" = "My Moments";
+"%d▼" = "%d▼";
+"Likes" = "Likes";
+"Delete this moment" = "Delete this moment";
+"Unable to save Moment" = "Unable to save Moment";
+"Write a description" = "Write a description";
+"Upload photo" = "Upload photo";
+"Moments must have a description" = "Moments must have a description";
+"Moments are limited to 20 pictures. Please delete one picture before uplading a new one." = "Moments are limited to 20 pictures. Please delete one picture before uplading a new one.";
+"You can't like your own photo" = "You can't like your own photo";
+"Moment has been reported to the admins." = "Moment has been reported to the admins.";
+
+//MARK: - Chat
+"Chat" = "Chat";
+"Sent" = "Sent";
+"Delivered" = "Delivered";
+"Read" = "Read";
+"Sending" = "Sending";
+"Call" = "Call";
+"Send Message" = "Send Message";
+"Create Contact" = "Create Contact";
+"Copy" =  "Copy";
+"Me" = "Me";
+"Something was wrong trying to show the location" = "Something was wrong trying to show the location";
+"Something was wrong trying to play the video" = "Something was wrong trying to play the video";
+"Something was wrong trying to show the image" = "Something was wrong trying to show the image";
+"Loading video" = "Loading video";
+"Something was wrong trying to delete the chat" = "Something was wrong trying to delete the chat";
+
+//MARK: Matches
+"TAP FOR MORE INFO" = "TAP FOR MORE INFO";
+"SWIPE TO SEE MORE MATCHES" = "SWIPE TO SEE MORE MATCHES";
+"No match found.\n Go to Settings: Change location or widen search." = "No match found.\n Go to Settings: Change location or widen search.";
+"Unable to retrieve matches at this time" = "Unable to retrieve matches at this time";
+"%d mile(s) away" = "%d mile(s) away";
+"Active %@ ago" = "Active %@ ago";
+"%d minute(s)" = "%d minute(s)";
+"%d hour(s)" = "%d hour(s)";
+"%d day(s)" = "%d day(s)";
+"%d week(s)" = "%d week(s)";
+"%d month(s)" = "%d month(s)";
+"%d year(s)" = "%d year(s)";
+"Interested in:" = "Interested in:";
+"⬅︎ Interests" = "⬅︎ Interests";
+"Mutual Friends" ="Mutual Friends";
+"Report" = "Report";
+"%d years old" = "%d years old";
+
+//MARK: Profile
+"About" = "About";
+"Matches" = "Matches";
+"My Trips" = "My Trips";
+"Trips" = "Trips";
+"Where would you like the image from?" = "Where would you like the image from?";
+"Photo Library" = "Photo Library";
+"Take a photo" ="Take a photo";
+"Take a video" = "Take a video";
+
+// MARK: Settings
+"Location"= "Location";
+"Search for new location" ="Search for new location";
+"I am a:" = "I am a:";
+"Man" = "Man";
+"Woman" = "Woman";
+"Couple" =  "Couple";
+"Search for one or more:" = "Search for one or more:";
+"Men" =  "Men";
+"Women" = "Women";
+"Men & Women" = "Men & Women";
+"Couples" = "Couples";
+"Age range:" = "Age range:";
+"Search distance:" = "Search distance:";
+"Select interests:" = "Select interests:";
+"Say something about yourself:" = "Say something about yourself:";
+"Type here" = "Type here";
+"Save" = "Save";
+"%d miles" = "%d miles";
+"User preferences saved" = "User preferences saved";
+"Interests" = "Interests";
+"Swipe left to chat" = "Swipe left to chat";
+
+// MARK: Match
+"It's a Match!" = "It's a Match!";
+"Enjoy Brizeo" = "Enjoy Brizeo";
+"Let the journey begin." = "Let the journey begin.";
+"Start chatting" = "Start chatting";
+"Return to search" = "Return to search";
+"%@ wants to match with you" = "%@ wants to match with you";
+
+// MARK: Trips
+"Search countries I have been to" = "Search countries I have been to";
+
+// MARK: User Report
+"User has been reported to the admins." = "User has been reported to the admins.";
+
+// MARK: Push Notifications
+"You have a new message on Brizeo." = "You have a new message on Brizeo.";
+
+// MARK: - Tutorial
+"Skip" = "Skip";
+"Done" = "Done";

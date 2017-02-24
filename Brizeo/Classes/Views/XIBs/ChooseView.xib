@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ChooseView" customModule="Brizeo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" rowHeight="37" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aqc-gV-vWf">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="582"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="582" id="J6M-Jq-L9V"/>
+                    </constraints>
+                    <color key="separatorColor" red="0.84313725490196079" green="0.84313725490196079" blue="0.84313725490196079" alpha="1" colorSpace="calibratedRGB"/>
+                    <inset key="separatorInset" minX="18" minY="0.0" maxX="18" maxY="0.0"/>
+                    <connections>
+                        <outlet property="dataSource" destination="iN0-l3-epB" id="2rj-v9-6hd"/>
+                        <outlet property="delegate" destination="iN0-l3-epB" id="cOV-Ii-gqF"/>
+                    </connections>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sCO-I0-jPH">
+                    <rect key="frame" x="0.0" y="582" width="375" height="85"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zt9-iy-Pr7">
+                            <rect key="frame" x="275" y="-0.5" width="100" height="85"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="100" id="MEU-0h-oIq"/>
+                            </constraints>
+                            <state key="normal">
+                                <attributedString key="attributedTitle">
+                                    <fragment content="Cancel">
+                                        <attributes>
+                                            <color key="NSColor" red="0.12156862745098039" green="0.29411764705882354" blue="0.6470588235294118" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="18" name="SourceSansPro-Bold"/>
+                                            <font key="NSOriginalFont" size="18" name="SourceSansPro-Bold"/>
+                                            <shadow key="NSShadow" blurRadius="10">
+                                                <size key="offset" width="1.3777276490407724e-16" height="2.25"/>
+                                                <color key="color" red="0.0" green="0.0" blue="0.0" alpha="0.33333333333333331" colorSpace="calibratedRGB"/>
+                                            </shadow>
+                                            <integer key="NSUnderline" value="1"/>
+                                            <color key="NSUnderlineColor" red="0.12156862745098039" green="0.29411764705882354" blue="0.6470588235294118" alpha="1" colorSpace="calibratedRGB"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                            </state>
+                            <connections>
+                                <action selector="onCancelButtonClickedWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="gvQ-jf-BMn"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="Zt9-iy-Pr7" firstAttribute="centerY" secondItem="sCO-I0-jPH" secondAttribute="centerY" id="4ZX-7z-gz9"/>
+                        <constraint firstAttribute="width" secondItem="sCO-I0-jPH" secondAttribute="height" multiplier="441:100" id="94e-bu-6ge"/>
+                        <constraint firstAttribute="trailing" secondItem="Zt9-iy-Pr7" secondAttribute="trailing" id="esm-Cp-lCO"/>
+                        <constraint firstItem="Zt9-iy-Pr7" firstAttribute="height" secondItem="sCO-I0-jPH" secondAttribute="height" id="xnL-n4-IjD"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="sCO-I0-jPH" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="8KB-Cd-Yhq"/>
+                <constraint firstItem="aqc-gV-vWf" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="JSw-AB-wRg"/>
+                <constraint firstAttribute="bottom" secondItem="sCO-I0-jPH" secondAttribute="bottom" id="eQy-0P-wdA"/>
+                <constraint firstItem="sCO-I0-jPH" firstAttribute="top" secondItem="aqc-gV-vWf" secondAttribute="bottom" id="gXh-pz-dEW"/>
+                <constraint firstItem="sCO-I0-jPH" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="idl-7J-qjN"/>
+                <constraint firstItem="aqc-gV-vWf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="jsd-k2-1Nw"/>
+                <constraint firstItem="aqc-gV-vWf" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="p2S-Ac-40v"/>
+            </constraints>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                    <real key="value" value="2"/>
+                </userDefinedRuntimeAttribute>
+                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                    <color key="value" red="0.84313725490196079" green="0.84313725490196079" blue="0.84313725490196079" alpha="1" colorSpace="calibratedRGB"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <connections>
+                <outlet property="cancelButton" destination="Zt9-iy-Pr7" id="3Eg-PU-6X2"/>
+                <outlet property="tableView" destination="aqc-gV-vWf" id="0Pl-9R-v9R"/>
+                <outlet property="tableViewHeightConstraint" destination="J6M-Jq-L9V" id="gkB-9c-Eb9"/>
+            </connections>
+        </view>
+    </objects>
+</document>

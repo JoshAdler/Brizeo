@@ -1,0 +1,6 @@
+framework module InstagramImagePicker {
+  umbrella header "InstagramImagePicker-umbrella.h"
+
+  export *
+  module * { export * }
+}

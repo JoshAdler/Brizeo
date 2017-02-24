@@ -1,0 +1,188 @@
+PODS:
+  - Alamofire (4.3.0)
+  - AlamofireImage (3.1.0):
+    - Alamofire (~> 4.0)
+  - Applozic (3.8.1):
+    - SDWebImage (~> 3.8)
+  - Atlas (1.0.31):
+    - LayerKit (>= 0.23.0)
+  - Bolts (1.8.4):
+    - Bolts/AppLinks (= 1.8.4)
+    - Bolts/Tasks (= 1.8.4)
+  - Bolts/AppLinks (1.8.4):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.8.4)
+  - Branch (0.12.26):
+    - Branch/Core (= 0.12.26)
+    - Branch/without-IDFA (= 0.12.26)
+  - Branch/Core (0.12.26)
+  - Branch/without-IDFA (0.12.26)
+  - CarbonKit (2.1.9)
+  - ChameleonFramework/Default (2.1.0)
+  - ChameleonFramework/Swift (2.1.0):
+    - ChameleonFramework/Default
+  - CLLocationManager-blocks (1.3.3)
+  - Crashlytics (3.8.3):
+    - Fabric (~> 1.6.3)
+  - DMSwipeCards (1.0.3)
+  - Fabric (1.6.11)
+  - FBSDKCoreKit (4.19.0):
+    - Bolts (~> 1.7)
+  - FBSDKLoginKit (4.19.0):
+    - FBSDKCoreKit
+  - FBSDKMessengerShareKit (1.3.2)
+  - FBSDKShareKit (4.19.0):
+    - FBSDKCoreKit
+  - FirebaseAnalytics (3.6.0):
+    - FirebaseCore (~> 3.4)
+    - FirebaseInstanceID (~> 1.0)
+    - GoogleInterchangeUtilities (~> 1.2)
+    - GoogleSymbolUtilities (~> 1.1)
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseCore (3.4.7):
+    - GoogleInterchangeUtilities (~> 1.2)
+    - GoogleSymbolUtilities (~> 1.1)
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseInstanceID (1.0.8)
+  - FLAnimatedImage (1.0.12)
+  - FontBlaster (3.0.0)
+  - GBHFacebookImagePicker (1.1.0):
+    - FBSDKCoreKit (~> 4.19.0)
+    - FBSDKLoginKit (~> 4.19.0)
+  - Google/Analytics (3.0.3):
+    - Google/Core
+    - GoogleAnalytics (~> 3.12)
+  - Google/Core (3.0.3):
+    - FirebaseAnalytics (~> 3.2)
+  - GoogleAnalytics (3.17.0)
+  - GoogleInterchangeUtilities (1.2.2):
+    - GoogleSymbolUtilities (~> 1.1)
+  - GoogleSymbolUtilities (1.1.2)
+  - GoogleToolboxForMac/Defines (2.1.1)
+  - GoogleToolboxForMac/NSData+zlib (2.1.1):
+    - GoogleToolboxForMac/Defines (= 2.1.1)
+  - IGLDropDownMenu (1.6.2)
+  - InstagramImagePicker (1.1.7):
+    - NXOAuth2Client (~> 1.2.8)
+  - IQKeyboardManagerSwift (4.0.8)
+  - LayerKit (0.24.0)
+  - Localytics (4.2.0)
+  - Mixpanel (2.9.9):
+    - Mixpanel/Mixpanel (= 2.9.9)
+  - Mixpanel/Mixpanel (2.9.9)
+  - MSRangeSlider (1.1.0)
+  - NXOAuth2Client (1.2.8)
+  - NYTPhotoViewer (1.2.0):
+    - NYTPhotoViewer/AnimatedGifSupport (= 1.2.0)
+    - NYTPhotoViewer/Core (= 1.2.0)
+  - NYTPhotoViewer/AnimatedGifSupport (1.2.0):
+    - FLAnimatedImage (~> 1.0.12)
+    - NYTPhotoViewer/Core
+  - NYTPhotoViewer/Core (1.2.0)
+  - Parse (1.14.2):
+    - Bolts/Tasks (~> 1.8)
+  - ParseUI (1.2.0):
+    - Bolts/Tasks (~> 1.3)
+    - Parse (~> 1.9)
+  - pop (1.0.9)
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
+  - SVProgressHUD (1.1.3)
+  - SWTableViewCell (0.3.7)
+  - UIScrollView-InfiniteScroll (0.9.1)
+  - ZTDropDownTextField (0.1.5):
+    - pop (~> 1.0)
+
+DEPENDENCIES:
+  - Alamofire (~> 4.0)
+  - AlamofireImage (~> 3.1.0)
+  - Applozic (~> 3.8)
+  - Atlas (~> 1.0.3)
+  - Branch (~> 0.12)
+  - CarbonKit
+  - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`)
+  - CLLocationManager-blocks
+  - Crashlytics
+  - DMSwipeCards
+  - Fabric
+  - FBSDKCoreKit
+  - FBSDKLoginKit
+  - FBSDKMessengerShareKit
+  - FBSDKShareKit
+  - FontBlaster
+  - GBHFacebookImagePicker
+  - Google/Analytics
+  - IGLDropDownMenu
+  - InstagramImagePicker
+  - IQKeyboardManagerSwift
+  - Localytics
+  - Mixpanel (~> 2.9)
+  - MSRangeSlider
+  - NYTPhotoViewer (~> 1.1)
+  - Parse
+  - ParseUI
+  - SDWebImage (~> 3.8)
+  - SVProgressHUD (~> 1.0)
+  - SWTableViewCell
+  - UIScrollView-InfiniteScroll (~> 0.7)
+  - ZTDropDownTextField
+
+EXTERNAL SOURCES:
+  ChameleonFramework:
+    :git: https://github.com/ViccAlexander/Chameleon.git
+
+CHECKOUT OPTIONS:
+  ChameleonFramework:
+    :commit: dcf98f9bf3a632a7f40679b7da46f09681e48526
+    :git: https://github.com/ViccAlexander/Chameleon.git
+
+SPEC CHECKSUMS:
+  Alamofire: 856a113053a7bc9cbe5d6367a555d773fc5cfef7
+  AlamofireImage: bb8c8351c51cb1633bb6be69b6dbbaff37ce65b7
+  Applozic: 22195271e71771b5411351a3d2e238cd2b106b27
+  Atlas: 291d97b97d9f0be83b40a3ca8529dee77292900c
+  Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
+  Branch: d23bf9c9073a5883e4d2172af066b298d4128807
+  CarbonKit: af16a9c0d2b6c908a5985fe4633424d38c9bfc0a
+  ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
+  CLLocationManager-blocks: ae34b44992b3d26de10d27d51043a123444efb1b
+  Crashlytics: 2b6dbe138a42395577cfa73dfa1aa7248cadf39e
+  DMSwipeCards: 0f2488120c13eb73366f01e87d1423495cde8ed4
+  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
+  FBSDKCoreKit: 894b2b6eda6a4c8c4204e92e59cc355709ef045c
+  FBSDKLoginKit: 83ca4d8f12a2022570af9fd6aacf27f6b425b99f
+  FBSDKMessengerShareKit: 41c0b1a667d685c9433f993eb9611b3d5074e1cb
+  FBSDKShareKit: 5953758366278430dc322d5cdc906db361ed7f81
+  FirebaseAnalytics: 9c67af0ebeb8d2146c9b4ea2616439affa947b58
+  FirebaseCore: 46afaf2c2e0419ea7d3acfb08cf26a461a75fe85
+  FirebaseInstanceID: ba1e640935235e5fac39dfa816fe7660e72e1a8a
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
+  FontBlaster: 0f4a3e2f965968e2dfc3f7f5cec7214c3f3b2f07
+  GBHFacebookImagePicker: df4275deaaf97a0340fb2aaa2bbddcfc823387dc
+  Google: 813c467362eabc11385f5a5cc9ad0cb651a58f4e
+  GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
+  GoogleInterchangeUtilities: d5bc4d88d5b661ab72f9d70c58d02ca8c27ad1f7
+  GoogleSymbolUtilities: 631ee17048aa5e9ab133470d768ea997a5ef9b96
+  GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
+  IGLDropDownMenu: ae118618ae858fa66ce7c2ac80ed9124a710b228
+  InstagramImagePicker: 3b1afb10b1b3e5625b8ef64dfabd13464467020d
+  IQKeyboardManagerSwift: c04bc9f68473823f825eb44d958fce98d921bead
+  LayerKit: ef028036b5623d2daf2f590c688fd790cd90340c
+  Localytics: 59cf99592a35c18e62d5994f2365ad3ccecc4982
+  Mixpanel: 818d1940c2d9402453b349545022a86968097f57
+  MSRangeSlider: 14b669140a4615e1d372c8d2abbfd96cd9e3fb08
+  NXOAuth2Client: 98c4d4c594edd2b289cfc34a8928653e1dab7adf
+  NYTPhotoViewer: 323217e4590a1586eb3c9674b3fefb0fb8b57896
+  Parse: 4335d65f40cb3d43190d723144bbe1afb9c38230
+  ParseUI: af2eba584799da4a9fbdac0e178662d7438b502e
+  pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
+  SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
+  SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
+  UIScrollView-InfiniteScroll: 14e204c50ca4040467e1cbfa141dad7a18919b56
+  ZTDropDownTextField: a9cb5db41b66eb28a7c38afaf4c334fb2a81034e
+
+PODFILE CHECKSUM: 25a1a91fef1c13c4a134738db1fb7734043bc366
+
+COCOAPODS: 1.2.0

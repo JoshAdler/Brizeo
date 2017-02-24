@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Semibold.otf">
+            <string>SourceSansPro-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChooseTableViewCell" id="Q4h-Vi-HAy" customClass="ChooseTableViewCell" customModule="Brizeo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Q4h-Vi-HAy" id="6Vm-pY-2pc">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9n0-9a-33j">
+                        <rect key="frame" x="16" y="7" width="30" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="ReM-rp-72J"/>
+                            <constraint firstAttribute="width" secondItem="9n0-9a-33j" secondAttribute="height" multiplier="1:1" id="iZA-VH-Mnl"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J7e-VY-FPh">
+                        <rect key="frame" x="60" y="14.5" width="297" height="16.5"/>
+                        <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="9n0-9a-33j" firstAttribute="leading" secondItem="6Vm-pY-2pc" secondAttribute="leading" constant="16" id="7pG-Qf-gCa"/>
+                    <constraint firstAttribute="trailing" secondItem="J7e-VY-FPh" secondAttribute="trailing" constant="18" id="9kc-cA-tnC"/>
+                    <constraint firstItem="J7e-VY-FPh" firstAttribute="leading" secondItem="6Vm-pY-2pc" secondAttribute="leading" constant="60" id="DAh-We-g4A"/>
+                    <constraint firstItem="J7e-VY-FPh" firstAttribute="centerY" secondItem="6Vm-pY-2pc" secondAttribute="centerY" id="dIp-YL-olb"/>
+                    <constraint firstItem="9n0-9a-33j" firstAttribute="centerY" secondItem="6Vm-pY-2pc" secondAttribute="centerY" id="wVO-SN-xC1"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="iconImageView" destination="9n0-9a-33j" id="WvU-KY-KF3"/>
+                <outlet property="titleLabel" destination="J7e-VY-FPh" id="y1V-uf-xBO"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

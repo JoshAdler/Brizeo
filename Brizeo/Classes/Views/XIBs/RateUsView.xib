@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Bold.otf">
+            <string>SourceSansPro-Bold</string>
+        </array>
+        <array key="SourceSansPro-Regular.otf">
+            <string>SourceSansPro-Regular</string>
+        </array>
+        <array key="SourceSansPro-Semibold.otf">
+            <string>SourceSansPro-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="RateUsView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0aV-ja-eGM">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.80000000000000004" colorSpace="calibratedWhite"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QuB-km-7hS">
+                    <rect key="frame" x="48.5" y="220" width="277" height="226"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PPx-C3-POE">
+                            <rect key="frame" x="0.0" y="30.5" width="277" height="74"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_rate_checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="7jJ-MK-Sgx">
+                                    <rect key="frame" x="108.5" y="-30" width="60" height="60"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="7jJ-MK-Sgx" secondAttribute="height" multiplier="1:1" id="oXa-zy-fMZ"/>
+                                    </constraints>
+                                </imageView>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0QV-ik-Bcj">
+                                    <rect key="frame" x="0.0" y="30" width="277" height="44"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rate Brizeo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="44C-TH-REw">
+                                            <rect key="frame" x="22" y="0.0" width="233" height="44"/>
+                                            <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstItem="44C-TH-REw" firstAttribute="top" secondItem="0QV-ik-Bcj" secondAttribute="top" id="Vwg-Jo-PDQ"/>
+                                        <constraint firstAttribute="bottom" secondItem="44C-TH-REw" secondAttribute="bottom" id="sVC-mV-Sj9"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" red="0.88235294117647056" green="0.88235294117647056" blue="0.88235294117647056" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstItem="0QV-ik-Bcj" firstAttribute="centerX" secondItem="PPx-C3-POE" secondAttribute="centerX" id="0xG-Al-3BO"/>
+                                <constraint firstItem="0QV-ik-Bcj" firstAttribute="width" secondItem="PPx-C3-POE" secondAttribute="width" id="beb-C2-yGo"/>
+                                <constraint firstItem="7jJ-MK-Sgx" firstAttribute="top" secondItem="PPx-C3-POE" secondAttribute="top" constant="-30" id="fbG-kq-Si1"/>
+                                <constraint firstItem="0QV-ik-Bcj" firstAttribute="top" secondItem="7jJ-MK-Sgx" secondAttribute="bottom" id="ggy-3t-z5Z"/>
+                                <constraint firstItem="7jJ-MK-Sgx" firstAttribute="centerX" secondItem="PPx-C3-POE" secondAttribute="centerX" id="kkr-fB-7HZ"/>
+                                <constraint firstAttribute="bottom" secondItem="0QV-ik-Bcj" secondAttribute="bottom" id="mFe-MI-qGo"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cQK-fB-FLI">
+                            <rect key="frame" x="0.0" y="104.5" width="277" height="121.5"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0pZ-0R-Xfn">
+                                    <rect key="frame" x="0.0" y="0.0" width="277" height="67.5"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KQr-AZ-iXn">
+                                            <rect key="frame" x="22" y="53.5" width="233" height="14"/>
+                                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="12"/>
+                                            <color key="textColor" red="0.40392156862745099" green="0.40392156862745099" blue="0.40392156862745099" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="KQr-AZ-iXn" secondAttribute="bottom" id="TOe-Sh-QWz"/>
+                                        <constraint firstAttribute="trailing" secondItem="KQr-AZ-iXn" secondAttribute="trailing" constant="22" id="qvK-kQ-TOY"/>
+                                        <constraint firstItem="KQr-AZ-iXn" firstAttribute="top" relation="greaterThanOrEqual" secondItem="0pZ-0R-Xfn" secondAttribute="top" constant="2" id="wFS-hk-kuL"/>
+                                        <constraint firstItem="KQr-AZ-iXn" firstAttribute="leading" secondItem="0pZ-0R-Xfn" secondAttribute="leading" constant="22" id="y8z-Mt-EUy"/>
+                                    </constraints>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8fM-Vj-jAd">
+                                    <rect key="frame" x="0.0" y="67.5" width="277" height="54"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zwZ-95-5w6">
+                                            <rect key="frame" x="0.0" y="0.0" width="80" height="54"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="80" id="Npc-TF-SPq"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="13"/>
+                                            <state key="normal" title="LATER">
+                                                <color key="titleColor" red="0.12156862745098039" green="0.29411764705882354" blue="0.6470588235294118" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="onLaterButtonClickedWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="GpN-bx-BCv"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rpf-Po-UUf">
+                                            <rect key="frame" x="176" y="0.0" width="101" height="54"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="101" id="SH3-EQ-YE5"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="13"/>
+                                            <state key="normal" title="RATE NOW">
+                                                <color key="titleColor" red="0.12156862745098039" green="0.29411764705882354" blue="0.6470588235294118" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="onRateNowButtonClickedWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="Y1R-9U-oqx"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstItem="zwZ-95-5w6" firstAttribute="leading" secondItem="8fM-Vj-jAd" secondAttribute="leading" id="Bzn-Xj-Vlf"/>
+                                        <constraint firstItem="rpf-Po-UUf" firstAttribute="height" secondItem="8fM-Vj-jAd" secondAttribute="height" id="EOn-q0-hIR"/>
+                                        <constraint firstAttribute="trailing" secondItem="rpf-Po-UUf" secondAttribute="trailing" id="RzZ-a0-h0g"/>
+                                        <constraint firstItem="rpf-Po-UUf" firstAttribute="centerY" secondItem="8fM-Vj-jAd" secondAttribute="centerY" id="szU-Ut-zq5"/>
+                                        <constraint firstItem="zwZ-95-5w6" firstAttribute="height" secondItem="8fM-Vj-jAd" secondAttribute="height" id="unh-qY-XXY"/>
+                                        <constraint firstItem="zwZ-95-5w6" firstAttribute="centerY" secondItem="8fM-Vj-jAd" secondAttribute="centerY" id="xg4-TP-maR"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="8fM-Vj-jAd" firstAttribute="height" secondItem="cQK-fB-FLI" secondAttribute="height" multiplier="108/243" id="0ef-ZS-0aW"/>
+                                <constraint firstItem="8fM-Vj-jAd" firstAttribute="centerX" secondItem="cQK-fB-FLI" secondAttribute="centerX" id="1ju-58-uPS"/>
+                                <constraint firstAttribute="bottom" secondItem="8fM-Vj-jAd" secondAttribute="bottom" id="DYh-oV-XmT"/>
+                                <constraint firstItem="8fM-Vj-jAd" firstAttribute="top" secondItem="0pZ-0R-Xfn" secondAttribute="bottom" id="EfR-cm-aXS"/>
+                                <constraint firstItem="0pZ-0R-Xfn" firstAttribute="width" secondItem="cQK-fB-FLI" secondAttribute="width" id="NzU-Jv-rdf"/>
+                                <constraint firstItem="0pZ-0R-Xfn" firstAttribute="top" secondItem="cQK-fB-FLI" secondAttribute="top" id="npt-Gm-5dK"/>
+                                <constraint firstItem="8fM-Vj-jAd" firstAttribute="width" secondItem="cQK-fB-FLI" secondAttribute="width" id="shf-DA-c92"/>
+                                <constraint firstItem="0pZ-0R-Xfn" firstAttribute="centerX" secondItem="cQK-fB-FLI" secondAttribute="centerX" id="wdK-cJ-I8m"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="PPx-C3-POE" firstAttribute="height" secondItem="QuB-km-7hS" secondAttribute="height" multiplier="148/452" id="4fZ-vc-md6"/>
+                        <constraint firstItem="PPx-C3-POE" firstAttribute="centerX" secondItem="QuB-km-7hS" secondAttribute="centerX" id="Edb-xY-NRB"/>
+                        <constraint firstAttribute="width" secondItem="QuB-km-7hS" secondAttribute="height" multiplier="554/452" id="P4O-JN-LNL"/>
+                        <constraint firstAttribute="bottom" secondItem="cQK-fB-FLI" secondAttribute="bottom" id="dFS-zv-pCM"/>
+                        <constraint firstItem="PPx-C3-POE" firstAttribute="width" secondItem="QuB-km-7hS" secondAttribute="width" id="fJc-KB-1Pj"/>
+                        <constraint firstItem="cQK-fB-FLI" firstAttribute="height" secondItem="QuB-km-7hS" secondAttribute="height" multiplier="243/452" id="jW1-OX-o9s"/>
+                        <constraint firstItem="cQK-fB-FLI" firstAttribute="top" secondItem="PPx-C3-POE" secondAttribute="bottom" id="kZN-ZH-dhQ"/>
+                        <constraint firstItem="cQK-fB-FLI" firstAttribute="width" secondItem="QuB-km-7hS" secondAttribute="width" id="nlF-GM-fEx"/>
+                        <constraint firstItem="44C-TH-REw" firstAttribute="trailing" secondItem="KQr-AZ-iXn" secondAttribute="trailing" id="pIU-aH-yjG"/>
+                        <constraint firstItem="cQK-fB-FLI" firstAttribute="centerX" secondItem="QuB-km-7hS" secondAttribute="centerX" id="rIF-Gd-aXN"/>
+                        <constraint firstItem="44C-TH-REw" firstAttribute="leading" secondItem="KQr-AZ-iXn" secondAttribute="leading" id="ubR-kd-vcD"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="QuB-km-7hS" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="20s-zc-Fj1"/>
+                <constraint firstItem="0aV-ja-eGM" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="B6N-sU-cDC"/>
+                <constraint firstItem="QuB-km-7hS" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="P82-e4-t03"/>
+                <constraint firstItem="QuB-km-7hS" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="554/750" id="ecw-cK-Kcw"/>
+                <constraint firstItem="0aV-ja-eGM" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="fRt-YO-hlp"/>
+                <constraint firstItem="0aV-ja-eGM" firstAttribute="height" secondItem="iN0-l3-epB" secondAttribute="height" id="q9p-ur-hu9"/>
+                <constraint firstItem="0aV-ja-eGM" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="wKq-AY-WnW"/>
+            </constraints>
+            <connections>
+                <outlet property="backgroundView" destination="0aV-ja-eGM" id="a5J-VG-SBE"/>
+                <outlet property="centerView" destination="QuB-km-7hS" id="lLF-85-aT7"/>
+                <outlet property="laterButton" destination="zwZ-95-5w6" id="Pzu-qG-DGe"/>
+                <outlet property="rateNowButton" destination="rpf-Po-UUf" id="qwu-GF-pSw"/>
+                <outlet property="textLabel" destination="KQr-AZ-iXn" id="C1G-b3-xs3"/>
+                <outlet property="topTextLabel" destination="44C-TH-REw" id="gZl-N2-TpW"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="ic_rate_checkmark" width="59" height="60"/>
+    </resources>
+</document>
