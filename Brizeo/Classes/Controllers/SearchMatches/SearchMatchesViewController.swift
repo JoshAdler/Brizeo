@@ -8,6 +8,8 @@
 
 import UIKit
 import DMSwipeCards
+import MessageUI
+import SVProgressHUD
 
 class SearchMatchesViewController: BasicViewController {
 
@@ -173,7 +175,21 @@ class SearchMatchesViewController: BasicViewController {
     }
     
     @IBAction func onShareButtonClicked(sender: UIButton) {
-        
+        // TODO: place real user id
+        BranchProvider.generateInviteURL(forUserId: /*user.userID*/"0") { (url) in
+            if let url = url {
+                if MFMessageComposeViewController.canSendText() {
+                    let messageComposeVC = MFMessageComposeViewController()
+                    messageComposeVC.body = url
+                    messageComposeVC.delegate = self
+                    messageComposeVC.messageComposeDelegate = self
+                    messageComposeVC.recipients = nil
+                    self.present(messageComposeVC, animated: true, completion: nil)
+                } else {
+                    SVProgressHUD.showError(withStatus: LocalizableString.ShareSmsFails.localizedString)
+                }
+            }
+        }
     }
     
     @IBAction func onActionButtonClicked(sender: UIButton) {
@@ -235,5 +251,13 @@ extension SearchMatchesViewController: DMSwipeCardsViewDelegate {
         
         // fetch new data
         fetchMatchesList()
+    }
+}
+
+// MARK: - MFMessageComposeViewControllerDelegate
+extension SearchMatchesViewController: MFMessageComposeViewControllerDelegate, UINavigationControllerDelegate {
+    
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        controller.dismiss(animated: true, completion: nil)
     }
 }
