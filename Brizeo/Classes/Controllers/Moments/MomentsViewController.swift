@@ -79,7 +79,8 @@ class MomentsViewController: UIViewController {
             self.loadMoments(with: false)
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(removeMomentNotificationReceived(_:)), name: NSNotification.Name(rawValue: removedMomentNotification), object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(removeMomentNotificationReceived(_:)), name: NSNotification.Name(rawValue: removedMomentNotification), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MomentsViewController.updateTableView), name: NSNotification.Name(rawValue: removedMomentNotification), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(MomentsViewController.updateTableView), name: NSNotification.Name(rawValue: LocalizableString.SomebodyLikeYourMoment.localizedString), object: nil)
         
         // init filter button

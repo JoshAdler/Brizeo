@@ -56,6 +56,7 @@
 		BB099F0C1E3F4EC700133794 /* PersonalDetailsTabsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB099F0B1E3F4EC700133794 /* PersonalDetailsTabsViewController.swift */; };
 		BB099F0F1E3F6E0500133794 /* AboutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB099F0E1E3F6E0500133794 /* AboutTableViewCell.swift */; };
 		BB099F111E3F6E9000133794 /* AboutSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB099F101E3F6E9000133794 /* AboutSelectView.swift */; };
+		BB09A6AC1E660D4C0020F8C5 /* OtherPersonAboutInvitedByTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB09A6AB1E660D4C0020F8C5 /* OtherPersonAboutInvitedByTableViewCell.swift */; };
 		BB104CE31E3F7F1E0082411E /* TripsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB104CE21E3F7F1E0082411E /* TripsViewController.swift */; };
 		BB104CE51E3F81390082411E /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB104CE41E3F81390082411E /* Country.swift */; };
 		BB104CE81E3F87370082411E /* TripsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB104CE71E3F87370082411E /* TripsTableViewCell.swift */; };
@@ -233,6 +234,7 @@
 		BB099F0B1E3F4EC700133794 /* PersonalDetailsTabsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalDetailsTabsViewController.swift; sourceTree = "<group>"; };
 		BB099F0E1E3F6E0500133794 /* AboutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutTableViewCell.swift; sourceTree = "<group>"; };
 		BB099F101E3F6E9000133794 /* AboutSelectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutSelectView.swift; sourceTree = "<group>"; };
+		BB09A6AB1E660D4C0020F8C5 /* OtherPersonAboutInvitedByTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherPersonAboutInvitedByTableViewCell.swift; sourceTree = "<group>"; };
 		BB104CE21E3F7F1E0082411E /* TripsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripsViewController.swift; sourceTree = "<group>"; };
 		BB104CE41E3F81390082411E /* Country.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		BB104CE71E3F87370082411E /* TripsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripsTableViewCell.swift; sourceTree = "<group>"; };
@@ -643,6 +645,7 @@
 				BBD428161E41D63600DA6E6C /* OtherPersonAboutTextTableViewCell.swift */,
 				BBD428181E41DDFD00DA6E6C /* OtherPersonAboutInviteTableViewCell.swift */,
 				BBD4281A1E41DE5100DA6E6C /* OtherPersonAboutInfoTableViewCell.swift */,
+				BB09A6AB1E660D4C0020F8C5 /* OtherPersonAboutInvitedByTableViewCell.swift */,
 			);
 			path = About;
 			sourceTree = "<group>";
@@ -1379,6 +1382,7 @@
 				88C1886B1CDB9D440011F3A6 /* Moment.swift in Sources */,
 				8873F7341CC1891B0053EAB8 /* UIViewController+defaultButtons.swift in Sources */,
 				BB64089B1E42948600C4D5F4 /* SpacingTextField.swift in Sources */,
+				BB09A6AC1E660D4C0020F8C5 /* OtherPersonAboutInvitedByTableViewCell.swift in Sources */,
 				88B569021CD904E3003A21EE /* PreferencesProvider.swift in Sources */,
 				BB104CE81E3F87370082411E /* TripsTableViewCell.swift in Sources */,
 				887455721CC53DC800F0D45F /* BrizeoKeys.swift in Sources */,

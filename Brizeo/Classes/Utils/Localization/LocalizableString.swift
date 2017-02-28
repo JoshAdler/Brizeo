@@ -9,6 +9,7 @@
 import Foundation
 
 enum LocalizableString: String {
+    case InvitedByText = "Invited by "
     case ShareSmsFails = "Sorry, but you can't send a text."
     case ShareTwitterFails = "Sorry, but you can't share the app with Twitter. Please try later."
     case ShareWhatsappFails = "Sorry, but it looks like you don't have Whatsapp app installed."

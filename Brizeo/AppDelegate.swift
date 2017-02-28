@@ -144,7 +144,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return Branch.currentInstance.continue(userActivity)
     }
     
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
         ALDBHandler.sharedInstance().saveContext()
     }
     
@@ -192,7 +192,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if error == nil {
                 print(params?.description)
             }
-            
+            // TODO: save here invited by person to use next
             print("Branch error: \(error?.localizedDescription)")
         }
     }

@@ -165,8 +165,12 @@ class MomentsTabsViewController: BasicViewController {
     
     // TODO: place it as a private method
     func updateWithMoment(_ moment: Moment) {
-        allMomentsController.addMoment(moment)
-        myMomentsController.addMoment(moment)
+        // update controller with new data
+        allMomentsController.updateTableView()
+        myMomentsController.updateTableView()
+        
+        //allMomentsController.addMoment(moment)
+        //myMomentsController.addMoment(moment)
         
         //TODO: dont know what to do here && why to use "self.enableToAnotherTab"
         /*if self.enableToAnotherTab == false {

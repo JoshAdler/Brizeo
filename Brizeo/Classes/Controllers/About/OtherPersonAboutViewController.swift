@@ -17,7 +17,13 @@ class OtherPersonAboutViewController: UIViewController {
     struct Constants {
         static let inviteCellHeightCoef: CGFloat = 110.0 / 985.0
         static let infoCellHeightCoef: CGFloat = 234.0 / 985.0
+        static let invitedByCellHeightCoef: CGFloat = 74.0 / 985.0
         static let headerViewHeightCoef: CGFloat = 74.0 / 985.0
+    }
+    
+    struct StoryboardIds {
+        static let otherProfileControllerId = "OtherProfileViewController"
+        static let profileControllerId = "PersonalTabsViewController"
     }
     
     // MARK: - Properties
@@ -83,9 +89,14 @@ extension OtherPersonAboutViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 1 { // details
+            return user.hasInvitedByPerson ? 2 : 1 /* details with/out invited by */
+        }
+        
         if section == 2 { // mutual friends
             return mutualFriends?.count ?? 0
         }
+        
         return 1
     }
     
@@ -95,13 +106,22 @@ extension OtherPersonAboutViewController: UITableViewDataSource {
             cell.titleLabel.text = user.personalText
             return cell
         } else if indexPath.section == 1 { // info cell
-            let cell = tableView.dequeueReusableCell(withIdentifier: OtherPersonAboutInfoTableViewCell.identifier, for: indexPath) as! OtherPersonAboutInfoTableViewCell
-            
-            cell.applyUser(user: user)
-            cell.applyLocationWithUser(user: user, locationString: locationString)
-            cell.friendsLabel.text = "\(mutualFriends?.count ?? 0) mutual friends"
-            
-            return cell
+            if indexPath.row == 0 { // detail cell
+                let cell = tableView.dequeueReusableCell(withIdentifier: OtherPersonAboutInfoTableViewCell.identifier, for: indexPath) as! OtherPersonAboutInfoTableViewCell
+                
+                cell.applyUser(user: user)
+                cell.applyLocationWithUser(user: user, locationString: locationString)
+                cell.friendsLabel.text = "\(mutualFriends?.count ?? 0) mutual friends"
+                
+                return cell
+            } else { // invited by
+                let cell = tableView.dequeueReusableCell(withIdentifier: OtherPersonAboutInvitedByTableViewCell.identifier, for: indexPath) as! OtherPersonAboutInvitedByTableViewCell
+                
+                cell.delegate = self
+                cell.invitedByName = "Roger"
+                
+                return cell
+            }
         } else { // invite cell
             let cell = tableView.dequeueReusableCell(withIdentifier: OtherPersonAboutInviteTableViewCell.identifier, for: indexPath) as! OtherPersonAboutInviteTableViewCell
 //            cell.logoImageView.sd_setImage(with: mutualFriends![indexPath.row].0)
@@ -118,7 +138,11 @@ extension OtherPersonAboutViewController: UITableViewDelegate {
         if indexPath.section == 0 { // text cell
             return UITableViewAutomaticDimension
         } else if indexPath.section == 1 { // info cell
-            return tableView.bounds.height * Constants.infoCellHeightCoef
+            if indexPath.row == 0 { // details
+                return tableView.bounds.height * Constants.infoCellHeightCoef
+            } else { // invited by
+                return tableView.bounds.height * Constants.invitedByCellHeightCoef
+            }
         } else {
             return tableView.bounds.height * Constants.inviteCellHeightCoef
         }
@@ -140,6 +164,21 @@ extension OtherPersonAboutViewController: UITableViewDelegate {
         let headerView: SettingsBigHeaderView = tableView.dequeueReusableHeaderFooterView(withIdentifier: SettingsBigHeaderView.nibName)
         headerView.titleLabel.text = [LocalizableString.Details, LocalizableString.MutualFriends][section - 1].localizedString.uppercased()
         return headerView
+    }
+}
+
+// MARK: - InvitedByCellDelegate
+extension OtherPersonAboutViewController: InvitedByCellDelegate {
+    
+    func onInvitedByCellClicked(cell: OtherPersonAboutInvitedByTableViewCell) {
+        // push user profile
+        if true {//User.userIsCurrentUser(user.invited) { // show my profile
+            let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
+            Helper.initialNavigationController().pushViewController(profileController, animated: true)
+        } else { // other person profile
+            let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
+            Helper.initialNavigationController().pushViewController(otherPersonProfileController, animated: true)
+        }
     }
 }
 

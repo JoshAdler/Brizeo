@@ -102,6 +102,10 @@ class User: PFUser {
         }
     }
     
+    var hasInvitedByPerson: Bool {
+        return true
+    }
+    
     // RB: for testings
     var uploadedImages: [URL] {
         return [
