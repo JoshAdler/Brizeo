@@ -64,7 +64,6 @@ PODS:
   - IGLDropDownMenu (1.6.2)
   - InstagramImagePicker (1.1.7):
     - NXOAuth2Client (~> 1.2.8)
-  - IQKeyboardManagerSwift (4.0.8)
   - LayerKit (0.24.0)
   - Localytics (4.2.0)
   - Mixpanel (2.9.9):
@@ -115,7 +114,6 @@ DEPENDENCIES:
   - Google/Analytics
   - IGLDropDownMenu
   - InstagramImagePicker
-  - IQKeyboardManagerSwift
   - Localytics
   - Mixpanel (~> 2.9)
   - MSRangeSlider
@@ -167,7 +165,6 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   IGLDropDownMenu: ae118618ae858fa66ce7c2ac80ed9124a710b228
   InstagramImagePicker: 3b1afb10b1b3e5625b8ef64dfabd13464467020d
-  IQKeyboardManagerSwift: c04bc9f68473823f825eb44d958fce98d921bead
   LayerKit: ef028036b5623d2daf2f590c688fd790cd90340c
   Localytics: 59cf99592a35c18e62d5994f2365ad3ccecc4982
   Mixpanel: 818d1940c2d9402453b349545022a86968097f57
@@ -183,6 +180,6 @@ SPEC CHECKSUMS:
   UIScrollView-InfiniteScroll: 14e204c50ca4040467e1cbfa141dad7a18919b56
   ZTDropDownTextField: a9cb5db41b66eb28a7c38afaf4c334fb2a81034e
 
-PODFILE CHECKSUM: 25a1a91fef1c13c4a134738db1fb7734043bc366
+PODFILE CHECKSUM: f08b2f30c1cf7cbb04b93ee226016feccd125c83
 
 COCOAPODS: 1.2.0

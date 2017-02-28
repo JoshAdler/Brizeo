@@ -9,6 +9,7 @@
 import UIKit
 import ChameleonFramework
 import MessageUI
+import SVProgressHUD
 
 class OtherProfileViewController: BasicViewController {
 
@@ -225,6 +226,8 @@ class OtherProfileViewController: BasicViewController {
                     messageComposeVC.messageComposeDelegate = self
                     messageComposeVC.recipients = nil
                     self.present(messageComposeVC, animated: true, completion: nil)
+                } else {
+                    SVProgressHUD.showError(withStatus: LocalizableString.ShareSmsFails.localizedString)
                 }
             }
         }

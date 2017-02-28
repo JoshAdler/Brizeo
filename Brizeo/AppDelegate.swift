@@ -19,7 +19,6 @@ import UserNotifications
 import FBSDKLoginKit
 import Localytics
 import FontBlaster
-import IQKeyboardManagerSwift
 
 import Applozic
 
@@ -41,8 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         ThemeManager.applyGlobalTheme()
-        
-        IQKeyboardManager.sharedManager().enable = true
         
         // set initial tab bar item
         Helper.selectedTabBarItem(with: 2)

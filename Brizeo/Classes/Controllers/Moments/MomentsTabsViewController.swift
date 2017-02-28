@@ -15,15 +15,6 @@ import InstagramImagePicker
 import SDWebImage
 import SVProgressHUD
 
-enum MomentFilterType: String {
-    case NewMomentForAll = "New Moment ForAll"
-    case MostPopularForAll = "Most Popular ForAll"
-    case NewMomentForMoment = "New Moment ForMoment"
-    case MostPopularForMoment = "Most Popular ForMoment"
-    case NewMomentForMy = "New Moment ForMy"
-    case MostPopularForMy = "Most Popular ForMy"
-}
-
 protocol MomentsTabsViewControllerDelegate: class {
     func onCreateMoment()
     func updateBadgeNumber(_ badgeCount: Int)
@@ -34,7 +25,11 @@ class MomentsTabsViewController: BasicViewController {
     // MARK: - Types
     
     struct Constants {
-        static let titles = [LocalizableString.All.localizedString.capitalized, LocalizableString.MyMatches.localizedString.capitalized, LocalizableString.MyMoments.localizedString.capitalized]
+        static let titles = [
+            LocalizableString.All.localizedString.capitalized,
+            LocalizableString.MyMatches.localizedString.capitalized,
+            LocalizableString.MyMoments.localizedString.capitalized
+        ]
     }
     
     struct StoryboardIds {
@@ -283,6 +278,7 @@ extension MomentsTabsViewController: GBHFacebookImagePickerDelegate {
     
     func facebookImagePicker(imagePicker: UIViewController, imageModel: GBHFacebookImageModel) {
         print("Image URL : \(imageModel.fullSizeUrl), Image Id: \(imageModel.imageId)")
+        
         if let pickedImage = imageModel.image {
             createNewMoment(with: pickedImage)
         }

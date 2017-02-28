@@ -36,6 +36,20 @@ class BranchProvider: NSObject {
         generateInviteURL(forParams: [.userId: userId], imageURL: imageURL, andCallback: completionHandler)
     }
     
+    class func generateShareURL(callback completionHandler: @escaping (String?) -> Void) {
+        let branchUniversalObject: BranchUniversalObject = BranchUniversalObject()
+        branchUniversalObject.title = LocalizableString.Brizeo.localizedString
+        branchUniversalObject.contentDescription = LocalizableString.InviteFriends.localizedString
+        
+        let linkProperties: BranchLinkProperties = BranchLinkProperties()
+        linkProperties.feature = BranchKeys.FeatureInvite
+        linkProperties.channel = BranchKeys.ChannelSocial
+        
+        branchUniversalObject.getShortUrl(with: linkProperties,  andCallback: { (url, error) -> Void in
+            completionHandler(url)
+        })
+    }
+    
     // MARK: - Private methods
     
     class private func generateInviteURL(forParams params: [MetadataKeys: String], imageURL: String?, andCallback completionHandler: @escaping (String?) -> Void) {

@@ -46,6 +46,11 @@ class Configurations: NSObject {
         static let appKey = ""
     }
     
+    // MARK: - Applozic
+    struct Applozic {
+        static let appKey = "324a31b8f131bb0d6f69f9164f3a7cfd6"
+    }
+    
     // MARK: - First entry
     
     class func isFirstEntry() -> Bool {

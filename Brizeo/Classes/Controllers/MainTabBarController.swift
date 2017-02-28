@@ -24,14 +24,15 @@ class MainTabBarController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //TODO: get this back
-//        
-//        if let items = tabBar.items {
-//            for item in items {
-//                item.image = item.image!.withRenderingMode(.alwaysOriginal)
-//                item.selectedImage = item.selectedImage!.withRenderingMode(.alwaysOriginal)
-//            }
-//        }
+        
+        delegate = self
+        
+        if let items = tabBar.items {
+            for item in items {
+                item.image = item.image!.withRenderingMode(.alwaysOriginal)
+                item.selectedImage = item.selectedImage!.withRenderingMode(.alwaysOriginal)
+            }
+        }
         
         if let navigationController = navigationController {
             navigationItem.backBarButtonItem = UIBarButtonItem(title: LocalizableString.Back.localizedString, style: .plain, target: nil, action: nil)
@@ -91,5 +92,18 @@ extension MainTabBarController: InviteFriendsViewDelegate {
     
     func onInviteClicked(inviteView: InviteFriendsView) {
 
+    }
+}
+
+extension MainTabBarController: UITabBarControllerDelegate {
+    
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        if viewController.isKind(of: ChatListViewController.self) {
+            let chatManager : ALChatManager = ALChatManager(applicationKey: Configurations.Applozic.appKey as NSString)
+            chatManager.registerUserAndLaunchChat(ALChatManager.getUserDetail(), fromController: self, forUser:nil)
+            
+            return false
+        }
+        return true
     }
 }

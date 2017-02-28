@@ -25,6 +25,7 @@ class InviteFriendsView: UIView {
     // MARK: - Properties
     
     weak var delegate: InviteFriendsViewDelegate?
+    var chooseView: ChooseView?
     
     // background
     @IBOutlet weak var backgroundView: UIView!
@@ -93,13 +94,13 @@ class InviteFriendsView: UIView {
     // MARK: - Actions
     
     @IBAction func onCloseButtonClicked(sender: UIButton) {
+        chooseView?.removeFromSuperview()
         self.removeFromSuperview()
     }
     
     @IBAction func onShareButtonClicked(sender: UIButton) {
-//        delegate?.onShareClicked(inviteView: self)
-        let chooseView: ChooseView = ChooseView.loadFromNib()
-        chooseView.present(on: superview!)
+        chooseView = ChooseView.loadFromNib()
+        chooseView?.present(on: superview!)
     }
     
     @IBAction func onNotifyButtonClicked(sender: UIButton) {

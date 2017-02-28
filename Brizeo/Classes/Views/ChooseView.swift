@@ -7,6 +7,12 @@
 //
 
 import UIKit
+import Branch
+import SVProgressHUD
+import FBSDKShareKit
+import FBSDKMessengerShareKit
+import MessageUI
+import Social
 
 class ChooseView: UIView {
 
@@ -89,8 +95,98 @@ class ChooseView: UIView {
         tableView.register(UINib(nibName: ChooseTableViewCell.identifier, bundle: nil), forCellReuseIdentifier: ChooseTableViewCell.identifier)
     }
     
-    // MARK: - Class methods
+    fileprivate func generateBranchURL(handler: @escaping (String) -> Void) {
+        // show loading
+        SVProgressHUD.setDefaultMaskType(.black)
+        SVProgressHUD.show()
+        
+        BranchProvider.generateShareURL { (url) in
+            if let url = url {
+                handler(url)
+            } else {
+                SVProgressHUD.showError(withStatus: LocalizableString.BranchUnavailable.localizedString)
+                return
+            }
+        }
+    }
     
+    fileprivate func shareWithSMS(url: String) {
+        if MFMessageComposeViewController.canSendText() {
+            let modifiedURLString = LocalizableString.TryBrizeo.localizedStringWithArguments([(User.current()?.displayName)!]) + "\n\n" + LocalizableString.BrizeoShareDescription.localizedString+" "+LocalizableString.CheckItOutAt.localizedStringWithArguments([url])
+            let messageComposeVC = MFMessageComposeViewController()
+            
+            messageComposeVC.body = modifiedURLString
+            messageComposeVC.delegate = Helper.initialNavigationController()
+            messageComposeVC.messageComposeDelegate = Helper.initialNavigationController()
+            messageComposeVC.recipients = nil
+            
+            Helper.initialNavigationController().present(messageComposeVC, animated: true, completion: nil)
+        } else {
+            SVProgressHUD.showError(withStatus: LocalizableString.ShareSmsFails.localizedString)
+        }
+    }
+
+    fileprivate func shareWithTwitter(url: String) {
+        let image = BrizeoImage.BrizeoPromo.image
+        let modifiedURLString = LocalizableString.TryBrizeo.localizedStringWithArguments([(User.current()?.displayName)!]) + "\n\n" + LocalizableString.BrizeoShareDescription.localizedString+" "+LocalizableString.CheckItOutAt.localizedStringWithArguments([url])
+        
+        if let vc = SLComposeViewController(forServiceType: SLServiceTypeTwitter) {
+            vc.setInitialText(modifiedURLString)
+            vc.add(image)
+            vc.add(URL(string: url))
+            Helper.initialNavigationController().present(vc, animated: true, completion: nil)
+        } else {
+            SVProgressHUD.showError(withStatus: LocalizableString.ShareTwitterFails.localizedString)
+        }
+    }
+
+    fileprivate func shareWithMessanger(url: String) {
+        let content = FBSDKShareLinkContent()
+        content.contentURL = URL(string: url)
+        content.imageURL = URL(string:BrizeoImage.BrizeoLogoImage.rawValue)
+        content.contentTitle = LocalizableString.TryBrizeo.localizedStringWithArguments([(User.current()?.displayName)!])
+        content.contentDescription = LocalizableString.BrizeoShareDescription.localizedString
+        
+        FBSDKMessageDialog.show(with: content, delegate: self)
+    }
+    
+    fileprivate func shareWithEmail(url: String) {
+        let mailComposerVC = MFMailComposeViewController()
+        let modifiedURLString = NSString(format: LocalizableString.BrizeoMailDescription.rawValue as NSString, "")
+        let modifiedString = NSString(format: LocalizableString.CheckItOutHere.rawValue as NSString, url, url)
+        let modifiedSubString = NSString(format: "%@%@", modifiedURLString, modifiedString)
+        let width =  UIScreen.main.bounds.width
+        let mailContent = NSString(format: LocalizableString.BrizeoMailContent.rawValue as NSString, width, width * 0.9, (User.current()?.displayName)!, modifiedSubString)
+        mailComposerVC.mailComposeDelegate = Helper.initialNavigationController()
+        mailComposerVC.setSubject(LocalizableString.TryBrizeo.localizedStringWithArguments([(User.current()?.displayName)!]))
+        mailComposerVC.setMessageBody(mailContent as String, isHTML: true)
+        
+        if MFMailComposeViewController.canSendMail() {
+            Helper.initialNavigationController().present(mailComposerVC, animated: true, completion: nil)
+        } else {
+            SVProgressHUD.showError(withStatus: LocalizableString.CouldNotSendEmail.localizedString)
+        }
+}
+
+    fileprivate func shareWithWhatsapp(url: String) {
+        let modifiedURLString = LocalizableString.TryBrizeo.localizedStringWithArguments([(User.current()?.displayName)!]) + "\n\n" + LocalizableString.BrizeoShareDescription.localizedString+" "+LocalizableString.CheckItOutAt.localizedStringWithArguments([url])
+        let originalString = modifiedURLString
+        let encodedString = originalString.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+        let url = URL(string: "whatsapp://send?text="+encodedString!)
+        
+        if UIApplication.shared.canOpenURL(url!) {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(url!)
+            }
+        } else {
+            SVProgressHUD.showError(withStatus: LocalizableString.ShareWhatsappFails.localizedString)
+        }
+    }
+
+    // MARK: - Class methods
+
     class func desiredHeight() -> CGFloat {
         return Items.count * Constants.rowHeight + Constants.bottomViewHeight
     }
@@ -125,10 +221,54 @@ extension ChooseView: UITableViewDataSource {
 extension ChooseView: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         
+        switch Items(rawValue: indexPath.row)! {
+        case .sms:
+            generateBranchURL(handler: { (url) in
+                self.shareWithSMS(url: url)
+            })
+            break
+        case .messanger:
+            generateBranchURL(handler: { (url) in
+                self.shareWithMessanger(url: url)
+            })
+            break
+        case .whatsapp:
+            generateBranchURL(handler: { (url) in
+                self.shareWithWhatsapp(url: url)
+            })
+            break
+        case .email:
+            generateBranchURL(handler: { (url) in
+                self.shareWithEmail(url: url)
+            })
+            break
+        case .twitter:
+            generateBranchURL(handler: { (url) in
+                self.shareWithTwitter(url: url)
+            })
+            break
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return Constants.rowHeight
+    }
+}
+
+// MARK: - FBSDKSharingDelegate
+extension ChooseView: FBSDKSharingDelegate {
+    
+    func sharer(_ sharer: FBSDKSharing!, didCompleteWithResults results: [AnyHashable: Any]!) {
+        print(results)
+        print(sharer)
+    }
+    
+    func sharer(_ sharer: FBSDKSharing!, didFailWithError error: Error!) {
+        FBSDKShareDialog.show(from: Helper.initialNavigationController(), with: sharer.shareContent, delegate: nil)
+    }
+    
+    func sharerDidCancel(_ sharer: FBSDKSharing!) {
     }
 }

@@ -82,21 +82,6 @@ class MomentsViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(removeMomentNotificationReceived(_:)), name: NSNotification.Name(rawValue: removedMomentNotification), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(MomentsViewController.updateTableView), name: NSNotification.Name(rawValue: LocalizableString.SomebodyLikeYourMoment.localizedString), object: nil)
         
-//        switch listType {
-//        case .allMoments(_):
-//            NotificationCenter.default.addObserver(self, selector: #selector(MomentsViewController.newestMomentsNotification(_:)), name: NSNotification.Name(rawValue: MomentFilterType.NewMomentForAll.rawValue), object: nil)
-//            NotificationCenter.default.addObserver(self, selector: #selector(MomentsViewController.mostmomentsNotification(_:)), name: NSNotification.Name(rawValue: MomentFilterType.MostPopularForAll.rawValue), object: nil)
-//            break
-//        case .myMatches(_):
-//            NotificationCenter.default.addObserver(self, selector: #selector(MomentsViewController.newestMomentsNotification(_:)), name: NSNotification.Name(rawValue: MomentFilterType.NewMomentForMoment.rawValue), object: nil)
-//            NotificationCenter.default.addObserver(self, selector: #selector(MomentsViewController.mostmomentsNotification(_:)), name: NSNotification.Name(rawValue: MomentFilterType.MostPopularForMoment.rawValue), object: nil)
-//            break
-//        default:
-//            NotificationCenter.default.addObserver(self, selector: #selector(MomentsViewController.newestMomentsNotification(_:)), name: NSNotification.Name(rawValue: MomentFilterType.NewMomentForMy.rawValue), object: nil)
-//            NotificationCenter.default.addObserver(self, selector: #selector(MomentsViewController.mostmomentsNotification(_:)), name: NSNotification.Name(rawValue: MomentFilterType.MostPopularForMy.rawValue), object: nil)
-//            break
-//        }
-        
         // init filter button
         initFilterButton()
         hideFilterViewIfNeeds()
@@ -139,18 +124,10 @@ class MomentsViewController: UIViewController {
     
     @IBAction func onPopularButtonClicked(_ sender: UIButton) {
         enableRadioForButton(button: sender)
-        
-//        NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: MomentFilterType.MostPopularForAll.rawValue), object: nil)
-//        NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: MomentFilterType.MostPopularForMoment.rawValue), object: nil)
-//        NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: MomentFilterType.MostPopularForMy.rawValue), object: nil)
     }
     
     @IBAction func onNewestButtonClicked(_ sender: UIButton) {
         enableRadioForButton(button: sender)
-        
-//        NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: MomentFilterType.NewMomentForAll.rawValue), object: nil)
-//        NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: MomentFilterType.NewMomentForMoment.rawValue), object: nil)
-//        NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: MomentFilterType.NewMomentForMy.rawValue), object: nil)
     }
     
     // MARK: - Public methods
@@ -347,7 +324,6 @@ class MomentsViewController: UIViewController {
             switch result {
                 
             case .success(_):
-                
                 self.momentsTableView.reloadData()
             case .failure(let error):
                 self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)

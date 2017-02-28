@@ -13,6 +13,7 @@ import MobileCoreServices
 import AVFoundation
 import Branch
 import SDWebImage
+import MessageUI
 
 class MediaViewController: UIViewController {
     
@@ -169,7 +170,22 @@ class MediaViewController: UIViewController {
         _ = navigationController?.popViewController(animated: true)
     }
     
+    //TODO: place corrent moment url
     @IBAction func onSharingButtonClicked(_ sender: UIButton) {
+        BranchProvider.generateInviteURL(forMomentId: "-1", imageURL: nil) { (url) in
+            if let url = url {
+                if MFMessageComposeViewController.canSendText() {
+                    let messageComposeVC = MFMessageComposeViewController()
+                    messageComposeVC.body = url
+                    messageComposeVC.delegate = self
+                    messageComposeVC.messageComposeDelegate = self
+                    messageComposeVC.recipients = nil
+                    self.present(messageComposeVC, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+/* old code
         guard media != nil else {
             return
         }
@@ -193,6 +209,7 @@ class MediaViewController: UIViewController {
             present(activityVC, animated: true, completion: nil)
         }
     }
+ */
 }
 
 // MARK: - UICollectionViewDataSource
@@ -262,6 +279,14 @@ extension MediaViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionView.frame.size
     }
+}
+
+    // MARK: - MFMessageComposeViewControllerDelegate
+    extension MediaViewController: MFMessageComposeViewControllerDelegate, UINavigationControllerDelegate {
+        
+        func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+            controller.dismiss(animated: true, completion: nil)
+        }
 }
 
 

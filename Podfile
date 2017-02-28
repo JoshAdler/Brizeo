@@ -42,7 +42,6 @@ target 'Brizeo' do
     pod 'SWTableViewCell'
     pod 'Localytics'
     pod 'FontBlaster'
-    pod 'IQKeyboardManagerSwift'
     pod 'CLLocationManager-blocks'
     pod 'Applozic', '~>3.8'
 end

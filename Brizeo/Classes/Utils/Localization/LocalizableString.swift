@@ -9,7 +9,10 @@
 import Foundation
 
 enum LocalizableString: String {
-    
+    case ShareSmsFails = "Sorry, but you can't send a text."
+    case ShareTwitterFails = "Sorry, but you can't share the app with Twitter. Please try later."
+    case ShareWhatsappFails = "Sorry, but it looks like you don't have Whatsapp app installed."
+    case BranchUnavailable = "Sorry, but you can't share the app now. Please try later."
     case SMSShare = "SMS Message"
     case MessangerShare = "Messanger"
     case WhatsappShare = "WhatsApp"
@@ -45,7 +48,7 @@ enum LocalizableString: String {
     case Cancel = "Cancel"
     case Ok = "Ok"
     case Success = "Success"
-    case CouldNotSendEmail = "Could not send email"
+    case CouldNotSendEmail = "Sorry, but you can not send an email."
     case PleaseTryAgain = "Please try again"
     case Brizeo = "Brizeo"
     case Error = "Error"

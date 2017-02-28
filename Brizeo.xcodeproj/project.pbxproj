@@ -131,7 +131,6 @@
 		BB7AD2611E48C33500502AE2 /* LikerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7AD2601E48C33500502AE2 /* LikerView.swift */; };
 		BB7AD2641E48C3CC00502AE2 /* LikesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7AD2631E48C3CC00502AE2 /* LikesTableViewCell.swift */; };
 		BB7EAEAF1E607848007986CD /* ALChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7EAEAE1E607848007986CD /* ALChatManager.swift */; };
-		BB7EAEB11E607BFA007986CD /* ChatTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7EAEB01E607BFA007986CD /* ChatTestViewController.swift */; };
 		BB8B6AD61E51047A00417D54 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB8B6AD41E51047A00417D54 /* Main.storyboard */; };
 		BBD125771E3FF4D900E17750 /* MomentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD125761E3FF4D900E17750 /* MomentTableViewCell.swift */; };
 		BBD125791E3FFDB000E17750 /* CreateMomentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD125781E3FFDB000E17750 /* CreateMomentViewController.swift */; };
@@ -311,7 +310,6 @@
 		BB7AD2631E48C3CC00502AE2 /* LikesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikesTableViewCell.swift; sourceTree = "<group>"; };
 		BB7EAEAB1E6077E9007986CD /* Applozic.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Applozic.framework; sourceTree = "<group>"; };
 		BB7EAEAE1E607848007986CD /* ALChatManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ALChatManager.swift; sourceTree = "<group>"; };
-		BB7EAEB01E607BFA007986CD /* ChatTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatTestViewController.swift; sourceTree = "<group>"; };
 		BB8B6AD51E51047A00417D54 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BBD125761E3FF4D900E17750 /* MomentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MomentTableViewCell.swift; sourceTree = "<group>"; };
 		BBD125781E3FFDB000E17750 /* CreateMomentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateMomentViewController.swift; sourceTree = "<group>"; };
@@ -489,7 +487,6 @@
 			children = (
 				BBD4281E1E420BA000DA6E6C /* ChatViewController.swift */,
 				BB49F94D1E409E16009EE6A0 /* ChatListViewController.swift */,
-				BB7EAEB01E607BFA007986CD /* ChatTestViewController.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -1360,7 +1357,6 @@
 				BBD428171E41D63600DA6E6C /* OtherPersonAboutTextTableViewCell.swift in Sources */,
 				BBD1257B1E4078E600E17750 /* OtherProfileViewController.swift in Sources */,
 				69722B9D1CDBE0030064E0B5 /* Helper.swift in Sources */,
-				BB7EAEB11E607BFA007986CD /* ChatTestViewController.swift in Sources */,
 				BB1EF48A1E3AA7D100231ACC /* EventTabsViewController.swift in Sources */,
 				69C215241CCE52D000F4C069 /* MatchStartChatViewController.swift in Sources */,
 				8CEB3DD81D8934D3009DE31F /* Notification.swift in Sources */,

@@ -45,6 +45,10 @@ class ChatListViewController: ATLConversationListViewController {
         rowHeight = 76.0
         shouldDisplaySearchController = true
         deletionModes = [NSNumber(value: LYRDeletionMode.myDevices.rawValue as UInt)]
+        
+        // new code from Applozic
+        let chatManager : ALChatManager = ALChatManager(applicationKey: Configurations.Applozic.appKey as NSString)
+        chatManager.registerUserAndLaunchChat(ALChatManager.getUserDetail(), fromController: self, forUser:nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {

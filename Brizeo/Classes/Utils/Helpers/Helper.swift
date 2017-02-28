@@ -103,7 +103,7 @@ class Helper: NSObject {
         navigationItem?.titleView = imageView
     }
     
-    class func initialNavigationController() -> UINavigationController {
+    class func initialNavigationController() -> MainNavigationViewController {
         let navigationController = AppDelegate.shared().window?.rootViewController as! MainNavigationViewController
         return navigationController
     }

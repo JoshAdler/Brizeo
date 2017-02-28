@@ -107,7 +107,7 @@ class SearchMatchesViewController: BasicViewController {
                 let imageView = UIImageView()
                 imageView.image = mode == .left ? #imageLiteral(resourceName: "no") : #imageLiteral(resourceName: "ok")
                 imageView.frame.size = CGSize(width: 100, height: 100)
-                imageView.center = CGPoint(x: frame.width / 2, y: frame.height / 2)
+                imageView.center = CGPoint(x: (mode == .left ? frame.width * (2.0 / 3.0): frame.width / 3.0), y: frame.height * 0.2)
                 
                 return imageView
             }
