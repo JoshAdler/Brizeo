@@ -57,6 +57,7 @@
 		BB099F0F1E3F6E0500133794 /* AboutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB099F0E1E3F6E0500133794 /* AboutTableViewCell.swift */; };
 		BB099F111E3F6E9000133794 /* AboutSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB099F101E3F6E9000133794 /* AboutSelectView.swift */; };
 		BB09A6AC1E660D4C0020F8C5 /* OtherPersonAboutInvitedByTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB09A6AB1E660D4C0020F8C5 /* OtherPersonAboutInvitedByTableViewCell.swift */; };
+		BB09A6AE1E66C08E0020F8C5 /* ChatProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB09A6AD1E66C08E0020F8C5 /* ChatProvider.swift */; };
 		BB104CE31E3F7F1E0082411E /* TripsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB104CE21E3F7F1E0082411E /* TripsViewController.swift */; };
 		BB104CE51E3F81390082411E /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB104CE41E3F81390082411E /* Country.swift */; };
 		BB104CE81E3F87370082411E /* TripsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB104CE71E3F87370082411E /* TripsTableViewCell.swift */; };
@@ -235,6 +236,7 @@
 		BB099F0E1E3F6E0500133794 /* AboutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutTableViewCell.swift; sourceTree = "<group>"; };
 		BB099F101E3F6E9000133794 /* AboutSelectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutSelectView.swift; sourceTree = "<group>"; };
 		BB09A6AB1E660D4C0020F8C5 /* OtherPersonAboutInvitedByTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherPersonAboutInvitedByTableViewCell.swift; sourceTree = "<group>"; };
+		BB09A6AD1E66C08E0020F8C5 /* ChatProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatProvider.swift; sourceTree = "<group>"; };
 		BB104CE21E3F7F1E0082411E /* TripsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripsViewController.swift; sourceTree = "<group>"; };
 		BB104CE41E3F81390082411E /* Country.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		BB104CE71E3F87370082411E /* TripsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripsTableViewCell.swift; sourceTree = "<group>"; };
@@ -562,6 +564,7 @@
 				69EFA9731CDA99FA00885EEA /* LocationManager.swift */,
 				756EAB6B1E1E37C400E81221 /* EventsProvider.swift */,
 				BB22CF9C1E5081790096A3D3 /* BranchProvider.swift */,
+				BB09A6AD1E66C08E0020F8C5 /* ChatProvider.swift */,
 			);
 			path = APIs;
 			sourceTree = "<group>";
@@ -1403,6 +1406,7 @@
 				BBFBBB8D1E3CDB750002BF4B /* SettingsCheckmarkCell.swift in Sources */,
 				0DC682131D640EA0003869CC /* UIViewController+Keyboard.m in Sources */,
 				BBD4281F1E420BA000DA6E6C /* ChatViewController.swift in Sources */,
+				BB09A6AE1E66C08E0020F8C5 /* ChatProvider.swift in Sources */,
 				BB22CF9A1E5072290096A3D3 /* DropMenuButton.swift in Sources */,
 				BB7AD2641E48C3CC00502AE2 /* LikesTableViewCell.swift in Sources */,
 				BB4ED60A1E3C1328005B3487 /* SettingsRangeCell.swift in Sources */,

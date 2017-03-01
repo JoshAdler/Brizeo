@@ -99,7 +99,7 @@ extension OtherPersonAboutViewController: UITableViewDataSource {
         
         return 1
     }
-    
+    //TODO: register user for chat at the start
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 { // text cell
             let cell = tableView.dequeueReusableCell(withIdentifier: OtherPersonAboutTextTableViewCell.identifier, for: indexPath) as! OtherPersonAboutTextTableViewCell

@@ -221,7 +221,7 @@ class ALChatManager: NSObject {
         user.applicationId = ALChatManager.applicationId
         user.email = ALUserDefaultsHandler.getEmailId()
         user.password = ALUserDefaultsHandler.getPassword()
-//        user.displayName = ALUserDefaultsHandler.getDisplayName()
+        user.displayName = ALUserDefaultsHandler.getDisplayName()
         
         return user;
         

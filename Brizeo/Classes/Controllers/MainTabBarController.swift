@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Applozic
 
 class MainTabBarController: UITabBarController {
     
@@ -99,8 +100,7 @@ extension MainTabBarController: UITabBarControllerDelegate {
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         if viewController.isKind(of: ChatListViewController.self) {
-            let chatManager : ALChatManager = ALChatManager(applicationKey: Configurations.Applozic.appKey as NSString)
-            chatManager.registerUserAndLaunchChat(ALChatManager.getUserDetail(), fromController: self, forUser:nil)
+            ChatProvider.startChat(with: nil, from: self)
             
             return false
         }

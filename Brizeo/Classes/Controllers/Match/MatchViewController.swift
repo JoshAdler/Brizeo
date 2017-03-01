@@ -32,7 +32,7 @@ class MatchViewController: BasicViewController {
     // MARK: - Actions
     
     @IBAction func onChatButtonClicked(sender: UIButton) {
-        
+        ChatProvider.startChat(with: user.userID, from: self)
     }
     
     @IBAction func onReturnButtonClicked(sender: UIButton) {

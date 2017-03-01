@@ -62,6 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         LocationManager.setup()
         updateUserLocationIfPossible()
         User.checkUserRewards()
+        ChatProvider.registerUserInChat()
 
         // chat logic
         

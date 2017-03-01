@@ -143,6 +143,7 @@ extension UserMatchesViewController: SWTableViewCellDelegate {
             
             let user = self.matches[indexPath.row]
             
+            ChatProvider.startChat(with: user.userID, from: self)
 //            if let conversation = LayerManager.conversationBetweenUser(User.current()!.objectId!, andUserId: user.objectId!, message: nil) {
 //                
 //                let chatController: ChatViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.chatController)!
