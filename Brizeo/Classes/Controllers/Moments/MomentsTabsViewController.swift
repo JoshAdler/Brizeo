@@ -17,7 +17,6 @@ import SVProgressHUD
 
 protocol MomentsTabsViewControllerDelegate: class {
     func onCreateMoment()
-    func updateBadgeNumber(_ badgeCount: Int)
 }
 
 class MomentsTabsViewController: BasicViewController {
@@ -38,11 +37,6 @@ class MomentsTabsViewController: BasicViewController {
     }
     
     // MARK: - Properties
-
-    // badge logic
-    var badgeLabel: UILabel! = UILabel(frame: CGRect.zero)
-    var badgeNumber: Int = 0
-    var isContentSet = false
     
     var allMomentsController: MomentsViewController!
     var myMatchesMomentsController: MomentsViewController!
@@ -53,42 +47,28 @@ class MomentsTabsViewController: BasicViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if AppDelegate.shared().presentLoginScreenIfNeeds() == true {
-            return
-        }
-        
         initContent()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        if !isContentSet {
-            initContent()
-        }
     }
     
     // MARK: - Private methods
     
     fileprivate func initContent() {
-        isContentSet = true
-        
-        let currentUser = User.test()
+        guard let currentUser = UserProvider.shared.currentUser else {
+            print("Error: no current user on moment tab")
+            return
+        }
         
         // load controller
         allMomentsController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.momentsControllerId)!
-        allMomentsController.listType = MomentsListType.allMoments(userId: currentUser.userID)
-        allMomentsController.currentUser = currentUser
+        allMomentsController.listType = MomentsListType.allMoments(userId: currentUser.objectId)
         allMomentsController.parentDelegate = self
         
         myMatchesMomentsController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.momentsControllerId)!
-        myMatchesMomentsController.listType = MomentsListType.myMatches(userId: currentUser.userID)
-        myMatchesMomentsController.currentUser = currentUser
+        myMatchesMomentsController.listType = MomentsListType.myMatches(userId: currentUser.objectId)
         myMatchesMomentsController.parentDelegate = self
         
         myMomentsController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.momentsControllerId)!
-        myMomentsController.listType = MomentsListType.myMoments(userId: currentUser.userID)
-        myMomentsController.currentUser = currentUser
+        myMomentsController.listType = MomentsListType.myMoments(userId: currentUser.objectId)
         myMomentsController.parentDelegate = self
         
         let carbonTabSwipeNavigation = Helper.createCarbonController(with: Constants.titles, self)
@@ -163,22 +143,6 @@ class MomentsTabsViewController: BasicViewController {
     
     // MARK: - Public methods
     
-    // TODO: place it as a private method
-    func updateWithMoment(_ moment: Moment) {
-        // update controller with new data
-        allMomentsController.updateTableView()
-        myMomentsController.updateTableView()
-        
-        //allMomentsController.addMoment(moment)
-        //myMomentsController.addMoment(moment)
-        
-        //TODO: dont know what to do here && why to use "self.enableToAnotherTab"
-        /*if self.enableToAnotherTab == false {
-            navigationCoordinator?.performTransition(Transition.inviteFriends)
-        }
-        self.enableToAnotherTab = true*/
-    }
-    
     func showPopupGuidence(){
         allMomentsController.gotoFirst()
         
@@ -188,30 +152,6 @@ class MomentsTabsViewController: BasicViewController {
         tempCenter.y += tempCenter.y + 90.0
         MomentPopupView.show(withColor: UIColor.black, center: tempCenter, size: CGSize(width: 50.0, height: 50.0), cornerRadius: nil, message: "Please upload a fun or travel pic") { (dismissed) -> Void in
         }*/
-    }
-    
-    func showBadgeNumber(_ badge: String?) {
-        var strBadge: String? = badge
-        if badge == nil || Int(badge!)! <= 0 {
-            if badgeNumber > 0 {
-                strBadge = String(format: "%d", badgeNumber)
-            } else {
-                badgeLabel.frame = CGRect.zero
-                return
-            }
-        }
-        
-        let frame = CGRect(x: self.view.frame.size.width - 24, y: 2, width: strBadge!.widthWithConstrainedHeight(12) + 5, height: 12 + 4)
-        badgeLabel.frame = frame
-        badgeLabel.text = strBadge
-        badgeLabel.backgroundColor = UIColor.red
-        badgeLabel.layer.cornerRadius = 16.0 / 2.0
-        badgeLabel.clipsToBounds = true
-        badgeLabel.textColor = UIColor.white
-        badgeLabel.font = UIFont.systemFont(ofSize: 12.0)
-        badgeLabel.textAlignment = .center
-        badgeNumber = Int(strBadge!)!
-        view.addSubview(badgeLabel)
     }
 }
 
@@ -251,36 +191,12 @@ extension MomentsTabsViewController: MomentsTabsViewControllerDelegate {
     func onCreateMoment() {
         showImageSourceAlertView()
     }
-    
-    func updateBadgeNumber(_ badgeCount: Int) {
-        guard let installation = PFInstallation.current() else {
-            assertionFailure("Error: no current installation")
-            return
-        }
-        
-        let badge = self.badgeLabel.text
-        
-        if badge == nil {
-            self.showBadgeNumber(nil)
-            installation.badge = 0
-        } else {
-            if Int(badge!)! - badgeCount > 0 {
-                installation.badge = Int(badge!)! - badgeCount
-            } else {
-                installation.badge = 0
-            }
-            print(String(format: "%d", (Int(badge!)! - badgeCount)))
-            self.badgeNumber = Int(badge!)! - badgeCount
-            self.showBadgeNumber(String(format: "%d", (Int(badge!)! - badgeCount)))
-        }
-        installation.saveInBackground()
-    }
 }
 
 // MARK: - GBHFacebookImagePickerDelegate
 extension MomentsTabsViewController: GBHFacebookImagePickerDelegate {
     
-    func facebookImagePicker(imagePicker: UIViewController, imageModel: GBHFacebookImageModel) {
+    func facebookImagePicker(imagePicker: UIViewController, imageModel: GBHFacebookImage) {
         print("Image URL : \(imageModel.fullSizeUrl), Image Id: \(imageModel.imageId)")
         
         if let pickedImage = imageModel.image {
@@ -293,12 +209,10 @@ extension MomentsTabsViewController: GBHFacebookImagePickerDelegate {
         print(error.debugDescription)
     }
     
-    // Optional
     func facebookImagePicker(didCancelled imagePicker: UIViewController) {
         print("Cancelled Facebook Album picker")
     }
     
-    // Optional
     func facebookImagePickerDismissed() {
         print("Picker dismissed")
     }

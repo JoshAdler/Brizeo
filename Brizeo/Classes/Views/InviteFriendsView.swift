@@ -108,7 +108,7 @@ class InviteFriendsView: UIView {
         let content = FBSDKAppInviteContent()
         content.appLinkURL = URL(string: "https://www.mydomain.com/myapplink")!
         
-        FBSDKAppInviteDialog.show(from: Helper.initialNavigationController(), with: content, delegate: self) 
+        FBSDKAppInviteDialog.show(from: Helper.initialNavigationController(), with: content, delegate: self)
     }
 }
 

@@ -66,7 +66,7 @@ extension GenderViewController: UITableViewDataSource {
             let gender = Gender.gender(for: indexPath.row)
             
             cell.titleLabel.text = gender.title
-            cell.isChecked = gender == user.genderValue
+            cell.isChecked = gender == user.gender
             return cell
         } else { // gender search
             let gender = Gender.gender(for: indexPath.row)
@@ -114,7 +114,7 @@ extension GenderViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         if indexPath.section == 0 { // I am
-            user.genderValue = Gender.gender(for: indexPath.row)
+            user.gender = Gender.gender(for: indexPath.row)
             tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
         } else { // search gender
             let gender = Gender.gender(for: indexPath.row)

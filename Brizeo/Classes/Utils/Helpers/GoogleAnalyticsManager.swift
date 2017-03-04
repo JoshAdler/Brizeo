@@ -124,19 +124,19 @@ extension GoogleAnalyticsManager {
     
     static func sendUserProfilePictures() {
         
-        guard let user = User.current() else {
-            return
-        }
-        
-        let userDefaults = UserDefaults.standard
-        if let lastSendDate = userDefaults.object(forKey: "") {
-            let days = (Date() as NSDate).days(since: lastSendDate as! Date)
-            if days > 1 {
-                GoogleAnalyticsManager.userHaveNumberOfPictures(number: "\(user.uploadedMedia.count)").sendEvent()
-            }
-        } else {
-            saveCurrentDate()
-        }
+//        guard let user = User.current() else {
+//            return
+//        }
+//        
+//        let userDefaults = UserDefaults.standard
+//        if let lastSendDate = userDefaults.object(forKey: "") {
+//            let days = (Date() as NSDate).days(since: lastSendDate as! Date)
+//            if days > 1 {
+//                GoogleAnalyticsManager.userHaveNumberOfPictures(number: "\(user.uploadedMedia.count)").sendEvent()
+//            }
+//        } else {
+//            saveCurrentDate()
+//        }
     }
     
     fileprivate static func saveCurrentDate() {

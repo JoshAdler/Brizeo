@@ -37,15 +37,18 @@ class PersonalDetailsTabsViewController: BasicViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let user = User.test()
+        guard let currentUser = UserProvider.shared.currentUser else {
+            assertionFailure("Error: No current user")
+            return
+        }
         
         // load controller
         aboutController = Helper.controllerFromStoryboard(controllerId: Constants.aboutControllerId)!
-        aboutController.user = user
+        aboutController.user = currentUser
         matchesController = Helper.controllerFromStoryboard(controllerId: Constants.matchesControllerId)!
-        matchesController.user = user
+        matchesController.user = currentUser
         tripsController = Helper.controllerFromStoryboard(controllerId: Constants.tripsControllerId)!
-        tripsController.user = user
+        tripsController.user = currentUser
         
         let carbonTabSwipeNavigation = Helper.createCarbonController(with: Constants.titles, self)
         carbonTabSwipeNavigation.insert(intoRootViewController: self, andTargetView: targetView)

@@ -82,18 +82,18 @@ class TripsViewController: UIViewController {
     
     // MARK: - Public methods
     
-    func saveUser() {
-        User.saveParseUser({ (result) in
-            
-            switch result {
-            case .success(): break
-            // Saved
-            case .failure(let error):
-                self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
-                break
-            }
-        })
-    }
+//    func saveUser() {
+//        User.saveParseUser({ (result) in
+//            
+//            switch result {
+//            case .success(): break
+//            // Saved
+//            case .failure(let error):
+//                self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
+//                break
+//            }
+//        })
+//    }
 }
 
 // MARK: - UISearchResultsUpdating
@@ -131,7 +131,7 @@ extension TripsViewController: UITableViewDataSource {
         if let filteredCountries = filteredCountries {
             country = filteredCountries[indexPath.row]
         } else {
-            country = Country.initWith(user.countries[indexPath.row])
+            country = user.countries[indexPath.row]
         }
         
         cell.delegate = self
@@ -156,10 +156,12 @@ extension TripsViewController: SWTableViewCellDelegate {
             guard let indexPath = tableView.indexPath(for: cell) else {
                 return
             }
+            //TODO: check equal protocol for country
+            let country = user.countries[indexPath.row]
+            user.countries.remove(at: user.countries.index(of: country)!)
+            //saveUser()
+            //TODO: save user
             
-            let country = Country.initWith(user.countries[indexPath.row])
-            user.countries.remove(at: user.countries.index(of: country.code)!)
-            saveUser()
             tableView.deleteRows(at: [indexPath], with: .top)
         }
     }
@@ -200,9 +202,10 @@ extension TripsViewController: UITableViewDelegate {
         
         if let filteredCountries = filteredCountries {
             let country = filteredCountries[indexPath.row]
-            if !user.countries.contains(country.code) {
-                user.countries.append(country.code)
-                saveUser()
+            if !user.countries.contains(country) {
+                user.countries.append(country)
+                // TODO: save user
+                //saveUser()
                 GoogleAnalyticsManager.userSelectCountry(country: country.name).sendEvent()
                 searchController.isActive = false
                 self.filteredCountries = nil

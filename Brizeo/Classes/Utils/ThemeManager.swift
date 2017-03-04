@@ -9,7 +9,6 @@
 import UIKit
 import ChameleonFramework
 import SVProgressHUD
-import FontBlaster
 
 class ThemeManager: NSObject {
 
@@ -25,9 +24,6 @@ class ThemeManager: NSObject {
     // MARK: - Class methods
     
     class func applyGlobalTheme() {
-        
-        // import fonts
-        FontBlaster.blast()
         
         // navigation bar
         UINavigationBar.appearance().titleTextAttributes = [

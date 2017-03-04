@@ -59,18 +59,18 @@ class UserMatchesViewController: UIViewController {
     // MARK: - Public methods
     
     func loadMatches() {
-        MatchesProvider.getUserMatches(user.objectId!, paginater: paginator) { (result) in
-            switch result {
-            case .success(let value):
-                self.paginator.addNewElements(&self.matches, newElements: value)
-                self.matches.append(User.test())
-                self.tableView.reloadData()
-                break
-            case .failure(let error):
-                self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
-                break
-            }
-        }
+//        MatchesProvider.getUserMatches(user.objectId, paginater: paginator) { (result) in
+//            switch result {
+//            case .success(let value):
+//                self.paginator.addNewElements(&self.matches, newElements: value)
+//                self.matches.append(User.test())
+//                self.tableView.reloadData()
+//                break
+//            case .failure(let error):
+//                self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
+//                break
+//            }
+//        }
     }
     
     // MARK: - Private methods
@@ -101,8 +101,9 @@ extension UserMatchesViewController: UITableViewDataSource {
         cell.delegate = self
         cell.rightUtilityButtons = rightUtilsButtons()
         cell.nameLabel.text = user.displayName
-        if let url = user.profileImageUrl {
-            cell.avatarImageView.sd_setImage(with: url)
+        
+        if user.hasProfileImage {
+            cell.avatarImageView.sd_setImage(with: user.profileUrl)
         } else {
             cell.avatarImageView.image = nil
         }
@@ -143,7 +144,7 @@ extension UserMatchesViewController: SWTableViewCellDelegate {
             
             let user = self.matches[indexPath.row]
             
-            ChatProvider.startChat(with: user.userID, from: self)
+            ChatProvider.startChat(with: user.objectId, from: self)
 //            if let conversation = LayerManager.conversationBetweenUser(User.current()!.objectId!, andUserId: user.objectId!, message: nil) {
 //                
 //                let chatController: ChatViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.chatController)!

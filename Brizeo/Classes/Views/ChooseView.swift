@@ -112,7 +112,7 @@ class ChooseView: UIView {
     
     fileprivate func shareWithSMS(url: String) {
         if MFMessageComposeViewController.canSendText() {
-            let modifiedURLString = LocalizableString.TryBrizeo.localizedStringWithArguments([(User.current()?.displayName)!]) + "\n\n" + LocalizableString.BrizeoShareDescription.localizedString+" "+LocalizableString.CheckItOutAt.localizedStringWithArguments([url])
+            let modifiedURLString = LocalizableString.TryBrizeo.localizedStringWithArguments([(UserProvider.shared.currentUser!.displayName)!]) + "\n\n" + LocalizableString.BrizeoShareDescription.localizedString+" "+LocalizableString.CheckItOutAt.localizedStringWithArguments([url])
             let messageComposeVC = MFMessageComposeViewController()
             
             messageComposeVC.body = modifiedURLString
@@ -128,7 +128,7 @@ class ChooseView: UIView {
 
     fileprivate func shareWithTwitter(url: String) {
         let image = BrizeoImage.BrizeoPromo.image
-        let modifiedURLString = LocalizableString.TryBrizeo.localizedStringWithArguments([(User.current()?.displayName)!]) + "\n\n" + LocalizableString.BrizeoShareDescription.localizedString+" "+LocalizableString.CheckItOutAt.localizedStringWithArguments([url])
+        let modifiedURLString = LocalizableString.TryBrizeo.localizedStringWithArguments([(UserProvider.shared.currentUser!.displayName)!]) + "\n\n" + LocalizableString.BrizeoShareDescription.localizedString+" "+LocalizableString.CheckItOutAt.localizedStringWithArguments([url])
         
         if let vc = SLComposeViewController(forServiceType: SLServiceTypeTwitter) {
             vc.setInitialText(modifiedURLString)
@@ -144,7 +144,7 @@ class ChooseView: UIView {
         let content = FBSDKShareLinkContent()
         content.contentURL = URL(string: url)
         content.imageURL = URL(string:BrizeoImage.BrizeoLogoImage.rawValue)
-        content.contentTitle = LocalizableString.TryBrizeo.localizedStringWithArguments([(User.current()?.displayName)!])
+        content.contentTitle = LocalizableString.TryBrizeo.localizedStringWithArguments([(UserProvider.shared.currentUser!.displayName)!])
         content.contentDescription = LocalizableString.BrizeoShareDescription.localizedString
         
         FBSDKMessageDialog.show(with: content, delegate: self)
@@ -156,9 +156,9 @@ class ChooseView: UIView {
         let modifiedString = NSString(format: LocalizableString.CheckItOutHere.rawValue as NSString, url, url)
         let modifiedSubString = NSString(format: "%@%@", modifiedURLString, modifiedString)
         let width =  UIScreen.main.bounds.width
-        let mailContent = NSString(format: LocalizableString.BrizeoMailContent.rawValue as NSString, width, width * 0.9, (User.current()?.displayName)!, modifiedSubString)
+        let mailContent = NSString(format: LocalizableString.BrizeoMailContent.rawValue as NSString, width, width * 0.9, (UserProvider.shared.currentUser!.displayName)!, modifiedSubString)
         mailComposerVC.mailComposeDelegate = Helper.initialNavigationController()
-        mailComposerVC.setSubject(LocalizableString.TryBrizeo.localizedStringWithArguments([(User.current()?.displayName)!]))
+        mailComposerVC.setSubject(LocalizableString.TryBrizeo.localizedStringWithArguments([(UserProvider.shared.currentUser!.displayName)!]))
         mailComposerVC.setMessageBody(mailContent as String, isHTML: true)
         
         if MFMailComposeViewController.canSendMail() {
@@ -169,7 +169,7 @@ class ChooseView: UIView {
 }
 
     fileprivate func shareWithWhatsapp(url: String) {
-        let modifiedURLString = LocalizableString.TryBrizeo.localizedStringWithArguments([(User.current()?.displayName)!]) + "\n\n" + LocalizableString.BrizeoShareDescription.localizedString+" "+LocalizableString.CheckItOutAt.localizedStringWithArguments([url])
+        let modifiedURLString = LocalizableString.TryBrizeo.localizedStringWithArguments([(UserProvider.shared.currentUser!.displayName)!]) + "\n\n" + LocalizableString.BrizeoShareDescription.localizedString+" "+LocalizableString.CheckItOutAt.localizedStringWithArguments([url])
         let originalString = modifiedURLString
         let encodedString = originalString.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
         let url = URL(string: "whatsapp://send?text="+encodedString!)

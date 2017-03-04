@@ -46,7 +46,7 @@ class OtherPersonAboutViewController: UIViewController {
         }
         
         // load user location
-        user.getUserLocationString { (location) in
+        LocationManager.getLocationString(for: user) { (location) in
             self.locationString = location
             self.passionsTableView.reloadSections(IndexSet(integer: 1), with: .automatic)
         }
@@ -69,7 +69,7 @@ class OtherPersonAboutViewController: UIViewController {
             switch result {
             case .success(let value):
                 // send notification
-                let notification = UIKit.Notification(name: NSNotification.Name.init(rawValue: mutualFriendsNotification), object: nil, userInfo: ["mutualFriends": value, "userId": self.user?.userID])
+                let notification = UIKit.Notification(name: NSNotification.Name.init(rawValue: mutualFriendsNotification), object: nil, userInfo: ["mutualFriends": value, "userId": self.user?.objectId])
                 NotificationCenter.default.post(notification)
                 
                 self.mutualFriends = value

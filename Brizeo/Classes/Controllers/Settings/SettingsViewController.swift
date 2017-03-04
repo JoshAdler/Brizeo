@@ -142,15 +142,12 @@ class SettingsViewController: UIViewController {
     
     // basic objects
     //TODO:
-    var user: User! = User.test()//User.current()!
+    var user: User! = UserProvider.shared.currentUser!
     var preferences: Preferences!
     
     // for location
     var currentLocationString = LocalizableString.Location.localizedString
     var searchLocationString = ""
-    
-    // for invitations
-    var invitedFriendsCount: Int = 0
     
     // for notifications
     var userNotificationSetting: [Bool] = [Bool]()
@@ -177,24 +174,22 @@ class SettingsViewController: UIViewController {
             }
         }
         
-        loadInvitedFriendsCount()
-        
         //fetchNotifications()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         let result = LocationManager.shared.requestCurrentLocation { (locationString, location) in
             
             if let locationString = locationString {
                 self.currentLocationString = locationString
                 self.tableView.reloadData()
-                
-                if let currentUser = User.current() {
-                    currentUser.location = PFGeoPoint(location: location)
-                    User.saveParseUser({ (result) in
-                    })
-                }
+        
+                // TODO: update user
+//                currentUser.location = PFGeoPoint(location: location)
+//                    User.saveParseUser({ (result) in
+//                })
             }
         }
         
@@ -209,23 +204,6 @@ class SettingsViewController: UIViewController {
     fileprivate func registerHeaderViews() {
         tableView.register(UINib(nibName: SettingsBigHeaderView.nibName, bundle: nil), forHeaderFooterViewReuseIdentifier: SettingsBigHeaderView.nibName)
         tableView.register(UINib(nibName: SettingsNormalHeaderView.nibName, bundle: nil), forHeaderFooterViewReuseIdentifier: SettingsNormalHeaderView.nibName)
-    }
-    
-    fileprivate func inviteFacebookFriends() {
-        let content = FBSDKAppInviteContent()
-        content.appLinkURL = URL(string: "https://www.mydomain.com/myapplink")!
-        
-        FBSDKAppInviteDialog.show(from: self, with: content, delegate: self)
-    }
-    
-    fileprivate func loadInvitedFriendsCount() {
-        Branch.currentInstance.loadRewards { (changed, error) -> Void in
-            let bucket = BranchKeys.ReferralBucket
-            let credits = Branch.currentInstance.getCreditsForBucket(bucket)
-            
-            self.invitedFriendsCount = credits
-            self.tableView.reloadRows(at: [IndexPath(row: 0, section: 3)], with: .automatic)
-        }
     }
     
     fileprivate func createSection(from number: Int) -> Sections? {
@@ -268,24 +246,24 @@ class SettingsViewController: UIViewController {
     }
     
     fileprivate func fetchNotifications() {
-        let query = PFQuery(className: "Preferences")
-        query.whereKey("user", equalTo: User.current()!)
-        query.findObjectsInBackground(block: { (objects, error) in
-            if error == nil {
-                let installations = objects
-                let installation = installations![0]
-                if let _ = installation["newMatch"] {
-                    self.userNotificationSetting.append((installation["newMatch"] as? Bool)!)
-                    self.userNotificationSetting.append((installation["messages"] as? Bool)!)
-                    self.userNotificationSetting.append((installation["moments"] as? Bool)!)
-                } else {
-                    self.userNotificationSetting.append(true)
-                    self.userNotificationSetting.append(true)
-                    self.userNotificationSetting.append(true)
-                }
-                self.tableView.reloadData()
-            }
-        })
+//        let query = PFQuery(className: "Preferences")
+//        query.whereKey("user", equalTo: User.current()!)
+//        query.findObjectsInBackground(block: { (objects, error) in
+//            if error == nil {
+//                let installations = objects
+//                let installation = installations![0]
+//                if let _ = installation["newMatch"] {
+//                    self.userNotificationSetting.append((installation["newMatch"] as? Bool)!)
+//                    self.userNotificationSetting.append((installation["messages"] as? Bool)!)
+//                    self.userNotificationSetting.append((installation["moments"] as? Bool)!)
+//                } else {
+//                    self.userNotificationSetting.append(true)
+//                    self.userNotificationSetting.append(true)
+//                    self.userNotificationSetting.append(true)
+//                }
+//                self.tableView.reloadData()
+//            }
+//        })
     }
 }
 
@@ -435,7 +413,7 @@ extension SettingsViewController: UITableViewDelegate {
         switch section {
         case .logout:
             UserProvider.logout()
-            AppDelegate.shared().logOut()
+            Helper.goToInitialController(true)
             break
         case .discovery:
             if indexPath.row == 2 { // gender

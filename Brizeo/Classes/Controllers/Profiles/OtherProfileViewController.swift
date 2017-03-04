@@ -49,7 +49,7 @@ class OtherProfileViewController: BasicViewController {
     
     var user: User!
     var mutualFriends: [(String, String)]?
-    var interests: [Interest]?
+    var passions: [Passion]?
     var detailsController: OtherPersonDetailsTabsViewController!
     
     // MARK: - Controller lifecycles
@@ -82,7 +82,10 @@ class OtherProfileViewController: BasicViewController {
         nameLabel.text = "\(user.displayName), \(user.age)"
         studyLabel.text = user.studyInfo
         workLabel.text = user.workInfo
-        profileImageView.sd_setImage(with: user.profileImageUrl)
+        
+        if user.hasProfileImage {
+            profileImageView.sd_setImage(with: user.profileUrl!)
+        }
         
         if let mutualFriends = mutualFriends {
             friendsCountLabel.text = "\(mutualFriends.count)"
@@ -104,19 +107,20 @@ class OtherProfileViewController: BasicViewController {
     }
     
     fileprivate func fetchInterests() {
-        InterestProvider.retrieveAllInterests { (result) in
+        PassionsProvider.shared.retrieveAllPassions(true) { (result) in
             switch result {
-            case .success(let interests):
-                self.interests = interests.sorted(by: {$0.displayOrder < $1.displayOrder })
+            case .success(let passions):
+                self.passions = passions
                 
-                if let userInterest = self.interests?.filter({ self.user.interests.contains($0.objectId!) }).first {
-                    self.interestView.image = userInterest.imageIcon
-                    self.interestView.title = userInterest.DisplayName
-                    self.interestView.interestColor = HexColor(userInterest.colorHex)!
-                }
-                else {
+//                if let userPassion = self.passions?.filter({ self.user.interests.contains($0.objectId!) }).first {
+//                    self.interestView.image = userPassion.imageIcon
+//                    self.interestView.title = userPassion.displayName
+//                    self.interestView.interestColor = HexColor(userPassion.colorHex)!
+//                }
+//                else {
                     self.interestView.isHidden = true
-                }
+//                }
+                //TODO: implement the functionality above
                 break
             case .failure(let error):
                 self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
@@ -156,7 +160,7 @@ class OtherProfileViewController: BasicViewController {
             let friends = userInfo["mutualFriends"] as? [(String, String)]
             let userId = userInfo["userId"] as? String? ?? "-1"
             
-            if userId == user.userID {
+            if userId == user.objectId {
                 self.mutualFriends = friends
                 self.friendsCountLabel.text = "\(mutualFriends?.count ?? 0)"
             }
@@ -167,7 +171,7 @@ class OtherProfileViewController: BasicViewController {
     
     @IBAction func onProfilePictureButtonClicked(sender: UIButton) {
         let mediaController: MediaViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.mediaControllerId)!
-        mediaController.media = user.uploadedMedia
+        mediaController.media = user.allMedia
         
         Helper.initialNavigationController().pushViewController(mediaController, animated: true)
     }
@@ -217,7 +221,7 @@ class OtherProfileViewController: BasicViewController {
     }
     //TODO: ask Josh about how it should work on moments
     @IBAction func onShareButtonClicked(_ sender: UIButton) {
-        BranchProvider.generateInviteURL(forUserId: user.userID) { (url) in
+        BranchProvider.generateInviteURL(forUserId: user.objectId) { (url) in
             if let url = url {
                 if MFMessageComposeViewController.canSendText() {
                     let messageComposeVC = MFMessageComposeViewController()
@@ -237,19 +241,19 @@ class OtherProfileViewController: BasicViewController {
         let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let reportAction = UIAlertAction(title: LocalizableString.Report.localizedString, style: .default, handler: { alert in
             self.showBlackLoader()
-            UserProvider.reportUser(self.user!, user: User.current()!, completion: { (result) in
-                
-                self.hideLoader()
-                switch result {
-                    
-                case .success(_):
-                    self.showAlert("", message: LocalizableString.UserHadBeenReported.localizedString, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
-                        self.actionsButton.isHidden = true
-                    break
-                case .failure(let error):
-                    self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
-                }
-            })
+//            UserProvider.reportUser(self.user!, user: User.current()!, completion: { (result) in
+//                
+//                self.hideLoader()
+//                switch result {
+//                    
+//                case .success(_):
+//                    self.showAlert("", message: LocalizableString.UserHadBeenReported.localizedString, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
+//                        self.actionsButton.isHidden = true
+//                    break
+//                case .failure(let error):
+//                    self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
+//                }
+//            })
         })
         
         alertVC.addAction(reportAction)

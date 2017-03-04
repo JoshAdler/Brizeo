@@ -70,7 +70,13 @@ extension LikesViewController: UITableViewDataSource {
         
         cell.delegate = self
         cell.titleLabel.text = user.displayName
-        cell.profileLogoImageView.sd_setImage(with: user.profileImageUrl)
+        
+        if user.hasProfileImage {
+            cell.profileLogoImageView.sd_setImage(with: user.profileUrl!)
+        } else {
+            cell.profileLogoImageView.image = nil
+        }
+        
         cell.likesView.isMatched = false
         
         return cell

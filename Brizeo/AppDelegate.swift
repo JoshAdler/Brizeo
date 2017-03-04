@@ -9,7 +9,6 @@
 import UIKit
 import Branch
 import Mixpanel
-import LayerKit
 import Fabric
 import Crashlytics
 import Parse
@@ -18,7 +17,6 @@ import Google
 import UserNotifications
 import FBSDKLoginKit
 import Localytics
-import FontBlaster
 
 import Applozic
 
@@ -39,77 +37,64 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+        // apply main theme for the app
         ThemeManager.applyGlobalTheme()
         
-        // set initial tab bar item
-        Helper.selectedTabBarItem(with: 2)
+        // setup 3rd parties
+        setupFabric()
+        setupMixpanel()
+        //setupLocalytics(with: launchOptions)
+        setupApplozic(with: launchOptions)
         
-        Fabric.with([Crashlytics.self])
-        
+        // setup Facebook SDK
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
-        setupBranchIO(launchOptions)
-        setupMixpanel()
-        setupParse(launchOptions)
-        //setupLocalytics(launchOptions)
-        
         registerForPushNotifications()
-        
-        LayerManager.sharedManager.loginLayer()
-        GoogleAnalyticsManager.setupGoogleAnalytics()
-        GoogleAnalyticsManager.sendUserProfilePictures()
+        // TODO: replace chat initialization on login
+        //LayerManager.sharedManager.loginLayer()
 
+        // TODO: replace GoogleAnalytics
+//        GoogleAnalyticsManager.setupGoogleAnalytics()
+//        GoogleAnalyticsManager.sendUserProfilePictures()
+
+        // setup managers
         LocationManager.setup()
-        updateUserLocationIfPossible()
-        User.checkUserRewards()
-        ChatProvider.registerUserInChat()
-
-        // chat logic
+        BranchProvider.setupBranch(with: launchOptions)
         
-        let alApplocalNotificationHnadler : ALAppLocalNotifications =  ALAppLocalNotifications.appLocalNotificationHandler();
-        alApplocalNotificationHnadler.dataConnectionNotificationHandler();
-        
-        if (launchOptions != nil) {
-            let dictionary = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? NSDictionary
-            
-            if (dictionary != nil) {
-                print("launched from push notification")
-                let alPushNotificationService: ALPushNotificationService = ALPushNotificationService()
-                
-                let appState: NSNumber = NSNumber(value: 0)
-                let applozicProcessed = alPushNotificationService.processPushNotification(launchOptions,updateUI:appState)
-                if (!applozicProcessed) {
-                    
-                }
-            }
-        }
+        // fetch initial data to cache 
+        PassionsProvider.shared.retrieveAllPassions(false, nil)
         
         return true
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
+        // mixpanel
         let mixPanel = Mixpanel.sharedInstance()
         mixPanel.track("App_Session")
         
-        print("APP_ENTER_IN_BACKGROUND")
+        // applozic
         let registerUserClientService = ALRegisterUserClientService()
         registerUserClientService.disconnect()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "APP_ENTER_IN_BACKGROUND"), object: nil)
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
+        UIApplication.shared.applicationIconBadgeNumber = 0
+        
+        // mixpanel
         let mixPanel = Mixpanel.sharedInstance()
         mixPanel.timeEvent("App_Session")
   
-        updateUserLocationIfPossible()
-        User.checkUserRewards()
-        UIApplication.shared.applicationIconBadgeNumber = 0
+        // check how many persons were invited by current user
+        BranchProvider.checkUserReward()
+        
+        // update current user location
+        LocationManager.updateUserLocation()
         
         // applozic implementation
         let registerUserClientService = ALRegisterUserClientService()
         registerUserClientService.connect()
         ALPushNotificationService.applicationEntersForeground()
-        print("APP_ENTER_IN_FOREGROUND")
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "APP_ENTER_IN_FOREGROUND"), object: nil)
         UIApplication.shared.applicationIconBadgeNumber = 0
@@ -117,15 +102,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         FBSDKAppEvents.activateApp()
-        guard let currentInstallation = PFInstallation.current() else {
-            assertionFailure("Error: no current installation from backend")
-            return
-        }
+
         
-        if currentInstallation.badge != 0 {
-            currentInstallation.badge = 0
-            currentInstallation.saveEventually()
-        }
+        //TODO: use API method to make badge count = 0
+//        guard let currentInstallation = PFInstallation.current() else {
+//            assertionFailure("Error: no current installation from backend")
+//            return
+//        }
+//        
+//        if currentInstallation.badge != 0 {
+//            currentInstallation.badge = 0
+//            currentInstallation.saveEventually()
+//        }
     }
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
@@ -154,90 +142,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     class func shared() -> AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
-    
-    // MARK: - Public methods
-    
-    func presentLoginScreenIfNeeds() -> Bool {
-        if !UserProvider.isAlreadyLoggedIn() {
-            let loginController: LoginViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.loginController)!
-            Helper.initialNavigationController().pushViewController(loginController, animated: false)
-            return true
-        }
-        
-        return false
-    }
-    
-    func logOut() {
-        let loginController: LoginViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.loginController)!
-        
-        guard let rootNavigationController = window?.rootViewController as? UINavigationController else {
-            print("Root controller is not navigation")
-            return
-        }
-        
-        // present login screen at first and only then dismiss everything to the root
-        rootNavigationController.present(loginController, animated: true) { 
-            rootNavigationController.popToRootViewController(animated: false)
-        }
-    }
-    
-    // MARK: - Private methods
-    
-    fileprivate func setupLocalytics(_ launchOptions: [AnyHashable: Any]?) {
-        Localytics.autoIntegrate(Configurations.Localytics.appKey, launchOptions: launchOptions)
-    }
-    
-    fileprivate func setupBranchIO(_ launchOptions: [AnyHashable: Any]?) {
-        let branch: Branch = Branch.currentInstance
-        branch.initSession(launchOptions: launchOptions) { (params, error) in
-            if error == nil {
-                print(params?.description)
-            }
-            // TODO: save here invited by person to use next
-            print("Branch error: \(error?.localizedDescription)")
-        }
-    }
-    
-    fileprivate func setupMixpanel() {
-        let mixpanel = Mixpanel.sharedInstance(withToken: Configurations.MixPanel.token)
-        mixpanel.timeEvent("App_Session")
-    }
-    
-    fileprivate func setupParse(_ launchOptions: [AnyHashable: Any]?) {
-        
-        User.registerSubclass()
-        Preferences.registerSubclass()
-        Interest.registerSubclass()
-        Moment.registerSubclass()
-        
-        let configuration = ParseClientConfiguration {
-            $0.applicationId = ParseKey.ApplicationId
-            $0.clientKey = ParseKey.ClientKey
-            $0.server = "https://parseapi.back4app.com"
-            $0.isLocalDatastoreEnabled = true // If you need to enable local data store
-        }
-        Parse.initialize(with: configuration)
-        
-        
-        PFAnalytics.trackAppOpenedWithLaunchOptions(inBackground: launchOptions, block: nil)
-    }
-    
-    fileprivate func updateUserLocationIfPossible() {
-        if !UserProvider.isAlreadyLoggedIn() {
-            return
-        }
-        
-        _ = LocationManager.shared.requestCurrentLocation { (locationString, location) in
-            if let location = location {
-                print("Current location: \(locationString) | \(location)")
-                //currentUser.location = PFGeoPoint(location: location)
-                User.saveParseUser({ (result) in
-                })
-            }
-        }
-    }
 }
-
+//TODO: ask Josh about whether we will use push notifications from Firebase
 //MARK: - Utils
 extension AppDelegate: UNUserNotificationCenterDelegate {
     
@@ -266,27 +172,11 @@ extension AppDelegate {
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         
-        // PREVIOUS REALIZATION
-        /*
-//        guard let currentInstallation = PFInstallation.current() else {
-//            assertionFailure("Error: no current installation from backend")
-//            return
-//        }
-//        
-//        currentInstallation.setDeviceTokenFrom(deviceToken)
-//        currentInstallation.saveInBackground(block: nil)
-//        currentInstallation.saveInBackground()
-//        do {
-//            try LayerManager.sharedManager.layerClient.updateRemoteNotificationDeviceToken(deviceToken)
-//        } catch {
-//            print("Error updating device token")
-//        }*/
-        
         print("DEVICE_TOKEN_DATA :: \(deviceToken.description)") // (SWIFT = 3):TOKEN PARSING
         
         var deviceTokenString: String = ""
-        for i in 0..<deviceToken.count
-        {
+        
+        for i in 0..<deviceToken.count {
             deviceTokenString += String(format: "%02.2hhx", deviceToken[i] as CVarArg)
         }
         
@@ -324,5 +214,42 @@ extension AppDelegate {
         
         alPushNotificationService.notificationArrived(to: application, with: userInfo)
         completionHandler(UIBackgroundFetchResult.newData)
+    }
+}
+
+// MARK: - Init/Setup 3rd Patry SDKs
+extension AppDelegate {
+    
+    fileprivate func setupApplozic(with launchOptions: [AnyHashable: Any]?) {
+        let alApplocalNotificationHnadler : ALAppLocalNotifications =  ALAppLocalNotifications.appLocalNotificationHandler();
+        alApplocalNotificationHnadler.dataConnectionNotificationHandler();
+        
+        if (launchOptions != nil) {
+            let dictionary = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? NSDictionary
+            
+            if (dictionary != nil) {
+                print("launched from push notification")
+                let alPushNotificationService: ALPushNotificationService = ALPushNotificationService()
+                
+                let appState: NSNumber = NSNumber(value: 0)
+                let applozicProcessed = alPushNotificationService.processPushNotification(launchOptions,updateUI:appState)
+                if (!applozicProcessed) {
+                    
+                }
+            }
+        }
+    }
+    
+    fileprivate func setupFabric() {
+        Fabric.with([Crashlytics.self])
+    }
+    
+    fileprivate func setupLocalytics(with launchOptions: [AnyHashable: Any]?) {
+        Localytics.autoIntegrate(Configurations.Localytics.appKey, launchOptions: launchOptions)
+    }
+    
+    fileprivate func setupMixpanel() {
+        let mixpanel = Mixpanel.sharedInstance(withToken: Configurations.MixPanel.token)
+        mixpanel.timeEvent("App_Session")
     }
 }

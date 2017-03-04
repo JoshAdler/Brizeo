@@ -118,7 +118,7 @@ extension NotificationsViewController: NotificationsTableViewCellDelegate {
         let notification = notifications[indexPath.row]
         let mediaController: MediaViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.mediaControllerId)!
         
-        mediaController.media = User.test().uploadedMedia//notification.media
+        mediaController.media = UserProvider.shared.currentUser?.uploadFiles//notification.media
         
         Helper.initialNavigationController().pushViewController(mediaController, animated: true)
     }

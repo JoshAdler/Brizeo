@@ -37,7 +37,6 @@ class LocationManager: NSObject {
     // MARK: - Class methods
     
     class func setup() {
-        CLLocationManager()
         LocationManager.shared.locationManager = CLLocationManager.update(withAccuracy: kCLLocationAccuracyBest, locationAge: 60.0, authorizationDesciption: .whenInUse)
 
         LocationManager.shared.locationManager.delegate = shared
@@ -58,7 +57,48 @@ class LocationManager: NSObject {
             completionHandler?(response)
         }
     }
-
+    
+    class func getLocationString(for user: User, _ completion:@escaping ((String) -> Void)) {
+        guard user.hasLocation else {
+            print("Error: can't get location string for nil location")
+            completion("Unknown")
+            return
+        }
+        
+        LocationManager().getLocationStringForLocation(user.location!, completion: { (locationString) in
+            completion(locationString)
+        })
+    }
+    
+    class func countDistanceInString(from fromUser: User, to toUser: User) -> String? {
+        
+        if let distance = countDistance(from: fromUser, to: toUser) {
+            let convertedDistance = Int(distance * Configurations.Dimentions.milesPerMeter)
+            let distanceValue = min(1, convertedDistance)
+            
+            let formatter = NumberFormatter()
+            formatter.numberStyle = .decimal
+            formatter.maximumFractionDigits = 0
+            
+            if distanceValue == 1 {
+                return LocalizableString.OneMilesAway.localizedString
+            } else {
+                return LocalizableString.MilesAway.localizedStringWithArguments([formatter.string(from: NSNumber(value: distanceValue as Int))!])
+            }
+        }
+        return nil
+    }
+    
+    class func countDistance(from fromUser: User, to toUser: User) -> Double? {
+        guard fromUser.hasLocation && toUser.hasLocation else {
+            print("Error: Can't count distance between nil coordinates")
+            return nil
+        }
+        
+        let distance = toUser.location!.distance(from: fromUser.location!)
+        return distance
+    }
+    
     // MARK: - Private methods
     
     fileprivate func locationStringForPlaceMark(_ placemark: CLPlacemark) -> String {
@@ -69,6 +109,20 @@ class LocationManager: NSObject {
     }
 
     // MARK: Public methods
+    
+    class func updateUserLocation() {
+        guard let currentUser = UserProvider.shared.currentUser else {
+            print("Error: no current user for 'updateUserLocationIfPossible'")
+            return
+        }
+        
+        _ = LocationManager.shared.requestCurrentLocation { (locationString, location) in
+            if let location = location {
+                print("Current location: \(locationString) | \(location)")
+                //TODO: update current location for user
+            }
+        }
+    }
     
     func checkAccessStatus() {
         if CLLocationManager.locationServicesEnabled() {

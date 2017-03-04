@@ -35,6 +35,7 @@ class PersonalTabsViewController: BasicViewController {
         // load controller
         profileController = Helper.controllerFromStoryboard(controllerId: Constants.profileControllerId)!
         profileController.delegate = self
+        
         settingsController = Helper.controllerFromStoryboard(controllerId: Constants.settingsControllerId)!
         
         let carbonTabSwipeNavigation = Helper.createCarbonController(with: Constants.titles, self)

@@ -26,13 +26,15 @@ class MatchViewController: BasicViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        profileImageView.sd_setImage(with: user.profileImageUrl)
+        if let url = user.profileUrl {
+            profileImageView.sd_setImage(with: url)
+        }
     }
     
     // MARK: - Actions
     
     @IBAction func onChatButtonClicked(sender: UIButton) {
-        ChatProvider.startChat(with: user.userID, from: self)
+        ChatProvider.startChat(with: user.objectId, from: self)
     }
     
     @IBAction func onReturnButtonClicked(sender: UIButton) {

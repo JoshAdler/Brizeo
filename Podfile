@@ -16,7 +16,7 @@ target 'Brizeo' do
     pod 'AlamofireImage', '~> 3.1.0'
     
     pod 'SVProgressHUD', '~> 1.0'
-    pod 'Atlas', '~> 1.0.3'
+    #pod 'Atlas', '~> 1.0.3'
     pod 'Mixpanel', '~> 2.9'
     pod 'Branch', '~> 0.12'
     pod 'Fabric'
@@ -41,7 +41,7 @@ target 'Brizeo' do
     pod 'SDWebImage', '~>3.8'
     pod 'SWTableViewCell'
     pod 'Localytics'
-    pod 'FontBlaster'
     pod 'CLLocationManager-blocks'
     pod 'Applozic', '~>3.8'
+    pod 'SwiftyUserDefaults'
 end

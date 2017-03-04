@@ -35,7 +35,7 @@ class EventTabsViewController: BasicViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if !isControllerReady && UserProvider.isAlreadyLoggedIn() {
+        if !isControllerReady && UserProvider.isUserLoggedInFacebook() {
             prepareController()
         }
         

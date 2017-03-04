@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'EECAF48F5BF043CD8A6D6E9BA55B1AC2'
+               BlueprintIdentifier = '0CEE7F4B8ECF672F393F3F9A0FE6EC56'
                BlueprintName = 'ZTDropDownTextField'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'ZTDropDownTextField.framework'>

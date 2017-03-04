@@ -14,6 +14,7 @@ class Country: NSObject {
     
     var code: String
     var name: String
+    var sortingIndex: Int = 0
     
     var flagImage: UIImage? {
         let imagePath = String(format: "CountryPicker.bundle/%@", code.uppercased())

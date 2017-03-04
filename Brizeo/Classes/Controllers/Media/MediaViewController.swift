@@ -42,8 +42,9 @@ class MediaViewController: UIViewController {
     
     var initialIndex = 0
     var isSharingEnabled = false
-    var isEditable = true // false
-    var media: [ProfileMediaType]?
+    var media: [FileObject]?
+    var moment: Moment?
+    
     //TODO: add sources of media to know whether we are using moments or not
     
     // MARK: - Controller lifecycle
@@ -51,14 +52,15 @@ class MediaViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        descriptionTextView.isEditable = isEditable
+        shareButton.isHidden = !isSharingEnabled
+        locationButton.isHidden = moment != nil && moment!.hasLocation
+        descriptionTextView.isEditable = moment != nil && UserProvider.shared.currentUser!.objectId == moment!.ownerId
         
-        if (true) { // check whether location is set
-            locationButton.isHidden = false
+        if moment != nil {
+            media = [FileObject(info: moment!.file)]
         }
         
-        // hide/show share button
-        shareButton.isHidden = !isSharingEnabled
+        //TODO: ask Josh about: when is it possible to edit and when sharing?
         
         addDismissKeyboardGestureRecognizer()
         
@@ -172,7 +174,7 @@ class MediaViewController: UIViewController {
     
     //TODO: place corrent moment url
     @IBAction func onSharingButtonClicked(_ sender: UIButton) {
-        BranchProvider.generateInviteURL(forMomentId: "-1", imageURL: nil) { (url) in
+        BranchProvider.generateInviteURL(forMomentId: moment!.objectId, imageURL: nil) { (url) in
             if let url = url {
                 if MFMessageComposeViewController.canSendText() {
                     let messageComposeVC = MFMessageComposeViewController()
@@ -185,31 +187,6 @@ class MediaViewController: UIViewController {
             }
         }
     }
-/* old code
-        guard media != nil else {
-            return
-        }
-        
-        let item = media![0]
-        var shareItems = [AnyObject]()
-        
-//        if let imageUrl = ProfileMediaTypePreviewUrl(item), let url = URL(string: imageUrl) {
-            shareItems.append(/*url as AnyObject*/item as AnyObject)
-        //}
-        
-  //      if let text = ProfileMediaTypeDescription(item) {
-            shareItems.append("Some share text" as AnyObject)//text as AnyObject)
-    //    }
-        
-        if shareItems.count > 0 {
-            let activityVC = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
-            activityVC.excludedActivityTypes = [UIActivityType.airDrop, UIActivityType.addToReadingList]
-            activityVC.completionWithItemsHandler = { (activityType, completed, returnedItems, activityError) in
-            }
-            present(activityVC, animated: true, completion: nil)
-        }
-    }
- */
 }
 
 // MARK: - UICollectionViewDataSource
@@ -221,23 +198,23 @@ extension MediaViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MatchProfilePictureCollectionViewCell.identifier, for: indexPath) as! MatchProfilePictureCollectionViewCell
+        
         let item = media![indexPath.row]
-        let imageUrl = ProfileMediaTypePreviewUrl(item)
         
-        switch item {
-        case .video(videoFile: _, thumbImage: _, description: _):
+        switch item.type {
+        case .video:
             cell.isPlayIconHidden = false
-        default:
+            cell.imageView.sd_setImage(with: URL(string: item.thumbFile!.url!))
+            break
+        case .image:
             cell.isPlayIconHidden = true
-        }
-        
-        if let imageUrl = imageUrl {
-            cell.imageView.sd_setImage(with: URL(string: imageUrl))
-        } else {
-            cell.imageView.image = nil
+            cell.imageView.sd_setImage(with: URL(string: item.imageFile!.url!))
+            break
         }
 
-        descriptionTextView.text = ProfileMediaTypeDescription(item)
+        // TODO: ask Josh what kind of resources can be used to a moment - image or video also?
+        // TODO: ask Josh about what text should be placed on the media? Only if moment?
+        descriptionTextView.text = moment != nil ? moment?.capture : nil
         
         return cell
     }
@@ -261,9 +238,9 @@ extension MediaViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = media![indexPath.row]
         
-        switch item {
-        case .video(videoFile: let video, thumbImage: _, _):
-            if let urlString = video.url, let url = URL(string: urlString) {
+        switch item.type {
+        case .video:
+            if let urlStr = item.videoFile?.url, let url = URL(string: urlStr) {
                 playVideo(url)
             }
             break

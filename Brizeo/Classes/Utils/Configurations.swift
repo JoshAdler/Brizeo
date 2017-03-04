@@ -43,7 +43,7 @@ class Configurations: NSObject {
     
     // MARK: - Localytics
     struct Localytics {
-        static let appKey = ""
+        static let appKey = "asd"
     }
     
     // MARK: - Applozic
@@ -51,14 +51,26 @@ class Configurations: NSObject {
         static let appKey = "324a31b8f131bb0d6f69f9164f3a7cfd6"
     }
     
+    // MARK: - URLs that are used in the app
+    struct AppURLs {
+        static let ShareImageVacationURL = "https://files.parsetfss.com/0693b1ef-dbce-4dc5-b0d9-b2e4d12cf0ab/tfss-dfc6f2f8-255a-4fbd-96cd-ce24cffc90be-upload.jpg"
+        static let RewardsURL = "http://brizeo.com/rewards/"
+        static let BrizeoCheckURL = "http://brizeo-fb.herokuapp.com/check"
+    }
+    
+    // MARK: - Reward
+    struct RewardInfo {
+        static let minInvitedUsers = 25
+    }
+    
     // MARK: - First entry
     
-    class func isFirstEntry() -> Bool {
-        return !UserDefaults.standard.bool(forKey: "HasLaunchedOnce")
-    }
-    
-    class func setUserDidEntry() {
-        UserDefaults.standard.set(true, forKey: "HasLaunchedOnce")
-        UserDefaults.standard.synchronize()
-    }
+//    class func isFirstEntry() -> Bool {
+//        return !UserDefaults.standard.bool(forKey: "HasLaunchedOnce")
+//    }
+//    
+//    class func setUserDidEntry() {
+//        UserDefaults.standard.set(true, forKey: "HasLaunchedOnce")
+//        UserDefaults.standard.synchronize()
+//    }
 }

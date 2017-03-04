@@ -7,32 +7,88 @@
 //
 
 import Foundation
-import Parse
 
-class Moment: PFObject, PFSubclassing {
+class Moment: NSObject {
 
+    // MARK: - Types
+    
+    enum JSONKeys: String {
+        case objectId = "objectId"
+        case likedByCurrentUser = "likedByCurrentUser"
+        case momentDescription = "momentDescription"
+        case momentUploadImages = "momentUploadImages"
+        case numberOfLikes = "numberOfLikes"
+        case readStatus = "readStatus"
+        case user = "user"
+        case userId = "userId"
+        case viewableByApp = "viewableByApp"
+        case passionId = "passionId"
+        case latitude = "latitude"
+        case longitude = "longitude"
+    }
+    
     // MARK: - Properties
     
-    @NSManaged var momentUploadImages: PFFile
-    @NSManaged var user: User
-    @NSManaged var numberOfLikes: Int
-    @NSManaged var timesReported: Int
-    @NSManaged var momentDescription: String
-    @NSManaged var likedByCurrentUser : Bool
-    @NSManaged var readStatus: Bool
+    var objectId: String
+    var isLikedByCurrentUser: Bool = false
+    var capture: String = ""
+    var likesCount: Int = 0
+    var readStatus: Bool
+    var viewableByApp: Bool
+    var passionId: String?
+    var ownerId: String!
+    var locationLongitude: Double?
+    var locationLatitude: Double?
+    var file: FileObjectInfo!
+    
+    var hasLocation: Bool {
+        if locationLongitude != nil && locationLatitude != nil {
+            return true
+        }
+        return false
+    }
     
     var imageUrl: URL? {
+        guard let url = file.url else { return nil }
         
-        if let urlString = momentUploadImages.url {
-            return URL(string: urlString)
-        }
-        return nil
+        return URL(string: url)
     }
-
-    // MARK: - Static methods
     
-    static func parseClassName() -> String {
-        return "MomentImages"
+    // MARK: - Init methods
+    
+    init(with JSON: [String: Any]) {
+        
+        // ids
+        objectId = JSON[JSONKeys.objectId.rawValue] as! String
+        passionId = JSON[JSONKeys.passionId.rawValue] as? String
+        
+        if let userId = JSON[JSONKeys.userId.rawValue] as? String { // new data
+            ownerId = userId
+        } else { // old migrated data
+            if let userDict = JSON[JSONKeys.user.rawValue] as? [String: String] {
+                ownerId = userDict[JSONKeys.objectId.rawValue]! as String
+            }
+        }
+        
+        // likes information
+        isLikedByCurrentUser = JSON[JSONKeys.likedByCurrentUser.rawValue] as! Bool
+        likesCount = JSON[JSONKeys.numberOfLikes.rawValue] as! Int
+        
+        // availability information
+        readStatus = JSON[JSONKeys.readStatus.rawValue] as! Bool
+        viewableByApp = JSON[JSONKeys.viewableByApp.rawValue] as! Bool
+        
+        // basic information
+        capture = JSON[JSONKeys.momentDescription.rawValue] as! String
+        
+        // location
+        locationLongitude = JSON[JSONKeys.longitude.rawValue] as? Double
+        locationLatitude = JSON[JSONKeys.latitude.rawValue] as? Double
+        
+        // file
+        if let fileDict = JSON[JSONKeys.momentUploadImages.rawValue] as? [String: String] {
+            file = FileObjectInfo(with: fileDict)
+        }
     }
     
     // MARK: - Override methods
@@ -41,25 +97,5 @@ class Moment: PFObject, PFSubclassing {
         guard let object = object as? Moment else { return false }
         
         return object.objectId == objectId
-    }
-    
-    // MARK: - Class methods
-    
-    class func query(_ paginator: PaginationHelper) -> PFQuery<PFObject> {
-        let query = PFQuery(className: Moment.parseClassName())
-        query.includeKey("user")
-        query.order(byDescending: "createdAt")
-        query.skip = paginator.totalElements
-        query.limit = 20
-        return query
-    }
-    
-    class func queryMost(_ paginator: PaginationHelper) -> PFQuery<PFObject> {
-        let query = PFQuery(className: Moment.parseClassName())
-        query.includeKey("user")
-        query.order(byDescending: "numberOfLikes")
-        query.skip = paginator.totalElements
-        query.limit = 20
-        return query
     }
 }

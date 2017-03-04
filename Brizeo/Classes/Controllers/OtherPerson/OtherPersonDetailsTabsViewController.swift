@@ -42,7 +42,7 @@ class OtherPersonDetailsTabsViewController: BasicViewController {
         aboutController.mutualFriends = mutualFriends
         
         momentsController = Helper.controllerFromStoryboard(controllerId: Constants.momentsControllerId)!
-        momentsController.listType = .myMoments(userId: user.userID)
+        momentsController.listType = .myMoments(userId: user.objectId)
         momentsController.shouldHideFilterView = true
         
         tripsController = Helper.controllerFromStoryboard(controllerId: Constants.tripsControllerId)!

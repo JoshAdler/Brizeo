@@ -61,8 +61,8 @@ class CreateMomentViewController: UIViewController {
     
     var image: UIImage?
     var user: User?
-    var selectedInterest: Interest?
-    var interests: [Interest]?
+    var selectedPassion: Passion?
+    var passions: [Passion]?
     var autocompleteLocationsResults: [MKMapItem]?
     var selectedLocation: CLLocationCoordinate2D?
     var suggestions: [String]?
@@ -84,23 +84,24 @@ class CreateMomentViewController: UIViewController {
         
         resizeViewWhenKeyboardAppears = false
         
-        fetchInterests()
+        fetchPassions()
     }
     
     // MARK: - Private methods
     
-    fileprivate func fetchInterests() {
+    fileprivate func fetchPassions() {
         showBlackLoader()
-        InterestProvider.retrieveAllInterests { (result) in
+        
+        PassionsProvider.shared.retrieveAllPassions(true) { [weak self] (result) in
             DispatchQueue.main.async {
-                self.hideLoader()
+                self?.hideLoader()
                 
                 switch result {
-                case .success(let interests):
-                    self.interests = interests.sorted(by: {$0.displayOrder < $1.displayOrder})
-                    self.initFilterButton()
+                case .success(let passions):
+                    self?.passions = passions
+                    self?.initFilterButton()
                 case .failure(let error):
-                    self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
+                    self?.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
                 }
             }
         }
@@ -113,15 +114,16 @@ class CreateMomentViewController: UIViewController {
     }
     
     fileprivate func initFilterButton() {
-        guard interests != nil && interests!.count > 0 else {
-            print("No interests")
+        guard passions != nil && passions!.count > 0 else {
+            print("No passions")
+            fetchPassions()
             return
         }
         
-        selectedInterest = interests!.filter({ $0.DisplayName == "Travel" }).first ?? interests?.first!
+        selectedPassion = passions!.filter({ $0.displayName == "Travel" }).first ?? passions!.first!
         
         // set default value
-        interestButton.setTitle(selectedInterest?.DisplayName, for: .normal)
+        interestButton.setTitle(selectedPassion?.displayName, for: .normal)
         interestButton.isEnabled = true
     }
     
@@ -148,17 +150,17 @@ class CreateMomentViewController: UIViewController {
     }
     
     @IBAction func onFilterButtonClicked(_ sender: UIButton) {
-        guard interests != nil && interests!.count > 0 else {
+        guard passions != nil && passions!.count > 0 else {
             print("No interests")
             return
         }
         
         let alertController = UIAlertController(title: nil, message: LocalizableString.SelectInterest.localizedString, preferredStyle: UIAlertControllerStyle.actionSheet)
         
-        for interest in interests! {
-            alertController.addAction(UIAlertAction(title: interest.DisplayName, style: .default, handler: { (action) in
+        for passion in passions! {
+            alertController.addAction(UIAlertAction(title: passion.displayName, style: .default, handler: { (action) in
                 
-                self.selectedInterest = self.interests!.filter({ $0.DisplayName == action.title }).first
+                self.selectedPassion = self.passions!.filter({ $0.displayName == action.title }).first
                 self.interestButton.setTitle(action.title, for: .normal)
             }))
         }

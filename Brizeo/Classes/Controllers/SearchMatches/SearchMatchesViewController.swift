@@ -69,27 +69,27 @@ class SearchMatchesViewController: BasicViewController {
         setButtonsHidden(isHidden: true)
         showBlackLoader()
         
-        MatchesProvider.getPotentialMatchesForUser(currentUser) { [weak self] (result) in
-            if let welf = self {
-                welf.hideLoader()
-                
-                if welf.matches == nil {
-                welf.matches = [User.test(), User.test(), User.test(), User.test(), User.test(), User.test(), User.test()]
-                }
-                welf.operateMatches()
-                
-                /*
-                switch result {
-                case .failure(let message):
-                    welf.presentErrorAlert(message: message)
-                    break
-                case .success(let potentialMatches):
-                    welf.matches = potentialMatches
-                    welf.operateMatches()
-                    break
-                }*/
-            }
-        }
+//        MatchesProvider.getPotentialMatchesForUser(currentUser) { [weak self] (result) in
+//            if let welf = self {
+//                welf.hideLoader()
+//                
+//                if welf.matches == nil {
+//                welf.matches = [User.test(), User.test(), User.test(), User.test(), User.test(), User.test(), User.test()]
+//                }
+//                welf.operateMatches()
+//                
+//                /*
+//                switch result {
+//                case .failure(let message):
+//                    welf.presentErrorAlert(message: message)
+//                    break
+//                case .success(let potentialMatches):
+//                    welf.matches = potentialMatches
+//                    welf.operateMatches()
+//                    break
+//                }*/
+//            }
+//        }
     }
     
     fileprivate func setupSwipeViewIfNeeds() {
@@ -201,7 +201,7 @@ class SearchMatchesViewController: BasicViewController {
         let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let reportAction = UIAlertAction(title: LocalizableString.Report.localizedString, style: .default, handler: { alert in
             self.showBlackLoader()
-            UserProvider.reportUser(self.matches!.first!, user: User.current()!, completion: { (result) in
+            UserProvider.reportUser(self.matches!.first!, user: UserProvider.shared.currentUser!, completion: { (result) in
                 
                 self.hideLoader()
                 switch result {
@@ -240,7 +240,7 @@ extension SearchMatchesViewController: DMSwipeCardsViewDelegate {
     func cardTapped(_ object: Any) {
         let mediaController: MediaViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.mediaControllerId)!
         mediaController.isSharingEnabled = true
-        mediaController.media = (object as! User).uploadedMedia
+        mediaController.media = (object as! User).uploadFiles
         
         Helper.initialNavigationController().pushViewController(mediaController, animated: true)
     }

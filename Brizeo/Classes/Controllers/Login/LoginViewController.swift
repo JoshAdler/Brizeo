@@ -12,6 +12,12 @@ import Branch
 
 class LoginViewController: UIViewController {
     
+    // MARK: - Types
+    
+    struct StoryboardIds {
+        static let tabBarControllerId = "MainTabBarController"
+    }
+    
     // MARK: - Properties
     
     @IBOutlet weak var termsSwitch: UISwitch!
@@ -22,6 +28,18 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         
         _ = LocationManager.shared.requestCurrentLocation(nil)
+        
+        // check whether user is logged in
+        if UserProvider.isUserLoggedInFacebook() {
+            if UserProvider.shared.currentUser != nil {
+                operateCurrentUser()
+                
+                // go next
+                goNextToTabBar()
+            } else {
+                loadCurrentUser()
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -36,6 +54,41 @@ class LoginViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
+    //MARK: - Private methods
+    
+    fileprivate func goNextToTabBar() {
+        let mainTabBarController = Helper.mainTabBarController()
+        mainTabBarController.selectedIndex = 2 /* select "Moments" tab" */
+        
+        Helper.initialNavigationController().pushViewController(mainTabBarController, animated: true)
+    }
+    
+    fileprivate func loadCurrentUser() {
+        showBlackLoader()
+        
+        UserProvider.loadUser { (result) in
+            switch result {
+            case .success(let user):
+                self.operateCurrentUser()
+                
+                self.hideLoader()
+                
+                // go next
+                self.goNextToTabBar()
+                break
+            case .failure(let message):
+                SVProgressHUD.showError(withStatus: message)
+                break
+            }
+        }
+    }
+    
+    fileprivate func operateCurrentUser() {
+        LocationManager.updateUserLocation()
+        BranchProvider.checkUserReward()
+        ChatProvider.registerUserInChat()
+    }
+    
     //MARK: - Actions
     
     @IBAction func loginWithFbButtonPressed(_ sender: AnyObject) {
@@ -44,17 +97,14 @@ class LoginViewController: UIViewController {
             return
         }
     
-        UserProvider.logInUser(LocationManager.shared.currentLocationCoordinates, from: self) { [unowned self] (result) in
+        UserProvider.logInUser(with: LocationManager.shared.currentLocationCoordinates, from: self) { [unowned self] (result) in
             switch (result) {
-            case .success(let user):
-                Branch.currentInstance.setIdentity("\(user.objectId!)-\(user.firstName) \(user.lastName)")
-                User.checkUserRewards()
-                self.validateBranchLink()
+            case .success(_):
+                self.operateCurrentUser()
                 self.hideLoader()
                 
-                _ = self.navigationController?.popViewController(animated: true)
+                self.goNextToTabBar()
             case .failure(let message):
-                // Login canceled
                 SVProgressHUD.showError(withStatus: message)
             }
         }
@@ -64,17 +114,5 @@ class LoginViewController: UIViewController {
     @IBAction func termsButtonTapped(_ sender: UIButton) {
         let termsURL = URL(string: Configurations.General.termsOfUseURL)!
         Helper.openURL(url: termsURL)
-    }
-    
-    // MARK: - Public methods
-    
-    func validateBranchLink() {
-        let installParams = Branch.currentInstance.getFirstReferringParams()
-        if let clickedOnLink = installParams?[BranchKeys.ClickedOnLink] as? Bool, let isFirstSession = installParams?[BranchKeys.IsFirstSession] as? Bool {
-            
-            if clickedOnLink && isFirstSession {
-                Branch.currentInstance.userCompletedAction(BranchKeys.InstallAfterInvitation, withState: [String: String]())
-            }
-        }
     }
 }

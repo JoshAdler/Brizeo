@@ -25,11 +25,15 @@ class BasicViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         if let navigationController = navigationController {
             navigationItem.backBarButtonItem = UIBarButtonItem(title: LocalizableString.Back.localizedString, style: .plain, target: nil, action: nil)
             
-            if navigationController.viewControllers.count < 2 {
+            if navigationController.viewControllers.count < 3 {
                 navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_settings").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(onLeftButtonClicked(sender:)))
                 navigationItem.leftBarButtonItem?.width = #imageLiteral(resourceName: "ic_search").size.width
             }

@@ -35,6 +35,10 @@ class Helper: NSObject {
         static let logoHeight: CGFloat = 25.0
     }
     
+    struct StoryboardIds {
+        static let mainTabBarControllerId = "MainTabBarController"
+    }
+    
     // MARK: - Class methods
     
     // storyboard
@@ -87,9 +91,13 @@ class Helper: NSObject {
     
     // tab bar
     class func selectedTabBarItem(with index: Int) {
-        if let navigationController = AppDelegate.shared().window?.rootViewController as? UINavigationController, let tabBarController = navigationController.viewControllers[0] as? MainTabBarController {
+        if let navigationController = AppDelegate.shared().window?.rootViewController as? UINavigationController, let tabBarController = navigationController.viewControllers.first as? MainTabBarController {
             tabBarController.selectedIndex = index
         }
+    }
+    
+    class func mainTabBarController() -> MainTabBarController {
+        return controllerFromStoryboard(controllerId: StoryboardIds.mainTabBarControllerId)!
     }
     
     // MARK: - Navigation
@@ -111,10 +119,55 @@ class Helper: NSObject {
     class func initialNavigationItem() -> UINavigationItem? {
         return initialNavigationController().viewControllers.first?.navigationItem
     }
+    
+    class func goToInitialController(_ animated: Bool) {
+        initialNavigationController().popToRootViewController(animated: animated)
+    }
+    
+    // MARK: - Date methods
+    
+    class func convertStringToDate(string: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        return dateFormatter.date(from: string)
+    }
+    
+    class func minutes(since date: Date) -> String {
+        var minutes = (Date() as NSDate).minute(since: date)
+        
+        if minutes < 0 {
+            minutes = -minutes
+        }
+        
+        if minutes > 60 {
+            return hours(since: date)
+        } else {
+            return LocalizableString.Minutes.localizedStringWithArguments([minutes])
+        }
+    }
+    
+    class func hours(since date: Date) -> String {
+        var hours = (Date() as NSDate).hours(since: date)
+        
+        if hours < 0 {
+            hours = -hours
+        }
+        if hours > 24 {
+            return days(since: date)
+        } else {
+            return LocalizableString.Hours.localizedStringWithArguments([hours])
+        }
+    }
+    
+    class func days(since date: Date) -> String {
+        
+        var days = (Date() as NSDate).days(since: date)
+        if days < 0 {
+            days = -days
+        }
+        return LocalizableString.Days.localizedStringWithArguments([days])
+    }
 }
-
-
-
 
 
 

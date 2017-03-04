@@ -6,23 +6,45 @@
 //  Copyright © 2016 Kogi Mobile. All rights reserved.
 //
 
-import Parse
 import Crashlytics
 import Branch
 
-class Notification: PFObject, PFSubclassing {
+class Notification: NSObject {
 
+    // MARK: - Types
+    
+    enum JSONKeys: String {
+        case objectId = "objectId"
+        case readStatus = "readStatus"
+        case receiveUserId = "receiveUserId"
+        case sendUserId = "sendUserId"
+        case momentsId = "momentsId"
+        case newMatchId = "newMatchId"
+        case pushType = "pushType"
+    }
+    
     // MARK: - Properties
     
-    @NSManaged var sendUser: User
-    @NSManaged var receiveUser: User
-    @NSManaged var PushType: String
-    @NSManaged var readStaus : Bool
-    @NSManaged var momentId: String
+    var objectId: String
+    var readStatus: Bool
+    var receiveUserId: String?
+    var sendUserId: String?
+    var momentsId: String?
+    var newMatchId: String?
+    var pushType: String!
+
+    // MARK: - Init
     
-    // MARK: - Static methods
-    
-    static func parseClassName() -> String {
-        return "Notification"
+    init(with JSON: [String: Any]) {
+        
+        // ids
+        objectId = JSON[JSONKeys.objectId.rawValue] as! String
+        receiveUserId = JSON[JSONKeys.receiveUserId.rawValue] as? String
+        sendUserId = JSON[JSONKeys.sendUserId.rawValue] as? String
+        momentsId = JSON[JSONKeys.momentsId.rawValue] as? String
+        newMatchId = JSON[JSONKeys.newMatchId.rawValue] as? String
+        
+        readStatus = JSON[JSONKeys.readStatus.rawValue] as! Bool
+        pushType = JSON[JSONKeys.pushType.rawValue] as! String
     }
 }

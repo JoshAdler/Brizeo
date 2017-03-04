@@ -49,6 +49,7 @@
 #import "ALMessageInfoResponse.h"
 #import "ALMessageServiceWrapper.h"
 #import "ALMQTTConversationService.h"
+#import "ALMuteRequest.h"
 #import "ALPushAssist.h"
 #import "ALPushNotificationService.h"
 #import "ALReachability.h"

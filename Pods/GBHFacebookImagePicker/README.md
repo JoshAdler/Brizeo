@@ -1,24 +1,31 @@
-# GBHFacebookImagePicker
+<p align="center">
+    <img src="https://github.com/terflogag/FacebookImagePicker/blob/master/Ressources/welcome_img.png" alt="FacebookImagePicker" />
+</p>
 
-[![Version](https://img.shields.io/cocoapods/v/GBHFacebookImagePicker.svg?style=flat)](http://cocoapods.org/pods/GBHFacebookImagePicker)
-[![License](https://img.shields.io/cocoapods/l/GBHFacebookImagePicker.svg?style=flat)](http://cocoapods.org/pods/GBHFacebookImagePicker)
-[![Platform](https://img.shields.io/cocoapods/p/GBHFacebookImagePicker.svg?style=flat)](http://cocoapods.org/pods/GBHFacebookImagePicker)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
-<a href="https://developer.apple.com/swift"><img src="https://img.shields.io/badge/swift3-compatible-4BC51D.svg?style=flat" alt="Swift 3 compatible" /></a>
+<p align="center">
+    <a href="http://cocoapods.org/pods/GBHFacebookImagePicker" target="_blank"><img src="https://img.shields.io/cocoapods/v/GBHFacebookImagePicker.svg?style=flat" alt="Cocoapods version" /></a>
+    <a href="http://cocoapods.org/pods/GBHFacebookImagePicker" target="_blank"><img src="https://img.shields.io/cocoapods/l/GBHFacebookImagePicker.svg?style=flat" alt="Cocoapods licence" /></a>
+    <a href="http://cocoapods.org/pods/GBHFacebookImagePicker" target="_blank"><img src="https://travis-ci.org/terflogag/FacebookImagePicker.svg?branch=master" alt="Travis CI" /></a>
+    <a href="http://cocoapods.org/pods/GBHFacebookImagePicker" target="_blank"><img src="https://img.shields.io/cocoapods/p/GBHFacebookImagePicker.svg?style=flat" alt="Cocoapods plateform" /></a>
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="Prs welcome" />
+</p>
 
-GBHFacebookImagePicker is Facebook album photo picker written in Swift.
+<p align="center">
+    <a href="#features">Features</a>
+  • <a href="#installation">Installation</a>
+  • <a href="#usage">Usage</a>
+  • <a href="#translation">Translation</a>
+  • <a href="#license">License</a>
+</p>
 
-- [👌🏼 Features](#features)
-- [🛠 Installation](#installation)
-- [🗝 Usage](#usage)
-- [👅 Translation](#translation)
-- [🚀 Contributing](./CONTRIBUTING.md)
+GBHFacebookImagePicker is ***Facebook's*** album photo picker written in Swift, built to provide a simple way to pick picture into Facebook account. The picker provides a simple interface like the native iOS photo picker. 
+This picker takes care of all authentication (from the web or with the native Facebook app) when necessary. It the photo's permission isn't accepted during the login, the picker prompts another permission's request. 
 
 ## Screenshot / Demo
 
 Video demonstration -> https://vimeo.com/192823627
 
-![Preview](https://github.com/terflogag/GBHFacebookImagePicker/raw/develop/Ressources/preview.png)
+![Preview](https://github.com/terflogag/FacebookImagePicker/blob/master/Ressources/preview.png)
 
 ## Features 
 
@@ -30,6 +37,7 @@ Video demonstration -> https://vimeo.com/192823627
 - [x] AppStore ready
 - [x] Swift 3 
 - [x] iPhone/iPad support  
+- [ ] Carthage support (feel free to make PR)
 - [ ] Unit & UI Test (feel free to make PR)
 - [ ] Multiple selection (feel free to make PR)
 
@@ -96,7 +104,7 @@ import GBHFacebookImagePicker
 ```swift
 // MARK: - GBHFacebookImagePicker Protocol
 
-func facebookImagePicker(imagePicker: UIViewController, imageModel: GBHFacebookImageModel) {
+func facebookImagePicker(imagePicker: UIViewController, imageModel: GBHFacebookImage) {
     print("Image URL : \(imageModel.fullSizeUrl), Image Id: \(imageModel.imageId)")
     if let pickedImage = imageModel.image {
         self.pickerImageView.image = pickedImage
@@ -122,7 +130,7 @@ func facebookImagePickerDismissed() {
 The imageModel contain : 
 
 ```swift
-public class GBHFacebookImageModel {
+public class GBHFacebookImage {
     public var image: UIImage? // The image, not nil only if image is selected
     public var normalSizeUrl: String? // Normal size picture url
     public var fullSizeUrl: String? // Full size source picture url

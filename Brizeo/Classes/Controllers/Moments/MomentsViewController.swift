@@ -22,8 +22,8 @@ class MomentsViewController: UIViewController {
     struct Constants {
         static let backButtonColor = HexColor("1f4ba5")!
         static let cellHeightCoef: CGFloat = 564.0 / 750.0
-        static let cornerRadius: CGFloat = 3.0
-        static let borderWidth: CGFloat = 1.0
+//        static let cornerRadius: CGFloat = 3.0
+//        static let borderWidth: CGFloat = 1.0
     }
     
     struct StoryboardIds {
@@ -43,34 +43,30 @@ class MomentsViewController: UIViewController {
     @IBOutlet weak fileprivate var popularButton: UIButton!
     @IBOutlet weak fileprivate var filterButton: DropMenuButton! {
         didSet {
-            filterButton.backgroundColor = .clear
-            filterButton.layer.cornerRadius = Constants.cornerRadius
-            filterButton.layer.borderWidth = Constants.borderWidth
-            filterButton.layer.borderColor = HexColor("dbdbdb")!.cgColor
+            //TODO: check whether it is done, if yes - remove code below
+//            filterButton.backgroundColor = .clear
+//            filterButton.layer.cornerRadius = Constants.cornerRadius
+//            filterButton.layer.borderWidth = Constants.borderWidth
+//            filterButton.layer.borderColor = HexColor("dbdbdb")!.cgColor
         }
     }
     
     var listType: MomentsListType = .allMoments(userId: "0")
-    var currentUser: User!// = User.current()!
+    var currentUser: User! = UserProvider.shared.currentUser!
     var shouldHideFilterView: Bool = false
+    
     weak var parentDelegate: MomentsTabsViewControllerDelegate?
     
     fileprivate var paginator = PaginationHelper(pagesSize: 20)
     fileprivate var moments: [Moment]?
     fileprivate var sortedMoments: [Moment]?
-    fileprivate var isNew = true
-    fileprivate var badgeCount = 0
-    fileprivate var interests: [Interest]?
-    fileprivate var selectedInterest: Interest?
+    fileprivate var passions: [Passion]?
+    fileprivate var selectedPassion: Passion?
     
     // MARK: - Controller lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        if currentUser == nil { // assing current user if needs
-            currentUser = User.current()
-        }
         
         setupTableView()
         
@@ -78,15 +74,13 @@ class MomentsViewController: UIViewController {
             self.paginator.increaseCurrentPage()
             self.loadMoments(with: false)
         }
-        
-        //NotificationCenter.default.addObserver(self, selector: #selector(removeMomentNotificationReceived(_:)), name: NSNotification.Name(rawValue: removedMomentNotification), object: nil)
+
         NotificationCenter.default.addObserver(self, selector: #selector(MomentsViewController.updateTableView), name: NSNotification.Name(rawValue: removedMomentNotification), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(MomentsViewController.updateTableView), name: NSNotification.Name(rawValue: LocalizableString.SomebodyLikeYourMoment.localizedString), object: nil)
         
-        // init filter button
+        fetchPassions()
         initFilterButton()
         hideFilterViewIfNeeds()
-        fetchInterests()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -148,93 +142,16 @@ class MomentsViewController: UIViewController {
         momentsTableView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
     }
     
-    func addMoment(_ moment: Moment) {
-        moments?.insert(moment, at: 0)
-        momentsTableView.reloadData()
-    }
-    
     func refreshTableView(_ sender: UIRefreshControl) {
         sender.endRefreshing()
         resetMoments()
     }
+    // TODO: ask Josh about readStatus. what is this?
     
-    func removeMomentNotificationReceived(_ notification: Foundation.Notification) {
-        guard let moment = (notification as NSNotification).userInfo?["moment"] as? Moment else {
-            return
-        }
-        
-        guard let index = moments?.index(of: moment) else {
-            return
-        }
-        
-        moments?.remove(at: index)
-        momentsTableView.reloadData()
-    }
+    // MARK: - Private methods
     
-    func newestMomentsNotification(_ notification: Foundation.Notification?) {
-        if isNew == false {
-            moments?.removeAll()
-            self.isNew = true
-            resetMoments()
-        } else {
-            loadMoments(with: true)
-        }
-    }
-    
-    func mostmomentsNotification(_ notification: Foundation.Notification?) {
-        if isNew == true {
-            moments?.removeAll()
-            self.isNew = false
-            resetMoments()
-        } else {
-            loadMoments(with: true)
-        }
-    }
-    
-    func getNotificationCount(_ moment: Moment, completionBlock: ((_ badge: Int) -> Void)?) {
-        var badge = 0
-        let qurey = PFQuery(className: "Notification")
-        qurey.whereKey("momentId", equalTo: moment.objectId!)
-        qurey.whereKey("readStaus", equalTo: false)
-        qurey.findObjectsInBackground { (objects, error) in
-            if error == nil {
-                badge = (objects?.count)!
-                completionBlock!(badge)
-            }
-        }
-    }
-    
-    func checkReadStatus(_ moment: Moment) {
-        moment.readStatus = true
-        moment.saveInBackground()
-        let query = PFQuery(className: "Notification")
-        query.whereKey("momentId", equalTo: moment.objectId!)
-        query.whereKey("readStaus", equalTo: false)
-        query.findObjectsInBackground { (object, error) in
-            if error == nil {
-                self.badgeCount = (object?.count)!
-                if (object?.count)! > 0 {
-                    switch self.listType {
-                    case .myMoments(userId: let userId):
-                        if User.current()?.objectId == userId {
-                            self.parentDelegate?.updateBadgeNumber(self.badgeCount)
-                        }
-                        break
-                    default:
-                        break
-                    }
-                    for item in object! {
-                        item["readStaus"] = true
-                        item.saveInBackground()
-                    }
-                    self.momentsTableView.reloadData()
-                }
-            }
-        }
-    }
-    
-    func showMomentUserProfile(_ moment: Moment) {
-        if User.userIsCurrentUser(moment.user) { // show my profile
+    fileprivate func showMomentUserProfile(_ moment: Moment) {
+        if moment.ownerId == UserProvider.shared.currentUser!.objectId { // show my profile
             let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
             Helper.initialNavigationController().pushViewController(profileController, animated: true)
         } else {
@@ -245,18 +162,15 @@ class MomentsViewController: UIViewController {
     }
     
     
-    func likeMoment(_ moment: Moment) {
-        
+    fileprivate func likeMoment(_ moment: Moment) {
         showBlackLoader()
         
         MomentsProvider.likeMoment(moment) { (result) in
-            
             self.hideLoader()
+            
             switch result {
-                
             case .success(_):
                 GoogleAnalyticsManager.userHitLikeMoment.sendEvent()
-                self.sendLikePushNotification(moment)
                 self.momentsTableView.reloadData()
             case .failure(let error):
                 self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
@@ -265,65 +179,13 @@ class MomentsViewController: UIViewController {
         }
     }
     
-    func sendLikePushNotification(_ moment: Moment) {
-        
-        let likePush = PFObject(className: "Notification")
-        likePush["PushType"] = PushType.LikeMoment.localizedString
-        likePush["sendUser"] = User.current()!
-        likePush["receiveUser"] = moment.user
-        likePush["readStaus"] = false
-        likePush["momentId"] = moment.objectId
-        likePush.saveEventually { (success, error) in
-            if success {
-                
-                let query = PFInstallation.query()
-                let data = [
-                    "alert": LocalizableString.SomebodyLikeYourMoment.localizedStringWithArguments([(User.current()?.displayName)!]),
-                    "badge": "Increment",
-                    "sound": "default",
-                    "push_type": PushType.LikeMoment.localizedString,
-                    "user_id": (User.current()?.objectId)! as String,
-                    "moment_id": moment.objectId! as String,
-                    "pushId": likePush.objectId! as String]
-                
-                query?.whereKey("user", equalTo: moment.user)
-                let queryUser = PFQuery(className: "Preferences")
-                queryUser.whereKey("user", equalTo: moment.user)
-                queryUser.findObjectsInBackground(block: { (objects, error) in
-                    if error == nil {
-                        let object = objects![0]
-                        if let item = object["moments"] , item as! Bool == false {
-                            
-                        } else {
-                            let push = PFPush()
-                            push.setData(data)
-                            push.setQuery(query as! PFQuery<PFInstallation>?)
-                            push.sendInBackground { (status, error) in
-                                if status {
-                                    moment.readStatus = false
-                                    moment.saveInBackground()
-                                } else if error != nil {
-                                    print(error!)
-                                }
-                            }
-                        }
-                    }
-                })
-                
-            } else if error != nil {
-                print(error!)
-            }
-        }
-    }
-    
-    func unlikeMoment(_ moment: Moment) {
-        
+    fileprivate func unlikeMoment(_ moment: Moment) {
         showBlackLoader()
+        
         MomentsProvider.unlikeMoment(moment) { (result) in
-            
             self.hideLoader()
+        
             switch result {
-                
             case .success(_):
                 self.momentsTableView.reloadData()
             case .failure(let error):
@@ -333,17 +195,16 @@ class MomentsViewController: UIViewController {
         }
     }
     
-    // MARK: - Private methods
-    
-    fileprivate func fetchInterests() {
+    fileprivate func fetchPassions() {
         showBlackLoader()
-        InterestProvider.retrieveAllInterests { (result) in
+        
+        PassionsProvider.shared.retrieveAllPassions(true) { (result) in
             DispatchQueue.main.async {
                 self.hideLoader()
                 
                 switch result {
-                case .success(let interests):
-                    self.interests = interests.sorted(by: {$0.displayOrder < $1.displayOrder})
+                case .success(let passions):
+                    self.passions = passions
                     self.initFilterButton()
                 case .failure(let error):
                     self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
@@ -353,26 +214,26 @@ class MomentsViewController: UIViewController {
     }
     //TODO: retry buttons for error alerts
     fileprivate func initFilterButton() {
-        guard interests != nil else {
+        guard passions != nil else {
             return
         }
         
-        selectedInterest = interests!.filter({ $0.DisplayName == "Travel" }).first ?? interests?.first!
+        selectedPassion = passions!.filter({ $0.displayName == "Travel" }).first ?? passions!.first!
         
         // set default value
-        filterButton.setTitle(selectedInterest?.DisplayName, for: .normal)
+        filterButton.setTitle(selectedPassion!.displayName, for: .normal)
         filterButton.isEnabled = true
         
         var handlers = [() -> Void]()
         
-        for i in 0 ..< interests!.count {
+        for i in 0 ..< passions!.count {
             handlers.append({ [weak self] () -> (Void) in
                 self?.onFilterButtonClicked(i)
             })
         }
         
-        let interestStrings = interests!.map({ $0.DisplayName })
-        filterButton.initMenu(interestStrings, actions: handlers)
+        let passionStrings = passions!.map({ $0.displayName })
+        filterButton.initMenu(passionStrings, actions: handlers)
     }
     
     fileprivate func enableRadioForButton(button: UIButton) {
@@ -400,42 +261,38 @@ class MomentsViewController: UIViewController {
             SVProgressHUD.show()
         }
         
-        MomentsProvider.getMomentsList(listType, sort: isNew, paginator: paginator) { [unowned self] (result) in
-            
-            switch result {
-            case .success(let moments):
-                SVProgressHUD.dismiss()
-                
-                if self.moments == nil {
-                    self.moments = [Moment]()
-                }
-                
-                // prefetch moments
-                var urls = [URL]()
-                for moment in moments {
-                    if moment.imageUrl != nil {
-                        urls.append(moment.imageUrl!)
-                    }
-                }
-                SDWebImagePrefetcher.shared().prefetchURLs(urls)
-                
-                self.paginator.addNewElements(&self.moments!, newElements: moments)
-                self.momentsTableView.reloadData()
-                break
-            case .failure(let error):
-                SVProgressHUD.showError(withStatus: error)
-                break
-            }
-            
-            self.momentsTableView.isHidden = false
-            self.momentsTableView.finishInfiniteScroll()
-        }
+//        MomentsProvider.getMomentsList(listType, sort: isNew, paginator: paginator) { [unowned self] (result) in
+//            
+//            switch result {
+//            case .success(let moments):
+//                SVProgressHUD.dismiss()
+//                
+//                if self.moments == nil {
+//                    self.moments = [Moment]()
+//                }
+//                
+//                // prefetch moments
+//                var urls = [URL]()
+//                for moment in moments {
+//                    if moment.imageUrl != nil {
+//                        urls.append(moment.imageUrl!)
+//                    }
+//                }
+//                SDWebImagePrefetcher.shared().prefetchURLs(urls)
+//                
+//                self.paginator.addNewElements(&self.moments!, newElements: moments)
+//                self.momentsTableView.reloadData()
+//                break
+//            case .failure(let error):
+//                SVProgressHUD.showError(withStatus: error)
+//                break
+//            }
+//            
+//            self.momentsTableView.isHidden = false
+//            self.momentsTableView.finishInfiniteScroll()
+//        }
     }
 }
-
-//protocol MomentsViewControllerDelegate {
-//    func updateBadgeNumber(_ badgeCount: Int)
-//}
 
 //MARK: - UITableViewDataSource
 extension MomentsViewController: UITableViewDataSource {
@@ -445,38 +302,26 @@ extension MomentsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let moment = moments![indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: MomentTableViewCell.identifier) as! MomentTableViewCell
         
         cell.delegate = self
-        cell.ownerNameLabel.text = moment.user.displayName
-        cell.momentDescriptionLabel.text = moment.momentDescription
-        cell.numberOfLikesButton.setTitle("\(moment.numberOfLikes)", for: .normal)
-        cell.likeButton.isHidden = moment.user.objectId == currentUser.objectId
-        cell.setButtonHighligted(isHighligted: /*moment.likedByCurrentUser*/true)
+        //cell.ownerNameLabel.text = moment.user.displayName
+        cell.momentDescriptionLabel.text = moment.capture
+        cell.numberOfLikesButton.setTitle("\(moment.likesCount)", for: .normal)
+        cell.likeButton.isHidden = moment.ownerId == currentUser.objectId
+        cell.setButtonHighligted(isHighligted: moment.isLikedByCurrentUser)
         
         cell.momentImageView.sd_setImage(with: moment.imageUrl)
-        cell.ownerLogoButton.sd_setImage(with: moment.user.profileImageUrl, for: .normal)
+//        cell.ownerLogoButton.sd_setImage(with: moment.user.profileUrl, for: .normal)
         
         cell.actionButton.isEnabled = true
-        if moment.user.objectId != currentUser.objectId && moment.user.superUser {
+        if moment.ownerId != currentUser.objectId/* && moment.user.isSuperUser*/ {
             cell.actionButton.isEnabled = false
         }
         
         cell.notificationView.isHidden = true
-        switch listType {
-        case .myMoments(userId: let userId):
-            if User.current()?.objectId == userId {
-                getNotificationCount(moment, completionBlock: { (badge) in
-                    if badge > 0 {
-                        cell.notificationView.isHidden = false
-                        cell.notificationView.text = String(format: "%d", badge)
-                    }
-                })
-            }
-        default:
-            cell.notificationView.isHidden = true
-        }
         
         return cell
     }
@@ -499,11 +344,9 @@ extension MomentsViewController: UITableViewDelegate {
             return
         }
         
-        let profileMediaType = ProfileMediaType.image(imageFile: moment.momentUploadImages, description: moment.momentDescription)
-        
         let mediaController: MediaViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.mediaControllerId)!
         mediaController.isSharingEnabled = true
-        mediaController.media = [profileMediaType]
+        mediaController.moment = moment
         
         Helper.initialNavigationController().pushViewController(mediaController, animated: true)
     }
@@ -523,7 +366,7 @@ extension MomentsViewController: MomentTableViewCellDelegate {
             return
         }
         
-        if moment.likedByCurrentUser {
+        if moment.isLikedByCurrentUser {
             unlikeMoment(moment)
         } else {
             likeMoment(moment)
@@ -540,8 +383,8 @@ extension MomentsViewController: MomentTableViewCellDelegate {
             print("No moment for this index path")
             return
         }
-        
-        checkReadStatus(moment)
+        //TODO: ask Josh about read status of moments and perhaps others?
+        //checkReadStatus(moment)
         
         let likersController: LikesViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.likesControllerId)!
         likersController.moment = moment
@@ -562,7 +405,7 @@ extension MomentsViewController: MomentTableViewCellDelegate {
         
         switch listType {
         case .myMoments(let userId):
-            if userId != moment.user.objectId {
+            if userId != moment.ownerId {
                 showMomentUserProfile(moment)
             }
         default:
@@ -582,11 +425,11 @@ extension MomentsViewController: MomentTableViewCellDelegate {
         }
         
         let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        if moment.user.objectId != currentUser.objectId {
+        //TODO: anyway we need to load users for a migrated users
+        if moment.ownerId != currentUser.objectId {
             let reportAction = UIAlertAction(title: LocalizableString.Report.localizedString, style: .default, handler: { alert in
                 self.showBlackLoader()
-                MomentsProvider.reportMoment(moment, user: User.current()!, completion: { (result) in
+                MomentsProvider.reportMoment(moment, user: self.currentUser, completion: { (result) in
                     self.hideLoader()
                     switch result {
                         
@@ -605,7 +448,7 @@ extension MomentsViewController: MomentTableViewCellDelegate {
             let deleteAction = UIAlertAction(title: LocalizableString.DeleteMoment.localizedString, style: .default, handler: { alert in
                 
                 self.showBlackLoader()
-                MomentsProvider.deleteMoment(moment, user: User.current()!, completion: { (result) in
+                MomentsProvider.deleteMoment(moment, user: self.currentUser, completion: { (result) in
                     
                     self.hideLoader()
                     switch result {

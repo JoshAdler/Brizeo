@@ -46,7 +46,7 @@ class ProfileViewController: UIViewController {
     
     weak var delegate: ProfileViewControllerDelegate?
     var index: Int = 0
-    var user: User = User.test()
+    var user: User!
     var indexOfMediaToChange = -1
     
     var bottomSpaceHeight: CGFloat {
@@ -94,8 +94,11 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        user = User.test()
-        profileImageView.sd_setImage(with: user.profileImageUrl)
+        user = UserProvider.shared.currentUser!
+        
+        if user.hasProfileImage {
+            profileImageView.sd_setImage(with: user.profileUrl)
+        }
         
 //        if user == nil {
 //            user = User.current()!
@@ -152,7 +155,7 @@ class ProfileViewController: UIViewController {
     @IBAction func onProfilePhotoClicked(_ sender: UIButton) {
         let mediaController: MediaViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.mediaController)!
         mediaController.initialIndex = 0
-        mediaController.media = user.uploadedMedia
+        mediaController.media = user.allMedia
         
         navigationController?.pushViewController(mediaController, animated: true)
     }
@@ -282,7 +285,7 @@ class ProfileViewController: UIViewController {
         // action for media from camera
         let deleteMedia = UIAlertAction(title: LocalizableString.Delete.localizedString, style: UIAlertActionStyle.default, handler: {
             (alert: UIAlertAction!) -> Void in
-            guard self.indexOfMediaToChange > 0 && self.indexOfMediaToChange < self.user.uploadedImages.count else {
+            guard self.indexOfMediaToChange > 0 && self.indexOfMediaToChange < (self.user.uploadFiles?.count ?? 0) else {
                 assertionFailure("Bad index for deleting a media")
                 return
             }
@@ -347,10 +350,14 @@ extension ProfileViewController: UICollectionViewDataSource {
         cell.imageView.image = #imageLiteral(resourceName: "ic_add_photo_plus")
         cell.isDeleteButtonHidden = false
 
+        //TODO: check whether it can be video here.
         //TODO: enable you to edit pictures
-        if indexPath.row < user.uploadedImages.count {
-            let imageURL = user.uploadedImages[indexPath.row]
-            cell.imageView.sd_setImage(with: imageURL)
+        if indexPath.row < (user.uploadFiles?.count ?? 0) {
+            if let imageURL = user.uploadFiles?[indexPath.row].imageFile?.url {
+                cell.imageView.sd_setImage(with: URL(string: imageURL))
+            } else {
+                cell.imageView.image = nil
+            }
         } else {
             cell.imageView.image = #imageLiteral(resourceName: "ic_add_photo_plus")
         }
@@ -371,12 +378,13 @@ extension ProfileViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 extension ProfileViewController: UICollectionViewDelegate {
-    
+    //TODO: check whether it is clicking okay with many uploaded files/idnexes/crashes
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row < user.uploadedImages.count { // show media
+        if indexPath.row < (user.uploadFiles?.count ?? 0) { // show media
             let mediaController: MediaViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.mediaController)!
-            mediaController.initialIndex = indexPath.row
-            mediaController.media = user.uploadedMedia
+            mediaController.initialIndex = indexPath.row + 1
+            //TODO: dublicate the same logic for other person profile controller
+            mediaController.media = user.allMedia
             
             navigationController?.pushViewController(mediaController, animated: true)
         } else { // plus button

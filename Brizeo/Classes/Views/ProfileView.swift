@@ -26,7 +26,13 @@ class ProfileView: UIView {
         nameLabel.text = "\(user.displayName), \(user.age)"
         studyLabel.text = user.studyInfo
         workLabel.text = user.workInfo
-        profileImageView.sd_setImage(with: user.profileImageUrl)
+        
+        if user.hasProfileImage {
+            profileImageView.sd_setImage(with: user.profileUrl!)
+        } else {
+            // TODO: place here something. Ask Josh
+            profileImageView.image = nil
+        }
     }
     
     func setInterest(with color: UIColor?, title: String?, image: UIImage?) {

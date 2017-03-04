@@ -9,7 +9,6 @@
 import Foundation
 import Crashlytics
 import Alamofire
-import LayerKit
 import CoreLocation
 import FBSDKLoginKit
 
@@ -21,10 +20,24 @@ class UserProvider: NSObject {
         case noBirthday
     }
     
+    struct Constants {
+        static let facebookPermissions = ["public_profile", "email", "user_photos", "user_birthday", "user_friends", "user_education_history", "user_work_history"/*, "user_events"*/]
+    }
+    
+    // MARK: - Properties
+    
+    static let shared = UserProvider()
+    
+    var currentUser: User?
+    
+    // MARK: - Init
+    
+    private override init() {}
+    
     // MARK: - Methods
     
-    class func isAlreadyLoggedIn() -> Bool {
-        if FBSDKAccessToken.current() != nil/* && User.current() */ {
+    class func isUserLoggedInFacebook() -> Bool {
+        if FBSDKAccessToken.current() != nil {
             return true
         }
         return false
@@ -33,16 +46,33 @@ class UserProvider: NSObject {
     class func logout() {
         let loginManager = FBSDKLoginManager()
         loginManager.logOut()
+        
+        shared.currentUser = nil
     }
     
-    class func logInUser(_ location : CLLocation?, from controller: UIViewController,  completion: @escaping ((Result<User>) -> Void)) {
+    class func loadUser(completion: ((Result<User>) -> Void)?) {
+        //TODO: load user by its facebook id
+        guard let facebookId = FBSDKAccessToken.current().userID else {
+            print("Error: Can't load user without normal token")
+            completion?(.failure("Your current session is expired. Please login."))
+            return
+        }
+        
+        print("Facebook Id = \(facebookId)")
+        
+        shared.currentUser = User.test()
+        completion?(.success(User.test()))
+    }
+    
+    class func logInUser(with location: CLLocation?, from controller: UIViewController, completion: @escaping ((Result<User>) -> Void)) {
+        
         let loginManager = FBSDKLoginManager()
-        loginManager.logIn(withReadPermissions: ["public_profile", "email", "user_photos", "user_birthday", "user_friends", "user_education_history", "user_work_history"/*, "user_events"*/], from: controller) { (result, error) in
-            
-            //error
-            if let error = error {
-                CLSNSLogv("ERROR: Error logging into Facebook: %@", getVaList([error as CVarArg]))
-                completion(.failure(error.localizedDescription))
+        loginManager.loginBehavior = .web
+        loginManager.logIn(withReadPermissions: Constants.facebookPermissions, from: controller) { (result, error) in
+        
+            guard error == nil else {
+                CLSNSLogv("ERROR: Error logging into Facebook: %@", getVaList([error! as CVarArg]))
+                completion(.failure(error!.localizedDescription))
                 return
             }
             
@@ -51,58 +81,69 @@ class UserProvider: NSObject {
                 return
             }
             
-            controller.showBlackLoader()
-            fetchUserInfoFromFacebook(completion: { (result) in
-                switch(result) {
-                case .failure(let msg):
-                    CLSNSLogv("ERROR: Unable to retrieve user details from Facebook: %@", getVaList([msg]))
-                    completion(.failure(msg))
-                    
-                case .success(let user):
-                    completion(.success(user))
+            // try to load user by facebook id
+            loadUser(completion: { (result) in
+                switch result {
+                case .success(let user): // reuse already created user
+                    completion(result)
                     break
-                    /*
-                    UserProvider.saveUserInInstallation(user)
-                    user.lastActiveTime = Date()
-                    
-                    UserProvider.saveParseUser(user) { (result) in
-                        
+                case .failure(let message): // no user with such facebook id
+                    fetchUserInfoFromFacebook(completion: { (result) in
                         switch(result) {
                         case .failure(let msg):
-                            CLSNSLogv("ERROR: Could not save user to Parse: %@", getVaList([msg]))
+                            CLSNSLogv("ERROR: Unable to retrieve user details from Facebook: %@", getVaList([msg]))
                             completion(.failure(msg))
                             
-                        case .success:
+                        case .success(let user):
+                            BranchProvider.operateFirstEntrance(with: user)
                             
-                            LayerManager.sharedManager.authenticateLayerWithUserID(user.objectId! as NSString, completion: { (success, error) in
-                                
-                                //TODO: Set it to new users only. below of pUser.isNew
-                                self.matchWithSuperUser(user.objectId!)
-                                //                                self.createChattingRoom()
-                                if pUser.isNew {
-                                    
-                                    var nLocation = CLLocation(latitude: 0, longitude: 0)
-                                    if location != nil {
-                                        nLocation = location!
-                                    }
-                                    
-                                    let preferences = Preferences.createPreferences(lowerAgeRange: 18, upperAgeRange: 85, searchLocation: nLocation, searchDistance: CLLocationDistance(100), lookingFor: [Gender.Man.rawValue, Gender.Woman.rawValue, Gender.Couple.rawValue])
-                                    
-                                    PreferencesProvider.saveParseUserPrefs(preferences, user: user, completion: { result in
-                                        
-                                        switch (result) {
-                                        case .failure(let msg):
-                                            completion(.failure(msg))
-                                        case .success:
-                                            completion(Result<User>.success(user))
-                                        }
-                                    })
-                                } else {
-                                    completion(.success(user))
-                                }
-                            })
+                            completion(.success(user))
+                            break
+                            /*
+                             UserProvider.saveUserInInstallation(user)
+                             user.lastActiveTime = Date()
+                             
+                             UserProvider.saveParseUser(user) { (result) in
+                             
+                             switch(result) {
+                             case .failure(let msg):
+                             CLSNSLogv("ERROR: Could not save user to Parse: %@", getVaList([msg]))
+                             completion(.failure(msg))
+                             
+                             case .success:
+                             
+                             LayerManager.sharedManager.authenticateLayerWithUserID(user.objectId! as NSString, completion: { (success, error) in
+                             
+                             //TODO: Set it to new users only. below of pUser.isNew
+                             self.matchWithSuperUser(user.objectId!)
+                             //                                self.createChattingRoom()
+                             if pUser.isNew {
+                             
+                             var nLocation = CLLocation(latitude: 0, longitude: 0)
+                             if location != nil {
+                             nLocation = location!
+                             }
+                             
+                             let preferences = Preferences.createPreferences(lowerAgeRange: 18, upperAgeRange: 85, searchLocation: nLocation, searchDistance: CLLocationDistance(100), lookingFor: [Gender.Man.rawValue, Gender.Woman.rawValue, Gender.Couple.rawValue])
+                             
+                             PreferencesProvider.saveParseUserPrefs(preferences, user: user, completion: { result in
+                             
+                             switch (result) {
+                             case .failure(let msg):
+                             completion(.failure(msg))
+                             case .success:
+                             completion(Result<User>.success(user))
+                             }
+                             })
+                             } else {
+                             completion(.success(user))
+                             }
+                             })
+                             }
+                             }*/
                         }
-                    }*/
+                    })
+                    break
                 }
             })
         }
@@ -214,7 +255,7 @@ class UserProvider: NSObject {
                                 let age = birthDate.age
                                 print("user has \(age) years")
                             }
-                            completion(.success(User.test()))
+                            completion(.success(UserProvider.shared.currentUser!))
                         } else {
                             throw UserProvider.LoginError.noBirthday
                         }
@@ -226,7 +267,7 @@ class UserProvider: NSObject {
                         (date) -> Void in
                         let age = date.age
                         print("user has \(age) years")
-                        completion(.success(User.test()))
+                        completion(.success(UserProvider.shared.currentUser!))
                     }
                 }
             } else {
@@ -268,19 +309,19 @@ class UserProvider: NSObject {
     
     fileprivate func saveParseUser(_ user: User, completion: @escaping (Result<Void>) -> Void) {
         
-        user.saveInBackground { (success, error) in
-            if(success) {
-                do {
-                    try User.current()?.fetch()
-                } catch(let error as NSError) {
-                    CLSNSLogv("ERROR: Unable to refresh current user: %@", getVaList([error]))
-                }
-                completion(.success())
-                
-            } else {
-                completion(.failure(error!.localizedDescription))
-            }
-        }
+//        user.saveInBackground { (success, error) in
+//            if(success) {
+//                do {
+//                    try User.current()?.fetch()
+//                } catch(let error as NSError) {
+//                    CLSNSLogv("ERROR: Unable to refresh current user: %@", getVaList([error]))
+//                }
+//                completion(.success())
+//                
+//            } else {
+//                completion(.failure(error!.localizedDescription))
+//            }
+//        }
     }
 
     class func getMutualFriendsOfCurrentUser(_ currUser: User, andSecondUser secondUser: User, completion: @escaping (Result<[(name:String, pictureURL:String)]>) -> Void) {
@@ -295,7 +336,7 @@ class UserProvider: NSObject {
         print(currUser)
         print(secondUser)
         
-        Alamofire.request(AppURL.BrizeoCheckURL, method: .post, parameters: params)
+        Alamofire.request(Configurations.AppURLs.BrizeoCheckURL, method: .post, parameters: params)
             .validate()
             .validate(contentType: ["application/json"])
             .responseJSON { (response) in
@@ -325,7 +366,7 @@ class UserProvider: NSObject {
     
     class func reportUser(_ reportedUser: User, user: User, completion: @escaping (Result<Bool>) -> Void) {
         
-        let params : [String: AnyObject] = [UserParameterKey.UserIdKey : user.objectId! as AnyObject, UserParameterKey.ReportedUserIdKey: reportedUser.objectId! as AnyObject]
+//        let params : [String: AnyObject] = [UserParameterKey.UserIdKey : user.objectId! as AnyObject, UserParameterKey.ReportedUserIdKey: reportedUser.objectId! as AnyObject]
 //        PFCloud.callFunction(inBackground: ParseFunction.ReportUser.name, withParameters: params) { (result, error) in
 //            
 //            if let error = error {
@@ -341,7 +382,7 @@ class UserProvider: NSObject {
     
     class func removeMatch(_ user: User, target: User, completion: @escaping (Result<Bool>) -> Void) {
         
-        let params : [String: AnyObject] = [UserParameterKey.UserIdKey : user.objectId! as AnyObject, UserParameterKey.TargetUserIdKey: target.objectId! as AnyObject]
+//        let params : [String: AnyObject] = [UserParameterKey.UserIdKey : user.objectId! as AnyObject, UserParameterKey.TargetUserIdKey: target.objectId! as AnyObject]
 //        PFCloud.callFunction(inBackground: ParseFunction.RemoveMatch.name, withParameters: params) { (result, error) in
 //            
 //            if let error = error {
@@ -358,7 +399,7 @@ class UserProvider: NSObject {
     //MARK: Rewards
     class func sendDownloadEvent(_ user: User, timesDownloaded: Int, completion: @escaping (Result<Bool>) -> Void) {
         
-        let params : [String: AnyObject] = [UserParameterKey.UserIdKey : user.objectId! as AnyObject, UserParameterKey.totalKey: timesDownloaded as AnyObject]
+//        let params : [String: AnyObject] = [UserParameterKey.UserIdKey : user.objectId! as AnyObject, UserParameterKey.totalKey: timesDownloaded as AnyObject]
 //        PFCloud.callFunction(inBackground: ParseFunction.DownloadEvent.name, withParameters: params) { (result, error) in
 //            
 //            if let error = error {
