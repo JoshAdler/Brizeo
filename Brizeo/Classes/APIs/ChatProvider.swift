@@ -18,7 +18,7 @@ class ChatProvider: NSObject {
             print("Error: can't register user in chat because current user is nil")
             return
         }
-        
+        // TODO: customize chat view as it is possible 
         let chatManager : ALChatManager = ALChatManager(applicationKey: Configurations.Applozic.appKey as NSString)
         let user = ALUser()
         

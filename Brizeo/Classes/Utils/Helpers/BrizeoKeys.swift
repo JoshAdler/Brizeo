@@ -32,8 +32,3 @@ struct ParseKey {
 //    #endif
 //    static let ATLMediaViewControllerSymLinkedMediaTempPath = "com.layer.atlas/media/"
 //}
-
-enum Result<T> {
-    case success(T)
-    case failure(String)
-}

@@ -102,6 +102,8 @@ class OtherProfileViewController: BasicViewController {
             case .failure(let error):
                 self.friendsCountLabel.text = "0"
                 self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
+            default:
+                break
             }
         })
     }
@@ -124,6 +126,8 @@ class OtherProfileViewController: BasicViewController {
                 break
             case .failure(let error):
                 self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
+                break
+            default:
                 break
             }
         }

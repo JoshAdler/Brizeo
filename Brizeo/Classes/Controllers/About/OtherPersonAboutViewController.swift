@@ -76,6 +76,8 @@ class OtherPersonAboutViewController: UIViewController {
                 self.passionsTableView.reloadSections(IndexSet(integer: 2), with: .automatic)
             case .failure(let error):
                 self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
+            default:
+                break
             }
         })
     }

@@ -27,6 +27,13 @@ struct ThemeConstants {
     static let carbonMenuIndicatorColor = HexColor("0356a2")
 }
 
+// TODO: rewrite result and add code,   
+enum Result<T> {
+    case success(T)
+    case failure(String)
+    case userCancelled(String)
+}
+
 class Helper: NSObject {
     
     // MARK: - Types

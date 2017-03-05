@@ -175,6 +175,8 @@ class MomentsViewController: UIViewController {
             case .failure(let error):
                 self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
                 break
+            default:
+                break
             }
         }
     }
@@ -190,6 +192,8 @@ class MomentsViewController: UIViewController {
                 self.momentsTableView.reloadData()
             case .failure(let error):
                 self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
+                break
+            default:
                 break
             }
         }
@@ -208,6 +212,8 @@ class MomentsViewController: UIViewController {
                     self.initFilterButton()
                 case .failure(let error):
                     self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
+                default:
+                    break
                 }
             }
         }
@@ -438,6 +444,8 @@ extension MomentsViewController: MomentTableViewCellDelegate {
                         break
                     case .failure(let error):
                         self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
+                    default:
+                        break
                     }
                 })
             })
@@ -468,6 +476,8 @@ extension MomentsViewController: MomentTableViewCellDelegate {
                         break
                     case .failure(let error):
                         self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
+                    default:
+                        break
                     }
                 })
             })

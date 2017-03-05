@@ -65,7 +65,7 @@ class User: NSObject {
     var gender: Gender
     var age: Int = 18
     var email: String
-    var personalText: String
+    var personalText: String = ""
     var countries: [Country] = []
     var isSuperUser: Bool = false
     var workInfo: String?
@@ -114,11 +114,17 @@ class User: NSObject {
     }
     
     var location: CLLocation? {
-        guard hasLocation else {
-            return nil
+        get {
+            guard hasLocation else {
+                return nil
+            }
+            
+            return CLLocation(latitude: locationLatitude!, longitude: locationLongitude!)
         }
-        
-        return CLLocation(latitude: locationLatitude!, longitude: locationLongitude!)
+        set {
+            locationLatitude = newValue?.coordinate.latitude
+            locationLongitude = newValue?.coordinate.longitude
+        }
     }
     
     var activity: String? {
@@ -177,6 +183,21 @@ class User: NSObject {
     }
     
     // MARK: - Init methods
+    
+    init(objectId: String, facebookId: String, displayName: String?, email: String, gender: Gender, profileImageURL: String?, workInfo: String?, studyInfo: String?, uploadedURLs: [URL], lastActiveDate: Date?) {
+        self.objectId = objectId
+        self.facebookId = facebookId
+        self.displayName = displayName
+        self.gender = gender
+        self.workInfo = workInfo
+        self.studyInfo = studyInfo
+        self.email = email
+        self.lastActiveTime = lastActiveDate
+        
+        // files
+        
+        
+    }
     
     init(with JSON: [String: Any]) {
         

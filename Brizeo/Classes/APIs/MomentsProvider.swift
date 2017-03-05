@@ -7,8 +7,8 @@
 //
 
 import Foundation
-import Parse
 import Crashlytics
+import Moya
 
 enum MomentsListType {
     case allMoments(userId: String)
@@ -16,7 +16,12 @@ enum MomentsListType {
     case myMoments(userId: String)
 }
 
-struct MomentsProvider {
+enum MomentsSortingFlag: String {
+    case newest = "updateAt "
+    case popular = "popular"
+}
+
+class MomentsProvider {
 
     // MARK: - Types
     
@@ -34,45 +39,90 @@ struct MomentsProvider {
     
     // MARK: - Properties
     
-    static func getMomentsList(_ momentsType: MomentsListType, sort: Bool, paginator: PaginationHelper, completion: @escaping MomentsCompletion) {
-    
-        switch momentsType {
-        case .allMoments(let userId):
-            if sort {
-               getAllMomentsWithQuery(paginator: paginator,userId: userId, completion: completion)
-            } else {
-                getAllMoments(paginator: paginator, userId: userId, completion: completion)
-            }
-        case .myMatches(let userId):
-            if sort {
-                getMyMatchesMomentsNewest(paginator: paginator, userId: userId, completion: completion)
-            } else {
-                getMyMatchesMoments(paginator: paginator, userId: userId, completion: completion)
-            }
-        case .myMoments(let userId):
-            if sort {
-                getMyMomentsNewest(paginator: paginator, userId: userId, completion: completion)
-            } else {
-                getMyMoments(paginator: paginator, userId: userId, completion: completion)
+    class func getMoments(for userId: String, sortingFlag: MomentsSortingFlag, filterFlag: String?, completion: @escaping MomentsCompletion) {
+        
+        let provider = MoyaProvider<APIService>()
+        provider.request(.getMoments(userId: userId, sortingFlag: sortingFlag, filterFlag: filterFlag ?? "all")) { (result) in
+            switch result {
+            case .success(let response):
+//                completion(.success())
+                break
+            case .failure(let error):
+                //completion(.failure(error.localizedDescription))
+                break
             }
         }
     }
     
-    static func getUsersWhoLikedMoment(_ moment: Moment, completion: @escaping (Result<[User]>) -> Void) {
-    
-        let params = [MomentsKey.MomentId : moment.objectId]
+    class func getAllMoments(sortingFlag: MomentsSortingFlag, filterFlag: String?, completion: @escaping MomentsCompletion) {
         
-        PFCloud.callFunction(inBackground: ParseFunction.GetMomentLikes.name, withParameters: params) { (objects, error) in
-            
-            if let error = error {
-                
-                completion(.failure(error.localizedDescription))
-                
-            } else if let users = objects as? [User] {
-                
-                completion(.success(users))
+        let provider = MoyaProvider<APIService>()
+        provider.request(.getAllMoments(sortingFlag: sortingFlag, filterFlag: filterFlag ?? "all")) { (result) in
+            switch result {
+            case .success(let response):
+                //                completion(.success())
+                break
+            case .failure(let error):
+                //completion(.failure(error.localizedDescription))
+                break
             }
         }
+    }
+    
+    class func getMatchedMoments(userId: String, sortingFlag: MomentsSortingFlag, filterFlag: String?, completion: @escaping MomentsCompletion) {
+        
+        let provider = MoyaProvider<APIService>()
+        provider.request(.getMatchedMoments(userId: userId, sortingFlag: sortingFlag, filterFlag: filterFlag ?? "all")) { (result) in
+            switch result {
+            case .success(let response):
+                //                completion(.success())
+                break
+            case .failure(let error):
+                //completion(.failure(error.localizedDescription))
+                break
+            }
+        }
+    }
+    
+    static func getMomentsList(_ momentsType: MomentsListType, sort: Bool, paginator: PaginationHelper, completion: @escaping MomentsCompletion) {
+//    
+//        switch momentsType {
+//        case .allMoments(let userId):
+//            if sort {
+//               getAllMomentsWithQuery(paginator: paginator,userId: userId, completion: completion)
+//            } else {
+//                getAllMoments(paginator: paginator, userId: userId, completion: completion)
+//            }
+//        case .myMatches(let userId):
+//            if sort {
+//                getMyMatchesMomentsNewest(paginator: paginator, userId: userId, completion: completion)
+//            } else {
+//                getMyMatchesMoments(paginator: paginator, userId: userId, completion: completion)
+//            }
+//        case .myMoments(let userId):
+//            if sort {
+//                getMyMomentsNewest(paginator: paginator, userId: userId, completion: completion)
+//            } else {
+//                getMyMoments(paginator: paginator, userId: userId, completion: completion)
+//            }
+//        }
+    }
+    
+    static func getUsersWhoLikedMoment(_ moment: Moment, completion: @escaping (Result<[User]>) -> Void) {
+//    
+//        let params = [MomentsKey.MomentId : moment.objectId]
+//        
+//        PFCloud.callFunction(inBackground: ParseFunction.GetMomentLikes.name, withParameters: params) { (objects, error) in
+//            
+//            if let error = error {
+//                
+//                completion(.failure(error.localizedDescription))
+//                
+//            } else if let users = objects as? [User] {
+//                
+//                completion(.success(users))
+//            }
+//        }
     }
     
     static func likeMoment(_ moment: Moment, completion: @escaping (Result<Bool>) -> Void) {

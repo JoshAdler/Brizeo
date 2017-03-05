@@ -212,6 +212,8 @@ class SearchMatchesViewController: BasicViewController {
                     break
                 case .failure(let error):
                     self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
+                default:
+                    break
                 }
             })
         })

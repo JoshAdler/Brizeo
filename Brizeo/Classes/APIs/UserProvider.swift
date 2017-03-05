@@ -11,17 +11,19 @@ import Crashlytics
 import Alamofire
 import CoreLocation
 import FBSDKLoginKit
+import Moya
 
 class UserProvider: NSObject {
     
     // MARK: - Types
     
-    enum LoginError : Error {
+    enum LoginError : Swift.Error {
         case noBirthday
     }
     
-    struct Constants {
-        static let facebookPermissions = ["public_profile", "email", "user_photos", "user_birthday", "user_friends", "user_education_history", "user_work_history"/*, "user_events"*/]
+    struct FacebookConstants {
+        static let permissions = ["public_profile", "email", "user_photos", "user_birthday", "user_friends", "user_education_history", "user_work_history"/*, "user_events"*/]
+        static let parameters = ["fields" : "id, email, first_name, last_name, name, birthday, gender, work, education, picture.width(1000).height(1000), albums{photos.height(1000){images},name}"]
     }
     
     // MARK: - Properties
@@ -58,17 +60,43 @@ class UserProvider: NSObject {
             return
         }
         
-        print("Facebook Id = \(facebookId)")
+        // load user by facebook id
+        let provider = MoyaProvider<APIService>()
+        provider.request(.getCurrentUser(facebookId: facebookId)) { (result) in
+            switch result {
+            case .success(let response):
+                shared.currentUser?.facebookId = facebookId
+                shared.currentUser = User.test()
+                completion?(.success(User.test()))
+                break
+            case .failure(let error):
+                completion?(.failure(error.localizedDescription))
+                break
+            }
+        }
+    }
+    
+    class func updateUser(user: User, completion: ((Result<User>) -> Void)?) {
         
-        shared.currentUser = User.test()
-        completion?(.success(User.test()))
+        let provider = MoyaProvider<APIService>()
+        provider.request(.updateUser(user: user)) { (result) in
+            switch result {
+            case .success(let response):
+                shared.currentUser = user
+                completion?(.success(user))
+                break
+            case .failure(let error):
+                completion?(.failure(error.localizedDescription))
+                break
+            }
+        }
     }
     
     class func logInUser(with location: CLLocation?, from controller: UIViewController, completion: @escaping ((Result<User>) -> Void)) {
         
         let loginManager = FBSDKLoginManager()
         loginManager.loginBehavior = .web
-        loginManager.logIn(withReadPermissions: Constants.facebookPermissions, from: controller) { (result, error) in
+        loginManager.logIn(withReadPermissions: FacebookConstants.permissions, from: controller) { (result, error) in
         
             guard error == nil else {
                 CLSNSLogv("ERROR: Error logging into Facebook: %@", getVaList([error! as CVarArg]))
@@ -78,6 +106,11 @@ class UserProvider: NSObject {
             
             guard result != nil else {
                 completion(.failure("No result"))
+                return
+            }
+            
+            guard result!.isCancelled == false else {
+                completion(.userCancelled("You has cancelled sign in process."))
                 return
             }
             
@@ -93,62 +126,42 @@ class UserProvider: NSObject {
                         case .failure(let msg):
                             CLSNSLogv("ERROR: Unable to retrieve user details from Facebook: %@", getVaList([msg]))
                             completion(.failure(msg))
-                            
-                        case .success(let user):
-                            BranchProvider.operateFirstEntrance(with: user)
-                            
-                            completion(.success(user))
                             break
-                            /*
-                             UserProvider.saveUserInInstallation(user)
-                             user.lastActiveTime = Date()
-                             
-                             UserProvider.saveParseUser(user) { (result) in
-                             
-                             switch(result) {
-                             case .failure(let msg):
-                             CLSNSLogv("ERROR: Could not save user to Parse: %@", getVaList([msg]))
-                             completion(.failure(msg))
-                             
-                             case .success:
-                             
-                             LayerManager.sharedManager.authenticateLayerWithUserID(user.objectId! as NSString, completion: { (success, error) in
-                             
-                             //TODO: Set it to new users only. below of pUser.isNew
-                             self.matchWithSuperUser(user.objectId!)
-                             //                                self.createChattingRoom()
-                             if pUser.isNew {
-                             
-                             var nLocation = CLLocation(latitude: 0, longitude: 0)
-                             if location != nil {
-                             nLocation = location!
-                             }
-                             
-                             let preferences = Preferences.createPreferences(lowerAgeRange: 18, upperAgeRange: 85, searchLocation: nLocation, searchDistance: CLLocationDistance(100), lookingFor: [Gender.Man.rawValue, Gender.Woman.rawValue, Gender.Couple.rawValue])
-                             
-                             PreferencesProvider.saveParseUserPrefs(preferences, user: user, completion: { result in
-                             
-                             switch (result) {
-                             case .failure(let msg):
-                             completion(.failure(msg))
-                             case .success:
-                             completion(Result<User>.success(user))
-                             }
-                             })
-                             } else {
-                             completion(.success(user))
-                             }
-                             })
-                             }
-                             }*/
+                        case .success(let user):
+                            
+                            // create new user with a FB data
+                            createUser(user: user, completion: { (result) in
+                                switch(result) {
+                                case .failure(let message):
+                                    CLSNSLogv("ERROR: Unable to retrieve user details from Facebook: %@", getVaList([message]))
+                                    completion(.failure(message))
+                                    break
+                                case .success(let user):
+                                    shared.currentUser = user
+                                    
+                                    BranchProvider.operateFirstEntrance(with: user)
+                                    //TODO: create chat with the admin
+                                    completion(.success(user))
+                                    break
+                                default:
+                                    break
+                                }
+                            })
+                            break
+                            //TODO: set lastactivetime for user to create
+                        default:
+                            break
                         }
                     })
+                    break
+                default:
                     break
                 }
             })
         }
     }
     
+    //TODO: create such chat
 //    private static func createChattingRoom() {
 //        let superUserId = "WlsuoQxwUB"
 //        LayerManager.sharedManager.authenticateLayerWithUserID(superUserId, completion: { (success, error) in
@@ -163,10 +176,26 @@ class UserProvider: NSObject {
     
     // MARK: - Private methods
     
-    fileprivate class func fetchUserInfoFromFacebook(completion: @escaping (Result<User>) -> Void) {
-        let parameters = ["fields" : "id, email, first_name, last_name, name, birthday, gender, work, education, picture.width(1000).height(1000), albums{photos.height(1000){images},name}"]
+    fileprivate class func createUser(user: User, completion: @escaping (Result<User>) -> Void) {
         
-        FBSDKGraphRequest(graphPath: "me", parameters: parameters).start { (connection, result, error) in
+        let provider = MoyaProvider<APIService>()
+        provider.request(.createNewUser(newUser: user)) { (result) in
+            switch result {
+            case .success(let response):
+                shared.currentUser = User.test()
+                completion(.success(User.test()))
+                break
+            case .failure(let error):
+                completion(.failure(error.localizedDescription))
+                break
+            }
+        }
+    }
+    
+    fileprivate class func fetchUserInfoFromFacebook(completion: @escaping (Result<User>) -> Void) {
+    
+        FBSDKGraphRequest(graphPath: "me", parameters: FacebookConstants.parameters).start { (connection, result, error) in
+            
             if error != nil {
                 CLSNSLogv("ERROR: Error issuing graph request: %@", getVaList([error as! CVarArg]))
                 completion(.failure(error!.localizedDescription))
@@ -181,11 +210,17 @@ class UserProvider: NSObject {
                 }
                 
                 // email/gender
-                let email = result["email"] as? String
-                let gender = result["gender"] as? String
+                let email = result["email"] as? String ?? "no_email"
+                var gender = Gender.Man
+                
+                if let genderStr = result["gender"] as? String, let fbGender = Gender(rawValue: genderStr) {
+                    gender = fbGender
+                }
                 
                 // profile image
-                if let pictureDict = result["picture"] as? [String: Any], let data = pictureDict["data"] as? [String: Any], let profileImageURL = data["url"] as? String {
+                var profileImageURL: String?
+                if let pictureDict = result["picture"] as? [String: Any], let data = pictureDict["data"] as? [String: Any] {
+                    profileImageURL = data["url"] as? String
                     print("user has profile image: \(profileImageURL)")
                 }
                 
@@ -240,6 +275,10 @@ class UserProvider: NSObject {
                     }
                 }
                 
+                // create user to hold all this information
+                let user = User(objectId: "-1", facebookId: id, displayName: name, email: email, gender: gender, profileImageURL: profileImageURL, workInfo: workInfo, studyInfo: educationInfo, uploadedURLs: profilePicturesURLs, lastActiveDate: Date())
+                user.location = LocationManager.shared.currentLocationCoordinates
+                
                 // birthday
                 do {
                     let birthdateFormatter = DateFormatter()
@@ -252,10 +291,11 @@ class UserProvider: NSObject {
                             if birthComponents.year == NSDateComponentUndefined {
                                 throw UserProvider.LoginError.noBirthday
                             } else {
-                                let age = birthDate.age
-                                print("user has \(age) years")
+                                user.age = birthDate.age
+                                print("user has \(user.age) years")
                             }
-                            completion(.success(UserProvider.shared.currentUser!))
+
+                            completion(.success(user))
                         } else {
                             throw UserProvider.LoginError.noBirthday
                         }
@@ -265,9 +305,9 @@ class UserProvider: NSObject {
                 } catch {
                     DatePickerDialog().show("Birthday", doneButtonTitle: "Done", datePickerMode: UIDatePickerMode.date) {
                         (date) -> Void in
-                        let age = date.age
-                        print("user has \(age) years")
-                        completion(.success(UserProvider.shared.currentUser!))
+                        user.age = date.age
+                        print("user has \(user.age) years")
+                        completion(.success(user))
                     }
                 }
             } else {

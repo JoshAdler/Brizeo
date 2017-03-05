@@ -44,4 +44,7 @@ target 'Brizeo' do
     pod 'CLLocationManager-blocks'
     pod 'Applozic', '~>3.8'
     pod 'SwiftyUserDefaults'
+    
+    #Moya
+    pod 'Moya'
 end

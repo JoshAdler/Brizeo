@@ -47,6 +47,8 @@ class OtherPersonAboutInfoTableViewCell: UITableViewCell {
                 case .failure(let message):
                     self?.interestLabel.text = nil
                     break
+                default:
+                    break
                 }
             }
         }

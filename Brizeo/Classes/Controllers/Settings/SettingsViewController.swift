@@ -141,7 +141,6 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     // basic objects
-    //TODO:
     var user: User! = UserProvider.shared.currentUser!
     var preferences: Preferences!
     
@@ -160,8 +159,8 @@ class SettingsViewController: UIViewController {
         registerHeaderViews()
         
         LocationManager.shared.updateLocation()
-        
-        PreferencesProvider.getUserMatchPrefs(user) { (result) in
+        // TODO: ask Josh about search location? It is changing every time we pass settings
+        PreferencesProvider.loadPreferences(for: user.objectId, fromCache: true) { (result) in
             switch result {
             case .success(let value):
                 self.preferences = value
@@ -170,6 +169,8 @@ class SettingsViewController: UIViewController {
                 break
             case .failure(let error):
                 self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
+                break
+            default:
                 break
             }
         }
@@ -180,16 +181,17 @@ class SettingsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let result = LocationManager.shared.requestCurrentLocation { (locationString, location) in
+        let result = LocationManager.shared.requestCurrentLocation { [weak self] (locationString, location) in
             
             if let locationString = locationString {
-                self.currentLocationString = locationString
-                self.tableView.reloadData()
-        
-                // TODO: update user
-//                currentUser.location = PFGeoPoint(location: location)
-//                    User.saveParseUser({ (result) in
-//                })
+                if self != nil {
+                    self?.currentLocationString = locationString
+                    self?.tableView.reloadData()
+                    
+                    // update user
+                    self?.user.location = location
+                    UserProvider.updateUser(user: self!.user, completion: nil)
+                }
             }
         }
         

@@ -79,6 +79,8 @@ class LoginViewController: UIViewController {
             case .failure(let message):
                 SVProgressHUD.showError(withStatus: message)
                 break
+            default:
+                break
             }
         }
     }
@@ -106,6 +108,8 @@ class LoginViewController: UIViewController {
                 self.goNextToTabBar()
             case .failure(let message):
                 SVProgressHUD.showError(withStatus: message)
+            case .userCancelled(_):
+                SVProgressHUD.dismiss()
             }
         }
     }

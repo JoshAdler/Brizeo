@@ -155,6 +155,10 @@ class BranchProvider: NSObject {
                 if let invitedByUserId = installParams?[MetadataKeys.invitedByUserId.rawValue] as? String, let invitedByUserName = installParams?[MetadataKeys.invitedByUserName.rawValue] as? String {
                     print("User was invited by \(invitedByUserId) - \(invitedByUserName)")
                     //TODO: save this data in the user
+                    user.invitedByUserId = invitedByUserId
+                    user.invitedByUserName = invitedByUserName
+                    
+                    //TODO: save user
                 }
             }
         }

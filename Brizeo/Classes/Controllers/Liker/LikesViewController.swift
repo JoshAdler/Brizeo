@@ -49,6 +49,8 @@ class LikesViewController: BasicViewController {
                 self.likesTableView.reloadData()
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error)
+            default:
+                break
             }
             
             self.activityIndicator.stopAnimating()

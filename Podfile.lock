@@ -2,9 +2,6 @@ PODS:
   - Alamofire (4.4.0)
   - AlamofireImage (3.1.0):
     - Alamofire (~> 4.0)
-  - AlamofireObjectMapper (4.1.0):
-    - Alamofire (~> 4.1)
-    - ObjectMapper (~> 2.0)
   - Applozic (3.8.3):
     - SDWebImage (~> 3.8)
   - Bolts (1.8.4):
@@ -61,6 +58,11 @@ PODS:
   - Mixpanel (2.9.9):
     - Mixpanel/Mixpanel (= 2.9.9)
   - Mixpanel/Mixpanel (2.9.9)
+  - Moya (8.0.2):
+    - Moya/Core (= 8.0.2)
+  - Moya/Core (8.0.2):
+    - Alamofire (~> 4.1)
+    - Result (~> 3.0)
   - MSRangeSlider (1.1.0)
   - NXOAuth2Client (1.2.8)
   - NYTPhotoViewer (1.2.0):
@@ -70,13 +72,13 @@ PODS:
     - FLAnimatedImage (~> 1.0.12)
     - NYTPhotoViewer/Core
   - NYTPhotoViewer/Core (1.2.0)
-  - ObjectMapper (2.2.5)
   - Parse (1.14.2):
     - Bolts/Tasks (~> 1.8)
   - ParseUI (1.2.0):
     - Bolts/Tasks (~> 1.3)
     - Parse (~> 1.9)
   - pop (1.0.9)
+  - Result (3.2.0)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
@@ -90,7 +92,6 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 4.0)
   - AlamofireImage (~> 3.1.0)
-  - AlamofireObjectMapper (~> 4.0)
   - Applozic (~> 3.8)
   - Branch (~> 0.12)
   - CarbonKit
@@ -109,6 +110,7 @@ DEPENDENCIES:
   - InstagramImagePicker
   - Localytics
   - Mixpanel (~> 2.9)
+  - Moya
   - MSRangeSlider
   - NYTPhotoViewer (~> 1.1)
   - Parse
@@ -132,7 +134,6 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   AlamofireImage: bb8c8351c51cb1633bb6be69b6dbbaff37ce65b7
-  AlamofireObjectMapper: 435adc82f5b367679bd9e71c4974a54efd0b2521
   Applozic: 9acedca0e6e5f759c10d4e1f42ed9127ba4705d6
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   Branch: 08e40d84f20b188443fd808fe01dadcc13d1727e
@@ -158,13 +159,14 @@ SPEC CHECKSUMS:
   InstagramImagePicker: 3b1afb10b1b3e5625b8ef64dfabd13464467020d
   Localytics: 59cf99592a35c18e62d5994f2365ad3ccecc4982
   Mixpanel: 818d1940c2d9402453b349545022a86968097f57
+  Moya: 47f61da5b634aa71f676431b64ee0f81e976296d
   MSRangeSlider: 14b669140a4615e1d372c8d2abbfd96cd9e3fb08
   NXOAuth2Client: 98c4d4c594edd2b289cfc34a8928653e1dab7adf
   NYTPhotoViewer: 323217e4590a1586eb3c9674b3fefb0fb8b57896
-  ObjectMapper: fb30f71e08470d1e5a20b199fafe1246281db898
   Parse: 4335d65f40cb3d43190d723144bbe1afb9c38230
   ParseUI: af2eba584799da4a9fbdac0e178662d7438b502e
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
+  Result: 5a6705171c0613cc5fbf6ec55ff520cc62a8e81d
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
   SwiftyUserDefaults: 0f1d45fc3aafb9064dac661e367f8f83fe21a4b4
@@ -172,6 +174,6 @@ SPEC CHECKSUMS:
   UIScrollView-InfiniteScroll: 14e204c50ca4040467e1cbfa141dad7a18919b56
   ZTDropDownTextField: a9cb5db41b66eb28a7c38afaf4c334fb2a81034e
 
-PODFILE CHECKSUM: 359ab6292ecea0f88c9c2fccb4455fe2d4fa1d5e
+PODFILE CHECKSUM: d1e456d5a155852f6749dc08944b85255750be0d
 
 COCOAPODS: 1.2.0
