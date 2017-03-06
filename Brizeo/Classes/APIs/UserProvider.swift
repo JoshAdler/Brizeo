@@ -66,7 +66,7 @@ class UserProvider: NSObject {
         
         // load user by facebook id
         let provider = MoyaProvider<APIService>()
-        provider.request(.getCurrentUser(facebookId: /*facebookId*/"0")) { (result) in
+        provider.request(.getCurrentUser(facebookId: facebookId/*"0"*/)) { (result) in
             switch result {
             case .success(let response):
                 guard response.statusCode == 200 else {

@@ -58,7 +58,7 @@ extension APIError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .firebaseError:
-            return "Firebase took place during operation."
+            return "Firebase error took place during operation."
         case .notFound:
             return "The object is not founded."
         case .moyaError(let message):

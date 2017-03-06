@@ -76,10 +76,21 @@ class MomentsProvider {
         provider.request(.getAllMoments(sortingFlag: sortingFlag, filterFlag: filterFlag ?? "all")) { (result) in
             switch result {
             case .success(let response):
-                //                completion(.success())
+                
+                guard response.statusCode == 200 else {
+                    completion(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
+                do {
+                    let moments = try response.mapArray(Moment.self)
+                    completion(.success(moments))
+                } catch (let error) {
+                    completion(.failure(APIError(error: error)))
+                }
                 break
             case .failure(let error):
-                //completion(.failure(error.localizedDescription))
+                completion(.failure(APIError(error: error)))
                 break
             }
         }
@@ -185,6 +196,13 @@ class MomentsProvider {
         provider.request(.likeMoment(moment: moment, userId: user.objectId)) { (result) in
             switch result {
             case .success(let response):
+                
+                guard response.statusCode == 200 else {
+                    completion(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
+                moment.isLikedByCurrentUser = true
                 completion(.success(moment))
                 break
             case .failure(let error):
@@ -206,6 +224,13 @@ class MomentsProvider {
         provider.request(.unlikeMoment(moment: moment, userId: user.objectId)) { (result) in
             switch result {
             case .success(let response):
+                
+                guard response.statusCode == 200 else {
+                    completion(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
+                moment.isLikedByCurrentUser = false
                 completion(.success(moment))
                 break
             case .failure(let error):

@@ -22,8 +22,7 @@ class MomentsViewController: UIViewController {
     struct Constants {
         static let backButtonColor = HexColor("1f4ba5")!
         static let cellHeightCoef: CGFloat = 564.0 / 750.0
-//        static let cornerRadius: CGFloat = 3.0
-//        static let borderWidth: CGFloat = 1.0
+        static let defaultFilterTitle = "All"
     }
     
     struct StoryboardIds {
@@ -41,15 +40,7 @@ class MomentsViewController: UIViewController {
     @IBOutlet weak fileprivate var addMomentButton: UIButton!
     @IBOutlet weak fileprivate var newestButton: UIButton!
     @IBOutlet weak fileprivate var popularButton: UIButton!
-    @IBOutlet weak fileprivate var filterButton: DropMenuButton! {
-        didSet {
-            //TODO: check whether it is done, if yes - remove code below
-//            filterButton.backgroundColor = .clear
-//            filterButton.layer.cornerRadius = Constants.cornerRadius
-//            filterButton.layer.borderWidth = Constants.borderWidth
-//            filterButton.layer.borderColor = HexColor("dbdbdb")!.cgColor
-        }
-    }
+    @IBOutlet weak fileprivate var filterButton: DropMenuButton!
     
     var listType: MomentsListType = .allMoments
     var currentUser: User! = UserProvider.shared.currentUser!
@@ -107,11 +98,13 @@ class MomentsViewController: UIViewController {
     // MARK: - Actions
     
     func onFilterButtonClicked(_ index: Int) {
-        if index == 0 { // no filter
-            
+        if index == 0 { // no filtering
+            selectedPassion = nil
         } else {
-            
+            selectedPassion = passions?[index - 1]
         }
+        
+        resetMoments()
     }
     
     @IBAction func onCreateButtonClicked(_ sender: UIButton) {
@@ -122,12 +115,14 @@ class MomentsViewController: UIViewController {
         enableRadioForButton(button: sender)
         
         sortingFlag = MomentsSortingFlag(with: sender.tag)
+        resetMoments()
     }
     
     @IBAction func onNewestButtonClicked(_ sender: UIButton) {
         enableRadioForButton(button: sender)
         
         sortingFlag = MomentsSortingFlag(with: sender.tag)
+        resetMoments()
     }
     
     // MARK: - Public methods
@@ -225,21 +220,26 @@ class MomentsViewController: UIViewController {
             return
         }
         
-        selectedPassion = passions!.filter({ $0.displayName == "Travel" }).first ?? passions!.first!
+//        selectedPassion = passions!.filter({ $0.displayName == "Travel" }).first ?? passions!.first!
         
         // set default value
-        filterButton.setTitle(selectedPassion!.displayName, for: .normal)
+        filterButton.setTitle(Constants.defaultFilterTitle, for: .normal)
         filterButton.isEnabled = true
         
         var handlers = [() -> Void]()
         
-        for i in 0 ..< passions!.count {
+        // set 0 handler for "All" filter
+        handlers.append({ [weak self] () -> (Void) in
+            self?.onFilterButtonClicked(0)
+        })
+        
+        for i in 1 ..< passions!.count + 1 {
             handlers.append({ [weak self] () -> (Void) in
                 self?.onFilterButtonClicked(i)
             })
         }
         
-        let passionStrings = passions!.map({ $0.displayName })
+        let passionStrings = [Constants.defaultFilterTitle] + passions!.map({ $0.displayName })
         filterButton.initMenu(passionStrings, actions: handlers)
     }
     
@@ -458,7 +458,7 @@ extension MomentsViewController: MomentTableViewCellDelegate {
                     
                     switch result {
                     case .success(_):
-                        guard let index = self.moments?.index(of: moment) else {
+                        guard let index = self.moments!.index(of: moment) else {
                             print("Can't find index for the moment")
                             return
                         }
