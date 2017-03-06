@@ -131,7 +131,7 @@ extension NotificationsViewController: NotificationsTableViewCellDelegate {
         let notification = notifications[indexPath.row]
         let profileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
         
-        profileController.user = User.test()//notification.user
+        profileController.user = UserProvider.shared.currentUser!//notification.user
         
         Helper.initialNavigationController().pushViewController(profileController, animated: true)
     }

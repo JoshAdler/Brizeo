@@ -101,7 +101,7 @@ class CreateMomentViewController: UIViewController {
                     self?.passions = passions
                     self?.initFilterButton()
                 case .failure(let error):
-                    self?.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
+                    self?.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
                 default:
                     break
                 }

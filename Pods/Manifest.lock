@@ -60,6 +60,11 @@ PODS:
   - Mixpanel/Mixpanel (2.9.9)
   - Moya (8.0.2):
     - Moya/Core (= 8.0.2)
+  - Moya-ObjectMapper (2.3.1):
+    - Moya-ObjectMapper/Core (= 2.3.1)
+  - Moya-ObjectMapper/Core (2.3.1):
+    - Moya (~> 8.0)
+    - ObjectMapper (~> 2.2)
   - Moya/Core (8.0.2):
     - Alamofire (~> 4.1)
     - Result (~> 3.0)
@@ -72,6 +77,7 @@ PODS:
     - FLAnimatedImage (~> 1.0.12)
     - NYTPhotoViewer/Core
   - NYTPhotoViewer/Core (1.2.0)
+  - ObjectMapper (2.2.5)
   - Parse (1.14.2):
     - Bolts/Tasks (~> 1.8)
   - ParseUI (1.2.0):
@@ -111,6 +117,7 @@ DEPENDENCIES:
   - Localytics
   - Mixpanel (~> 2.9)
   - Moya
+  - Moya-ObjectMapper
   - MSRangeSlider
   - NYTPhotoViewer (~> 1.1)
   - Parse
@@ -160,9 +167,11 @@ SPEC CHECKSUMS:
   Localytics: 59cf99592a35c18e62d5994f2365ad3ccecc4982
   Mixpanel: 818d1940c2d9402453b349545022a86968097f57
   Moya: 47f61da5b634aa71f676431b64ee0f81e976296d
+  Moya-ObjectMapper: 952be2b261d38cf8d973b7e429708eb03d256e23
   MSRangeSlider: 14b669140a4615e1d372c8d2abbfd96cd9e3fb08
   NXOAuth2Client: 98c4d4c594edd2b289cfc34a8928653e1dab7adf
   NYTPhotoViewer: 323217e4590a1586eb3c9674b3fefb0fb8b57896
+  ObjectMapper: fb30f71e08470d1e5a20b199fafe1246281db898
   Parse: 4335d65f40cb3d43190d723144bbe1afb9c38230
   ParseUI: af2eba584799da4a9fbdac0e178662d7438b502e
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
@@ -174,6 +183,6 @@ SPEC CHECKSUMS:
   UIScrollView-InfiniteScroll: 14e204c50ca4040467e1cbfa141dad7a18919b56
   ZTDropDownTextField: a9cb5db41b66eb28a7c38afaf4c334fb2a81034e
 
-PODFILE CHECKSUM: d1e456d5a155852f6749dc08944b85255750be0d
+PODFILE CHECKSUM: 212de2d4026e9fe3efeea3935329ea7a0313a363
 
 COCOAPODS: 1.2.0

@@ -13,7 +13,7 @@ import Parse
 import ChameleonFramework
 import SDWebImage
 
-let removedMomentNotification = "removedMomentNotification"
+let updateMomentNotification = "updateMomentNotification"
 
 class MomentsViewController: UIViewController {
 
@@ -51,7 +51,7 @@ class MomentsViewController: UIViewController {
         }
     }
     
-    var listType: MomentsListType = .allMoments(userId: "0")
+    var listType: MomentsListType = .allMoments
     var currentUser: User! = UserProvider.shared.currentUser!
     var shouldHideFilterView: Bool = false
     
@@ -62,6 +62,7 @@ class MomentsViewController: UIViewController {
     fileprivate var sortedMoments: [Moment]?
     fileprivate var passions: [Passion]?
     fileprivate var selectedPassion: Passion?
+    fileprivate var sortingFlag: MomentsSortingFlag = .newest
     
     // MARK: - Controller lifecycle
     
@@ -75,7 +76,7 @@ class MomentsViewController: UIViewController {
             self.loadMoments(with: false)
         }
 
-        NotificationCenter.default.addObserver(self, selector: #selector(MomentsViewController.updateTableView), name: NSNotification.Name(rawValue: removedMomentNotification), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(MomentsViewController.updateTableView), name: NSNotification.Name(rawValue: updateMomentNotification), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(MomentsViewController.updateTableView), name: NSNotification.Name(rawValue: LocalizableString.SomebodyLikeYourMoment.localizedString), object: nil)
         
         fetchPassions()
@@ -119,10 +120,14 @@ class MomentsViewController: UIViewController {
     
     @IBAction func onPopularButtonClicked(_ sender: UIButton) {
         enableRadioForButton(button: sender)
+        
+        sortingFlag = MomentsSortingFlag(with: sender.tag)
     }
     
     @IBAction func onNewestButtonClicked(_ sender: UIButton) {
         enableRadioForButton(button: sender)
+        
+        sortingFlag = MomentsSortingFlag(with: sender.tag)
     }
     
     // MARK: - Public methods
@@ -165,7 +170,7 @@ class MomentsViewController: UIViewController {
     fileprivate func likeMoment(_ moment: Moment) {
         showBlackLoader()
         
-        MomentsProvider.likeMoment(moment) { (result) in
+        MomentsProvider.like(moment: moment) { (result) in
             self.hideLoader()
             
             switch result {
@@ -173,7 +178,7 @@ class MomentsViewController: UIViewController {
                 GoogleAnalyticsManager.userHitLikeMoment.sendEvent()
                 self.momentsTableView.reloadData()
             case .failure(let error):
-                self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
+                self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
                 break
             default:
                 break
@@ -184,14 +189,14 @@ class MomentsViewController: UIViewController {
     fileprivate func unlikeMoment(_ moment: Moment) {
         showBlackLoader()
         
-        MomentsProvider.unlikeMoment(moment) { (result) in
+        MomentsProvider.unlike(moment: moment) { (result) in
             self.hideLoader()
         
             switch result {
             case .success(_):
                 self.momentsTableView.reloadData()
             case .failure(let error):
-                self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
+                self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
                 break
             default:
                 break
@@ -200,18 +205,14 @@ class MomentsViewController: UIViewController {
     }
     
     fileprivate func fetchPassions() {
-        showBlackLoader()
-        
         PassionsProvider.shared.retrieveAllPassions(true) { (result) in
             DispatchQueue.main.async {
-                self.hideLoader()
-                
                 switch result {
                 case .success(let passions):
                     self.passions = passions
                     self.initFilterButton()
                 case .failure(let error):
-                    self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
+                    self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
                 default:
                     break
                 }
@@ -267,36 +268,32 @@ class MomentsViewController: UIViewController {
             SVProgressHUD.show()
         }
         
-//        MomentsProvider.getMomentsList(listType, sort: isNew, paginator: paginator) { [unowned self] (result) in
-//            
-//            switch result {
-//            case .success(let moments):
-//                SVProgressHUD.dismiss()
-//                
-//                if self.moments == nil {
-//                    self.moments = [Moment]()
-//                }
-//                
-//                // prefetch moments
-//                var urls = [URL]()
-//                for moment in moments {
-//                    if moment.imageUrl != nil {
-//                        urls.append(moment.imageUrl!)
-//                    }
-//                }
-//                SDWebImagePrefetcher.shared().prefetchURLs(urls)
-//                
-//                self.paginator.addNewElements(&self.moments!, newElements: moments)
-//                self.momentsTableView.reloadData()
-//                break
-//            case .failure(let error):
-//                SVProgressHUD.showError(withStatus: error)
-//                break
-//            }
-//            
-//            self.momentsTableView.isHidden = false
-//            self.momentsTableView.finishInfiniteScroll()
-//        }
+        MomentsProvider.getMoments(with: listType, sortingFlag: sortingFlag, filterPassion: selectedPassion, paginator: paginator) { [unowned self] (result) in
+            
+            switch result {
+            case .success(let newMoments):
+                SVProgressHUD.dismiss()
+                
+                if self.moments == nil {
+                    self.moments = [Moment]()
+                }
+                
+                // prefetch moments
+                MomentsProvider.preloadMomentPictures(moments: newMoments)
+                
+                self.paginator.addNewElements(&self.moments!, newElements: newMoments)
+                self.momentsTableView.reloadData()
+                break
+            case .failure(let error):
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                break
+            default:
+                break
+            }
+            
+            self.momentsTableView.isHidden = false
+            self.momentsTableView.finishInfiniteScroll()
+        }
     }
 }
 
@@ -433,34 +430,33 @@ extension MomentsViewController: MomentTableViewCellDelegate {
         let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         //TODO: anyway we need to load users for a migrated users
         if moment.ownerId != currentUser.objectId {
-            let reportAction = UIAlertAction(title: LocalizableString.Report.localizedString, style: .default, handler: { alert in
+            alertVC.addAction(UIAlertAction(title: LocalizableString.Report.localizedString, style: .default, handler: { alert in
                 self.showBlackLoader()
-                MomentsProvider.reportMoment(moment, user: self.currentUser, completion: { (result) in
+                
+                MomentsProvider.report(moment: moment, completion: { (result) in
                     self.hideLoader()
+                    
                     switch result {
-                        
                     case .success(_):
                         self.showAlert("", message: LocalizableString.MomentHadBeenReported.localizedString, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
                         break
                     case .failure(let error):
-                        self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
+                        self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
                     default:
                         break
                     }
                 })
-            })
-            alertVC.addAction(reportAction)
-            
+                //TODO: perhaps it is a good idea to block reporting moment more than 1 time
+            }))
         } else {
-            
-            let deleteAction = UIAlertAction(title: LocalizableString.DeleteMoment.localizedString, style: .default, handler: { alert in
+            alertVC.addAction(UIAlertAction(title: LocalizableString.DeleteMoment.localizedString, style: .default, handler: { alert in
                 
                 self.showBlackLoader()
-                MomentsProvider.deleteMoment(moment, user: self.currentUser, completion: { (result) in
-                    
+                
+                MomentsProvider.delete(moment: moment, completion: { (result) in
                     self.hideLoader()
+                    
                     switch result {
-                        
                     case .success(_):
                         guard let index = self.moments?.index(of: moment) else {
                             print("Can't find index for the moment")
@@ -469,23 +465,19 @@ extension MomentsViewController: MomentTableViewCellDelegate {
                         
                         self.moments?.remove(at: index)
                         self.momentsTableView.reloadData()
-                        NotificationCenter.default.post(
-                            name: Foundation.Notification.Name(rawValue: removedMomentNotification),
-                            object: nil,
-                            userInfo: ["moment": moment])
+                        
+                        Helper.sendNotification(with: updateMomentNotification, object: nil, dict: ["moment": moment])
                         break
                     case .failure(let error):
-                        self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
+                        self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
                     default:
                         break
                     }
                 })
-            })
-            alertVC.addAction(deleteAction)
+            }))
         }
         
-        let cancelAction = UIAlertAction(title: LocalizableString.Cancel.localizedString, style: .cancel, handler: nil)
-        alertVC.addAction(cancelAction)
+        alertVC.addAction(UIAlertAction(title: LocalizableString.Cancel.localizedString, style: .cancel, handler: nil))
         
         present(alertVC, animated: true, completion: nil)
     }

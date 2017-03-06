@@ -68,7 +68,7 @@ class LoginViewController: UIViewController {
         
         UserProvider.loadUser { (result) in
             switch result {
-            case .success(let user):
+            case .success(_):
                 self.operateCurrentUser()
                 
                 self.hideLoader()
@@ -76,8 +76,12 @@ class LoginViewController: UIViewController {
                 // go next
                 self.goNextToTabBar()
                 break
-            case .failure(let message):
-                SVProgressHUD.showError(withStatus: message)
+            case .failure(let error):
+                if error.localizedDescription != APIError.notFound.localizedDescription {
+                    SVProgressHUD.showError(withStatus: error.localizedDescription)
+                } else {
+                    SVProgressHUD.dismiss()
+                }
                 break
             default:
                 break
@@ -99,6 +103,8 @@ class LoginViewController: UIViewController {
             return
         }
     
+        showBlackLoader()
+        
         UserProvider.logInUser(with: LocationManager.shared.currentLocationCoordinates, from: self) { [unowned self] (result) in
             switch (result) {
             case .success(_):
@@ -106,8 +112,8 @@ class LoginViewController: UIViewController {
                 self.hideLoader()
                 
                 self.goNextToTabBar()
-            case .failure(let message):
-                SVProgressHUD.showError(withStatus: message)
+            case .failure(let error):
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             case .userCancelled(_):
                 SVProgressHUD.dismiss()
             }

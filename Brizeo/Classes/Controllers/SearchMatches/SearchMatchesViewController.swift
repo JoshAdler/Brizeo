@@ -39,7 +39,7 @@ class SearchMatchesViewController: BasicViewController {
         super.viewDidLoad()
         
         if currentUser == nil {
-            currentUser = User.test()
+            currentUser = UserProvider.shared.currentUser!
         }
     }
     
@@ -211,7 +211,7 @@ class SearchMatchesViewController: BasicViewController {
                     self.actionsButton.isHidden = true
                     break
                 case .failure(let error):
-                    self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
+                    self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
                 default:
                     break
                 }

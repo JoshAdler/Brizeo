@@ -9,16 +9,25 @@
 import Foundation
 import Crashlytics
 import Moya
+import SDWebImage
 
 enum MomentsListType {
-    case allMoments(userId: String)
+    case allMoments
     case myMatches(userId: String)
     case myMoments(userId: String)
 }
 
 enum MomentsSortingFlag: String {
-    case newest = "updateAt "
+    case newest = "updateAt"
     case popular = "popular"
+    
+    init(with index: Int) {
+        if index == 1 {
+            self = .popular
+        } else {
+            self = .newest
+        }
+    }
 }
 
 class MomentsProvider {
@@ -26,6 +35,8 @@ class MomentsProvider {
     // MARK: - Types
     
     typealias MomentsCompletion = (Result<[Moment]>) -> Void
+    typealias MomentCompletion = (Result<Moment>) -> Void
+    typealias MomentLikersCompletion = (Result<[User]>) -> Void
     
     struct Constants {
         static let momentsLimitAmount = 20
@@ -37,7 +48,12 @@ class MomentsProvider {
         static let MomentId = "imageId"
     }
     
-    // MARK: - Properties
+    // MARK: - Class methods
+    
+    class func preloadMomentPictures(moments: [Moment]) {
+        let urls = moments.filter({ $0.imageUrl != nil }).map({ $0.imageUrl })
+        SDWebImagePrefetcher.shared().prefetchURLs(urls)
+    }
     
     class func getMoments(for userId: String, sortingFlag: MomentsSortingFlag, filterFlag: String?, completion: @escaping MomentsCompletion) {
         
@@ -78,103 +94,139 @@ class MomentsProvider {
                 //                completion(.success())
                 break
             case .failure(let error):
-                //completion(.failure(error.localizedDescription))
+                completion(.failure(APIError(error: error)))
                 break
             }
         }
     }
     
-    static func getMomentsList(_ momentsType: MomentsListType, sort: Bool, paginator: PaginationHelper, completion: @escaping MomentsCompletion) {
-//    
-//        switch momentsType {
-//        case .allMoments(let userId):
-//            if sort {
-//               getAllMomentsWithQuery(paginator: paginator,userId: userId, completion: completion)
-//            } else {
-//                getAllMoments(paginator: paginator, userId: userId, completion: completion)
-//            }
-//        case .myMatches(let userId):
-//            if sort {
-//                getMyMatchesMomentsNewest(paginator: paginator, userId: userId, completion: completion)
-//            } else {
-//                getMyMatchesMoments(paginator: paginator, userId: userId, completion: completion)
-//            }
-//        case .myMoments(let userId):
-//            if sort {
-//                getMyMomentsNewest(paginator: paginator, userId: userId, completion: completion)
-//            } else {
-//                getMyMoments(paginator: paginator, userId: userId, completion: completion)
-//            }
-//        }
+    class func create(new moment: Moment, completion: @escaping MomentCompletion) {
+        
+        let provider = MoyaProvider<APIService>()
+        provider.request(.createNewMoment(moment: moment)) { (result) in
+            switch result {
+            case .success(let response):
+//                                completion(.success())
+                break
+            case .failure(let error):
+                completion(.failure(APIError(error: error)))
+                break
+            }
+        }
     }
     
-    static func getUsersWhoLikedMoment(_ moment: Moment, completion: @escaping (Result<[User]>) -> Void) {
-//    
-//        let params = [MomentsKey.MomentId : moment.objectId]
-//        
-//        PFCloud.callFunction(inBackground: ParseFunction.GetMomentLikes.name, withParameters: params) { (objects, error) in
-//            
-//            if let error = error {
-//                
-//                completion(.failure(error.localizedDescription))
-//                
-//            } else if let users = objects as? [User] {
-//                
-//                completion(.success(users))
-//            }
-//        }
+    class func delete(moment: Moment, completion: @escaping MomentCompletion) {
+        
+        guard let user = UserProvider.shared.currentUser else {
+            print("Error: Can't delete moment without current user")
+            completion(.failure(APIError(code: 0, message: "Can't delete moment without current user")))
+            return
+        }
+        
+        let provider = MoyaProvider<APIService>()
+        provider.request(.deleteMoment(moment: moment, userId: user.objectId)) { (result) in
+            switch result {
+            case .success(let response):
+                completion(.success(moment))
+                break
+            case .failure(let error):
+                completion(.failure(APIError(error: error)))
+                break
+            }
+        }
     }
     
-    static func likeMoment(_ moment: Moment, completion: @escaping (Result<Bool>) -> Void) {
-        let user = UserProvider.shared.currentUser!
-//        
-//        CLSNSLogv("Attempting to user %@'s like of Moment %@", getVaList([user.objectId!, moment.objectId!]))
-//        // Make sure you can't like your own picture
-//        if(moment.user == user) {
-//            completion(.failure(LocalizableString.YouCantLikeYourOwnMoment.localizedString))
-//            return
-//        }
-//        
-//        let params : [String: AnyObject] = [UserParameterKey.UserIdKey : user.objectId! as AnyObject, MomentsKey.MomentId: moment.objectId! as AnyObject]
-//        PFCloud.callFunction(inBackground: ParseFunction.LikeMoment.name, withParameters: params) { (result, error) in
-//            
-//            if let error = error {
-//                
-//                completion(.failure(error.localizedDescription))
-//                
-//            } else {
-//                
-//                moment.likedByCurrentUser = true
-//                moment.numberOfLikes += 1
-//                completion(.success(true))
-//            }
-//        }
+    //TODO: user everywhere this solution like MomentCompletion
+    class func getLikers(for moment: Moment, completion: @escaping MomentLikersCompletion) {
+        
+        let provider = MoyaProvider<APIService>()
+        provider.request(.getLikersForMoment(moment: moment)) { (result) in
+            switch result {
+            case .success(let response):
+                //                                completion(.success())
+                break
+            case .failure(let error):
+                completion(.failure(APIError(error: error)))
+                break
+            }
+        }
+    }
+
+    class func report(moment: Moment, completion: @escaping MomentCompletion) {
+        
+        guard let user = UserProvider.shared.currentUser else {
+            print("Error: Can't report moment without current user")
+            completion(.failure(APIError(code: 0, message: "Can't report moment without current user")))
+            return
+        }
+        
+        let provider = MoyaProvider<APIService>()
+        provider.request(.reportMoment(moment: moment, reporterId: user.objectId)) { (result) in
+            switch result {
+            case .success(let response):
+                completion(.success(moment))
+                break
+            case .failure(let error):
+                completion(.failure(APIError(error: error)))
+                break
+            }
+        }
     }
     
-    static func unlikeMoment(_ moment: Moment, completion: @escaping (Result<Bool>) -> Void) {
-//        
-//        let user = User.current()!
-//        CLSNSLogv("Attempting to user %@'s like of Moment %@", getVaList([user.objectId!, moment.objectId!]))
-//        // Make sure you can't like your own picture
-//        if(moment.user == user) {
-//            completion(.failure(LocalizableString.YouCantLikeYourOwnMoment.localizedString))
-//            return
-//        }
-//        
-//        let params : [String: AnyObject] = [UserParameterKey.UserIdKey : user.objectId! as AnyObject, MomentsKey.MomentId: moment.objectId! as AnyObject]
-//        PFCloud.callFunction(inBackground: ParseFunction.UnlikeMoment.name, withParameters: params) { (result, error) in
-//            
-//            if let error = error {
-//                
-//                completion(.failure(error.localizedDescription))
-//                
-//            } else {
-//                
-//                moment.likedByCurrentUser = false
-//                moment.numberOfLikes -= 1
-//                completion(.success(true))
-//            }
-//        }
+    class func like(moment: Moment, completion: @escaping MomentCompletion) {
+        
+        guard let user = UserProvider.shared.currentUser else {
+            print("Error: Can't like moment without current user")
+            completion(.failure(APIError(code: 0, message: "Can't like moment without current user")))
+            return
+        }
+        
+        let provider = MoyaProvider<APIService>()
+        provider.request(.likeMoment(moment: moment, userId: user.objectId)) { (result) in
+            switch result {
+            case .success(let response):
+                completion(.success(moment))
+                break
+            case .failure(let error):
+                completion(.failure(APIError(error: error)))
+                break
+            }
+        }
+    }
+    
+    class func unlike(moment: Moment, completion: @escaping MomentCompletion) {
+        
+        guard let user = UserProvider.shared.currentUser else {
+            print("Error: Can't unlike moment without current user")
+            completion(.failure(APIError(code: 0, message: "Can't unlike moment without current user")))
+            return
+        }
+        
+        let provider = MoyaProvider<APIService>()
+        provider.request(.unlikeMoment(moment: moment, userId: user.objectId)) { (result) in
+            switch result {
+            case .success(let response):
+                completion(.success(moment))
+                break
+            case .failure(let error):
+                completion(.failure(APIError(error: error)))
+                break
+            }
+        }
+    }
+    
+    //TODO: check to be sure that the current user can't like his moment
+    
+    class func getMoments(with type: MomentsListType, sortingFlag: MomentsSortingFlag, filterPassion: Passion?, paginator: PaginationHelper, completion: @escaping MomentsCompletion) {
+        
+        switch type {
+        case .allMoments:
+            getAllMoments(sortingFlag: sortingFlag, filterFlag: filterPassion?.objectId, completion: completion)
+        case .myMatches(let userId):
+            getMatchedMoments(userId: userId, sortingFlag: sortingFlag, filterFlag: filterPassion?.objectId, completion: completion)
+        case .myMoments(let userId):
+            getMoments(for: userId, sortingFlag: sortingFlag, filterFlag: filterPassion?.objectId, completion: completion)
+        }
     }
     
     static func createMomentWithImage(_ image: UIImage, andDescription description: String, forUser user: User, completion: @escaping (Result<Moment>) -> Void) {
@@ -226,54 +278,6 @@ class MomentsProvider {
 //                } else {
 //                    completion(.failure(LocalizableString.UnableToSaveMoment.localizedString))
 //                }
-//            }
-//        }
-    }
-    
-    static func deleteMoment(_ moment: Moment, user: User, completion: @escaping (Result<Bool>) -> Void) {
-        
-//        let params : [String: AnyObject] = [UserParameterKey.UserIdKey : user.objectId! as AnyObject, MomentsKey.MomentId: moment.objectId! as AnyObject]
-//        PFCloud.callFunction(inBackground: ParseFunction.DeleteMoment.name, withParameters: params) { (result, error) in
-//            
-//            if let error = error {
-//                
-//                completion(.failure(error.localizedDescription))
-//                
-//            } else {
-//                
-//                completion(.success(true))
-//            }
-//        }
-    }
-    
-    static func userDidLikeMoment(_ moment: Moment, userId: String, completion: @escaping (Result<Bool>) -> Void) {
-        
-//        let params : [String: AnyObject] = [UserParameterKey.UserIdKey : userId as AnyObject, MomentsKey.MomentId: moment.objectId! as AnyObject]
-//        PFCloud.callFunction(inBackground: ParseFunction.GetUserDidLikeMoment.name, withParameters: params) { (result, error) in
-//            
-//            if let liked = result as? Bool {
-//                
-//                completion(.success(liked))
-//                
-//            } else {
-//                
-//                completion(.success(false))
-//            }
-//        }
-    }
-    
-    static func reportMoment(_ moment: Moment, user: User, completion: @escaping (Result<Bool>) -> Void) {
-        
-//        let params : [String: AnyObject] = [UserParameterKey.UserIdKey : user.objectId! as AnyObject, MomentsKey.MomentId: moment.objectId! as AnyObject]
-//        PFCloud.callFunction(inBackground: ParseFunction.ReportMoment.name, withParameters: params) { (result, error) in
-//            
-//            if let error = error {
-//                
-//                completion(.failure(error.localizedDescription))
-//                
-//            } else {
-//                
-//                completion(.success(true))
 //            }
 //        }
     }

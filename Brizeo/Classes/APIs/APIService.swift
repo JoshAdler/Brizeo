@@ -10,10 +10,13 @@ import Foundation
 import Moya
 
 enum APIService {
+    
     // user
     case getCurrentUser(facebookId: String)
     case createNewUser(newUser: User)
     case updateUser(user: User)
+    case getUserWithStatus(firstUserId: String, secondUserId: String)
+    case reportUser(reporterId: String, reportedId: String)
     
     // preferences
     case getPreferences(userId: String)
@@ -23,10 +26,31 @@ enum APIService {
     case getMoments(userId: String, sortingFlag: MomentsSortingFlag, filterFlag: String)
     case getAllMoments(sortingFlag: MomentsSortingFlag, filterFlag: String)
     case getMatchedMoments(userId: String, sortingFlag: MomentsSortingFlag, filterFlag: String)
+    case createNewMoment(moment: Moment)
+    case getLikersForMoment(moment: Moment)
+    case reportMoment(moment: Moment, reporterId: String)
+    case likeMoment(moment: Moment, userId: String)
+    case unlikeMoment(moment: Moment, userId: String)
+    case deleteMoment(moment: Moment, userId: String)
+    
+    // matching
+    case approveMatch(approverId: String, userId: String)
+    case declineMatch(approverId: String, userId: String)
+    case getUsersForMatch(userId: String)
+    case getMatchesForUser(userId: String)
     
     // country
     case addCountriesForUser(countries: [Country], userId: String)
     case deleteCountriesForUser(countries: [Country], userId: String)
+    
+    // passions
+    case getAllPassions
+    
+    // notifications
+    case getNotifications(userId: String)
+    
+    // info
+    case notifyAdminAboutDownloads(userId: String, count: Int)
 }
 
 extension APIService: TargetType {
@@ -37,9 +61,13 @@ extension APIService: TargetType {
         case .getCurrentUser(let facebookId):
             return "/users/\(facebookId)"
         case .createNewUser(_):
-            return "/usres"
+            return "/users"
         case .updateUser(let user):
             return "/users/\(user.objectId)"
+        case .getUserWithStatus(let firstUserId, let secondUserId):
+            return "/notifications/\(firstUserId)/\(secondUserId)"
+        case .reportUser(let reporterId, let reportedId):
+            return "/reportuser/\(reporterId)/\(reportedId)"
         case .getPreferences(let userId), .updatePreferences(let userId, _):
             return "/preferences/\(userId)"
         case .addCountriesForUser(_, let userId), .deleteCountriesForUser(_, let userId):
@@ -48,77 +76,79 @@ extension APIService: TargetType {
             return "/moments/\(userId)/\(sortingFlag.rawValue)/\(filterFlag)"
         case .getAllMoments(let sortingFlag, let filterFlag):
             return "/moments/\(sortingFlag.rawValue)/\(filterFlag)"
+        case .likeMoment(let moment, let userId), .unlikeMoment(let moment, let userId):
+            return "/likemoments/\(userId)/\(moment.objectId)"
         case .getMatchedMoments(let userId, let sortingFlag, let filterFlag):
             return "/matchedmoments/\(userId)/\(sortingFlag.rawValue)/\(filterFlag)"
+        case .createNewMoment(_):
+            return "/moments"
+        case .getLikersForMoment(let moment):
+            return "/likemoments/users/\(moment.objectId)"
+        case .reportMoment(let moment, let reporterId):
+            return "/reportmoment/\(moment.objectId)/\(reporterId)"
+        case .deleteMoment(let moment, let userId):
+            return "/moments/\(userId)/\(moment.objectId)"
+        case .getAllPassions:
+            return "/passions"
+        case .getNotifications(let userId):
+            return "/notifications/\(userId)"
+        case .notifyAdminAboutDownloads(let userId, let count):
+            return "/downloadevent/\(userId)/\(count)"
+        case .approveMatch(let approverId, let userId), .declineMatch(let approverId, let userId):
+            return "/match/\(approverId)/\(userId)"
+        case .getUsersForMatch(let userId):
+            return "/approveuserformatch/\(userId)"
+        case .getMatchesForUser(let userId):
+            return "/approvematchforuser/\(userId)"
         }
     }
-    
+
     var method: Moya.Method {
         switch self {
-        case .getCurrentUser(_), .getPreferences(_), .getMoments(_, _, _), .getAllMoments(_, _), .getMatchedMoments(_, _, _):
-            return .get
-        case .createNewUser(_):
+        case .createNewUser(_), .reportMoment(_, _), .reportUser(_, _), .notifyAdminAboutDownloads(_, _), .approveMatch(_, _):
             return .post
-        case .updatePreferences(_, _), .updateUser(_), .addCountriesForUser(_, _):
+        case .updatePreferences(_, _), .updateUser(_), .addCountriesForUser(_, _), .createNewMoment(_), .likeMoment(_, _):
             return .put
-        case .deleteCountriesForUser(_, _):
+        case .deleteCountriesForUser(_, _), .unlikeMoment(_, _), .deleteMoment(_, _), .declineMatch(_, _):
             return .delete
+        default:
+            return .get
         }
     }
     
     var parameters: [String: Any]? {
         switch self {
-        case .getCurrentUser(_), .getPreferences(_), .getMoments(_, _, _), .getAllMoments(_, _), .getMatchedMoments(_, _, _):
-            return nil
-        case .createNewUser(_):
-            return nil
+        case .createNewUser(let user):
+            let dict = ["newuser": user.toJSON()]
+            return dict
         case .updatePreferences(_, _):
             return nil
-        case .updateUser(_):
-            return nil
+        case .updateUser(let user):
+            return user.toJSON()
         case .addCountriesForUser(_):
             return nil
         case .deleteCountriesForUser(_, _):
+            return nil
+        case .createNewMoment(_):
+            return nil
+        default:
             return nil
         }
     }
     
     var parameterEncoding: ParameterEncoding {
         switch self {
-        case .getCurrentUser(_), .getPreferences(_), .getMoments(_, _, _), .getAllMoments(_ ,_), .getMatchedMoments(_, _ ,_):
-            return URLEncoding.default
-        case .createNewUser(_), .updatePreferences(_, _), .updateUser(_), .addCountriesForUser(_, _), .deleteCountriesForUser(_, _):
+        case .createNewUser(_), .updatePreferences(_, _), .updateUser(_), .addCountriesForUser(_, _), .deleteCountriesForUser(_, _), .createNewMoment(_):
             return JSONEncoding.default
+        default:
+            return URLEncoding.default
         }
     }
     
     var sampleData: Data {
         return "No test data".utf8Encoded
-//        switch self {
-//        case .zen:
-//            return "Half measures are as bad as nothing at all.".utf8Encoded
-//        case .showUser(let id):
-//            return "{\"id\": \(id), \"first_name\": \"Harry\", \"last_name\": \"Potter\"}".utf8Encoded
-//        case .createUser(let firstName, let lastName):
-//            return "{\"id\": 100, \"first_name\": \"\(firstName)\", \"last_name\": \"\(lastName)\"}".utf8Encoded
-//        case .updateUser(let id, let firstName, let lastName):
-//            return "{\"id\": \(id), \"first_name\": \"\(firstName)\", \"last_name\": \"\(lastName)\"}".utf8Encoded
-//        case .showAccounts:
-//            // Provided you have a file named accounts.json in your bundle.
-//            guard let path = Bundle.main.path(forResource: "accounts", ofType: "json"),
-//                let data = Data(base64Encoded: path) else {
-//                    return Data()
-//            }
-//            return data
-//        }
     }
     var task: Task {
         return .request
-//        switch self {
-//        case .getCurrentUser(_), .createNewUser(_), .getPreferences(_), .updatePreferences(_, _):
-//            return .request
-////        case .zen, .showUser, .createUser, .updateUser, .showAccounts:
-////            return .request
-//        }
     }
 }

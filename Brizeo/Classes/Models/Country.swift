@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import ObjectMapper
 
-class Country: NSObject {
+class Country: Mappable {
 
     // MARK: - Properties
     
-    var code: String
-    var name: String
+    var code: String = ""
+    var name: String = ""
     var sortingIndex: Int = 0
     
     var flagImage: UIImage? {
@@ -27,9 +28,14 @@ class Country: NSObject {
     
     // MARK: - Init
     
+    required init?(map: Map) { }
+    
     init(code: String, name: String) {
         self.code = code
         self.name = name
+    }
+    
+    func mapping(map: Map) {
     }
     
     // MARK: - Class methods

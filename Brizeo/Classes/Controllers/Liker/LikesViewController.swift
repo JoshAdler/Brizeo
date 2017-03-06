@@ -42,13 +42,13 @@ class LikesViewController: BasicViewController {
     
         likesTableView.tableFooterView = UIView()
 
-        MomentsProvider.getUsersWhoLikedMoment(moment) { [unowned self] (result) in
+        MomentsProvider.getLikers(for: moment) { (result) in
             switch result {
             case .success(let users):
                 self.users = users
                 self.likesTableView.reloadData()
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error)
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             default:
                 break
             }

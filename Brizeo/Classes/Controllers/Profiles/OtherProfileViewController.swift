@@ -57,7 +57,7 @@ class OtherProfileViewController: BasicViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        user = User.test()
+        user = UserProvider.shared.currentUser!
         
         fetchMutualFriends()
         fetchInterests()
@@ -93,7 +93,7 @@ class OtherProfileViewController: BasicViewController {
     }
     
     fileprivate func fetchMutualFriends() {
-        let currentUser = User.test()//User.current()!
+        let currentUser = UserProvider.shared.currentUser!
         UserProvider.getMutualFriendsOfCurrentUser(currentUser, andSecondUser: user, completion: { (result) in
             switch result {
             case .success(let value):
@@ -101,7 +101,7 @@ class OtherProfileViewController: BasicViewController {
                 self.friendsCountLabel.text = "\(value.count)"
             case .failure(let error):
                 self.friendsCountLabel.text = "0"
-                self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
+                self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
             default:
                 break
             }
@@ -125,7 +125,7 @@ class OtherProfileViewController: BasicViewController {
                 //TODO: implement the functionality above
                 break
             case .failure(let error):
-                self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
+                self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
                 break
             default:
                 break

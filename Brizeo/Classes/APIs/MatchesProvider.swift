@@ -7,10 +7,113 @@
 //
 
 import Foundation
-import Parse
 import Crashlytics
+import Moya
 
-struct MatchesProvider {
+class MatchesProvider {
+    
+    // MARK: - Types
+    
+    typealias MatchUserCompletion = (Result<User>) -> Void
+    typealias UsersCompletion = (Result<[User]>) -> Void
+    
+    // MARK: - Class methods
+    
+    class func approveMatch(for user: User, completion: @escaping MatchUserCompletion) {
+        
+        guard let currentUser = UserProvider.shared.currentUser else {
+            print("Error: Can't approve match without current user")
+            completion(.failure(APIError(code: 0, message: "Can't approve match without current user")))
+            return
+        }
+        
+        let provider = MoyaProvider<APIService>()
+        provider.request(.approveMatch(approverId: currentUser.objectId, userId: user.objectId)) { (result) in
+            switch result {
+            case .success(let response):
+                //self.passions = passions.sorted(by: {$0.displayOrder < $1.displayOrder})
+                // TODO: make a request and cache result
+                //                                completion(.success())
+                // save to cache
+                break
+            case .failure(let error):
+                completion(.failure(APIError(error: error)))
+                break
+            }
+        }
+    }
+    
+    class func declineMatch(for user: User, completion: @escaping MatchUserCompletion) {
+        
+        guard let currentUser = UserProvider.shared.currentUser else {
+            print("Error: Can't decline match without current user")
+            completion(.failure(APIError(code: 0, message: "Can't decline match without current user")))
+            return
+        }
+        
+        let provider = MoyaProvider<APIService>()
+        provider.request(.declineMatch(approverId: currentUser.objectId, userId: user.objectId)) { (result) in
+            switch result {
+            case .success(let response):
+                //self.passions = passions.sorted(by: {$0.displayOrder < $1.displayOrder})
+                // TODO: make a request and cache result
+                //                                completion(.success())
+                // save to cache
+                break
+            case .failure(let error):
+                completion(.failure(APIError(error: error)))
+                break
+            }
+        }
+    }
+    
+    class func getUsersForMatching(for user: User, completion: @escaping UsersCompletion) {
+        
+        guard let currentUser = UserProvider.shared.currentUser else {
+            print("Error: Can't get users for matching without current user")
+            completion(.failure(APIError(code: 0, message: "Can't get users for matching without current user")))
+            return
+        }
+        
+        let provider = MoyaProvider<APIService>()
+        provider.request(.getUsersForMatch(userId: currentUser.objectId)) { (result) in
+            switch result {
+            case .success(let response):
+                //self.passions = passions.sorted(by: {$0.displayOrder < $1.displayOrder})
+                // TODO: make a request and cache result
+                //                                completion(.success())
+                // save to cache
+                break
+            case .failure(let error):
+                completion(.failure(APIError(error: error)))
+                break
+            }
+        }
+    }
+    
+    class func getMatches(for user: User, completion: @escaping UsersCompletion) {
+        
+        guard let currentUser = UserProvider.shared.currentUser else {
+            print("Error: Can't get matches without current user")
+            completion(.failure(APIError(code: 0, message: "Can't get matches without current user")))
+            return
+        }
+        
+        let provider = MoyaProvider<APIService>()
+        provider.request(.getMatchesForUser(userId: currentUser.objectId)) { (result) in
+            switch result {
+            case .success(let response):
+                //self.passions = passions.sorted(by: {$0.displayOrder < $1.displayOrder})
+                // TODO: make a request and cache result
+                //                                completion(.success())
+                // save to cache
+                break
+            case .failure(let error):
+                completion(.failure(APIError(error: error)))
+                break
+            }
+        }
+    }
     
 //    static func getPotentialMatchesForUser(_ user: User, completion:@escaping ((Result<[User]>) -> Void)) {
 //        

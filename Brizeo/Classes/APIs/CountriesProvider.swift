@@ -23,7 +23,7 @@ class CountriesProvider: NSObject {
                 completion(.success(UserProvider.shared.currentUser!))
                 break
             case .failure(let error):
-                completion(.failure(error.localizedDescription))
+                completion(.failure(APIError(error: error)))
                 break
             }
         }
@@ -39,7 +39,7 @@ class CountriesProvider: NSObject {
                 completion(.success(UserProvider.shared.currentUser!))
                 break
             case .failure(let error):
-                completion(.failure(error.localizedDescription))
+                completion(.failure(APIError(error: error)))
                 break
             }
         }

@@ -158,7 +158,7 @@ extension TripsViewController: SWTableViewCellDelegate {
             }
             //TODO: check equal protocol for country
             let country = user.countries[indexPath.row]
-            user.countries.remove(at: user.countries.index(of: country)!)
+            //user.countries.remove(at: user.countries.index(of: country)!)
             //saveUser()
             //TODO: save user
             
@@ -202,15 +202,16 @@ extension TripsViewController: UITableViewDelegate {
         
         if let filteredCountries = filteredCountries {
             let country = filteredCountries[indexPath.row]
-            if !user.countries.contains(country) {
-                user.countries.append(country)
-                // TODO: save user
-                //saveUser()
-                GoogleAnalyticsManager.userSelectCountry(country: country.name).sendEvent()
-                searchController.isActive = false
-                self.filteredCountries = nil
-                tableView.reloadData()
-            }
+            //TODO:
+//            if !user.countries.contains(where: country) {
+//                user.countries.append(country)
+//                // TODO: save user
+//                //saveUser()
+//                GoogleAnalyticsManager.userSelectCountry(country: country.name).sendEvent()
+//                searchController.isActive = false
+//                self.filteredCountries = nil
+//                tableView.reloadData()
+//            }
         }
     }
 }

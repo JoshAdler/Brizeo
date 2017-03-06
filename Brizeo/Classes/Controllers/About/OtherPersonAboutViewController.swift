@@ -65,7 +65,7 @@ class OtherPersonAboutViewController: UIViewController {
     }
     
     fileprivate func fetchMutualFriends() {
-        UserProvider.getMutualFriendsOfCurrentUser(/*User.current()!*/User.test(), andSecondUser: user, completion: { (result) in
+        UserProvider.getMutualFriendsOfCurrentUser(UserProvider.shared.currentUser!, andSecondUser: user, completion: { (result) in
             switch result {
             case .success(let value):
                 // send notification
@@ -75,7 +75,7 @@ class OtherPersonAboutViewController: UIViewController {
                 self.mutualFriends = value
                 self.passionsTableView.reloadSections(IndexSet(integer: 2), with: .automatic)
             case .failure(let error):
-                self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
+                self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
             default:
                 break
             }

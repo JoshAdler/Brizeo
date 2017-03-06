@@ -30,7 +30,7 @@ struct ThemeConstants {
 // TODO: rewrite result and add code,   
 enum Result<T> {
     case success(T)
-    case failure(String)
+    case failure(APIError)
     case userCancelled(String)
 }
 
@@ -46,7 +46,7 @@ class Helper: NSObject {
         static let mainTabBarControllerId = "MainTabBarController"
     }
     
-    // MARK: - Class methods
+    // MARK: - Storyboard
     
     // storyboard
     class func storyboard() -> UIStoryboard {
@@ -60,7 +60,7 @@ class Helper: NSObject {
         }
         return controller
     }
-    
+    //TODO: use sound from Josh for notifications
     // carbon
     class func createCarbonController(with items: [String], _ delegate: CarbonTabSwipeNavigationDelegate) -> CarbonTabSwipeNavigation {
         let controller = CarbonTabSwipeNavigation(items: items, delegate: delegate)
@@ -173,6 +173,12 @@ class Helper: NSObject {
             days = -days
         }
         return LocalizableString.Days.localizedStringWithArguments([days])
+    }
+    
+    // MARK: - Notifications
+    
+    class func sendNotification(with name: String, object: Any?, dict: [String: Any]?) {
+        NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: name), object: object, userInfo: dict)
     }
 }
 

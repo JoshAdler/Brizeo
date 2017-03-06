@@ -12,6 +12,7 @@ import Alamofire
 import CoreLocation
 import FBSDKLoginKit
 import Moya
+import Moya_ObjectMapper
 
 class UserProvider: NSObject {
     
@@ -25,6 +26,9 @@ class UserProvider: NSObject {
         static let permissions = ["public_profile", "email", "user_photos", "user_birthday", "user_friends", "user_education_history", "user_work_history"/*, "user_events"*/]
         static let parameters = ["fields" : "id, email, first_name, last_name, name, birthday, gender, work, education, picture.width(1000).height(1000), albums{photos.height(1000){images},name}"]
     }
+
+    typealias UserCompletion = (Result<User>) -> Void
+    typealias EmptyCompletion = (Result<Void>) -> Void
     
     // MARK: - Properties
     
@@ -53,24 +57,35 @@ class UserProvider: NSObject {
     }
     
     class func loadUser(completion: ((Result<User>) -> Void)?) {
-        //TODO: load user by its facebook id
+
         guard let facebookId = FBSDKAccessToken.current().userID else {
             print("Error: Can't load user without normal token")
-            completion?(.failure("Your current session is expired. Please login."))
+            completion?(.failure(APIError.unknown(message: "Your current session is expired. Please login.")))
             return
         }
         
         // load user by facebook id
         let provider = MoyaProvider<APIService>()
-        provider.request(.getCurrentUser(facebookId: facebookId)) { (result) in
+        provider.request(.getCurrentUser(facebookId: /*facebookId*/"0")) { (result) in
             switch result {
             case .success(let response):
-                shared.currentUser?.facebookId = facebookId
-                shared.currentUser = User.test()
-                completion?(.success(User.test()))
+                guard response.statusCode == 200 else {
+                    completion?(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
+                do {
+                    let user = try response.mapObject(User.self)
+                    
+                    shared.currentUser = user
+                    completion?(.success(user))
+                }
+                catch (let error) {
+                    completion?(.failure(APIError(error: error)))
+                }
                 break
             case .failure(let error):
-                completion?(.failure(error.localizedDescription))
+                completion?(.failure(APIError(error: error)))
                 break
             }
         }
@@ -81,12 +96,12 @@ class UserProvider: NSObject {
         let provider = MoyaProvider<APIService>()
         provider.request(.updateUser(user: user)) { (result) in
             switch result {
-            case .success(let response):
+            case .success(_):
                 shared.currentUser = user
                 completion?(.success(user))
                 break
             case .failure(let error):
-                completion?(.failure(error.localizedDescription))
+                completion?(.failure(APIError(error: error)))
                 break
             }
         }
@@ -100,12 +115,12 @@ class UserProvider: NSObject {
         
             guard error == nil else {
                 CLSNSLogv("ERROR: Error logging into Facebook: %@", getVaList([error! as CVarArg]))
-                completion(.failure(error!.localizedDescription))
+                completion(.failure(APIError(error: error!)))
                 return
             }
             
             guard result != nil else {
-                completion(.failure("No result"))
+                completion(.failure(APIError(code: 0, message: "No result")))
                 return
             }
             
@@ -117,24 +132,29 @@ class UserProvider: NSObject {
             // try to load user by facebook id
             loadUser(completion: { (result) in
                 switch result {
-                case .success(let user): // reuse already created user
+                case .success(_): // reuse already created user
                     completion(result)
                     break
-                case .failure(let message): // no user with such facebook id
+                case .failure(let error): // no user with such facebook id
+                    if error != APIError.notFound {
+                        completion(.failure(APIError(error: error)))
+                        return
+                    }
+                    
                     fetchUserInfoFromFacebook(completion: { (result) in
                         switch(result) {
-                        case .failure(let msg):
-                            CLSNSLogv("ERROR: Unable to retrieve user details from Facebook: %@", getVaList([msg]))
-                            completion(.failure(msg))
+                        case .failure(let error):
+                            CLSNSLogv("ERROR: Unable to retrieve user details from Facebook: %@", getVaList([error as CVarArg]))
+                            completion(.failure(error))
                             break
                         case .success(let user):
                             
                             // create new user with a FB data
                             createUser(user: user, completion: { (result) in
                                 switch(result) {
-                                case .failure(let message):
-                                    CLSNSLogv("ERROR: Unable to retrieve user details from Facebook: %@", getVaList([message]))
-                                    completion(.failure(message))
+                                case .failure(let error):
+                                    CLSNSLogv("ERROR: Unable to retrieve user details from Facebook: %@", getVaList([error as CVarArg]))
+                                    completion(.failure(error))
                                     break
                                 case .success(let user):
                                     shared.currentUser = user
@@ -148,7 +168,6 @@ class UserProvider: NSObject {
                                 }
                             })
                             break
-                            //TODO: set lastactivetime for user to create
                         default:
                             break
                         }
@@ -160,6 +179,44 @@ class UserProvider: NSObject {
             })
         }
     }
+    
+    class func getUserWithStatus(for firstUserId: String, and secondUserId: String, completion: @escaping UserCompletion) {
+        
+        let provider = MoyaProvider<APIService>()
+        provider.request(.getUserWithStatus(firstUserId: firstUserId, secondUserId: secondUserId)) { (result) in
+            switch result {
+            case .success(let response):
+//                completion(.success(user))
+                break
+            case .failure(let error):
+                completion(.failure(APIError(error: error)))
+                break
+            }
+        }
+    }
+    
+    class func report(user: User, completion: @escaping EmptyCompletion) {
+        
+        guard let currentUser = UserProvider.shared.currentUser else {
+            print("Error: Can't report moment without current user")
+            completion(.failure(APIError(code: 0, message: "Can't report moment without current user")))
+            return
+        }
+        
+        let provider = MoyaProvider<APIService>()
+        provider.request(.reportUser(reporterId: currentUser.objectId, reportedId: user.objectId)) { (result) in
+            switch result {
+            case .success(let response):
+                completion(.success())
+                break
+            case .failure(let error):
+                completion(.failure(APIError(error: error)))
+                break
+            }
+        }
+    }
+
+
     
     //TODO: create such chat
 //    private static func createChattingRoom() {
@@ -182,11 +239,24 @@ class UserProvider: NSObject {
         provider.request(.createNewUser(newUser: user)) { (result) in
             switch result {
             case .success(let response):
-                shared.currentUser = User.test()
-                completion(.success(User.test()))
+                guard response.statusCode == 200 else {
+                    completion(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
+                do {
+                    let userId = try response.mapString()
+                    user.objectId = userId
+                    
+                    shared.currentUser = user
+                    completion(.success(user))
+                }
+                catch (let error) {
+                    completion(.failure(APIError(error: error)))
+                }
                 break
             case .failure(let error):
-                completion(.failure(error.localizedDescription))
+                completion(.failure(APIError(error: error)))
                 break
             }
         }
@@ -198,14 +268,14 @@ class UserProvider: NSObject {
             
             if error != nil {
                 CLSNSLogv("ERROR: Error issuing graph request: %@", getVaList([error as! CVarArg]))
-                completion(.failure(error!.localizedDescription))
+                completion(.failure(APIError(error: error!)))
                 return
             }
             
             if let result = result as? [String: Any] {
                 guard let id = result["id"] as? String, let name = result["name"] as? String else {
                     CLSNSLogv("ERROR: FB Info bad format", getVaList([]))
-                    completion(.failure("Unable to retrieve info from Facebook"))
+                    completion(.failure(APIError(code: 0, message: "Unable to retrieve info from Facebook")))
                     return
                 }
                 
@@ -312,8 +382,7 @@ class UserProvider: NSObject {
                 }
             } else {
                 CLSNSLogv("ERROR: FB Info bad format", getVaList([]))
-                completion(.failure("Unable to retrieve info from Facebook"))
-                return
+                completion(.failure(APIError(code: 0, message: "Unable to retrieve info from Facebook")))
             }
         }
     }
@@ -398,7 +467,7 @@ class UserProvider: NSObject {
                     break
                 case .failure(let error):
                     debugPrint(error)
-                    completion(Result.failure(error.localizedDescription))
+                    completion(Result.failure(APIError(error: error)))
                     break
                 }
         }

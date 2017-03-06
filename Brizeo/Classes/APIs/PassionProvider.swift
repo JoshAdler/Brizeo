@@ -7,28 +7,35 @@
 //
 
 import Foundation
-import Parse
+import ObjectMapper
+import Moya
 
 struct PassionsProvider {
     
     // MARK: - Properties
     
-    static let shared = PassionsProvider()
+    static var shared = PassionsProvider()
     var passions: [Passion]?
     
     // MARK: - Public methods
     //TODO: add reachability and load passions when the internet connection appears
-    func retrieveAllPassions(_ fromCache: Bool, _ result: ((Result<[Passion]>) -> Void)?) {
+    func retrieveAllPassions(_ fromCache: Bool, _ completion: ((Result<[Passion]>) -> Void)?) {
         
-        if fromCache && passions != nil {
-            result?(.success(passions!))
+        let isCacheUsed = fromCache && passions != nil
+        if isCacheUsed {
+            completion?(.success(passions!))
         }
         
-        //self.passions = passions.sorted(by: {$0.displayOrder < $1.displayOrder})
-        // TODO: make a request and cache result
+        if isCacheUsed {
+            getAllPassions(completion: nil)
+        } else {
+            getAllPassions { (result) in
+                completion?(result)
+            }
+        }
     }
     
-    func getPassion(with objectId: String,_ withUsingCache: Bool, completion: (Result<Passion>) -> Void) {
+    func getPassion(with objectId: String,_ withUsingCache: Bool, completion: @escaping (Result<Passion>) -> Void) {
         
         // get passion from cache
         if passions != nil && withUsingCache {
@@ -38,7 +45,54 @@ struct PassionsProvider {
             }
         }
         
-        // load passion from web api
-        completion(.success(Passion.test()))
+        // load passions from web api
+        getAllPassions { (result) in
+            switch(result) {
+            case .success(let passions):
+                if let passion = passions.filter({ $0.objectId == objectId }).first {
+                    completion(.success(passion))
+                    return
+                } else {
+                    completion(.failure(APIError(code: 0, message: "There is no passion wtih such id")))
+                }
+                break
+            case .failure(let error):
+                completion(.failure(error))
+            default: break
+            }
+        }
+    }
+    
+    func getAllPassions(completion: ((Result<[Passion]>) -> Void)?) {
+        
+        let provider = MoyaProvider<APIService>()
+        provider.request(.getAllPassions) { (result) in
+            switch result {
+            case .success(let response):
+                guard response.statusCode == 200 else {
+                    completion?(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
+                do {
+                if let passionsDict = Mapper<Passion>().mapDictionary(JSONObject: try response.mapJSON()) {
+                    let passions = Array(passionsDict.values)
+                    
+                    PassionsProvider.shared.passions = passions
+                    completion?(.success(passions))
+                    //self.passions = passions.sorted(by: {$0.displayOrder < $1.displayOrder})
+                } else {
+                    completion?(.failure(APIError(code: 0, message: "Can't parse passion data")))
+                    }
+                } catch (let error) {
+                    completion?(.failure(APIError(error: error)))
+                }
+                
+                break
+            case .failure(let error):
+                completion?(.failure(APIError(error: error)))
+                break
+            }
+        }
     }
 }

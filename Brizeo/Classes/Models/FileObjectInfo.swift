@@ -28,4 +28,8 @@ class FileObjectInfo: NSObject {
         name = JSON[JSONKeys.name.rawValue] as? String
         url = JSON[JSONKeys.url.rawValue] as? String
     }
+    
+    init(url: String) {
+        self.url = url
+    }
 }

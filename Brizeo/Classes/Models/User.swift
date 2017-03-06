@@ -9,6 +9,7 @@
 import Crashlytics
 import Branch
 import CoreLocation
+import ObjectMapper
 
 struct UserParameterKey {
     static let UserIdKey = "userId"
@@ -17,28 +18,26 @@ struct UserParameterKey {
     static let totalKey = "total"
 }
 
-class User: NSObject {
+class User: Mappable {
     
     // MARK: - Types
     
     enum JSONKeys: String {
         case age = "age"
         case facebookId = "facebookId"
-        case authData = "authData"
         case id = "id"
         case facebook = "facebook"
         case displayName = "displayName"
         case email = "email"
         case gender = "gender"
         case lastActiveTime = "lastActiveTime"
-        case iso = "iso"
         case countries = "countries"
-        case location = "location"
-        case latitude = "latitude"
-        case longitude = "longitude"
+        case location = "currentLocation"
+        case latitude = "currentLocation.latitude"
+        case longitude = "currentLocation.longitude"
         case objectId = "objectId"
         case personalText = "personalText"
-        case profileImage = "profileImage"
+        case profileImage = "mainProfileImage"
         case uploadImages = "uploadImages"
         case username = "username"
         case superUser = "superUser"
@@ -51,20 +50,22 @@ class User: NSObject {
         case numberOfMatches = "numberOfMatches"
         case invitedByUserId = "invitedByUserId"
         case invitedByUserName = "invitedByUserName"
+        
+        //TODO: check about unused fields like "numberOfMatches", etc
     }
     
     // MARK: - Properties
     
     // ids
-    var objectId: String
+    var objectId: String!
     var facebookId: String!
     
     // basic information
     var username: String?
     var displayName: String? = ""
-    var gender: Gender
+    var gender: Gender = .Man
     var age: Int = 18
-    var email: String
+    var email: String!
     var personalText: String = ""
     var countries: [Country] = []
     var isSuperUser: Bool = false
@@ -184,6 +185,8 @@ class User: NSObject {
     
     // MARK: - Init methods
     
+    required init?(map: Map) { }
+    
     init(objectId: String, facebookId: String, displayName: String?, email: String, gender: Gender, profileImageURL: String?, workInfo: String?, studyInfo: String?, uploadedURLs: [URL], lastActiveDate: Date?) {
         self.objectId = objectId
         self.facebookId = facebookId
@@ -195,8 +198,6 @@ class User: NSObject {
         self.lastActiveTime = lastActiveDate
         
         // files
-        
-        
     }
     
     init(with JSON: [String: Any]) {
@@ -233,7 +234,7 @@ class User: NSObject {
         // addiotional info
         numberOfMatches = JSON[JSONKeys.numberOfMatches.rawValue] as? Int ?? 0
         
-        if let lastActiveTimeDict = JSON[JSONKeys.lastActiveTime.rawValue] as? [String: Any], let lastActiveTimeStr = lastActiveTimeDict[JSONKeys.iso.rawValue] as? String {
+        if let lastActiveTimeStr = JSON[JSONKeys.lastActiveTime.rawValue] as? String {
             lastActiveTime = Helper.convertStringToDate(string: lastActiveTimeStr)
         }
 
@@ -242,12 +243,17 @@ class User: NSObject {
         invitedByUserName = JSON[JSONKeys.invitedByUserName.rawValue] as? String
 
         // location 
-        locationLongitude = JSON[JSONKeys.longitude.rawValue] as? Double
-        locationLatitude = JSON[JSONKeys.latitude.rawValue] as? Double
+        if let currentLocation = JSON[JSONKeys.location.rawValue] as? [String: Any] {
+            locationLongitude = currentLocation[JSONKeys.longitude.rawValue] as? Double
+            locationLatitude = currentLocation[JSONKeys.latitude.rawValue] as? Double
+        }
         
         // files
-        if let profileDict = JSON[JSONKeys.profileImage.rawValue] as? [String: String] {
-            profileImage = FileObjectInfo(with: profileDict)
+//        if let profileDict = JSON[JSONKeys.profileImage.rawValue] as? [String: String] {
+//            profileImage = FileObjectInfo(with: profileDict)
+//        }
+        if let profileDict = JSON[JSONKeys.profileImage.rawValue] as? String {
+            profileImage = FileObjectInfo(url: profileDict)
         }
         
         if let uploadedFilesDict = JSON[JSONKeys.uploadImages.rawValue] as? [String: [String: Any]] {
@@ -260,8 +266,61 @@ class User: NSObject {
         }
     }
     
-    class func test() -> User {
-        return UserProvider.shared.currentUser!
+    func mapping(map: Map) {
+        
+        // ids
+        objectId <- map[JSONKeys.objectId.rawValue]
+        facebookId <- map[JSONKeys.facebookId.rawValue]
+        
+        // basic information
+        username <- map[JSONKeys.username.rawValue]
+        displayName <- map[JSONKeys.displayName.rawValue]
+        gender <- (map[JSONKeys.gender.rawValue], EnumTransform<Gender>())
+        age <- map[JSONKeys.age.rawValue]
+        email <- map[JSONKeys.email.rawValue]
+        personalText <- map[JSONKeys.personalText.rawValue]
+        isSuperUser <- map[JSONKeys.isSuperUser.rawValue]
+        workInfo <- map[JSONKeys.workInfo.rawValue]
+        studyInfo <- map[JSONKeys.studyInfo.rawValue]
+        
+        // countries
+        countries <- (map[JSONKeys.countries.rawValue], CountriesTransform())
+        
+        // passions
+        primaryPassionId <- map[JSONKeys.primaryPassionId.rawValue]
+        secondaryPassionId <- map[JSONKeys.secondaryPassionId.rawValue]
+        thirdPassionId <- map[JSONKeys.thirdPassionId.rawValue]
+        
+        // addiotional info
+        numberOfMatches <- map[JSONKeys.numberOfMatches.rawValue]
+        lastActiveTime <- (map[JSONKeys.lastActiveTime.rawValue], LastActiveDateTransform())
+
+        
+        // invited info
+        invitedByUserId <- map[JSONKeys.invitedByUserId.rawValue]
+        invitedByUserName <- map[JSONKeys.invitedByUserName.rawValue]
+        
+        // location
+        locationLongitude <- map[JSONKeys.longitude.rawValue]
+        locationLatitude <- map[JSONKeys.latitude.rawValue]
+        
+        // files
+        //        if let profileDict = JSON[JSONKeys.profileImage.rawValue] as? [String: String] {
+        //            profileImage = FileObjectInfo(with: profileDict)
+        //        }
+        
+//        if let profileDict = JSON[JSONKeys.profileImage.rawValue] as? String {
+//            profileImage = FileObjectInfo(url: profileDict)
+//        }
+//        
+//        if let uploadedFilesDict = JSON[JSONKeys.uploadImages.rawValue] as? [String: [String: Any]] {
+//            for (key, value) in uploadedFilesDict {
+//                let file = FileObject(with: value)
+//                file.sortingIndex = Int(key) ?? 0
+//                
+//                uploadFiles?.append(file)
+//            }
+//        }
     }
     
     // MARK:

@@ -65,8 +65,15 @@ extension UICollectionViewCell {
 
 // MARK: - Date
 extension Date {
+ 
     var age: Int {
         return Calendar.current.dateComponents([.year], from: self, to: Date()).year!
+    }
+    
+    var toLongString: String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        return dateFormatter.string(from: self)
     }
 }
 

@@ -168,7 +168,7 @@ class SettingsViewController: UIViewController {
                 self.tableView.reloadData()
                 break
             case .failure(let error):
-                self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
+                self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
                 break
             default:
                 break

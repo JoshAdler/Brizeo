@@ -60,7 +60,7 @@ class MomentsTabsViewController: BasicViewController {
         
         // load controller
         allMomentsController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.momentsControllerId)!
-        allMomentsController.listType = MomentsListType.allMoments(userId: currentUser.objectId)
+        allMomentsController.listType = MomentsListType.allMoments
         allMomentsController.parentDelegate = self
         
         myMatchesMomentsController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.momentsControllerId)!
@@ -112,7 +112,7 @@ class MomentsTabsViewController: BasicViewController {
             let picker = GBHFacebookImagePicker()
             picker.presentFacebookAlbumImagePicker(from: self, delegate: self)
         }))
-        
+        //TODO: use correct instagram credentials
         // instagram source
         alertView.addAction(UIAlertAction(title: LocalizableString.TakeAPhotoFromInstagram.localizedString, style: UIAlertActionStyle.default, handler: {
             (alert: UIAlertAction!) -> Void in

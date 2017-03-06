@@ -41,7 +41,7 @@ class PreferencesProvider: NSObject {
                 completion?(.success(shared.currentUserPreferences!))
                 break
             case .failure(let error):
-                completion?(.failure(error.localizedDescription))
+                completion?(.failure(APIError(error: error)))
                 break
             }
         }
@@ -57,7 +57,7 @@ class PreferencesProvider: NSObject {
                 completion(.success(preferences))
                 break
             case .failure(let error):
-                completion(.failure(error.localizedDescription))
+                completion(.failure(APIError(error: error)))
                 break
             }
         }
