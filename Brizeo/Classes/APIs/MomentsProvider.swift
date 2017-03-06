@@ -138,6 +138,12 @@ class MomentsProvider {
         provider.request(.deleteMoment(moment: moment, userId: user.objectId)) { (result) in
             switch result {
             case .success(let response):
+                
+                guard response.statusCode == 200 else {
+                    completion(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
                 completion(.success(moment))
                 break
             case .failure(let error):
@@ -154,7 +160,19 @@ class MomentsProvider {
         provider.request(.getLikersForMoment(moment: moment)) { (result) in
             switch result {
             case .success(let response):
-                //                                completion(.success())
+                
+                guard response.statusCode == 200 else {
+                    completion(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
+                do {
+                    let users = try response.mapArray(User.self)
+                    completion(.success(user))
+                }
+                catch (let error) {
+                    completion(.failure(APIError(error: error)))
+                }
                 break
             case .failure(let error):
                 completion(.failure(APIError(error: error)))
@@ -175,6 +193,11 @@ class MomentsProvider {
         provider.request(.reportMoment(moment: moment, reporterId: user.objectId)) { (result) in
             switch result {
             case .success(let response):
+                guard response.statusCode == 200 else {
+                    completion(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
                 completion(.success(moment))
                 break
             case .failure(let error):

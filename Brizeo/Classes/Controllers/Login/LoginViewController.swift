@@ -37,7 +37,7 @@ class LoginViewController: UIViewController {
                 // go next
                 goNextToTabBar()
             } else {
-                loadCurrentUser()
+                loadCurrentUser(failureCompletion: nil)
             }
         }
     }
@@ -63,7 +63,7 @@ class LoginViewController: UIViewController {
         Helper.initialNavigationController().pushViewController(mainTabBarController, animated: true)
     }
     
-    fileprivate func loadCurrentUser() {
+    fileprivate func loadCurrentUser(failureCompletion: ((Void) -> Void)?) {
         showBlackLoader()
         
         UserProvider.loadUser { (result) in
@@ -81,6 +81,7 @@ class LoginViewController: UIViewController {
                     SVProgressHUD.showError(withStatus: error.localizedDescription)
                 } else {
                     SVProgressHUD.dismiss()
+                    failureCompletion?()
                 }
                 break
             default:
@@ -95,16 +96,7 @@ class LoginViewController: UIViewController {
         ChatProvider.registerUserInChat()
     }
     
-    //MARK: - Actions
-    
-    @IBAction func loginWithFbButtonPressed(_ sender: AnyObject) {
-        guard termsSwitch.isOn else {
-            SVProgressHUD.showError(withStatus: "You have to accept our Terms of Use.")
-            return
-        }
-    
-        showBlackLoader()
-        
+    fileprivate func signUpWithFacebook() {
         UserProvider.logInUser(with: LocationManager.shared.currentLocationCoordinates, from: self) { [unowned self] (result) in
             switch (result) {
             case .success(_):
@@ -117,6 +109,26 @@ class LoginViewController: UIViewController {
             case .userCancelled(_):
                 SVProgressHUD.dismiss()
             }
+        }
+    }
+    
+    //MARK: - Actions
+    
+    @IBAction func loginWithFbButtonPressed(_ sender: AnyObject) {
+        guard termsSwitch.isOn else {
+            SVProgressHUD.showError(withStatus: "You have to accept our Terms of Use.")
+            return
+        }
+    
+        showBlackLoader()
+        
+        // check whether user is logged in
+        if UserProvider.isUserLoggedInFacebook() {
+            loadCurrentUser(failureCompletion: {
+                self.signUpWithFacebook()
+            })
+        } else {
+            signUpWithFacebook()
         }
     }
     //TODO: check the place with loading

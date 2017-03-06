@@ -125,10 +125,48 @@ extension LikesViewController: UITableViewDelegate {
 extension LikesViewController: LikesTableViewCellDelegate {
     
     func likesCell(cell: LikesTableViewCell, didClickedApprove likerView: LikerView) {
+        showBlackLoader()
         
+        guard let indexPath = likesTableView.indexPath(for: cell) else {
+            print("No index path for liker user")
+            return
+        }
+        let user = users[indexPath.row]
+        
+        MatchesProvider.approveMatch(for: user) { (result) in
+            self.hideLoader()
+            
+            switch result {
+            case .success(_):
+                break
+            case .failure(let error):
+                self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
+            default:
+                break
+            }
+        }
     }
     
     func likesCell(cell: LikesTableViewCell, didClickedDecline likerView: LikerView) {
+        showBlackLoader()
         
+        guard let indexPath = likesTableView.indexPath(for: cell) else {
+            print("No index path for liker user")
+            return
+        }
+        let user = users[indexPath.row]
+        
+        MatchesProvider.declineMatch(for: user) { (result) in
+            self.hideLoader()
+            
+            switch result {
+            case .success(_):
+                break
+            case .failure(let error):
+                self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
+            default:
+                break
+            }
+        }
     }
 }

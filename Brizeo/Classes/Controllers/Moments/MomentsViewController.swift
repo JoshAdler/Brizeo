@@ -464,7 +464,7 @@ extension MomentsViewController: MomentTableViewCellDelegate {
                         }
                         
                         self.moments?.remove(at: index)
-                        self.momentsTableView.reloadData()
+                        self.momentsTableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .fade)
                         
                         Helper.sendNotification(with: updateMomentNotification, object: nil, dict: ["moment": moment])
                         break

@@ -31,6 +31,12 @@ class MatchesProvider {
         provider.request(.approveMatch(approverId: currentUser.objectId, userId: user.objectId)) { (result) in
             switch result {
             case .success(let response):
+                
+                guard response.statusCode == 200 else {
+                    completion(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
                 //self.passions = passions.sorted(by: {$0.displayOrder < $1.displayOrder})
                 // TODO: make a request and cache result
                 //                                completion(.success())
@@ -55,6 +61,11 @@ class MatchesProvider {
         provider.request(.declineMatch(approverId: currentUser.objectId, userId: user.objectId)) { (result) in
             switch result {
             case .success(let response):
+                
+                guard response.statusCode == 200 else {
+                    completion(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
                 //self.passions = passions.sorted(by: {$0.displayOrder < $1.displayOrder})
                 // TODO: make a request and cache result
                 //                                completion(.success())
