@@ -29,7 +29,7 @@ class SearchMatchesViewController: BasicViewController {
     
     var swipeView: DMSwipeCardsView<Any>!
     var matches: [User]?
-    var currentUser: User!
+    var currentUser: User! = UserProvider.shared.currentUser!
     var detailsController: OtherPersonDetailsTabsViewController!
     var mutualFriends: [(String, String)]?
     
@@ -37,10 +37,6 @@ class SearchMatchesViewController: BasicViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if currentUser == nil {
-            currentUser = UserProvider.shared.currentUser!
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,27 +65,23 @@ class SearchMatchesViewController: BasicViewController {
         setButtonsHidden(isHidden: true)
         showBlackLoader()
         
-//        MatchesProvider.getPotentialMatchesForUser(currentUser) { [weak self] (result) in
-//            if let welf = self {
-//                welf.hideLoader()
-//                
-//                if welf.matches == nil {
-//                welf.matches = [User.test(), User.test(), User.test(), User.test(), User.test(), User.test(), User.test()]
-//                }
-//                welf.operateMatches()
-//                
-//                /*
-//                switch result {
-//                case .failure(let message):
-//                    welf.presentErrorAlert(message: message)
-//                    break
-//                case .success(let potentialMatches):
-//                    welf.matches = potentialMatches
-//                    welf.operateMatches()
-//                    break
-//                }*/
-//            }
-//        }
+        MatchesProvider.getUsersForMatching(for: currentUser) { [weak self] (result) in
+            if let welf = self {
+                welf.hideLoader()
+                
+                switch result {
+                case .failure(let error):
+                    welf.presentErrorAlert(message: error.localizedDescription)
+                    break
+                case .success(let potentialMatches):
+                    welf.matches = potentialMatches
+                    welf.operateMatches()
+                    break
+                default:
+                    break
+                }
+            }
+        }
     }
     
     fileprivate func setupSwipeViewIfNeeds() {

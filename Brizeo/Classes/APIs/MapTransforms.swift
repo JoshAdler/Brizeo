@@ -68,3 +68,29 @@ class CountriesTransform: TransformType {
         }
     }
 }
+
+class FileObjectInfoTransform: TransformType {
+    public typealias Object = FileObjectInfo
+    public typealias JSON = String
+    
+    public init() {}
+    
+    public func transformFromJSON(_ value: Any?) -> FileObjectInfo? {
+        
+        if let url = value as? String {
+            let file = FileObjectInfo(url: url)
+            return file
+        }
+        
+        return nil
+    }
+    
+    open func transformToJSON(_ value: FileObjectInfo?) -> String? {
+        
+        if let value = value {
+            return value.url
+        }
+        
+        return nil
+    }
+}

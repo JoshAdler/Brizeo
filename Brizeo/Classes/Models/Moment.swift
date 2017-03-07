@@ -8,6 +8,7 @@
 
 import Foundation
 import ObjectMapper
+import CoreLocation
 
 class Moment: Mappable, Equatable {
     
@@ -29,13 +30,13 @@ class Moment: Mappable, Equatable {
         case userId = "userId"
         case viewableByApp = "viewableByApp"
         case passionId = "passionId"
-        case latitude = "latitude"
-        case longitude = "longitude"
+        case latitude = "currentLocation.latitude"
+        case longitude = "currentLocation.longitude"
     }
     
     // MARK: - Properties
     
-    var objectId: String!
+    var objectId: String = "0"
     var isLikedByCurrentUser: Bool = false
     var capture: String = ""
     var likesCount: Int = 0
@@ -46,7 +47,6 @@ class Moment: Mappable, Equatable {
     var locationLongitude: Double?
     var locationLatitude: Double?
     var file: FileObjectInfo!
-    var uploadImageUrl: String!
     
     var hasLocation: Bool {
         if locationLongitude != nil && locationLatitude != nil {
@@ -56,10 +56,23 @@ class Moment: Mappable, Equatable {
     }
     
     var imageUrl: URL? {
-        return URL(string: uploadImageUrl)
-//        guard let url = file.url else { return nil }
-//        
-//        return URL(string: url)
+        guard let url = file?.url else { return nil }
+        
+        return URL(string: url)
+    }
+    
+    var location: CLLocation? {
+        get {
+            guard hasLocation else {
+                return nil
+            }
+            
+            return CLLocation(latitude: locationLatitude!, longitude: locationLongitude!)
+        }
+        set {
+            locationLatitude = newValue?.coordinate.latitude
+            locationLongitude = newValue?.coordinate.longitude
+        }
     }
     
     // MARK: - Init methods
@@ -102,7 +115,7 @@ class Moment: Mappable, Equatable {
 //        }
         
         // uploaded image url
-        uploadImageUrl <- map[JSONKeys.momentsUploadImage.rawValue]
+        file <- (map[JSONKeys.momentsUploadImage.rawValue], FileObjectInfoTransform())
     }
     
     init(with JSON: [String: Any]) {
@@ -138,9 +151,6 @@ class Moment: Mappable, Equatable {
         if let fileDict = JSON[JSONKeys.momentUploadImages.rawValue] as? [String: String] {
             file = FileObjectInfo(with: fileDict)
         }
-        
-        // uploaded image url
-        uploadImageUrl = JSON[JSONKeys.momentsUploadImage.rawValue] as? String
     }
     
     // MARK: - Override methods

@@ -14,6 +14,7 @@ import AVFoundation
 import Branch
 import SDWebImage
 import MessageUI
+import SVProgressHUD
 
 class MediaViewController: UIViewController {
     
@@ -53,7 +54,7 @@ class MediaViewController: UIViewController {
         super.viewDidLoad()
         
         shareButton.isHidden = !isSharingEnabled
-        locationButton.isHidden = moment != nil && moment!.hasLocation
+        locationButton.isHidden = !(moment != nil && moment!.hasLocation)
         descriptionTextView.isEditable = moment != nil && UserProvider.shared.currentUser!.objectId == moment!.ownerId
         
         if moment != nil {
@@ -157,8 +158,8 @@ class MediaViewController: UIViewController {
                 return
             }
             
-            destinationController.coordinates = LocationManager.shared.currentLocationCoordinates?.coordinate
-            destinationController.text = "Some text"
+            destinationController.coordinates = moment!.location!.coordinate
+            destinationController.text = moment?.capture
         }
     }
     
@@ -183,6 +184,8 @@ class MediaViewController: UIViewController {
                     messageComposeVC.messageComposeDelegate = self
                     messageComposeVC.recipients = nil
                     self.present(messageComposeVC, animated: true, completion: nil)
+                } else {
+                    SVProgressHUD.show(withStatus: "Sorry, you can't use iMessages on this device.")
                 }
             }
         }

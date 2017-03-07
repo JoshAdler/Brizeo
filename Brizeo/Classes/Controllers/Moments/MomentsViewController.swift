@@ -62,10 +62,10 @@ class MomentsViewController: UIViewController {
         
         setupTableView()
         
-        momentsTableView.addInfiniteScroll { [unowned self] (tableView) in
-            self.paginator.increaseCurrentPage()
-            self.loadMoments(with: false)
-        }
+//        momentsTableView.addInfiniteScroll { [unowned self] (tableView) in
+//            self.paginator.increaseCurrentPage()
+//            self.loadMoments(with: false)
+//        }
 
         NotificationCenter.default.addObserver(self, selector: #selector(MomentsViewController.updateTableView), name: NSNotification.Name(rawValue: updateMomentNotification), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(MomentsViewController.updateTableView), name: NSNotification.Name(rawValue: LocalizableString.SomebodyLikeYourMoment.localizedString), object: nil)
@@ -81,7 +81,7 @@ class MomentsViewController: UIViewController {
         let count = moments?.count ?? 0
         if count == 0 {
             momentsTableView.isHidden = true
-            loadMoments(with: true)
+            loadMoments(with: true, removeOldMoments: false)
         }
     }
 
@@ -260,10 +260,10 @@ class MomentsViewController: UIViewController {
     
     fileprivate func resetMoments() {
         paginator.resetPages()
-        loadMoments(with: true)
+        loadMoments(with: true, removeOldMoments: true)
     }
     
-    fileprivate func loadMoments(with centerLoading: Bool) {
+    fileprivate func loadMoments(with centerLoading: Bool, removeOldMoments: Bool) {
         if centerLoading {
             SVProgressHUD.show()
         }
@@ -273,6 +273,10 @@ class MomentsViewController: UIViewController {
             switch result {
             case .success(let newMoments):
                 SVProgressHUD.dismiss()
+                
+                if removeOldMoments {
+                    self.moments = [Moment]()
+                }
                 
                 if self.moments == nil {
                     self.moments = [Moment]()
@@ -319,10 +323,9 @@ extension MomentsViewController: UITableViewDataSource {
         cell.momentImageView.sd_setImage(with: moment.imageUrl)
 //        cell.ownerLogoButton.sd_setImage(with: moment.user.profileUrl, for: .normal)
         
-        cell.actionButton.isEnabled = true
-        if moment.ownerId != currentUser.objectId/* && moment.user.isSuperUser*/ {
-            cell.actionButton.isEnabled = false
-        }
+        //TODO: block action button only in case the owner is superuser
+        //cell.actionButton.isEnabled = moment.ownerId != currentUser.objectId
+        //if moment.ownerId != currentUser.objectId/* && moment.user.isSuperUser*/ {
         
         cell.notificationView.isHidden = true
         

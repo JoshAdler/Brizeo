@@ -252,6 +252,7 @@ class User: Mappable {
 //        if let profileDict = JSON[JSONKeys.profileImage.rawValue] as? [String: String] {
 //            profileImage = FileObjectInfo(with: profileDict)
 //        }
+        
         if let profileDict = JSON[JSONKeys.profileImage.rawValue] as? String {
             profileImage = FileObjectInfo(url: profileDict)
         }
@@ -305,6 +306,7 @@ class User: Mappable {
         locationLatitude <- map[JSONKeys.latitude.rawValue]
         
         // files
+        profileImage <- (map[JSONKeys.profileImage.rawValue], FileObjectInfoTransform())
         //        if let profileDict = JSON[JSONKeys.profileImage.rawValue] as? [String: String] {
         //            profileImage = FileObjectInfo(with: profileDict)
         //        }

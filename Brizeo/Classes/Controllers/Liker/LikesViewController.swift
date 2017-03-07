@@ -32,16 +32,36 @@ class LikesViewController: BasicViewController {
     
     fileprivate var users = [User]()
     var moment: Moment!
+    var topRefresher: UIRefreshControl!
     
     // MARK: - Controller lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // set top refresher
+        topRefresher = UIRefreshControl()
+        topRefresher.addTarget(self, action: #selector(LikesViewController.refreshTableView), for: .valueChanged)
+        likesTableView.addSubview(topRefresher)
+        
         self.title = LocalizableString.LikesTitle.localizedString
     
         likesTableView.tableFooterView = UIView()
-
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        loadLikers()
+    }
+    
+    // MARK: - Private methods
+    
+    @objc fileprivate func refreshTableView() {
+        loadLikers()
+    }
+    
+    fileprivate func loadLikers() {
         MomentsProvider.getLikers(for: moment) { (result) in
             switch result {
             case .success(let users):
@@ -53,6 +73,7 @@ class LikesViewController: BasicViewController {
                 break
             }
             
+            self.topRefresher.endRefreshing()
             self.activityIndicator.stopAnimating()
             self.likesTableView.isHidden = false
         }

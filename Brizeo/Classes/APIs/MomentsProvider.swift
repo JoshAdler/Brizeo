@@ -61,10 +61,21 @@ class MomentsProvider {
         provider.request(.getMoments(userId: userId, sortingFlag: sortingFlag, filterFlag: filterFlag ?? "all")) { (result) in
             switch result {
             case .success(let response):
-//                completion(.success())
+                
+                guard response.statusCode == 200 else {
+                    completion(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
+                do {
+                    let moments = try response.mapArray(Moment.self)
+                    completion(.success(moments))
+                } catch (let error) {
+                    completion(.failure(APIError(error: error)))
+                }
                 break
             case .failure(let error):
-                //completion(.failure(error.localizedDescription))
+                completion(.failure(APIError(error: error)))
                 break
             }
         }
@@ -102,7 +113,18 @@ class MomentsProvider {
         provider.request(.getMatchedMoments(userId: userId, sortingFlag: sortingFlag, filterFlag: filterFlag ?? "all")) { (result) in
             switch result {
             case .success(let response):
-                //                completion(.success())
+                
+                guard response.statusCode == 200 else {
+                    completion(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
+                do {
+                    let moments = try response.mapArray(Moment.self)
+                    completion(.success(moments))
+                } catch (let error) {
+                    completion(.failure(APIError(error: error)))
+                }
                 break
             case .failure(let error):
                 completion(.failure(APIError(error: error)))
@@ -168,7 +190,7 @@ class MomentsProvider {
                 
                 do {
                     let users = try response.mapArray(User.self)
-                    completion(.success(user))
+                    completion(.success(users))
                 }
                 catch (let error) {
                     completion(.failure(APIError(error: error)))
