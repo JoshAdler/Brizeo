@@ -151,11 +151,12 @@ class MomentsViewController: UIViewController {
     // MARK: - Private methods
     
     fileprivate func showMomentUserProfile(_ moment: Moment) {
-        if moment.ownerId == UserProvider.shared.currentUser!.objectId { // show my profile
+        if moment.ownerId == currentUser.objectId { // show my profile
             let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
             Helper.initialNavigationController().pushViewController(profileController, animated: true)
         } else {
             let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
+            otherPersonProfileController.user = UserProvider.shared.currentUser!
             Helper.initialNavigationController().pushViewController(otherPersonProfileController, animated: true)
         }
         GoogleAnalyticsManager.userGoToProfileFromMoment.sendEvent()
@@ -169,9 +170,14 @@ class MomentsViewController: UIViewController {
             self.hideLoader()
             
             switch result {
-            case .success(_):
+            case .success(let updatedMoment):
                 GoogleAnalyticsManager.userHitLikeMoment.sendEvent()
-                self.momentsTableView.reloadData()
+                
+                if let index = self.moments?.index(of: moment) {
+                    self.moments?[index] = updatedMoment
+                    
+                    self.momentsTableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                }
             case .failure(let error):
                 self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
                 break
@@ -188,8 +194,13 @@ class MomentsViewController: UIViewController {
             self.hideLoader()
         
             switch result {
-            case .success(_):
-                self.momentsTableView.reloadData()
+            case .success(let updatedMoment):
+                
+                if let index = self.moments?.index(of: moment) {
+                    self.moments?[index] = updatedMoment
+                    
+                    self.momentsTableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+                }
             case .failure(let error):
                 self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
                 break
@@ -408,15 +419,16 @@ extension MomentsViewController: MomentTableViewCellDelegate {
             print("No moment for this index path")
             return
         }
-        
-        switch listType {
-        case .myMoments(let userId):
-            if userId != moment.ownerId {
-                showMomentUserProfile(moment)
-            }
-        default:
-            showMomentUserProfile(moment)
-        }
+
+        showMomentUserProfile(moment)
+//        switch listType {
+//        case .myMoments(let userId):
+//            if userId != moment.ownerId {
+//                showMomentUserProfile(moment)
+//            }
+//        default:
+//            showMomentUserProfile(moment)
+//        }
     }
     
     func momentCellDidSelectMoreOptions(_ cell: MomentTableViewCell) {

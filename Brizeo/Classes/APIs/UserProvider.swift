@@ -13,6 +13,7 @@ import CoreLocation
 import FBSDKLoginKit
 import Moya
 import Moya_ObjectMapper
+import FBSDKShareKit
 
 class UserProvider: NSObject {
     
@@ -207,6 +208,12 @@ class UserProvider: NSObject {
         provider.request(.reportUser(reporterId: currentUser.objectId, reportedId: user.objectId)) { (result) in
             switch result {
             case .success(let response):
+                
+                guard response.statusCode == 200 else {
+                    completion(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
                 completion(.success())
                 break
             case .failure(let error):
@@ -435,15 +442,19 @@ class UserProvider: NSObject {
 
     class func getMutualFriendsOfCurrentUser(_ currUser: User, andSecondUser secondUser: User, completion: @escaping (Result<[(name:String, pictureURL:String)]>) -> Void) {
         
+        let request = FBSDKGraphRequest(graphPath: "/{user-context-id}/mutual_friends", parameters: NSDictionary() as! [AnyHashable : Any], httpMethod: "GET")
+        request?.start(completionHandler: { (connection, result, error) in
+            print("sd")
+        })
+        
+        return
+        /*
         let currUserFBToken = FBSDKAccessToken.current()
         let currUserFBId = currUser.facebookId
-        let secondUserFBId = secondUser.facebookId
+        let secondUserFBId = "734396810046847"//secondUser.facebookId
         
         let userParams = ["id": currUserFBId, "token": currUserFBToken?.tokenString, "friend_id": secondUserFBId] as [String : Any]
         let params = ["user":userParams]
-        
-        print(currUser)
-        print(secondUser)
         
         Alamofire.request(Configurations.AppURLs.BrizeoCheckURL, method: .post, parameters: params)
             .validate()
@@ -470,23 +481,7 @@ class UserProvider: NSObject {
                     completion(Result.failure(APIError(error: error)))
                     break
                 }
-        }
-    }
-    
-    class func reportUser(_ reportedUser: User, user: User, completion: @escaping (Result<Bool>) -> Void) {
-        
-//        let params : [String: AnyObject] = [UserParameterKey.UserIdKey : user.objectId! as AnyObject, UserParameterKey.ReportedUserIdKey: reportedUser.objectId! as AnyObject]
-//        PFCloud.callFunction(inBackground: ParseFunction.ReportUser.name, withParameters: params) { (result, error) in
-//            
-//            if let error = error {
-//                
-//                completion(.failure(error.localizedDescription))
-//                
-//            } else {
-//                
-//                completion(.success(true))
-//            }
-//        }
+        }*/
     }
     
     class func removeMatch(_ user: User, target: User, completion: @escaping (Result<Bool>) -> Void) {

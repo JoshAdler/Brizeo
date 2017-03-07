@@ -40,7 +40,7 @@ class NotificationsViewController: UIViewController {
     // MARK: - Properties
     
     @IBOutlet weak var tableView: UITableView!
-    var notifications: NSMutableArray!
+    var notifications: [Notification]?
     var contentType: NotificationContentType = .likes
     var index: Int = 0
     
@@ -48,16 +48,18 @@ class NotificationsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        initData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        loadNotifications()
     }
     
     // MARK: - Private methods
     
-    fileprivate func initData() {
-        let fileTitle = contentType == .likes ? "LikeNotificationList" : "PeopleNotificationList"
-        let filePath = Bundle.main.path(forResource: fileTitle, ofType: "plist")
-        notifications = NSMutableArray(contentsOfFile: filePath!)
+    fileprivate func loadNotifications() {
+        
     }
 }
 
@@ -65,7 +67,7 @@ class NotificationsViewController: UIViewController {
 extension NotificationsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return notifications.count
+        return notifications?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -73,22 +75,22 @@ extension NotificationsViewController: UITableViewDataSource {
         
         if contentType == .likes {
             let cell = tableView.dequeueReusableCell(withIdentifier: StoryboardIds.likesCellId, for: indexPath) as! LikesNotificationTableViewCell
-            let notification = notifications.object(at: indexPath.row) as! NSDictionary
+            let notification = notifications![indexPath.row]
             
             cell.delegate = self
-            cell.likeUserImage.sd_setImage(with: URL(string: notification.object(forKey: "userImage") as! String)!)
-            cell.likedMomentImage.sd_setImage(with: URL(string: notification.object(forKey: "momentImage") as! String)!)
-            cell.generateText(with: notification.object(forKey: "userName") as! String, time: notification.object(forKey: "timeframe") as! String)
+//            cell.likeUserImage.sd_setImage(with: URL(string: notification.object(forKey: "userImage") as! String)!)
+//            cell.likedMomentImage.sd_setImage(with: URL(string: notification.object(forKey: "momentImage") as! String)!)
+//            cell.generateText(with: notification.object(forKey: "userName") as! String, time: notification.object(forKey: "timeframe") as! String)
 
             return cell
         } else { // people
             let cell = tableView.dequeueReusableCell(withIdentifier: StoryboardIds.peopleCellId, for: indexPath) as! PeopleNotificationTableViewCell
-            let notification = notifications.object(at: indexPath.row) as! NSDictionary
-            
-            cell.delegate = self
-            cell.commentUserImage.sd_setImage(with: URL(string: notification.object(forKey: "userImage") as! String)!)
-            cell.commentTimeLabel.text = "2d"//notification.object(forKey: "timeframe") as? String
-            cell.generateText(with: "Jonathan Harrison", "John.H")
+//            let notification = notifications.object(at: indexPath.row) as! NSDictionary
+//            
+//            cell.delegate = self
+//            cell.commentUserImage.sd_setImage(with: URL(string: notification.object(forKey: "userImage") as! String)!)
+//            cell.commentTimeLabel.text = "2d"//notification.object(forKey: "timeframe") as? String
+//            cell.generateText(with: "Jonathan Harrison", "John.H")
             
             return cell
         }
@@ -115,12 +117,12 @@ extension NotificationsViewController: NotificationsTableViewCellDelegate {
             return
         }
         
-        let notification = notifications[indexPath.row]
-        let mediaController: MediaViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.mediaControllerId)!
-        
-        mediaController.media = UserProvider.shared.currentUser?.uploadFiles//notification.media
-        
-        Helper.initialNavigationController().pushViewController(mediaController, animated: true)
+//        let notification = notifications[indexPath.row]
+//        let mediaController: MediaViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.mediaControllerId)!
+//        
+//        mediaController.media = UserProvider.shared.currentUser?.uploadFiles//notification.media
+//        
+//        Helper.initialNavigationController().pushViewController(mediaController, animated: true)
     }
     
     func notificationCellDidClickedOnProfile(cell: UITableViewCell) {
@@ -128,12 +130,12 @@ extension NotificationsViewController: NotificationsTableViewCellDelegate {
             return
         }
         
-        let notification = notifications[indexPath.row]
-        let profileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
-        
-        profileController.user = UserProvider.shared.currentUser!//notification.user
-        
-        Helper.initialNavigationController().pushViewController(profileController, animated: true)
+//        let notification = notifications[indexPath.row]
+//        let profileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
+//        
+//        profileController.user = UserProvider.shared.currentUser!//notification.user
+//        
+//        Helper.initialNavigationController().pushViewController(profileController, animated: true)
     }
     
     func notificationCell(cell: UITableViewCell, didClickedApprove likerView: LikerView) {

@@ -247,8 +247,12 @@ class MomentsProvider {
                     return
                 }
                 
-                moment.isLikedByCurrentUser = true
-                completion(.success(moment))
+                do {
+                    let moment = try response.mapObject(Moment.self)
+                    completion(.success(moment))
+                } catch (let error) {
+                    completion(.failure(APIError(error: error)))
+                }
                 break
             case .failure(let error):
                 completion(.failure(APIError(error: error)))
@@ -275,8 +279,12 @@ class MomentsProvider {
                     return
                 }
                 
-                moment.isLikedByCurrentUser = false
-                completion(.success(moment))
+                do {
+                    let moment = try response.mapObject(Moment.self)
+                    completion(.success(moment))
+                } catch (let error) {
+                    completion(.failure(APIError(error: error)))
+                }
                 break
             case .failure(let error):
                 completion(.failure(APIError(error: error)))

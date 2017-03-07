@@ -94,3 +94,29 @@ class FileObjectInfoTransform: TransformType {
         return nil
     }
 }
+
+class LikersTransform: TransformType {
+
+    public typealias Object = Bool
+    public typealias JSON = Array<String>
+    
+    public init() {}
+    
+    
+    public func transformFromJSON(_ value: Any?) -> Bool? {
+     
+        guard let currentUser = UserProvider.shared.currentUser else {
+            return nil
+        }
+        
+        if let value = value as? [String] {
+            return value.contains(currentUser.objectId)
+        }
+            
+        return nil
+    }
+    
+    public func transformToJSON(_ value: Bool?) -> Array<String>? {
+        return nil
+    }
+}

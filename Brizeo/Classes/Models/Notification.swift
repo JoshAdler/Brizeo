@@ -8,8 +8,9 @@
 
 import Crashlytics
 import Branch
+import ObjectMapper
 
-class Notification: NSObject {
+class Notification: Mappable {
 
     // MARK: - Types
     
@@ -25,8 +26,8 @@ class Notification: NSObject {
     
     // MARK: - Properties
     
-    var objectId: String
-    var readStatus: Bool
+    var objectId: String = "0"
+    var readStatus: Bool = false
     var receiveUserId: String?
     var sendUserId: String?
     var momentsId: String?
@@ -34,6 +35,21 @@ class Notification: NSObject {
     var pushType: String!
 
     // MARK: - Init
+    
+    required init?(map: Map) { }
+    
+    func mapping(map: Map) {
+        
+        // ids
+        objectId <- map[JSONKeys.objectId.rawValue]
+        receiveUserId <- map[JSONKeys.receiveUserId.rawValue]
+        sendUserId <- map[JSONKeys.sendUserId.rawValue]
+        momentsId <- map[JSONKeys.momentsId.rawValue]
+        newMatchId <- map[JSONKeys.newMatchId.rawValue]
+        
+        readStatus <- map[JSONKeys.readStatus.rawValue]
+        pushType <- map[JSONKeys.pushType.rawValue]
+    }
     
     init(with JSON: [String: Any]) {
         

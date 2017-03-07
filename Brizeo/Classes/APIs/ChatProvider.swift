@@ -27,6 +27,10 @@ class ChatProvider: NSObject {
         user.email = currentUser.email
         user.applicationId = Configurations.Applozic.appKey
         
+        if let url = currentUser.profileUrl {
+            user.imageLink = url.absoluteString
+        }
+        
         ALUserDefaultsHandler.setUserId(user.userId)
         ALUserDefaultsHandler.setEmailId(user.email)
         ALUserDefaultsHandler.setDisplayName(user.displayName)

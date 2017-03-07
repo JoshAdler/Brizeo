@@ -24,35 +24,6 @@ class Passion : Mappable {
         case iconURL = "iconURL"
     }
     
-    // MARK: - Types
-    
-//    struct Constants {
-//        static let colorPalette = [
-//            "0": "337bff",
-//            "1": "fd4444",
-//            "2": "7d44fd",
-//            "3": "44ca3a",
-//            "4": "cbc94c",
-//            "5": "f975e5",
-//            "6": "f7b61a",
-//            "7": "ffffff", // fashion color
-//            "8": "483f47"
-//        ]
-//        //TODO: ask Josh about color for fashion
-//        // TODO: ask Charlie about id for each passion
-//        static let icons = [
-//            "0": #imageLiteral(resourceName: "ic_interests_travel"),
-//            "1": #imageLiteral(resourceName: "ic_interests_fitness"),
-//            "2": #imageLiteral(resourceName: "ic_interests_mindfulness"),
-//            "3": #imageLiteral(resourceName: "ic_interests_foodie"),
-//            "4": #imageLiteral(resourceName: "ic_interests_arts"),
-//            "5": #imageLiteral(resourceName: "ic_interests_fashion"),
-//            "6": #imageLiteral(resourceName: "ic_interests_sports"),
-//            "7": #imageLiteral(resourceName: "ic_interests_fashion"),
-//            "8": #imageLiteral(resourceName: "ic_interests_nightlife")
-//        ]
-//    }
-    
     // MARK: - Properties
     
     var objectId: String!

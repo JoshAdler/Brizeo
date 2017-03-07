@@ -27,10 +27,19 @@ class NotificationProvider: NSObject {
         provider.request(.getNotifications(userId: userId)) { (result) in
             switch result {
             case .success(let response):
-                //self.passions = passions.sorted(by: {$0.displayOrder < $1.displayOrder})
-                // TODO: make a request and cache result
-                //                                completion(.success())
-                // save to cache
+                
+                guard response.statusCode == 200 else {
+                    completion(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
+                do {
+                    let notifications = try response.mapArray(Notification.self)
+                    completion(.success(notifications))
+                }
+                catch (let error) {
+                    completion(.failure(APIError(error: error)))
+                }
                 break
             case .failure(let error):
                 completion(.failure(APIError(error: error)))

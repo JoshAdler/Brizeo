@@ -62,7 +62,7 @@ class User: Mappable {
     
     // basic information
     var username: String?
-    var displayName: String? = ""
+    var displayName: String = "Mr./Mrs"
     var gender: Gender = .Man
     var age: Int = 18
     var email: String!
@@ -183,6 +183,23 @@ class User: Mappable {
         return ids
     }
     
+    var topPassionId: String? {
+        
+        if primaryPassionId != nil {
+            return primaryPassionId!
+        }
+        
+        if secondaryPassionId != nil {
+            return secondaryPassionId!
+        }
+        
+        if thirdPassionId != nil {
+            return thirdPassionId!
+        }
+        
+        return nil
+    }
+    
     // MARK: - Init methods
     
     required init?(map: Map) { }
@@ -190,12 +207,12 @@ class User: Mappable {
     init(objectId: String, facebookId: String, displayName: String?, email: String, gender: Gender, profileImageURL: String?, workInfo: String?, studyInfo: String?, uploadedURLs: [URL], lastActiveDate: Date?) {
         self.objectId = objectId
         self.facebookId = facebookId
-        self.displayName = displayName
         self.gender = gender
         self.workInfo = workInfo
         self.studyInfo = studyInfo
         self.email = email
         self.lastActiveTime = lastActiveDate
+        self.displayName = displayName ?? "Mr./Mrs"
         
         // files
     }
@@ -208,7 +225,7 @@ class User: Mappable {
         
         // basic information
         username = JSON[JSONKeys.username.rawValue] as? String
-        displayName = JSON[JSONKeys.displayName.rawValue] as? String
+        displayName = JSON[JSONKeys.displayName.rawValue] as? String ?? "Mr./Mrs"
         gender = Gender(rawValue: JSON[JSONKeys.gender.rawValue] as! String)!
         age = JSON[JSONKeys.age.rawValue] as! Int
         email = JSON[JSONKeys.email.rawValue] as! String

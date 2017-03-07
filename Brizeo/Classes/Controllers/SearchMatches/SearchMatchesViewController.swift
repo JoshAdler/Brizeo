@@ -193,8 +193,7 @@ class SearchMatchesViewController: BasicViewController {
         let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let reportAction = UIAlertAction(title: LocalizableString.Report.localizedString, style: .default, handler: { alert in
             self.showBlackLoader()
-            UserProvider.reportUser(self.matches!.first!, user: UserProvider.shared.currentUser!, completion: { (result) in
-                
+            UserProvider.report(user: self.matches!.first!, completion: { (result) in
                 self.hideLoader()
                 switch result {
                     

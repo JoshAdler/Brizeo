@@ -76,7 +76,7 @@ class PersonalDetailsTabsViewController: BasicViewController {
     
     // MARK: - Keyboard methods
     
-    func keyboardWillShow(notification: Notification) {
+    func keyboardWillShow(notification: NSNotification) {
 //        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
 //            scrollViewBottomConstraint.constant = Constants.bottomMargin + keyboardSize.height
             
@@ -86,10 +86,10 @@ class PersonalDetailsTabsViewController: BasicViewController {
 //        }
     }
     
-    func keyboardDidShow(notification: Notification) {
+    func keyboardDidShow(notification: NSNotification) {
     }
     
-    func keyboardWillHide(notification: Notification) {
+    func keyboardWillHide(notification: NSNotification) {
 //        scrollViewBottomConstraint.constant = Constants.bottomMargin
         
         UIView.animate(withDuration: 0.25, animations: {
@@ -97,7 +97,7 @@ class PersonalDetailsTabsViewController: BasicViewController {
         })
     }
     
-    func keyboardDidHide(notification: Notification) {
+    func keyboardDidHide(notification: NSNotification) {
 
     }
     

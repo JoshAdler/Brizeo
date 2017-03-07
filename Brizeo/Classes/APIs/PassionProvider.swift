@@ -9,13 +9,21 @@
 import Foundation
 import ObjectMapper
 import Moya
+import SDWebImage
 
 struct PassionsProvider {
     
     // MARK: - Properties
     
     static var shared = PassionsProvider()
-    var passions: [Passion]?
+    var passions: [Passion]? {
+        didSet {
+            if passions != nil {
+                let urls = passions!.filter({ $0.iconURL != nil }).map({ $0.iconURL })
+                SDWebImagePrefetcher.shared().prefetchURLs(urls)
+            }
+        }
+    }
     
     // MARK: - Public methods
     //TODO: add reachability and load passions when the internet connection appears

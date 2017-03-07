@@ -22,7 +22,8 @@ class LikesViewController: BasicViewController {
     }
     
     struct StoryboardIds {
-        static let profileControllerId = "OtherProfileViewController"
+        static let otherProfileControllerId = "OtherProfileViewController"
+        static let profileControllerId = "PersonalTabsViewController"
     }
     
     // MARK: - Properties
@@ -32,6 +33,7 @@ class LikesViewController: BasicViewController {
     
     fileprivate var users = [User]()
     var moment: Moment!
+    var currentUser = UserProvider.shared.currentUser!
     var topRefresher: UIRefreshControl!
     
     // MARK: - Controller lifecycle
@@ -100,6 +102,7 @@ extension LikesViewController: UITableViewDataSource {
             cell.profileLogoImageView.image = nil
         }
         
+        cell.likesView.isHidden = user.objectId == currentUser.objectId
         cell.likesView.isMatched = false
         
         return cell
@@ -113,12 +116,18 @@ extension LikesViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let user = users[indexPath.row]
-        let profileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
-        profileController.user = user
-        
-        Helper.initialNavigationController().pushViewController(profileController, animated: true)
+        if user.objectId == currentUser.objectId { // show my profile
+            let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
+            
+            Helper.initialNavigationController().pushViewController(profileController, animated: true)
+        } else {
+            let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
+            otherPersonProfileController.user = user
+            
+            Helper.initialNavigationController().pushViewController(otherPersonProfileController, animated: true)
+        }
     }
-    
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return Constants.headerViewHeight
     }

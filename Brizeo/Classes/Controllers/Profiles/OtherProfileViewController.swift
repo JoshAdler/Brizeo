@@ -57,10 +57,8 @@ class OtherProfileViewController: BasicViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        user = UserProvider.shared.currentUser!
-        
         fetchMutualFriends()
-        fetchInterests()
+        fetchPassions()
         applyUserData()
         
         // check whether the user has been already matched
@@ -108,27 +106,37 @@ class OtherProfileViewController: BasicViewController {
         })
     }
     
-    fileprivate func fetchInterests() {
-        PassionsProvider.shared.retrieveAllPassions(true) { (result) in
-            switch result {
-            case .success(let passions):
-                self.passions = passions
-                
-//                if let userPassion = self.passions?.filter({ self.user.interests.contains($0.objectId!) }).first {
-//                    self.interestView.image = userPassion.imageIcon
-//                    self.interestView.title = userPassion.displayName
-//                    self.interestView.interestColor = HexColor(userPassion.colorHex)!
-//                }
-//                else {
-                    self.interestView.isHidden = true
-//                }
-                //TODO: implement the functionality above
-                break
-            case .failure(let error):
-                self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
-                break
-            default:
-                break
+    fileprivate func fetchPassions() {
+        PassionsProvider.shared.retrieveAllPassions(true) { [weak self] (result) in
+            
+            if let weak = self {
+                switch result {
+                case .success(let passions):
+                    weak.passions = passions
+                    
+                    if let topPassionId = weak.user.topPassionId, let userPassion = weak.passions?.filter({ topPassionId == $0.objectId! }).first {
+//                        weak.interestView.image = userPassion.imageIcon
+                        //TODO: load it from the web
+                        weak.interestView.title = userPassion.displayName
+                        weak.interestView.interestColor = userPassion.color
+                    }
+                    else {
+                        if let defaultPassion = weak.passions?.filter({ $0.displayName == "Travel" }).first {
+                            //                        weak.interestView.image = userPassion.imageIcon
+                            //TODO: load it from the web
+                            weak.interestView.title = defaultPassion.displayName
+                            weak.interestView.interestColor = defaultPassion.color
+                        } else {
+                            weak.interestView.isHidden = true
+                        }
+                    }
+                    break
+                case .failure(let error):
+                    weak.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
+                    break
+                default:
+                    break
+                }
             }
         }
     }
@@ -243,26 +251,26 @@ class OtherProfileViewController: BasicViewController {
     
     @IBAction func onMoreButtonClicked(_ sender: UIButton) {
         let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let reportAction = UIAlertAction(title: LocalizableString.Report.localizedString, style: .default, handler: { alert in
-            self.showBlackLoader()
-//            UserProvider.reportUser(self.user!, user: User.current()!, completion: { (result) in
-//                
-//                self.hideLoader()
-//                switch result {
-//                    
-//                case .success(_):
-//                    self.showAlert("", message: LocalizableString.UserHadBeenReported.localizedString, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
-//                        self.actionsButton.isHidden = true
-//                    break
-//                case .failure(let error):
-//                    self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
-//                }
-//            })
-        })
         
-        alertVC.addAction(reportAction)
-        let cancelAction = UIAlertAction(title: LocalizableString.Cancel.localizedString, style: .cancel, handler: nil)
-        alertVC.addAction(cancelAction)
+        alertVC.addAction(UIAlertAction(title: LocalizableString.Report.localizedString, style: .default, handler: { alert in
+            self.showBlackLoader()
+            
+            UserProvider.report(user: self.user, completion: { (result) in
+                self.hideLoader()
+                
+                switch result {
+                case .success(_):
+                    self.showAlert("", message: LocalizableString.UserHadBeenReported.localizedString, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
+                    self.actionsButton.isHidden = true
+                    break
+                case .failure(let error):
+                    self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
+                default: break
+                }
+            })
+        }))
+        
+        alertVC.addAction(UIAlertAction(title: LocalizableString.Cancel.localizedString, style: .cancel, handler: nil))
         
         present(alertVC, animated: true, completion: nil)
     }

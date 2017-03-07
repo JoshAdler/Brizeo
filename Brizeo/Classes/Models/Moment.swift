@@ -20,7 +20,7 @@ class Moment: Mappable, Equatable {
     
     enum JSONKeys: String {
         case objectId = "objectId"
-        case likedByCurrentUser = "likedByCurrentUser"
+        case likedByCurrentUser = "likedBycurrentUser"
         case momentDescription = "momentDescription"
         case momentUploadImages = "momentUploadImages"
         case momentsUploadImage = "momentsUploadImage"
@@ -95,7 +95,7 @@ class Moment: Mappable, Equatable {
 //        }
         
         // likes information
-        isLikedByCurrentUser <- map[JSONKeys.likedByCurrentUser.rawValue]
+        isLikedByCurrentUser <- (map[JSONKeys.likedByCurrentUser.rawValue], LikersTransform())
         likesCount <- map[JSONKeys.numberOfLikes.rawValue]
         
         // availability information

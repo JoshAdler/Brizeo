@@ -185,7 +185,7 @@ class MediaViewController: UIViewController {
                     messageComposeVC.recipients = nil
                     self.present(messageComposeVC, animated: true, completion: nil)
                 } else {
-                    SVProgressHUD.show(withStatus: "Sorry, you can't use iMessages on this device.")
+                    SVProgressHUD.showError(withStatus: "Sorry, you can't use iMessages on this device.")
                 }
             }
         }
