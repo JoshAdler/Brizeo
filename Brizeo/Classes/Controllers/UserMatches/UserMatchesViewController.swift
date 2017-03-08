@@ -12,6 +12,7 @@ import Alamofire
 import ChameleonFramework
 import SWTableViewCell
 import SDWebImage
+import SVProgressHUD
 
 class UserMatchesViewController: UIViewController {
 
@@ -22,7 +23,8 @@ class UserMatchesViewController: UIViewController {
     }
     
     struct StoryboardIds {
-        static let otherProfileController = "OtherProfileViewController"
+        static let otherProfileControllerId = "OtherProfileViewController"
+        static let profileControllerId = "PersonalTabsViewController"
         static let chatController = "ChatViewController"
     }
     
@@ -37,6 +39,7 @@ class UserMatchesViewController: UIViewController {
     
     var user : User!
     
+    fileprivate var topRefresher: UIRefreshControl!
     fileprivate var matches = [User]()
     fileprivate var paginator = PaginationHelper(pagesSize: 100)
     
@@ -45,32 +48,44 @@ class UserMatchesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.addInfiniteScroll { [unowned self] (tableView) in
-            self.paginator.increaseCurrentPage()
-            self.loadMatches()
-        }
+        // set top refresher
+        topRefresher = UIRefreshControl()
+        topRefresher.addTarget(self, action: #selector(UserMatchesViewController.resetMatches), for: .valueChanged)
+        tableView.addSubview(topRefresher)
+        
+//        tableView.addInfiniteScroll { [unowned self] (tableView) in
+//            self.paginator.increaseCurrentPage()
+//            self.loadMatches()
+//        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadMatches()
+        
+        if matches.count == 0 {
+            loadMatches()
+        }
     }
     
     // MARK: - Public methods
     
     func loadMatches() {
-//        MatchesProvider.getUserMatches(user.objectId, paginater: paginator) { (result) in
-//            switch result {
-//            case .success(let value):
-//                self.paginator.addNewElements(&self.matches, newElements: value)
-//                self.matches.append(User.test())
-//                self.tableView.reloadData()
-//                break
-//            case .failure(let error):
-//                self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
-//                break
-//            }
-//        }
+        MatchesProvider.getMatches(for: user) { [weak self] (result) in
+            
+            if let welf = self {
+                switch(result) {
+                case .success(let users):
+                    welf.matches = users
+                    //                self.paginator.addNewElements(&self.matches, newElements: value)
+                    welf.tableView.reloadData()
+                    break
+                case .failure(let error):
+                    SVProgressHUD.showError(withStatus: error.localizedDescription)
+                    break
+                default: break
+                }
+            }
+        }
     }
     
     // MARK: - Private methods
@@ -81,7 +96,7 @@ class UserMatchesViewController: UIViewController {
         return rightUtilityButtons as [AnyObject]
     }
     
-    fileprivate func resetMoments() {
+    @objc fileprivate func resetMatches() {
         paginator.resetPages()
         loadMatches()
     }
@@ -123,8 +138,14 @@ extension UserMatchesViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         let user = matches[indexPath.row]
         
-        let profileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileController)!
-        Helper.initialNavigationController().pushViewController(profileController, animated: true)
+        if user.isCurrent { // show my profile
+            let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
+            Helper.initialNavigationController().pushViewController(profileController, animated: true)
+        } else {
+            let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
+            otherPersonProfileController.user = user
+            Helper.initialNavigationController().pushViewController(otherPersonProfileController, animated: true)
+        }
     }
 }
 
@@ -143,13 +164,7 @@ extension UserMatchesViewController: SWTableViewCellDelegate {
             }
             
             let user = self.matches[indexPath.row]
-            
             ChatProvider.startChat(with: user.objectId, from: self)
-//            if let conversation = LayerManager.conversationBetweenUser(User.current()!.objectId!, andUserId: user.objectId!, message: nil) {
-//                
-//                let chatController: ChatViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.chatController)!
-//                navigationController?.pushViewController(chatController, animated: true)
-//            }
             tableView.endEditing(true)
         }
     }

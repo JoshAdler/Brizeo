@@ -70,6 +70,7 @@ class UserProvider: NSObject {
         provider.request(.getCurrentUser(facebookId: facebookId/*"0"*/)) { (result) in
             switch result {
             case .success(let response):
+                
                 guard response.statusCode == 200 else {
                     completion?(.failure(APIError(code: response.statusCode, message: nil)))
                     return
@@ -181,13 +182,31 @@ class UserProvider: NSObject {
         }
     }
     
-    class func getUserWithStatus(for firstUserId: String, and secondUserId: String, completion: @escaping UserCompletion) {
+    class func getUserWithStatus(for searchedUserId: String, completion: @escaping UserCompletion) {
+        
+        guard let currentUser = UserProvider.shared.currentUser else {
+            print("Error: Can't like moment without current user")
+            completion(.failure(APIError(code: 0, message: "Can't like moment without current user")))
+            return
+        }
         
         let provider = MoyaProvider<APIService>()
-        provider.request(.getUserWithStatus(firstUserId: firstUserId, secondUserId: secondUserId)) { (result) in
+        provider.request(.getUserWithStatus(searchedUserId: searchedUserId, searchingUserId: currentUser.objectId)) { (result) in
             switch result {
             case .success(let response):
-//                completion(.success(user))
+
+                guard response.statusCode == 200 else {
+                    completion(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
+                do {
+                    let user = try response.mapObject(User.self)
+                    completion(.success(user))
+                }
+                catch (let error) {
+                    completion(.failure(APIError(error: error)))
+                }
                 break
             case .failure(let error):
                 completion(.failure(APIError(error: error)))
@@ -441,11 +460,7 @@ class UserProvider: NSObject {
     }
 
     class func getMutualFriendsOfCurrentUser(_ currUser: User, andSecondUser secondUser: User, completion: @escaping (Result<[(name:String, pictureURL:String)]>) -> Void) {
-        
-        let request = FBSDKGraphRequest(graphPath: "/{user-context-id}/mutual_friends", parameters: NSDictionary() as! [AnyHashable : Any], httpMethod: "GET")
-        request?.start(completionHandler: { (connection, result, error) in
-            print("sd")
-        })
+
         
         return
         /*

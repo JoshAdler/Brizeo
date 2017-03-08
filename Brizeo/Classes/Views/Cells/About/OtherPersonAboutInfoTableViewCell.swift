@@ -28,11 +28,14 @@ class OtherPersonAboutInfoTableViewCell: UITableViewCell {
     // MARK: - Public methods
     
     func applyUser(user: User) {
+        
         // passions
         PassionsProvider.shared.retrieveAllPassions(true) { [weak self] (result) in
-            if self != nil {
+            
+            if let welf = self {
                 switch result {
                 case .success(let passions):
+                    
                     var passionText = ""
                     for id in user.passionsIds {
                         if let passion = passions.filter({ $0.objectId == id }).first {
@@ -40,12 +43,17 @@ class OtherPersonAboutInfoTableViewCell: UITableViewCell {
                         }
                     }
                     
-                    let endIndex = passionText.index(passionText.endIndex, offsetBy: -2)
-                    passionText = passionText.substring(to: endIndex)
-                    self?.interestLabel.text = passionText
+                    if passionText.numberOfCharactersWithoutSpaces() == 0 {
+                        passionText = "Travel"
+                    } else {
+                        let endIndex = passionText.index(passionText.endIndex, offsetBy: -2)
+                        passionText = passionText.substring(to: endIndex)
+                    }
+                    
+                    welf.interestLabel.text = passionText
                     break
-                case .failure(let message):
-                    self?.interestLabel.text = nil
+                case .failure(_):
+                    welf.interestLabel.text = nil
                     break
                 default:
                     break
@@ -54,10 +62,10 @@ class OtherPersonAboutInfoTableViewCell: UITableViewCell {
         }
         
         // study
-        educationLabel.text = user.studyInfo
+        educationLabel.text = user.studyInfo ?? "Unknown"
         
         // work
-        workLabel.text = user.workInfo
+        workLabel.text = user.workInfo ?? "Unknown"
     }
     
     func applyLocationWithUser(user: User, locationString: String?) {

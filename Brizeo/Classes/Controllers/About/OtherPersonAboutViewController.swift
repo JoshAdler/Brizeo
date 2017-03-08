@@ -105,7 +105,8 @@ extension OtherPersonAboutViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 { // text cell
             let cell = tableView.dequeueReusableCell(withIdentifier: OtherPersonAboutTextTableViewCell.identifier, for: indexPath) as! OtherPersonAboutTextTableViewCell
-            cell.titleLabel.text = user.personalText
+            //TODO: test this place to make sure this cell is dynamic
+            cell.titleLabel.text = "asda dasd das dasd as da dadasdasdasd as sad ad "//user.personalText
             return cell
         } else if indexPath.section == 1 { // info cell
             if indexPath.row == 0 { // detail cell

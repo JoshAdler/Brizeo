@@ -15,7 +15,7 @@ enum APIService {
     case getCurrentUser(facebookId: String)
     case createNewUser(newUser: User)
     case updateUser(user: User)
-    case getUserWithStatus(firstUserId: String, secondUserId: String)
+    case getUserWithStatus(searchedUserId: String, searchingUserId: String)
     case reportUser(reporterId: String, reportedId: String)
     
     // preferences
@@ -64,8 +64,8 @@ extension APIService: TargetType {
             return "/users"
         case .updateUser(let user):
             return "/users/\(user.objectId)"
-        case .getUserWithStatus(let firstUserId, let secondUserId):
-            return "/notifications/\(firstUserId)/\(secondUserId)"
+        case .getUserWithStatus(let searchedUserId, let searchingUserId):
+            return "/notifications/\(searchedUserId)/\(searchingUserId)"
         case .reportUser(let reporterId, let reportedId):
             return "/reportuser/\(reporterId)/\(reportedId)"
         case .getPreferences(let userId), .updatePreferences(let userId, _):

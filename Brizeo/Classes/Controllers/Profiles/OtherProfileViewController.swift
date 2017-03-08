@@ -61,10 +61,7 @@ class OtherProfileViewController: BasicViewController {
         fetchPassions()
         applyUserData()
         
-        // check whether the user has been already matched
-        if false {
-            increaseProfileViewHeight(false)
-        }
+        loadStatusBetweenUsers()
         
         //add mutual friends observer
         NotificationCenter.default.addObserver(self, selector: #selector(didReceivedMutualFriendsNotification(notification:)), name: NSNotification.Name(rawValue: mutualFriendsNotification), object: nil)
@@ -114,13 +111,14 @@ class OtherProfileViewController: BasicViewController {
                 case .success(let passions):
                     weak.passions = passions
                     
+                    // try to get top passion
                     if let topPassionId = weak.user.topPassionId, let userPassion = weak.passions?.filter({ topPassionId == $0.objectId! }).first {
 //                        weak.interestView.image = userPassion.imageIcon
-                        //TODO: load it from the web
+                        
                         weak.interestView.title = userPassion.displayName
                         weak.interestView.interestColor = userPassion.color
                     }
-                    else {
+                    else { // set default passion "Travel"
                         if let defaultPassion = weak.passions?.filter({ $0.displayName == "Travel" }).first {
                             //                        weak.interestView.image = userPassion.imageIcon
                             //TODO: load it from the web
@@ -165,6 +163,77 @@ class OtherProfileViewController: BasicViewController {
         }
     }
     
+    fileprivate func loadStatusBetweenUsers() {
+        showBlackLoader()
+        
+        UserProvider.getUserWithStatus(for: user.objectId) { [weak self] (result) in
+            if let welf = self {
+                
+                welf.hideLoader()
+                
+                switch(result) {
+                case .success(let user):
+                    
+                    // check whether the user has been already matched
+                    if false {
+                        welf.increaseProfileViewHeight(false)
+                    }
+                    
+                    break
+                case .failure(let error):
+                    break
+                default: break
+                }
+            }
+        }
+    }
+    
+    fileprivate func declineUser() {
+        showBlackLoader()
+        
+        MatchesProvider.declineMatch(for: user) { [weak self] (result) in
+            
+            if let welf = self {
+                
+                switch(result) {
+                case .success(_):
+                    
+                    welf.hideLoader()
+                    welf.increaseProfileViewHeight(true)
+                    
+                    break
+                case .failure(let error):
+                    SVProgressHUD.showError(withStatus: error.localizedDescription)
+                    break
+                default: break
+                }
+            }
+        }
+    }
+    
+    fileprivate func approveUser() {
+        showBlackLoader()
+        
+        MatchesProvider.approveMatch(for: user) { [weak self] (result) in
+            
+            if let welf = self {
+                
+                switch(result) {
+                case .success(_):
+                    
+                    welf.hideLoader()
+                    welf.increaseProfileViewHeight(true)
+                    
+                    break
+                case .failure(let error):
+                    SVProgressHUD.showError(withStatus: error.localizedDescription)
+                    break
+                default: break
+                }
+            }
+        }
+    }
+    //TODO: check text cell for many text
     // MARK: - Public methods
 
     func didReceivedMutualFriendsNotification(notification: UIKit.Notification) {
@@ -191,45 +260,13 @@ class OtherProfileViewController: BasicViewController {
     @IBAction func onDeclineButtonClicked(_ sender: UIButton) {
         increaseProfileViewHeight(true)
         
-        //        userLikeDislikeMatch()
-        //        showBlackLoader()
-        //        MatchesProvider.user(User.current()!, didPassUser: user!, completion: { (result) in
-        //
-        //            self.hideLoader()
-        //            switch (result) {
-        //            case .success:
-        //
-        //                self.navigationCoordinator?.performTransition(Transition.didLikeDislikeUser)
-        //                self.showLikeButtons(false, animated: true)
-        //                self.resetUserActions()
-        //                break
-        //            case .failure(let error):
-        //
-        //                self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
-        //                break
-        //            }
-        //        })
+        declineUser()
     }
     
     @IBAction func onAcceptButtonClicked(_ sender: UIButton) {
         increaseProfileViewHeight(true)
         
-        //        userLikeDislikeMatch()
-        //        showBlackLoader()
-        //        MatchesProvider.user(User.current()!, didLikeUser: user!, completion: { (result) in
-        //
-        //            self.hideLoader()
-        //            switch (result) {
-        //            case .success(_):
-        //                self.showLikeButtons(false, animated: true)
-        //                self.resetUserActions()
-        //                break
-        //            case .failure(let error):
-        //
-        //                self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
-        //                break
-        //            }
-        //        })
+        approveUser()
     }
     //TODO: ask Josh about how it should work on moments
     @IBAction func onShareButtonClicked(_ sender: UIButton) {
@@ -303,43 +340,3 @@ extension OtherProfileViewController: MFMessageComposeViewControllerDelegate, UI
         controller.dismiss(animated: true, completion: nil)
     }
 }
-
-//    
-//    @IBAction func userLikeButtonClicked(_ sender: AnyObject) {
-//        userLikeDislikeMatch()
-//        showBlackLoader()
-//        MatchesProvider.user(User.current()!, didLikeUser: user!, completion: { (result) in
-//            
-//            self.hideLoader()
-//            switch (result) {
-//            case .success(_):
-//                self.showLikeButtons(false, animated: true)
-//                self.resetUserActions()
-//                break
-//            case .failure(let error):
-//                
-//                self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
-//                break
-//            }
-//        })
-//    }
-//    
-//    func userGetStartChat() {
-//        navigationCoordinator?.performTransition(Transition.didFindMatch(user: self.user!, userMatchesActionDelegate: nil))
-//    }
-//
-//    
-//    @IBAction func profileImageTapped(_ sender: UIButton) {
-//        
-//        navigationCoordinator?.performTransition(Transition.showMedia(media: user!.uploadedMedia, index: 0, sharing: false))
-//    }
-//    
-//    //MARK: - AboutViewControllerDelegate
-//    func mutualFriendsCount(_ count: Int) {
-//        if count > 0 {
-//            self.lblFriendCount.text = String(format: "%d", count)
-//            mutualFriendVisible = true
-//            mutualFriendImageView.isHidden = false
-//        }
-//    }
-

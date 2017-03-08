@@ -342,6 +342,17 @@ class User: Mappable {
 //        }
     }
     
+    // MARK: - Public methods
+    
+    func removeCountries(countriesToRemove: [Country]) {
+        countries = countries.filter({ !countriesToRemove.contains($0) })
+    }
+    
+    func addCountries(countriesToAdd: [Country]) {
+        let countriesToAdd = countriesToAdd.filter({ !countries.contains($0) })
+        countries.append(contentsOf: countriesToAdd)
+    }
+    
     // MARK:
     
 //    class func saveParseUser(_ completion: @escaping (Result<Void>) -> Void) {

@@ -9,7 +9,11 @@
 import UIKit
 import ObjectMapper
 
-class Country: Mappable {
+class Country: Mappable, Equatable {
+
+    static func ==(lhs: Country, rhs: Country) -> Bool {
+        return lhs.code == rhs.code
+    }
 
     // MARK: - Properties
     

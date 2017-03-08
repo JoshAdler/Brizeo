@@ -100,6 +100,8 @@ class ProfileViewController: UIViewController {
             profileImageView.sd_setImage(with: user.profileUrl)
         }
         
+        
+        
 //        if user == nil {
 //            user = User.current()!
 //        } else if !User.userIsCurrentUser(user!) {

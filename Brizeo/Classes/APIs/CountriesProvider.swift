@@ -13,14 +13,21 @@ class CountriesProvider: NSObject {
 
     // MARK: - Class methods
     
-    class func addCountry(countries: [Country], for userId: String, completion: @escaping (Result<User>) -> Void) {
+    class func addCountry(countries: [Country], for userId: String, completion: @escaping (Result<[Country]>) -> Void) {
         
         let provider = MoyaProvider<APIService>()
         provider.request(.addCountriesForUser(countries: countries, userId: userId)) { (result) in
             switch result {
             case .success(let response):
-                UserProvider.shared.currentUser!.countries.append(contentsOf: countries)
-                completion(.success(UserProvider.shared.currentUser!))
+                
+                guard response.statusCode == 200 else {
+                    completion(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
+                UserProvider.shared.currentUser!.countries = UserProvider.shared.currentUser!.countries.filter({ !countries.map({ $0.code }).contains($0.code) })
+                
+                completion(.success(countries))
                 break
             case .failure(let error):
                 completion(.failure(APIError(error: error)))
@@ -29,14 +36,21 @@ class CountriesProvider: NSObject {
         }
     }
     
-    class func deleteCountry(countries: [Country], for userId: String, completion: @escaping (Result<User>) -> Void) {
+    class func deleteCountry(countries: [Country], for userId: String, completion: @escaping (Result<[Country]>) -> Void) {
         
         let provider = MoyaProvider<APIService>()
         provider.request(.deleteCountriesForUser(countries: countries, userId: userId)) { (result) in
             switch result {
             case .success(let response):
+                
+                guard response.statusCode == 200 else {
+                    completion(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+
                 UserProvider.shared.currentUser!.countries = UserProvider.shared.currentUser!.countries.filter({ !countries.map({ $0.code }).contains($0.code) })
-                completion(.success(UserProvider.shared.currentUser!))
+                
+                completion(.success(countries))
                 break
             case .failure(let error):
                 completion(.failure(APIError(error: error)))

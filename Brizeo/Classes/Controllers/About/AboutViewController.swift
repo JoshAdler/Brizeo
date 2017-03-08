@@ -57,7 +57,7 @@ class AboutViewController: UIViewController {
     
     fileprivate var mutualFriends = [(name:String, pictureURL:String)]()
     fileprivate var selectedPassion = [String: Int]()
-    fileprivate var interests: [String]? = ["Football", "Basketball", "Golf", "Polo", "Moto", "Kater", "Some"]//[Interest]?
+    fileprivate var passions: [Passion]?
     //TODO: do something with a user
     
     // MARK: - Controller lifecycle
@@ -65,14 +65,7 @@ class AboutViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // init selected passions
-        selectedPassion = [
-            interests![0]: 0,
-            interests![1]: 1,
-            interests![2]: 2
-        ]
-        
-        fetchInterests()
+        fetchPassions()
 //        fetchMutualFriends()
 
         // apply placeholder
@@ -87,6 +80,43 @@ class AboutViewController: UIViewController {
     
     // MARK: - Private methods
     
+    fileprivate func setSelectedPassions() {
+        
+        guard (passions?.count)! >= 3 else {
+            print("Error: can't operate selected passions with < 3 passions")
+            return
+        }
+        
+        // init selected passions
+        let ids = user.passionsIds
+        if ids.count == 0 { // set default passions
+            if let travelPassion = passions!.filter({ $0.displayName == "Travel" }).first {
+                selectedPassion[travelPassion.objectId] = 0
+                
+                let leftPassions = passions!.filter({ $0.objectId != travelPassion.objectId })
+                selectedPassion[leftPassions[1].objectId] = 1
+                selectedPassion[leftPassions[2].objectId] = 2
+            } else {
+                selectedPassion[passions![0].objectId] = 0
+                selectedPassion[passions![1].objectId] = 1
+                selectedPassion[passions![2].objectId] = 2
+            }
+        } else {
+            for i in 0 ..< ids.count {
+                selectedPassion[ids[i]] = i
+            }
+            
+            if selectedPassion.count < 3 {
+                for i in 0 ..< (3 - selectedPassion.count) {
+                    let restPassions = passions!.filter({ !Array(selectedPassion.keys).contains($0.objectId) })
+                    selectedPassion[restPassions.first!.objectId] = selectedPassion.count + i
+                }
+            }
+        }
+            //TODO: check this function
+        //TODO: ask Josh about the default passions
+    }
+    
     fileprivate func applyPlaceholder() {
         if user.personalText.numberOfCharactersWithoutSpaces() == 0 {
             aboutMeTextView.text = Constants.placeholderText
@@ -97,17 +127,32 @@ class AboutViewController: UIViewController {
         }
     }
     
-    fileprivate func fetchInterests() {
-//        InterestProvider.retrieveAllInterests { (result) in
-//            switch result {
-//            case .success(let interests):
-//                let sortedInterests = interests.sorted(by: {$0.displayOrder < $1.displayOrder})
-//                self.interests = sortedInterests.filter { self.user.interests.contains($0.objectId!) }
-//                self.passionsTableView.reloadData()
-//            case .failure(let error):
-//                self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
-//            }
-//        }
+    fileprivate func fetchPassions() {
+        PassionsProvider.shared.retrieveAllPassions(true) { [weak self] (result) in
+            if let welf = self {
+                
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let passions):
+                        
+                        welf.passions = passions
+                        welf.setSelectedPassions()
+                        welf.passionsTableView.reloadData()
+                        
+                        break
+                    case .failure(let error):
+                        
+                        welf.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Dismiss.localizedString) {
+                            welf.fetchPassions()
+                        }
+                        
+                        break
+                    default:
+                        break
+                    }
+                }
+            }
+        }
     }
     
     fileprivate func fetchMutualFriends() {
@@ -161,20 +206,19 @@ extension AboutViewController: UITextViewDelegate {
 extension AboutViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7//interests?.count ?? 0
+        return passions?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //let interest = interests![indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: AboutTableViewCell.identifier, for: indexPath) as! AboutTableViewCell
         
-        let interest = interests![indexPath.row]
+        let passion = passions![indexPath.row]
         
         cell.delegate = self
-        //cell.titleLabel.text = interest.DisplayName
-        cell.titleLabel.text = interest
+        cell.titleLabel.text = passion.displayName
         
-        if let index = selectedPassion[interest] {
+        if let index = selectedPassion[passion.objectId] {
             cell.selectedIndex = index
         } else {
             cell.selectedIndex = -1
@@ -201,73 +245,30 @@ extension AboutViewController: AboutTableViewCellDelegate {
             return
         }
         
-        var pastInterest: String = "" /* get the current interest with the selected index */
-        let newInterest = interests![indexPath.row]
+        var pastPassionId: String? /* get the current interest with the selected index */
+        let newPassionId = passions![indexPath.row].objectId!
         
-        for (interest, _index) in selectedPassion {
+        for (passionId, _index) in selectedPassion {
             if _index == index {
-                pastInterest = interest
+                pastPassionId = passionId
                 break
             }
         }
         
-        if let alreadySelectedIndex = selectedPassion[newInterest] {
-            selectedPassion[newInterest] = index
-            selectedPassion[pastInterest] = alreadySelectedIndex
+        if let alreadySelectedIndex = selectedPassion[newPassionId] {
+            
+            selectedPassion[newPassionId] = index
+            
+            if pastPassionId != nil {
+                selectedPassion[pastPassionId!] = alreadySelectedIndex
+            }
         } else {
-            selectedPassion[pastInterest] = nil
-            selectedPassion[newInterest] = index
+            if pastPassionId != nil {
+                selectedPassion[pastPassionId!] = nil
+            }
+            selectedPassion[newPassionId] = index
         }
         
         passionsTableView.reloadData()
     }
 }
-
-//    init(user : User) {
-//        
-//        self.user = user
-//        super.init(nibName: String(describing: AboutViewController.self), bundle: nil)
-//    }
-    
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        
-//        if let sectionType = Sections(rawValue: (indexPath as NSIndexPath).section) {
-//            
-//            switch sectionType {
-//            case .about:
-//                let cell = tableView.dequeueReusableCell(withIdentifier: AboutTableViewCell.identifier, for: indexPath) as! AboutTableViewCell
-//                cell.titleLabel.text = user.personalText
-//                return cell
-//            case .interests:
-//                if (indexPath as NSIndexPath).row == 0 {
-//                    let cell = tableView.dequeueReusableCell(withIdentifier: TitleTableViewCell.identifier, for: indexPath) as! TitleTableViewCell
-//                    cell.titleLabel.text = LocalizableString.Interests.localizedString.uppercased()
-//                    return cell
-//                } else {
-//                    let cell = tableView.dequeueReusableCell(withIdentifier: DetailsTableViewCell.identifier, for: indexPath) as! DetailsTableViewCell
-//                    let interest = interests[(indexPath as NSIndexPath).row-1]
-//                    cell.passionsLabel.text = interest.DisplayName
-//                    return cell
-//                }
-//            case .mutualFriends:
-//                if (indexPath as NSIndexPath).row == 0 {
-//                    let cell = tableView.dequeueReusableCell(withIdentifier: TitleTableViewCell.identifier, for: indexPath) as! TitleTableViewCell
-//                    cell.titleLabel.text = LocalizableString.MutualFriends.localizedString.uppercased()
-//                    return cell
-//                } else {
-//                    let cell = tableView.dequeueReusableCell(withIdentifier: UserMatchTableViewCell.identifier, for: indexPath) as! UserMatchTableViewCell
-//                    let mutualFriend = mutualFriends[(indexPath as NSIndexPath).row - 1]
-//                    cell.avatarImageView.image = nil
-//                    cell.nameLabel.text = mutualFriend.name
-//                    if let url = URL(string: mutualFriend.pictureURL) {
-//                        cell.avatarImageView.af_setImage(withURL: url)
-//                    }
-//                    return cell
-//                }
-//            }
-//        }
-//        let cell = tableView.dequeueReusableCell(withIdentifier: TitleTableViewCell.identifier, for: indexPath)
-//        return cell
-//    }
-
- 

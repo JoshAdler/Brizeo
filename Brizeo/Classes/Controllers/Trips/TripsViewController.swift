@@ -20,8 +20,7 @@ class TripsViewController: UIViewController {
     @IBOutlet fileprivate weak var activityIndicator: UIActivityIndicatorView!
     
     var user: User!
-    
-    fileprivate var countries = [Country]()
+
     fileprivate var filteredCountries: [Country]?
     fileprivate let searchController = UISearchController(searchResultsController: nil)
     
@@ -30,16 +29,14 @@ class TripsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        loadCountries()
-        
-        //if User.userIsCurrentUser(user) {
+        if user.isCurrent {
             searchController.searchResultsUpdater = self
             searchController.dimsBackgroundDuringPresentation = false
             searchController.delegate = self
             definesPresentationContext = true
             tableView.tableHeaderView = searchController.searchBar
             searchController.searchBar.placeholder = LocalizableString.SearchCountries.localizedString
-        //}
+        }
         
         resizeViewWhenKeyboardAppears = true
         
@@ -54,25 +51,29 @@ class TripsViewController: UIViewController {
     // MARK: - Private methods
     
     fileprivate func rightUtilityButtons() -> [AnyObject] {
-        //if User.userIsCurrentUser(user) {
+        if user.isCurrent {
             let rightUtilityButtons = NSMutableArray()
-        rightUtilityButtons.sw_addUtilitySpecialDeleteButton(with: HexColor("2f9bd6")!, title: LocalizableString.Delete.localizedString)
+            rightUtilityButtons.sw_addUtilitySpecialDeleteButton(with: HexColor("2f9bd6")!, title: LocalizableString.Delete.localizedString)
             return rightUtilityButtons as [AnyObject]
-        //}
-        //return []
+        }
+        return []
     }
     
-    fileprivate func loadCountries() {
+    fileprivate func loadAllCountries() -> [Country] {
+        var countries = [Country]()
+        
         for code in Locale.isoRegionCodes {
             countries.append(Country.initWith(code))
         }
+        
+        return countries
     }
     
     fileprivate func filterContentForSearchText(searchText: String) {
         if searchText.numberOfCharactersWithoutSpaces() == 0 {
-            filteredCountries = countries
+            filteredCountries = loadAllCountries()
         } else {
-            filteredCountries = countries.filter {
+            filteredCountries = loadAllCountries().filter {
                 $0.name.lowercased().contains(searchText.lowercased())
             }
         }
@@ -80,20 +81,47 @@ class TripsViewController: UIViewController {
         tableView.reloadData()
     }
     
-    // MARK: - Public methods
+    fileprivate func deleteCountry(country: Country) {
+        
+        CountriesProvider.deleteCountry(countries: [country], for: user.objectId, completion: { [weak self] (result) in
+            if let welf = self {
+                
+                switch(result) {
+                case .success(let countries):
+                    
+                    welf.user.removeCountries(countriesToRemove: countries)
+                    welf.tableView.reloadData()
+                    break
+                case .failure(let error):
+                    welf.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
+                    break
+                default: break
+                }
+            }
+        })
+    }
     
-//    func saveUser() {
-//        User.saveParseUser({ (result) in
-//            
-//            switch result {
-//            case .success(): break
-//            // Saved
-//            case .failure(let error):
-//                self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
-//                break
-//            }
-//        })
-//    }
+    fileprivate func addCountry(country: Country) {
+        CountriesProvider.addCountry(countries: [country], for: user.objectId, completion: { [weak self] (result) in
+            if let welf = self {
+                
+                switch(result) {
+                case .success(let countries):
+                    
+                    welf.user.addCountries(countriesToAdd: countries)
+                    welf.tableView.reloadData()
+                    
+                    GoogleAnalyticsManager.userSelectCountry(country: country.name).sendEvent()
+                    
+                    break
+                case .failure(let error):
+                    welf.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
+                    break
+                default: break
+                }
+            }
+        })
+    }
 }
 
 // MARK: - UISearchResultsUpdating
@@ -156,11 +184,9 @@ extension TripsViewController: SWTableViewCellDelegate {
             guard let indexPath = tableView.indexPath(for: cell) else {
                 return
             }
-            //TODO: check equal protocol for country
+            
             let country = user.countries[indexPath.row]
-            //user.countries.remove(at: user.countries.index(of: country)!)
-            //saveUser()
-            //TODO: save user
+            deleteCountry(country: country)
             
             tableView.deleteRows(at: [indexPath], with: .top)
         }
@@ -170,48 +196,23 @@ extension TripsViewController: SWTableViewCellDelegate {
 // MARK: - UITableViewDelegate
 extension TripsViewController: UITableViewDelegate {
     
-//    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
-//        // TODO: check delete button
-//        return LocalizableString.Delete.localizedString
-//    }
-    
-//    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-//        return filteredCountries == nil
-//    }
-    
-//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-//        
-//        if editingStyle == .delete {
-//            let country = Country.initWith(user.countries[indexPath.row])
-//            user.countries.remove(at: user.countries.index(of: country.code)!)
-//            saveUser()
-//            tableView.deleteRows(at: [indexPath], with: .top)
-//        }
-//    }
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70.0
     }
-    
-//    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-//        return .delete
-//    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
         if let filteredCountries = filteredCountries {
             let country = filteredCountries[indexPath.row]
-            //TODO:
-//            if !user.countries.contains(where: country) {
-//                user.countries.append(country)
-//                // TODO: save user
-//                //saveUser()
-//                GoogleAnalyticsManager.userSelectCountry(country: country.name).sendEvent()
-//                searchController.isActive = false
-//                self.filteredCountries = nil
-//                tableView.reloadData()
-//            }
+    
+            if !user.countries.contains(country) {
+                addCountry(country: country)
+                
+                searchController.isActive = false
+                self.filteredCountries = nil
+                tableView.reloadData()
+            }
         }
     }
 }
