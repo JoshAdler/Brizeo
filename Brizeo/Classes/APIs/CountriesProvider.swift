@@ -13,10 +13,10 @@ class CountriesProvider: NSObject {
 
     // MARK: - Class methods
     
-    class func addCountry(countries: [Country], for userId: String, completion: @escaping (Result<[Country]>) -> Void) {
+    class func addCountry(country: Country, for userId: String, completion: @escaping (Result<User>) -> Void) {
         
         let provider = MoyaProvider<APIService>()
-        provider.request(.addCountriesForUser(countries: countries, userId: userId)) { (result) in
+        provider.request(.addCountryForUser(country: country, userId: userId)) { (result) in
             switch result {
             case .success(let response):
                 
@@ -25,9 +25,21 @@ class CountriesProvider: NSObject {
                     return
                 }
                 
-                UserProvider.shared.currentUser!.countries = UserProvider.shared.currentUser!.countries.filter({ !countries.map({ $0.code }).contains($0.code) })
-                
-                completion(.success(countries))
+                do {
+                    if let countriesArray = try response.mapJSON() as? [String] {
+                        var countries = [Country]()
+                        
+                        for code in countriesArray {
+                            countries.append(Country.initWith(code))
+                        }
+                        UserProvider.shared.currentUser?.countries = countries
+                        completion(.success(UserProvider.shared.currentUser!))
+                    } else {
+                        completion(.failure(APIError(code: 0, message: "Can't parse response.")))
+                    }
+                } catch (let error) {
+                    completion(.failure(APIError(error: error)))
+                }
                 break
             case .failure(let error):
                 completion(.failure(APIError(error: error)))
@@ -36,10 +48,10 @@ class CountriesProvider: NSObject {
         }
     }
     
-    class func deleteCountry(countries: [Country], for userId: String, completion: @escaping (Result<[Country]>) -> Void) {
+    class func deleteCountry(country: Country, for userId: String, completion: @escaping (Result<User>) -> Void) {
         
         let provider = MoyaProvider<APIService>()
-        provider.request(.deleteCountriesForUser(countries: countries, userId: userId)) { (result) in
+        provider.request(.deleteCountryForUser(country: country, userId: userId)) { (result) in
             switch result {
             case .success(let response):
                 
@@ -47,10 +59,22 @@ class CountriesProvider: NSObject {
                     completion(.failure(APIError(code: response.statusCode, message: nil)))
                     return
                 }
-
-                UserProvider.shared.currentUser!.countries = UserProvider.shared.currentUser!.countries.filter({ !countries.map({ $0.code }).contains($0.code) })
                 
-                completion(.success(countries))
+                do {
+                    if let countriesArray = try response.mapJSON() as? [String] {
+                        var countries = [Country]()
+                        
+                        for code in countriesArray {
+                            countries.append(Country.initWith(code))
+                        }
+                        UserProvider.shared.currentUser?.countries = countries
+                        completion(.success(UserProvider.shared.currentUser!))
+                    } else {
+                        completion(.failure(APIError(code: 0, message: "Can't parse response.")))
+                    }
+                } catch (let error) {
+                    completion(.failure(APIError(error: error)))
+                }
                 break
             case .failure(let error):
                 completion(.failure(APIError(error: error)))

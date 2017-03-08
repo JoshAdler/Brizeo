@@ -344,13 +344,16 @@ class User: Mappable {
     
     // MARK: - Public methods
     
-    func removeCountries(countriesToRemove: [Country]) {
-        countries = countries.filter({ !countriesToRemove.contains($0) })
+    func removeCountry(countryToRemove: Country) {
+        if let index = countries.index(of: countryToRemove) {
+            countries.remove(at: index)
+        }
     }
     
-    func addCountries(countriesToAdd: [Country]) {
-        let countriesToAdd = countriesToAdd.filter({ !countries.contains($0) })
-        countries.append(contentsOf: countriesToAdd)
+    func addCountry(countryToAdd: Country) {
+        if !countries.contains(countryToAdd) {
+            countries.append(countryToAdd)
+        }
     }
     
     // MARK:

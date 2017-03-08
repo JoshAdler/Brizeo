@@ -36,6 +36,7 @@ class UserProvider: NSObject {
     static let shared = UserProvider()
     
     var currentUser: User?
+    var needToSaveChanges: Bool = false
     
     // MARK: - Init
     
@@ -81,6 +82,9 @@ class UserProvider: NSObject {
                     
                     shared.currentUser = user
                     completion?(.success(user))
+                    
+                    // load preferences
+                    PreferencesProvider.loadPreferences(for: user.objectId, fromCache: false, completion: nil)
                 }
                 catch (let error) {
                     completion?(.failure(APIError(error: error)))
@@ -98,12 +102,24 @@ class UserProvider: NSObject {
         let provider = MoyaProvider<APIService>()
         provider.request(.updateUser(user: user)) { (result) in
             switch result {
-            case .success(_):
+            case .success(let response):
+                
+                guard response.statusCode == 200 else {
+                    completion?(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
                 shared.currentUser = user
+                shared.needToSaveChanges = true
                 completion?(.success(user))
+                
                 break
             case .failure(let error):
                 completion?(.failure(APIError(error: error)))
+                
+                if completion == nil {
+                    shared.needToSaveChanges = true
+                }
                 break
             }
         }
@@ -160,6 +176,9 @@ class UserProvider: NSObject {
                                     break
                                 case .success(let user):
                                     shared.currentUser = user
+                                    
+                                    // load preferences
+                                    PreferencesProvider.loadPreferences(for: user.objectId, fromCache: false, completion: nil)
                                     
                                     BranchProvider.operateFirstEntrance(with: user)
                                     //TODO: create chat with the admin
@@ -430,33 +449,6 @@ class UserProvider: NSObject {
 //                _ = LayerManager.conversationBetweenUser(superUser, andUserId: userId, message: LocalizableString.EnjoyBrizeo.localizedString)
 //            }
 //        })
-    }
-    
-    fileprivate func saveUserInInstallation(_ user: User) {
-//        guard let installation = PFInstallation.current() else {
-//            print("No installation")
-//            return
-//        }
-//        
-//        installation["user"] = user
-//        installation.saveInBackground()
-    }
-    
-    fileprivate func saveParseUser(_ user: User, completion: @escaping (Result<Void>) -> Void) {
-        
-//        user.saveInBackground { (success, error) in
-//            if(success) {
-//                do {
-//                    try User.current()?.fetch()
-//                } catch(let error as NSError) {
-//                    CLSNSLogv("ERROR: Unable to refresh current user: %@", getVaList([error]))
-//                }
-//                completion(.success())
-//                
-//            } else {
-//                completion(.failure(error!.localizedDescription))
-//            }
-//        }
     }
 
     class func getMutualFriendsOfCurrentUser(_ currUser: User, andSecondUser secondUser: User, completion: @escaping (Result<[(name:String, pictureURL:String)]>) -> Void) {

@@ -127,6 +127,9 @@ extension GenderViewController: UITableViewDelegate {
                 searchGenders.append(gender)
             }
             tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+            //TODO: connect gender to current state
+//            UserProvider.updateUser(user: <#T##User#>, completion: <#T##((Result<User>) -> Void)?##((Result<User>) -> Void)?##(Result<User>) -> Void#>)
+//            PreferencesProvider.updatePreferences(preferences: preferences, completion: nil)
         }
     }
 }

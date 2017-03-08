@@ -37,8 +37,19 @@ class PreferencesProvider: NSObject {
             switch result {
             case .success(let response):
                 
-//                shared.currentUserPreferences = responce
-                completion?(.success(shared.currentUserPreferences!))
+                guard response.statusCode == 200 else {
+                    completion?(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
+                do {
+                    let preferences = try response.mapObject(Preferences.self)
+                    shared.currentUserPreferences = preferences
+                    completion?(.success(preferences))
+                }
+                catch (let error) {
+                    completion?(.failure(APIError(error: error)))
+                }
                 break
             case .failure(let error):
                 completion?(.failure(APIError(error: error)))
@@ -47,17 +58,35 @@ class PreferencesProvider: NSObject {
         }
     }
     
-    class func updatePreferences(with userId: String, preferences: Preferences, completion: @escaping (Result<Preferences>) -> Void) {
+    class func updatePreferences(preferences: Preferences, completion: ((Result<Preferences>) -> Void)?) {
+        
+        guard let currentUser = UserProvider.shared.currentUser else {
+            print("Error: Can't like moment without current user")
+            completion?(.failure(APIError(code: 0, message: "Can't like moment without current user")))
+            return
+        }
         
         let provider = MoyaProvider<APIService>()
-        provider.request(.updatePreferences(userId: userId, preferences: preferences)) { (result) in
+        provider.request(.updatePreferences(userId: currentUser.objectId, preferences: preferences)) { (result) in
             switch result {
             case .success(let response):
-                //                shared.currentUserPreferences = preferences
-                completion(.success(preferences))
+                
+                guard response.statusCode == 200 else {
+                    completion?(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
+                do {
+                    let preferences = try response.mapObject(Preferences.self)
+                    shared.currentUserPreferences = preferences
+                    completion?(.success(preferences))
+                }
+                catch (let error) {
+                    completion?(.failure(APIError(error: error)))
+                }
                 break
             case .failure(let error):
-                completion(.failure(APIError(error: error)))
+                completion?(.failure(APIError(error: error)))
                 break
             }
         }

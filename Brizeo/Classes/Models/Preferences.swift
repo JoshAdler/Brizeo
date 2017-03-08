@@ -7,46 +7,72 @@
 //
 
 import Foundation
-import Parse
+import ObjectMapper
+import CoreLocation
 
-class Preferences: PFObject, PFSubclassing {
+class Preferences: Mappable {
+    
+    // MARK: - Types
+    
+    enum JSONKeys: String {
+        case objectId = "objectId"
+        case ageLowerLimit = "upperAgeLimit"
+        case ageUpperLimit = "lowerAgeLimit"
+        case genders = "genders"
+        case maxSearchDistance = "maxSearchDistance"
+        case searchLocationLatitude = "searchLocation.latitude"
+        case searchLocationLongitude = "searchLocation.longitude"
+    }
     
     // MARK: - Properties
-    
-    @NSManaged var ageLowerLimit: Int
-    @NSManaged var ageUpperLimit: Int
-    @NSManaged var searchLocation: PFGeoPoint
-    @NSManaged var searchDistance: CLLocationDistance
-    @NSManaged var genders: [String]
-    
-    // MARK: - Static methods
-    
-    static func parseClassName() -> String {
-        return "Preferences"
+    //TODO: check whether there is a object id?
+    var objectId: String = "0"
+    var ageLowerLimit: Int = 0
+    var ageUpperLimit: Int = 0
+    var genders: [Gender] = []
+    var maxSearchDistance: Int = 100
+    var longitude: Double?
+    var latitude: Double?
+
+    var hasLocation: Bool {
+        if longitude != nil && latitude != nil {
+            return true
+        }
+        return false
     }
     
-    // MARK: - Class methods
-    // TODO: why static func, not class func?
-    class func createPreferences(lowerAgeRange: Int, upperAgeRange: Int, searchLocation: CLLocation, searchDistance: CLLocationDistance, lookingFor: [String]) -> Preferences {
+    var searchLocation: CLLocation? {
+        get {
+            guard hasLocation else {
+                return nil
+            }
+            
+            return CLLocation(latitude: latitude!, longitude: longitude!)
+        }
+        set {
+            latitude = newValue?.coordinate.latitude
+            longitude = newValue?.coordinate.longitude
+        }
+    }
     
-        let preferences = Preferences()
-        preferences.ageLowerLimit = lowerAgeRange
-        preferences.ageUpperLimit = upperAgeRange
-        preferences.searchLocation = PFGeoPoint(location: searchLocation)
-        preferences.searchDistance = searchDistance
-        preferences.genders = lookingFor
+    // MARK: - Init methods
+    
+    required init?(map: Map) { }
+    
+    func mapping(map: Map) {
         
-        return preferences
-    }
-    
-    class func parseGeoPointLocationWithLocation(_ location: CLLocation) -> PFGeoPoint {
-        return PFGeoPoint(location: location)
-    }
-    
-    // MARK: - Public methods
-    
-    func searchLocationCoordinate() -> CLLocation {
-        
-        return CLLocation(latitude: searchLocation.latitude, longitude: searchLocation.longitude)
+        objectId <- map[JSONKeys.objectId.rawValue]
+        ageLowerLimit <- map[JSONKeys.ageLowerLimit.rawValue]
+        ageUpperLimit <- map[JSONKeys.ageUpperLimit.rawValue]
+        genders <- (map[JSONKeys.genders.rawValue], EnumTransform<Gender>())
+        maxSearchDistance <- map[JSONKeys.maxSearchDistance.rawValue]
+        longitude <- map[JSONKeys.searchLocationLongitude.rawValue]
+        latitude <- map[JSONKeys.searchLocationLatitude.rawValue]
     }
 }
+
+
+
+
+
+

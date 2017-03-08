@@ -53,42 +53,6 @@ class ProfileViewController: UIViewController {
         return bottomView.frame.height
     }
     
-//    @IBOutlet fileprivate weak var bottomViewTopConstraint: NSLayoutConstraint!
-//    @IBOutlet fileprivate weak var bottomViewButton: UIButton!
-//    @IBOutlet fileprivate weak var bottomViewContainerView: UIView!
-//    @IBOutlet fileprivate weak var takePictureContainerView: UIView!
-//    @IBOutlet fileprivate weak var takePictureVisualEffectView: UIVisualEffectView!
-//    @IBOutlet weak var likeDislikeContainerView: UIView!
-//    @IBOutlet weak var userAgeLabel: UILabel!
-//    @IBOutlet weak var userActivityLabel: UILabel!
-//    @IBOutlet weak var dislikeButton: UIButton!
-//    @IBOutlet weak var likeButton: UIButton!
-//    @IBOutlet weak var reportButton: UIButton!
-//    @IBOutlet weak var likeDislikeContainerViewHeightConstraint: NSLayoutConstraint!
-//    @IBOutlet weak var imagesCollectionViewHeightConstraint: NSLayoutConstraint!
-    
-    
-//
-//    var delegate : UserMatchesActionDelegate?
-//    fileprivate var shouldGotoMomentView: Bool = false
-//    //Analytics
-//    fileprivate var userDidTapMoreInformation = false
-//    fileprivate var userDidTapMomments = false
-//    fileprivate var bottomViewIsVisible = false
-//    fileprivate var userMediaCurrentIndex = 0
-//    fileprivate var userMatchesViewController : UserMatchesViewController?
-//    fileprivate var userTabs: [LocalizableString] {
-//        guard let user = user else {
-//            return []
-//        }
-//        
-//        if User.userIsCurrentUser(user) {
-//            return [.About, .Matches, .MyMap]
-//        } else {
-//            return [.About, .Moments, .Map]
-//        }
-//    }
-    
     // MARK: - Controller lifecycle
     
     override func viewDidLoad() {
@@ -99,37 +63,6 @@ class ProfileViewController: UIViewController {
         if user.hasProfileImage {
             profileImageView.sd_setImage(with: user.profileUrl)
         }
-        
-        
-        
-//        if user == nil {
-//            user = User.current()!
-//        } else if !User.userIsCurrentUser(user!) {
-////            showLikeButtons(false, animated: false)
-////            if user!.uploadedMedia.count < 2 {
-////                imagesCollectionViewHeightConstraint.constant = 0
-////            }
-//            MatchesProvider.didUser(User.current()!, alreadyVoteOnUser: user!, completion: { (result) in
-//                
-//                switch (result) {
-//                case .success(let voted):
-//                    
-//                    if (!voted) {
-//                        self.showLikeButtons(true, animated: false)
-//                    }
-//                    break
-//                case .failure(let error):
-//                    
-//                    self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
-//                    break
-//                }
-//            })
-//        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        //userMatchesViewController?.viewWillAppear(animated)
     }
     
     // MARK: - Actions
@@ -163,60 +96,6 @@ class ProfileViewController: UIViewController {
     }
     
     // MARK: - Public methods
-    
-    func updateWithUser(_ user: User) {
-        self.user = user
-        setupUI()
-    }
-    
-    func setupUI() {
-        return
-//        if let user = user {
-//            if User.userIsCurrentUser(user) {
-//                takePictureVisualEffectView.isHidden = true
-//                likeDislikeContainerView.isHidden = true
-//            } else {
-//                
-//                takePictureContainerView.isHidden = true
-//                takePictureVisualEffectView.isHidden = false
-//                likeDislikeContainerView.isHidden = false
-//                
-//                var distanceString = ""
-//                if let currentLocation = User.current()!.location, let distance = user.getDistanceString(currentLocation) {
-//                    distanceString = distance
-//                }
-//                let activityString = user.getActivityString()
-//                if activityString?.numberOfCharactersWithoutSpaces() > 0 {
-//                    distanceString += String(format: "%@%@", distanceString.characters.count > 0 ? " · " : "", user.getActivityString() ?? "")
-//                }
-//                
-//                userAgeLabel.text = String(format: LocalizableString.YearsOld.localizedString, arguments: [user.age])
-//                userActivityLabel.text = distanceString
-//            }
-//            
-//            var items = [String]()
-//            for tab in userTabs {
-//                items.append(tab.localizedString.uppercased())
-//            }
-//            let color = UIColor(colorLiteralRed: 0.0/255.0, green: 104/255.0, blue: 217/255.0, alpha: 1.0)
-//            let width = UIScreen.main.bounds.width
-//            let carbonTabSwipeNavigation = CarbonTabSwipeNavigation(items: items, delegate: self)
-//            carbonTabSwipeNavigation.insert(intoRootViewController: self, andTargetView: bottomViewContainerView)
-//            carbonTabSwipeNavigation.view.backgroundColor = UIColor.clear
-//            carbonTabSwipeNavigation.setIndicatorHeight(0.0)
-//            carbonTabSwipeNavigation.setIndicatorHeight(4.0)
-//            carbonTabSwipeNavigation.setIndicatorColor(color)
-//            carbonTabSwipeNavigation.setTabExtraWidth(10)
-//            for i in 0 ... items.count - 1 {
-//                carbonTabSwipeNavigation.carbonSegmentedControl?.setWidth(width / CGFloat(items.count), forSegmentAt: i)
-//            }
-//            
-//            carbonTabSwipeNavigation.setNormalColor(UIColor.black, font: UIFont(name: "HelveticaNeue-Light", size: 17.0)!)
-//            carbonTabSwipeNavigation.setSelectedColor(UIColor.color(11.0, green: 106.0, blue: 216.0), font: UIFont(name: "HelveticaNeue-Light", size: 17.0)!)
-//            carbonTabSwipeNavigation.toolbar.barTintColor = UIColor.white
-//            reloadUserImages()
-//        }
-    }
     
     func reloadUserImages() {
 //        if let media = user?.uploadedMedia {
@@ -350,30 +229,20 @@ extension ProfileViewController: UICollectionViewDataSource {
         
         cell.delegate = self
         cell.imageView.image = #imageLiteral(resourceName: "ic_add_photo_plus")
-        cell.isDeleteButtonHidden = false
+        cell.isDeleteButtonHidden = true
 
         //TODO: check whether it can be video here.
-        //TODO: enable you to edit pictures
         if indexPath.row < (user.uploadFiles?.count ?? 0) {
             if let imageURL = user.uploadFiles?[indexPath.row].imageFile?.url {
                 cell.imageView.sd_setImage(with: URL(string: imageURL))
+                cell.isDeleteButtonHidden = false
             } else {
                 cell.imageView.image = nil
             }
         } else {
             cell.imageView.image = #imageLiteral(resourceName: "ic_add_photo_plus")
         }
-        
-//        if let media = user?.uploadedMedia , (indexPath as NSIndexPath).section < media.count {
-//            let item = media[(indexPath as NSIndexPath).section]
-//            if User.userIsCurrentUser(self.user!) {
-//                cell.imageView.image = #imageLiteral(resourceName: "ic_add_photo_plus")
-//            }
-//            if let imageUrl = ProfileMediaTypePreviewUrl(item), let url = URL(string: imageUrl) {
-//                cell.imageView.af_setImage(withURL: url)
-//                cell.isDeleteButtonHidden = User.userIsCurrentUser(self.user!)
-//            }
-//        }
+    
         return cell
     }
 }
@@ -405,7 +274,6 @@ extension ProfileViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: width, height: height)
     }
 }
-
 
 // MARK: - UIImagePickerControllerDelegate {
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -484,227 +352,4 @@ extension ProfileViewController: ProfileImageCollectionViewCellDelegate {
         showNewMediaAlert(with: .photoVideoDelete)
     }
 }
-    
-//    init(user: User?) {
-//        
-//        self.user = user
-//        super.init(nibName: String(describing: ProfileViewController.self), bundle: nil)
-//        
-//        tabBarItem.title = LocalizableString.Profile.localizedString
-//        tabBarItem.image = BrizeoImage.ProfileGrey.image.withRenderingMode(UIImageRenderingMode.alwaysOriginal)
-//        tabBarItem.selectedImage = BrizeoImage.ProfileBlue.image
-//    }
 
-    
-//    @IBAction func reportUser(_ sender: UIButton) {
-//        
-//        let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-//        let reportAction = UIAlertAction(title: LocalizableString.Report.localizedString, style: .default, handler: { alert in
-//            self.showBlackLoader()
-//            UserProvider.reportUser(self.user!, user: User.current()!, completion: { (result) in
-//                
-//                self.hideLoader()
-//                switch result {
-//                    
-//                case .success(_):
-//                    self.showAlert("", message: LocalizableString.UserHadBeenReported.localizedString, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
-//                    break
-//                case .failure(let error):
-//                    self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
-//                }
-//            })
-//        })
-//        alertVC.addAction(reportAction)
-//        let cancelAction = UIAlertAction(title: LocalizableString.Cancel.localizedString, style: .cancel, handler: nil)
-//        alertVC.addAction(cancelAction)
-//        
-//        present(alertVC, animated: true, completion: nil)
-//    }
-//    
-//    func showLikeButtons(_ show: Bool, animated: Bool) {
-//        
-//        likeDislikeContainerViewHeightConstraint.constant = show ? 228.0 : 80.0
-//        UIView.animate(withDuration: animated ? 0.4 : 0.0, delay: 0.0, options: UIViewAnimationOptions(), animations: {
-//            
-//            self.dislikeButton.alpha = show ? 1.0 : 0.0
-//            self.likeButton.alpha = show ? 1.0 : 0.0
-//            self.view.layoutIfNeeded()
-//            
-//        }) { (finished) in
-//        }
-//    }
-//    
-//    @IBAction func dislikeButtonTapped(_ sender: UIButton) {
-//        
-//        userLikeDislikeMatch()
-//        showBlackLoader()
-//        MatchesProvider.user(User.current()!, didPassUser: user!, completion: { (result) in
-//            
-//            self.hideLoader()
-//            switch (result) {
-//            case .success:
-//                
-//                self.delegate?.userDidLikeDislikeUser(self, loadNext: true)
-//                self.navigationCoordinator?.performTransition(Transition.didLikeDislikeUser)
-//                self.showLikeButtons(false, animated: true)
-//                self.resetUserActions()
-//                break
-//            case .failure(let error):
-//                
-//                self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
-//                break
-//            }
-//        })
-//    }
-//    
-//    @IBAction func likeButtonTapped(_ sender: UIButton) {
-//        
-//        userLikeDislikeMatch()
-//        showBlackLoader()
-//        MatchesProvider.user(User.current()!, didLikeUser: user!, completion: { (result) in
-//            
-//            self.hideLoader()
-//            switch (result) {
-//            case .success(let isMatch):
-//                
-//                if (isMatch) {
-//                    self.navigationCoordinator?.performTransition(Transition.didFindMatch(user: self.user!, userMatchesActionDelegate: self.delegate))
-//                } else {
-//                    self.delegate?.userDidLikeDislikeUser(self, loadNext: true)
-//                }
-//                
-//                self.showLikeButtons(false, animated: true)
-//                self.resetUserActions()
-//                break
-//            case .failure(let error):
-//                
-//                self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
-//                break
-//            }
-//        })
-//    }
-//    
-//    func userLikeDislikeMatch() {
-//        
-//        if userDidTapMoreInformation {
-//            
-//            GoogleAnalyticsManager.userHitLikeDislikeAfterSeeingMoreInformation.sendEvent()
-//        } else if userDidTapMomments {
-//            
-//            GoogleAnalyticsManager.userHitLikeDislikeAfterSeeingMoments.sendEvent()
-//        } else {
-//            
-//            GoogleAnalyticsManager.userHitLikeDislikeAfterSeeingProfilePicture.sendEvent()
-//        }
-//    }
-
-//    func resetUserActions() {
-//        
-//        userDidTapMoreInformation = false
-//        userDidTapMomments = false
-//    }
-
-//    @IBAction func profileImageTapped(_ sender: UIButton) {
-//        
-//        navigationCoordinator?.performTransition(Transition.showMedia(media: user!.uploadedMedia, index: 0, sharing: false))
-//    }
-
-//    @IBAction func topBottomViewTapped(_ sender: UIButton) {
-//        
-//        userDidTapMoreInformation = true
-//        view.endEditing(true)
-//        let constant = bottomViewIsVisible ? 0 : -(profileImageView.frame.size.height+imagesCollectionView.frame.size.height+likeDislikeContainerView.frame.size.height)
-//        bottomViewTopConstraint.constant = constant
-//        UIView.animate(withDuration: 0.4, delay: 0.0, options: UIViewAnimationOptions(), animations: {
-//            
-//            self.view.layoutIfNeeded()
-//        }) { (finished) in
-//            
-//            UIView.animate(withDuration: 0.4, delay: 0.0, options: UIViewAnimationOptions(), animations: {
-//                
-//                if self.bottomViewIsVisible {
-//                    
-//                    self.bottomViewButton.transform = CGAffineTransform.identity
-//                } else {
-//                    
-//                    self.bottomViewButton.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI))
-//                }
-//            }, completion: { (finished) in
-//                
-//            })
-//            self.bottomViewIsVisible = !self.bottomViewIsVisible
-//        }
-//    }
-//
-//    func showPassionList () {
-//        userDidTapMoreInformation = true
-//        view.endEditing(true)
-//        let constant = bottomViewIsVisible ? 0 : -(profileImageView.frame.size.height+imagesCollectionView.frame.size.height+likeDislikeContainerView.frame.size.height)
-//        bottomViewTopConstraint.constant = constant
-//        UIView.animate(withDuration: 0.4, delay: 0.0, options: UIViewAnimationOptions(), animations: {
-//            
-//            self.view.layoutIfNeeded()
-//        }) { (finished) in
-//            
-//            UIView.animate(withDuration: 0.4, delay: 0.0, options: UIViewAnimationOptions(), animations: {
-//                
-//                if self.bottomViewIsVisible {
-//                    
-//                    self.bottomViewButton.transform = CGAffineTransform.identity
-//                } else {
-//                    
-//                    self.bottomViewButton.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI))
-//                }
-//            }, completion: { (finished) in
-//                
-//            })
-//            self.bottomViewIsVisible = !self.bottomViewIsVisible
-//        }
-//    }
-
-
-
-    
-    // MARK: ImagePicker
-
-//    func setImageAtIndex(_ image: UIImage, index: Int) {
-//        
-//        if index == 0 {
-//            
-//            profileImageView.image = image
-//        } else if let cell = imagesCollectionView.cellForItem(at: IndexPath.init(row: 0, section: index)) as? ProfileImageCollectionViewCell {
-//            
-//            cell.imageView.image = image
-//            cell.showDeleteButton(true)
-//        }
-//    }
-
-//    // MARK: CarbonKit
-//    func carbonTabSwipeNavigation(_ carbonTabSwipeNavigation: CarbonTabSwipeNavigation, viewControllerAt index: UInt) -> UIViewController {
-//        
-//        // return viewController at index
-//        let tab = userTabs[Int(index)]
-//        switch tab {
-//        case .Moments:
-//            let momentsViewController = MomentsViewController(momentsListType: .myMoments(userId: user!.objectId!))
-//            momentsViewController.view.backgroundColor = UIColor.clear
-//            momentsViewController.navigationCoordinator = navigationCoordinator
-//            return momentsViewController
-//        case .Map, .MyMap:
-//            let tripsViewController = TripsViewController(user: user!)
-//            return tripsViewController
-//        case .Matches:
-//            
-//            if userMatchesViewController == nil {
-//                userMatchesViewController = UserMatchesViewController(user: user!)
-//                userMatchesViewController!.navigationCoordinator = navigationCoordinator
-//            }
-//            return userMatchesViewController!
-//        default:
-//            if User.userIsCurrentUser(user!) {
-//                return SettingsViewController(user: user!)
-//            } else {
-//                return AboutViewController(user: user!)
-//            }
-//        }
-//    }

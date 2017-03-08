@@ -160,22 +160,8 @@ class SettingsViewController: UIViewController {
         
         LocationManager.shared.updateLocation()
         // TODO: ask Josh about search location? It is changing every time we pass settings
-        PreferencesProvider.loadPreferences(for: user.objectId, fromCache: true) { (result) in
-            switch result {
-            case .success(let value):
-                self.preferences = value
-                self.getLocationString()
-                self.tableView.reloadData()
-                break
-            case .failure(let error):
-                self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
-                break
-            default:
-                break
-            }
-        }
         
-        //fetchNotifications()
+        loadPreferences()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -201,7 +187,51 @@ class SettingsViewController: UIViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        PreferencesProvider.updatePreferences(preferences: preferences, completion: nil)
+    }
+    
     // MARK: - Private methods
+    
+    fileprivate func presentErrorAlert(message: String?) {
+        let alert = UIAlertController(title: LocalizableString.Error.localizedString, message: message, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: LocalizableString.TryAgain.localizedString, style: .default, handler: { (action) in
+            self.loadPreferences()
+        }))
+        
+        alert.addAction(UIAlertAction(title: LocalizableString.Dismiss.localizedString, style: .cancel, handler: { (action) in
+            //TODO: switch to profile
+        }))
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    fileprivate func loadPreferences() {
+        
+        PreferencesProvider.loadPreferences(for: user.objectId, fromCache: true) {  [weak self] (result) in
+            if let welf = self {
+                
+                switch result {
+                case .success(let value):
+                    
+                    welf.preferences = value
+                    welf.getLocationString()
+                    welf.tableView.reloadData()
+                    
+                    break
+                case .failure(let error):
+                    welf.presentErrorAlert(message: error.localizedDescription)
+//                    self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
+                    break
+                default:
+                    break
+                }
+            }
+        }
+    }
     
     fileprivate func registerHeaderViews() {
         tableView.register(UINib(nibName: SettingsBigHeaderView.nibName, bundle: nil), forHeaderFooterViewReuseIdentifier: SettingsBigHeaderView.nibName)
@@ -219,9 +249,13 @@ class SettingsViewController: UIViewController {
     
     fileprivate func getLocationString() {
         if let preferences = preferences {
-            
             let geocoder = CLGeocoder()
-            geocoder.reverseGeocodeLocation(preferences.searchLocationCoordinate()) {
+            
+            if !preferences.hasLocation {
+                return
+            }
+            
+            geocoder.reverseGeocodeLocation(preferences.searchLocation!) {
                 (placemarks, error) in
                 if (placemarks != nil) {
                     let placemark = placemarks!.first
@@ -245,27 +279,6 @@ class SettingsViewController: UIViewController {
                 }
             }
         }
-    }
-    
-    fileprivate func fetchNotifications() {
-//        let query = PFQuery(className: "Preferences")
-//        query.whereKey("user", equalTo: User.current()!)
-//        query.findObjectsInBackground(block: { (objects, error) in
-//            if error == nil {
-//                let installations = objects
-//                let installation = installations![0]
-//                if let _ = installation["newMatch"] {
-//                    self.userNotificationSetting.append((installation["newMatch"] as? Bool)!)
-//                    self.userNotificationSetting.append((installation["messages"] as? Bool)!)
-//                    self.userNotificationSetting.append((installation["moments"] as? Bool)!)
-//                } else {
-//                    self.userNotificationSetting.append(true)
-//                    self.userNotificationSetting.append(true)
-//                    self.userNotificationSetting.append(true)
-//                }
-//                self.tableView.reloadData()
-//            }
-//        })
     }
 }
 
@@ -311,7 +324,7 @@ extension SettingsViewController: UITableViewDataSource {
                 let typeCell = cell as! SettingsRangeCell
                 typeCell.ageRangeLabel?.text = LocalizableString.AgeRange.localizedString.capitalized
                 if let preferences = preferences {
-                    typeCell.setupWithRange(preferences.ageLowerLimit, maxAgeRange: preferences.ageUpperLimit, distanceRange: Int(preferences.searchDistance))
+                    typeCell.setupWithRange(preferences.ageLowerLimit, maxAgeRange: preferences.ageUpperLimit, distanceRange: preferences.maxSearchDistance)
                 }
 
                 typeCell.delegate = self
@@ -322,7 +335,7 @@ extension SettingsViewController: UITableViewDataSource {
                 
                 if let preferences = preferences {
                     for gender in [Gender.Man, Gender.Woman, Gender.Couple] {
-                        if preferences.genders.contains(gender.rawValue) {
+                        if preferences.genders.contains(gender) {
                             genderString += gender.title
                             genderString += " and"
                         }
@@ -436,7 +449,7 @@ extension SettingsViewController: UITableViewDelegate {
 extension SettingsViewController: SettingsRangeCellDelegate {
     
     func rangeCellDidSetDistanceValue(_ rangeCell: SettingsRangeCell, distanceValue: Int) {
-        preferences?.searchDistance = Double(distanceValue)
+        preferences?.maxSearchDistance = distanceValue
     }
     
     func rangeCellDidSetAgeValue(_ rangeCell: SettingsRangeCell, ageMinValue: Int, ageMaxValue: Int) {
@@ -454,10 +467,9 @@ extension SettingsViewController: SettingsSearchLocationCellDelegate {
         LocationManager.shared.getLocationCoordinateForText(text) { (location) in
             
             if let location = location {
-                self.preferences?.searchLocation = Preferences.parseGeoPointLocationWithLocation(location)
+                self.preferences?.searchLocation = location
             }
         }
-//        userChangeCity = true
     }
     
     func searchLocationCell(_ searchLocationCell: SettingsSearchLocationCell, textSuggestionsForText text: String, completion: (([String]) -> Void)?) {

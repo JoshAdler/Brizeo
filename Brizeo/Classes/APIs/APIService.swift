@@ -40,8 +40,8 @@ enum APIService {
     case getMatchesForUser(userId: String)
     
     // country
-    case addCountriesForUser(countries: [Country], userId: String)
-    case deleteCountriesForUser(countries: [Country], userId: String)
+    case addCountryForUser(country: Country, userId: String)
+    case deleteCountryForUser(country: Country, userId: String)
     
     // passions
     case getAllPassions
@@ -70,7 +70,7 @@ extension APIService: TargetType {
             return "/reportuser/\(reporterId)/\(reportedId)"
         case .getPreferences(let userId), .updatePreferences(let userId, _):
             return "/preferences/\(userId)"
-        case .addCountriesForUser(_, let userId), .deleteCountriesForUser(_, let userId):
+        case .addCountryForUser(_, let userId), .deleteCountryForUser(_, let userId):
             return "/countries/\(userId)"
         case .getMoments(let userId, let sortingFlag, let filterFlag):
             return "/moments/\(userId)/\(sortingFlag.rawValue)/\(filterFlag)"
@@ -107,9 +107,9 @@ extension APIService: TargetType {
         switch self {
         case .createNewUser(_), .reportMoment(_, _), .reportUser(_, _), .notifyAdminAboutDownloads(_, _), .approveMatch(_, _):
             return .post
-        case .updatePreferences(_, _), .updateUser(_), .addCountriesForUser(_, _), .createNewMoment(_), .likeMoment(_, _):
+        case .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .createNewMoment(_), .likeMoment(_, _):
             return .put
-        case .deleteCountriesForUser(_, _), .unlikeMoment(_, _), .deleteMoment(_, _), .declineMatch(_, _):
+        case .deleteCountryForUser(_, _), .unlikeMoment(_, _), .deleteMoment(_, _), .declineMatch(_, _):
             return .delete
         default:
             return .get
@@ -121,14 +121,16 @@ extension APIService: TargetType {
         case .createNewUser(let user):
             let dict = ["newuser": user.toJSON()]
             return dict
-        case .updatePreferences(_, _):
-            return nil
+        case .updatePreferences(_, let preferences):
+            return preferences.toJSON()
         case .updateUser(let user):
             return user.toJSON()
-        case .addCountriesForUser(_):
-            return nil
-        case .deleteCountriesForUser(_, _):
-            return nil
+        case .addCountryForUser(let country, _):
+            let dict = ["country": country.code]
+            return dict
+        case .deleteCountryForUser(let country, _):
+            let dict = ["country": country.code]
+            return dict
         case .createNewMoment(_):
             return nil
         default:
@@ -138,7 +140,7 @@ extension APIService: TargetType {
     
     var parameterEncoding: ParameterEncoding {
         switch self {
-        case .createNewUser(_), .updatePreferences(_, _), .updateUser(_), .addCountriesForUser(_, _), .deleteCountriesForUser(_, _), .createNewMoment(_):
+        case .createNewUser(_), .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .deleteCountryForUser(_, _), .createNewMoment(_):
             return JSONEncoding.default
         default:
             return URLEncoding.default

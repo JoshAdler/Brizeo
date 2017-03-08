@@ -84,6 +84,8 @@ class UserMatchesViewController: UIViewController {
                     break
                 default: break
                 }
+                
+                welf.topRefresher.endRefreshing()
             }
         }
     }

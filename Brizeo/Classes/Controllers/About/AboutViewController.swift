@@ -8,6 +8,7 @@
 
 import UIKit
 import ChameleonFramework
+import SVProgressHUD
 
 class AboutViewController: UIViewController {
     
@@ -20,7 +21,6 @@ class AboutViewController: UIViewController {
         static let cellHeightCoef: CGFloat = 68.0 / 984.0
     }
     //TODO: handle keyboard opening
-    // TODO: set default interests Travel, Foodie, Fitness
     
     // MARK: - Properties
     
@@ -72,12 +72,34 @@ class AboutViewController: UIViewController {
         applyPlaceholder()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        UserProvider.updateUser(user: UserProvider.shared.currentUser!, completion: nil)
+    }
+    
     // MARK: - Actions
     
     @IBAction func onSaveButtonClicked(_ sender: UIButton!) {
+        showBlackLoader()
         
+        let currentUser = UserProvider.shared.currentUser!
+        UserProvider.updateUser(user: currentUser) { [weak self] (result) in
+            switch(result) {
+            case .success(_):
+                
+                SVProgressHUD.showSuccess(withStatus: LocalizableString.Success.localizedString)
+                break
+            case .failure(let error):
+                
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                break
+            default:
+                break
+            }
+        }
     }
-    
+    //TODO: ask Josh about saving - in case of error? Whether we should go back?
     // MARK: - Private methods
     
     fileprivate func setSelectedPassions() {

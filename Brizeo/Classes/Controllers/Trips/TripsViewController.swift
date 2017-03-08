@@ -12,8 +12,6 @@ import ChameleonFramework
 
 class TripsViewController: UIViewController {
 
-    // MARK: - Types
-    
     // MARK: - Properties
 
     @IBOutlet fileprivate weak var tableView: UITableView!
@@ -83,13 +81,13 @@ class TripsViewController: UIViewController {
     
     fileprivate func deleteCountry(country: Country) {
         
-        CountriesProvider.deleteCountry(countries: [country], for: user.objectId, completion: { [weak self] (result) in
+        CountriesProvider.deleteCountry(country: country, for: user.objectId, completion: { [weak self] (result) in
             if let welf = self {
                 
                 switch(result) {
-                case .success(let countries):
+                case .success(let user):
                     
-                    welf.user.removeCountries(countriesToRemove: countries)
+                    welf.user = user
                     welf.tableView.reloadData()
                     break
                 case .failure(let error):
@@ -102,13 +100,13 @@ class TripsViewController: UIViewController {
     }
     
     fileprivate func addCountry(country: Country) {
-        CountriesProvider.addCountry(countries: [country], for: user.objectId, completion: { [weak self] (result) in
+        CountriesProvider.addCountry(country: country, for: user.objectId, completion: { [weak self] (result) in
             if let welf = self {
                 
                 switch(result) {
-                case .success(let countries):
+                case .success(let user):
                     
-                    welf.user.addCountries(countriesToAdd: countries)
+                    welf.user = user
                     welf.tableView.reloadData()
                     
                     GoogleAnalyticsManager.userSelectCountry(country: country.name).sendEvent()
@@ -187,8 +185,6 @@ extension TripsViewController: SWTableViewCellDelegate {
             
             let country = user.countries[indexPath.row]
             deleteCountry(country: country)
-            
-            tableView.deleteRows(at: [indexPath], with: .top)
         }
     }
 }
