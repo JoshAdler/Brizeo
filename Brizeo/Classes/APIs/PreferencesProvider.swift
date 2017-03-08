@@ -44,6 +44,11 @@ class PreferencesProvider: NSObject {
                 
                 do {
                     let preferences = try response.mapObject(Preferences.self)
+                    
+                    if !preferences.hasLocation {
+                        preferences.searchLocation = LocationManager.shared.currentLocationCoordinates
+                    }
+                    
                     shared.currentUserPreferences = preferences
                     completion?(.success(preferences))
                 }

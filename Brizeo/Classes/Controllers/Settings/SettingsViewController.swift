@@ -224,7 +224,6 @@ class SettingsViewController: UIViewController {
                     break
                 case .failure(let error):
                     welf.presentErrorAlert(message: error.localizedDescription)
-//                    self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
                     break
                 default:
                     break

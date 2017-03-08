@@ -31,7 +31,6 @@ class GenderViewController: BasicViewController {
     @IBOutlet weak var tableView: UITableView!
     var user: User!
     var preferences: Preferences!
-    var searchGenders: [Gender] = [.Man, .Couple]
     
     // MARK: - Controller lifecycle
     
@@ -39,6 +38,13 @@ class GenderViewController: BasicViewController {
         super.viewDidLoad()
         
         registerViews()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        UserProvider.updateUser(user: UserProvider.shared.currentUser!, completion: nil)
+        PreferencesProvider.updatePreferences(preferences: preferences, completion: nil)
     }
     
     // MARK: - Private methods
@@ -67,12 +73,14 @@ extension GenderViewController: UITableViewDataSource {
             
             cell.titleLabel.text = gender.title
             cell.isChecked = gender == user.gender
+            
             return cell
         } else { // gender search
             let gender = Gender.gender(for: indexPath.row)
             
             cell.titleLabel.text = gender.title
-            cell.isChecked = /*preferences.genders*/searchGenders.contains(Gender.gender(for: indexPath.row))
+            cell.isChecked = preferences.genders.contains(gender)
+            
             return cell
         }
     }
@@ -116,20 +124,22 @@ extension GenderViewController: UITableViewDelegate {
         if indexPath.section == 0 { // I am
             user.gender = Gender.gender(for: indexPath.row)
             tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+            
+            UserProvider.updateUser(user: UserProvider.shared.currentUser!, completion: nil)
         } else { // search gender
             let gender = Gender.gender(for: indexPath.row)
             
-            if searchGenders.contains(gender) {
-                if searchGenders.count > 1 { // won't allow to remove the last search gender
-                    searchGenders.remove(at: searchGenders.index(of: gender)!)
+            if preferences.genders.contains(gender) {
+                if preferences.genders.count > 1 { // won't allow to remove the last search gender
+                    preferences.genders.remove(at: preferences.genders.index(of: gender)!)
                 }
             } else {
-                searchGenders.append(gender)
+                preferences.genders.append(gender)
             }
             tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
             //TODO: connect gender to current state
-//            UserProvider.updateUser(user: <#T##User#>, completion: <#T##((Result<User>) -> Void)?##((Result<User>) -> Void)?##(Result<User>) -> Void#>)
-//            PreferencesProvider.updatePreferences(preferences: preferences, completion: nil)
+
+            PreferencesProvider.updatePreferences(preferences: preferences, completion: nil)
         }
     }
 }
