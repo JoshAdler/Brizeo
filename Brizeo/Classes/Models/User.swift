@@ -356,6 +356,24 @@ class User: Mappable {
         }
     }
     
+    func assignPassionIds(dict: [String: Int]) {
+        for (key, value) in dict {
+            switch value {
+            case 0:
+                primaryPassionId = key
+                break
+            case 1:
+                secondaryPassionId = key
+                break
+            case 2:
+                thirdPassionId = key
+                break
+            default:
+                break
+            }
+        }
+    }
+    
     // MARK:
     
 //    class func saveParseUser(_ completion: @escaping (Result<Void>) -> Void) {

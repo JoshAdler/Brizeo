@@ -443,7 +443,7 @@ extension SettingsViewController: UITableViewDelegate {
         }
     }
 }
-//TODO: save changes
+
 // MARK: - SettingsRangeCellDelegate
 extension SettingsViewController: SettingsRangeCellDelegate {
     
@@ -454,7 +454,6 @@ extension SettingsViewController: SettingsRangeCellDelegate {
     func rangeCellDidSetAgeValue(_ rangeCell: SettingsRangeCell, ageMinValue: Int, ageMaxValue: Int) {
         preferences?.ageLowerLimit = ageMinValue
         preferences?.ageUpperLimit = ageMaxValue
-        //userChangeAgeRange = true
     }
 }
 
@@ -476,15 +475,5 @@ extension SettingsViewController: SettingsSearchLocationCellDelegate {
         LocationManager.shared.getLocationsForText(text) { (suggestions) in
             completion?(suggestions)
         }
-    }
-}
-
-// MARK: - FBSDKAppInviteDialogDelegate
-extension SettingsViewController: FBSDKAppInviteDialogDelegate {
-    
-    func appInviteDialog(_ appInviteDialog: FBSDKAppInviteDialog!, didFailWithError error: Error!) {
-    }
-    
-    func appInviteDialog(_ appInviteDialog: FBSDKAppInviteDialog!, didCompleteWithResults results: [AnyHashable : Any]!) {
     }
 }

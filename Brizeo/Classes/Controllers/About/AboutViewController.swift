@@ -135,7 +135,9 @@ class AboutViewController: UIViewController {
                 }
             }
         }
-            //TODO: check this function
+        
+        user.assignPassionIds(dict: selectedPassion)
+        UserProvider.updateUser(user: user, completion: nil)
         //TODO: ask Josh about the default passions
     }
     
@@ -292,5 +294,8 @@ extension AboutViewController: AboutTableViewCellDelegate {
         }
         
         passionsTableView.reloadData()
+        
+        user.assignPassionIds(dict: selectedPassion)
+        UserProvider.updateUser(user: user, completion: nil)
     }
 }
