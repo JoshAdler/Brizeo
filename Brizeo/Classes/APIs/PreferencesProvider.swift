@@ -85,6 +85,8 @@ class PreferencesProvider: NSObject {
                     let preferences = try response.mapObject(Preferences.self)
                     shared.currentUserPreferences = preferences
                     completion?(.success(preferences))
+                    
+                    print("successfully updated preferences info")
                 }
                 catch (let error) {
                     completion?(.failure(APIError(error: error)))
