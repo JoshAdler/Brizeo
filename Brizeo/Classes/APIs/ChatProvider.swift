@@ -46,4 +46,14 @@ class ChatProvider: NSObject {
             chatManager.registerUserAndLaunchChat(nil, fromController: controller, forUser: userId)
         }
     }
+    
+    class func createChatWithSuperuser() {
+//        let channelService = ALChannelService()
+//
+//        channelService.createChannel("Chat with admin", orClientChannelKey: nil, andMembersList: [UserProvider.shared.currentUser!.objectId, "2aMOJP6zFh"], andImageLink: "http://fsb.zedge.net/scale.php?img=Mi84LzQvOC8xLTkzMzA3NjMtMjg0ODEyNC5qcGc&ctype=1&v=4&q=81&xs=620&ys=0&sig=9dbb4bdba5aeb86a6d79bdd7ff95d4f66a263319") { (channel, error) in
+//            if error == nil {
+//                print("Successfully created a chat")
+//            }
+//        }
+    }
 }

@@ -8,6 +8,7 @@
 
 import CarbonKit
 import ChameleonFramework
+import SwiftDate
 
 struct Resources {
     static let pushNotificationSound = "new_message.wav"

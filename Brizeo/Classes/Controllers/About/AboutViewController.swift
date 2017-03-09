@@ -9,6 +9,7 @@
 import UIKit
 import ChameleonFramework
 import SVProgressHUD
+import Typist
 
 class AboutViewController: UIViewController {
     
@@ -20,7 +21,6 @@ class AboutViewController: UIViewController {
         static let defaultTextColor = UIColor.black
         static let cellHeightCoef: CGFloat = 68.0 / 984.0
     }
-    //TODO: handle keyboard opening
     
     // MARK: - Properties
     
@@ -69,6 +69,11 @@ class AboutViewController: UIViewController {
 
         // apply placeholder
         applyPlaceholder()
+        
+        configureKeyboardBehaviour()
+        
+        // hide keyboard on click anywhere
+        hideKeyboardWhenTappedAround()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -80,6 +85,8 @@ class AboutViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func onSaveButtonClicked(_ sender: UIButton!) {
+        view.endEditing(true)
+        
         showBlackLoader()
         
         let currentUser = UserProvider.shared.currentUser!
@@ -98,8 +105,25 @@ class AboutViewController: UIViewController {
             }
         }
     }
-
+    
     // MARK: - Private methods
+    
+    fileprivate func configureKeyboardBehaviour() {
+        let keyboard = Typist.shared
+        
+        keyboard
+            .on(event: .willHide, do: { (options) in
+                UIView.animate(withDuration: options.animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(options.animationCurve.rawValue)), animations: {
+                    self.view.frame.origin.y = 0
+                }, completion: nil)
+            })
+            .on(event: .willShow, do: { (options) in
+                UIView.animate(withDuration: options.animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(options.animationCurve.rawValue)), animations: {
+                    self.view.frame.origin.y -= options.endFrame.height
+                }, completion: nil)
+            })
+            .start()
+    }
     
     fileprivate func setSelectedPassions() {
         

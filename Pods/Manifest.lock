@@ -89,8 +89,10 @@ PODS:
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
   - SVProgressHUD (1.1.3)
+  - SwiftDate (4.0.13)
   - SwiftyUserDefaults (3.0.0)
   - SWTableViewCell (0.3.7)
+  - Typist (1.0.0)
   - UIScrollView-InfiniteScroll (0.9.1)
   - ZTDropDownTextField (0.1.5):
     - pop (~> 1.0)
@@ -124,8 +126,10 @@ DEPENDENCIES:
   - ParseUI
   - SDWebImage (~> 3.8)
   - SVProgressHUD (~> 1.0)
+  - SwiftDate (~> 4.0)
   - SwiftyUserDefaults
   - SWTableViewCell
+  - Typist
   - UIScrollView-InfiniteScroll (~> 0.7)
   - ZTDropDownTextField
 
@@ -178,11 +182,13 @@ SPEC CHECKSUMS:
   Result: 5a6705171c0613cc5fbf6ec55ff520cc62a8e81d
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
+  SwiftDate: 8ec416bb1b5129d1f35e8efaed720421f41d42df
   SwiftyUserDefaults: 0f1d45fc3aafb9064dac661e367f8f83fe21a4b4
   SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
+  Typist: 470a4f47f4e635ccd0e9f3ff9ce2d70c9e6001a5
   UIScrollView-InfiniteScroll: 14e204c50ca4040467e1cbfa141dad7a18919b56
   ZTDropDownTextField: a9cb5db41b66eb28a7c38afaf4c334fb2a81034e
 
-PODFILE CHECKSUM: 212de2d4026e9fe3efeea3935329ea7a0313a363
+PODFILE CHECKSUM: 75032418ac0de59f732a7ee656547db1e20c5cc7
 
 COCOAPODS: 1.2.0

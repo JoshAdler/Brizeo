@@ -8,6 +8,7 @@
 
 import UIKit
 import FBSDKShareKit
+import SVProgressHUD
 
 protocol InviteFriendsViewDelegate: class {
     func onInviteClicked(inviteView: InviteFriendsView)
@@ -104,11 +105,25 @@ class InviteFriendsView: UIView {
     }
     
     @IBAction func onNotifyButtonClicked(sender: UIButton) {
-        //TODO: generate invite url with Branch and test maybe add some image
-        let content = FBSDKAppInviteContent()
-        content.appLinkURL = URL(string: "https://www.mydomain.com/myapplink")!
+        // show loading
+        SVProgressHUD.setDefaultMaskType(.black)
+        SVProgressHUD.show()
         
-        FBSDKAppInviteDialog.show(from: Helper.initialNavigationController(), with: content, delegate: self)
+        BranchProvider.generateInviteURL(forUserId: UserProvider.shared.currentUser!.objectId) { (url) in
+            guard url != nil else {
+                SVProgressHUD.showError(withStatus: LocalizableString.ErrorWithBranchURL.localizedString)
+                return
+            }
+            
+            let content = FBSDKAppInviteContent()
+            content.appLinkURL = URL(string: url!)!
+            content.promotionText = "test text"
+            
+            FBSDKAppInviteDialog.show(from: Helper.initialNavigationController(), with: content, delegate: self)
+            
+            // hide loading
+            SVProgressHUD.dismiss()
+        }
     }
 }
 

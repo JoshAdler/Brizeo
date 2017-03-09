@@ -36,8 +36,6 @@ class TripsViewController: UIViewController {
             searchController.searchBar.placeholder = LocalizableString.SearchCountries.localizedString
         }
         
-        resizeViewWhenKeyboardAppears = true
-        
         tableView.reloadData()
     }
     

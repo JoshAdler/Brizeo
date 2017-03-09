@@ -89,6 +89,8 @@ class MomentsViewController: UIViewController {
         super.viewDidAppear(animated)
         
         LocationManager.shared.checkAccessStatus()
+        
+        presentSharedContentIfNeeds()
     }
     
     deinit {
@@ -149,8 +151,21 @@ class MomentsViewController: UIViewController {
     
     // MARK: - Private methods
     
-    fileprivate func showMomentUserProfile(_ moment: Moment) {
-        if moment.ownerId == currentUser.objectId { // show my profile
+    fileprivate func presentSharedContentIfNeeds() {
+        // check whether we need to present user or moment
+        
+        if let userId = BranchProvider.userIdToPresent() {
+            showUserProfile(with: userId)
+        }
+        
+        if let momentId = BranchProvider.momentIdToPresent() {
+//            showMoment(with: momentId)
+            //TODO: to do when the backend will be done for it
+        }
+    }
+    
+    fileprivate func showUserProfile(with userId: String) {
+        if userId == currentUser.objectId { // show my profile
             let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
             Helper.initialNavigationController().pushViewController(profileController, animated: true)
         } else {
@@ -416,8 +431,8 @@ extension MomentsViewController: MomentTableViewCellDelegate {
             print("No moment for this index path")
             return
         }
-
-        showMomentUserProfile(moment)
+        
+        showUserProfile(with: moment.ownerId)
 //        switch listType {
 //        case .myMoments(let userId):
 //            if userId != moment.ownerId {

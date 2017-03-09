@@ -61,7 +61,7 @@ class MediaViewController: UIViewController {
             media = [FileObject(info: moment!.file)]
         }
         
-        addDismissKeyboardGestureRecognizer()
+        hideKeyboardWhenTappedAround()
         
         //TODO: place below in some place
         // track keyboard
@@ -175,9 +175,11 @@ class MediaViewController: UIViewController {
     @IBAction func onSharingButtonClicked(_ sender: UIButton) {
         BranchProvider.generateInviteURL(forMomentId: moment!.objectId, imageURL: nil) { (url) in
             if let url = url {
+                let modifiedURL = "\(LocalizableString.BrizeoInvite.localizedString) \n\n \(url)"
+                
                 if MFMessageComposeViewController.canSendText() {
                     let messageComposeVC = MFMessageComposeViewController()
-                    messageComposeVC.body = url
+                    messageComposeVC.body = modifiedURL
                     messageComposeVC.delegate = self
                     messageComposeVC.messageComposeDelegate = self
                     messageComposeVC.recipients = nil

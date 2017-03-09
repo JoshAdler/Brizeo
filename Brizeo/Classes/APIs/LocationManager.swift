@@ -194,7 +194,13 @@ class LocationManager: NSObject {
     func getLocationsForText(_ text: String, completion:@escaping (([String]) -> Void))  {
         request?.cancel()
         
-        request = Alamofire.request(Constants.googleMapsURL, method: .get, parameters: ["key": GooglePlacesKey.GooglePlacesKey, "input": text, "types": "(cities)"], encoding: JSONEncoding.default, headers: nil).validate().responseJSON{ (response) in
+        let params = [
+            "key": Configurations.GooglePlaces.key,
+            "input": text,
+            "types": "(cities)"
+        ]
+        
+        request = Alamofire.request(Constants.googleMapsURL, method: .get, parameters: params, encoding: JSONEncoding.default, headers: nil).validate().responseJSON{ (response) in
             
            switch response.result {
            case .success(let value):

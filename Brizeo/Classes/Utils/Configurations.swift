@@ -59,6 +59,11 @@ class Configurations: NSObject {
         static let BrizeoCheckURL = "http://brizeo-fb.herokuapp.com/check"
     }
     
+    // MARK: - Google Places
+    struct GooglePlaces {
+        static let key = "AIzaSyAEiofIW_qR2owrLntAtoy-kH0Cq8szDrQ"
+    }
+    
     // MARK: - Reward
     struct RewardInfo {
         static let minInvitedUsers = 25

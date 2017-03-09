@@ -16,7 +16,6 @@ target 'Brizeo' do
     pod 'AlamofireImage', '~> 3.1.0'
     
     pod 'SVProgressHUD', '~> 1.0'
-    #pod 'Atlas', '~> 1.0.3'
     pod 'Mixpanel', '~> 2.9'
     pod 'Branch', '~> 0.12'
     pod 'Fabric'
@@ -42,10 +41,20 @@ target 'Brizeo' do
     pod 'SWTableViewCell'
     pod 'Localytics'
     pod 'CLLocationManager-blocks'
-    pod 'Applozic', '~>3.8'
+    
+    # for managing user defaults
     pod 'SwiftyUserDefaults'
-    pod 'Moya-ObjectMapper'
+    
+    # main chat
+    pod 'Applozic', '~>3.8'
+    
+    # for keyboard management
+    pod 'Typist'
     
     #Moya
     pod 'Moya'
+    pod 'Moya-ObjectMapper'
+    
+    # very useful to work with date
+    pod 'SwiftDate', '~> 4.0'
 end

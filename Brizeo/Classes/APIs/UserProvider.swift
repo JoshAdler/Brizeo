@@ -183,6 +183,8 @@ class UserProvider: NSObject {
                                     
                                     BranchProvider.operateFirstEntrance(with: user)
                                     //TODO: create chat with the admin
+                                    ChatProvider.createChatWithSuperuser()
+                                    
                                     completion(.success(user))
                                     break
                                 default:

@@ -13,8 +13,10 @@ import SwiftyUserDefaults
 extension DefaultsKeys {
     static let sharedUserId = DefaultsKey<String?>("sharedUserId")
     static let launchCount = DefaultsKey<Int>("launchCount")
+    static let userIdToPresent = DefaultsKey<String?>("userIdToPresent")
+    static let momentIdToPresent = DefaultsKey<String?>("momentIdToPresent")
 }
-
+//TODO: check invited by link
 class BranchProvider: NSObject {
 
     // MARK: - Types
@@ -47,6 +49,19 @@ class BranchProvider: NSObject {
     }
     
     // MARK: - Class methods
+    
+    class func userIdToPresent() -> String? {
+        return Defaults[.userIdToPresent]
+    }
+    
+    class func momentIdToPresent() -> String? {
+        return Defaults[.momentIdToPresent]
+    }
+    
+    class func clearPresentData() {
+        Defaults[.userIdToPresent] = nil
+        Defaults[.momentIdToPresent] = nil
+    }
     
     class func generateInviteURL(forMomentId momentId: String, imageURL: String? = nil, andCallback completionHandler: @escaping (String?) -> Void) {
         generateInviteURL(forParams: [.momentId: momentId], imageURL: imageURL, andCallback: completionHandler)
@@ -84,10 +99,12 @@ class BranchProvider: NSObject {
             print("Setup Branch data: \(params?.description)")
             if let userIdToPresent = params?[MetadataKeys.userId.rawValue] as? String {
                 print("user should present user id = \(userIdToPresent)")
+                Defaults[.userIdToPresent] = userIdToPresent
             }
             
             if let momentIdToPresent = params?[MetadataKeys.momentId.rawValue] as? String {
                 print("user should present moment id = \(momentIdToPresent)")
+                Defaults[.momentIdToPresent] = momentIdToPresent
             }
         }
     }
@@ -152,6 +169,7 @@ class BranchProvider: NSObject {
     // MARK: - Private methods
     
     class private func generateInviteURL(forParams params: [MetadataKeys: String], imageURL: String?, andCallback completionHandler: @escaping (String?) -> Void) {
+        
         let branchUniversalObject = BranchUniversalObject()
         branchUniversalObject.title = LocalizableString.Brizeo.localizedString
         branchUniversalObject.contentDescription = LocalizableString.BrizeoInvite.localizedString
@@ -166,16 +184,12 @@ class BranchProvider: NSObject {
         linkProperties.channel = Channel.SMS.rawValue
         
         branchUniversalObject.getShortUrl(with: linkProperties, andCallback: { (url, error) -> Void in
+            
             if let error = error {
                 print("BranchManager: \(error.localizedDescription)")
             }
             
-            if url != nil {
-                let modifiedURL = "\(LocalizableString.BrizeoInvite.localizedString) \n\n \(url!)"
-                completionHandler(modifiedURL)
-            } else {
-                completionHandler(nil)
-            }
+            completionHandler(url)
         })
     }
 }

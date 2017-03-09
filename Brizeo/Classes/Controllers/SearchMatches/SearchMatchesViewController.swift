@@ -174,9 +174,11 @@ class SearchMatchesViewController: BasicViewController {
         
         BranchProvider.generateInviteURL(forUserId: user.objectId) { (url) in
             if let url = url {
+                let modifiedURL = "\(LocalizableString.BrizeoInvite.localizedString) \n\n \(url)"
+                
                 if MFMessageComposeViewController.canSendText() {
                     let messageComposeVC = MFMessageComposeViewController()
-                    messageComposeVC.body = url
+                    messageComposeVC.body = modifiedURL
                     messageComposeVC.delegate = self
                     messageComposeVC.messageComposeDelegate = self
                     messageComposeVC.recipients = nil

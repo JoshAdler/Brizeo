@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0DC682131D640EA0003869CC /* UIViewController+Keyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC682121D640EA0003869CC /* UIViewController+Keyboard.m */; };
-		0DC682161D640EE9003869CC /* NSDate+Kogi.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC682151D640EE9003869CC /* NSDate+Kogi.m */; };
 		690DB8F31CD00F4500733D90 /* Tutorials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690DB8F21CD00F4500733D90 /* Tutorials.swift */; };
 		692B1B471CE5351C00C4906C /* CountryPicker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 692B1B461CE5351C00C4906C /* CountryPicker.bundle */; };
 		692D2FB61CCAC99A00434B54 /* Passion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692D2FB51CCAC99A00434B54 /* Passion.swift */; };
@@ -29,7 +27,6 @@
 		8873F72D1CBFFF520053EAB8 /* BrizeoImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8873F72C1CBFFF520053EAB8 /* BrizeoImage.swift */; };
 		8873F7341CC1891B0053EAB8 /* UIViewController+defaultButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8873F7331CC1891B0053EAB8 /* UIViewController+defaultButtons.swift */; };
 		8874556F1CC5366200F0D45F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8874556E1CC5366200F0D45F /* User.swift */; };
-		887455721CC53DC800F0D45F /* BrizeoKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 887455711CC53DC800F0D45F /* BrizeoKeys.swift */; };
 		88A6279F1CC5725D006A191A /* ProfileMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A6279E1CC5725D006A191A /* ProfileMedia.swift */; };
 		88A627A31CC5789F006A191A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A627A11CC5789F006A191A /* LoginViewController.swift */; };
 		88A627AB1CC599CF006A191A /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A627AA1CC599CF006A191A /* ParseFacebookUtilsV4.framework */; };
@@ -140,6 +137,8 @@
 		BB7AD2641E48C3CC00502AE2 /* LikesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7AD2631E48C3CC00502AE2 /* LikesTableViewCell.swift */; };
 		BB7EAEAF1E607848007986CD /* ALChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7EAEAE1E607848007986CD /* ALChatManager.swift */; };
 		BB8B6AD61E51047A00417D54 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB8B6AD41E51047A00417D54 /* Main.storyboard */; };
+		BBA2DB351E7157760066B84B /* NSDate+Kogi.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA2DB341E7157760066B84B /* NSDate+Kogi.m */; };
+		BBA2DB3A1E715AB00066B84B /* notification_sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = BBA2DB391E715AB00066B84B /* notification_sound.wav */; };
 		BBCDA9311E6DDDF800DCBB5D /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCDA9301E6DDDF800DCBB5D /* APIError.swift */; };
 		BBCDA9331E6DF16500DCBB5D /* MapTransforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCDA9321E6DF16500DCBB5D /* MapTransforms.swift */; };
 		BBD125771E3FF4D900E17750 /* MomentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD125761E3FF4D900E17750 /* MomentTableViewCell.swift */; };
@@ -182,10 +181,6 @@
 
 /* Begin PBXFileReference section */
 		078B3E832DB60A88C1747506 /* Pods-Brizeo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brizeo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Brizeo/Pods-Brizeo.release.xcconfig"; sourceTree = "<group>"; };
-		0DC682111D640EA0003869CC /* UIViewController+Keyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Keyboard.h"; sourceTree = "<group>"; };
-		0DC682121D640EA0003869CC /* UIViewController+Keyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Keyboard.m"; sourceTree = "<group>"; };
-		0DC682141D640EE9003869CC /* NSDate+Kogi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Kogi.h"; sourceTree = "<group>"; };
-		0DC682151D640EE9003869CC /* NSDate+Kogi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Kogi.m"; sourceTree = "<group>"; };
 		2E68A4F7EA84288D8B53FD40 /* Pods-Brizeo.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brizeo.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-Brizeo/Pods-Brizeo.adhoc.xcconfig"; sourceTree = "<group>"; };
 		690DB8F21CD00F4500733D90 /* Tutorials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tutorials.swift; sourceTree = "<group>"; };
 		692B1B461CE5351C00C4906C /* CountryPicker.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CountryPicker.bundle; sourceTree = "<group>"; };
@@ -206,7 +201,6 @@
 		8873F72C1CBFFF520053EAB8 /* BrizeoImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrizeoImage.swift; sourceTree = "<group>"; };
 		8873F7331CC1891B0053EAB8 /* UIViewController+defaultButtons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+defaultButtons.swift"; sourceTree = "<group>"; };
 		8874556E1CC5366200F0D45F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		887455711CC53DC800F0D45F /* BrizeoKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrizeoKeys.swift; sourceTree = "<group>"; };
 		88A6279E1CC5725D006A191A /* ProfileMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileMedia.swift; sourceTree = "<group>"; };
 		88A627A11CC5789F006A191A /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		88A627AA1CC599CF006A191A /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseFacebookUtilsV4.framework; path = Brizeo/ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
@@ -327,6 +321,9 @@
 		BB7EAEAB1E6077E9007986CD /* Applozic.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Applozic.framework; sourceTree = "<group>"; };
 		BB7EAEAE1E607848007986CD /* ALChatManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ALChatManager.swift; sourceTree = "<group>"; };
 		BB8B6AD51E51047A00417D54 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		BBA2DB331E7157760066B84B /* NSDate+Kogi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+Kogi.h"; path = "KogiDate/NSDate+Kogi.h"; sourceTree = "<group>"; };
+		BBA2DB341E7157760066B84B /* NSDate+Kogi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+Kogi.m"; path = "KogiDate/NSDate+Kogi.m"; sourceTree = "<group>"; };
+		BBA2DB391E715AB00066B84B /* notification_sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = notification_sound.wav; sourceTree = "<group>"; };
 		BBCDA9301E6DDDF800DCBB5D /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		BBCDA9321E6DF16500DCBB5D /* MapTransforms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTransforms.swift; sourceTree = "<group>"; };
 		BBD125761E3FF4D900E17750 /* MomentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MomentTableViewCell.swift; sourceTree = "<group>"; };
@@ -522,7 +519,6 @@
 		8873F7231CBFFE2A0053EAB8 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				887455711CC53DC800F0D45F /* BrizeoKeys.swift */,
 				8873F72C1CBFFF520053EAB8 /* BrizeoImage.swift */,
 				88B568F51CC93E53003A21EE /* DeviceAction.swift */,
 				88B568F71CC9700C003A21EE /* CaptionedPhoto.swift */,
@@ -539,10 +535,6 @@
 		8873F7321CC188FD0053EAB8 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				0DC682111D640EA0003869CC /* UIViewController+Keyboard.h */,
-				0DC682121D640EA0003869CC /* UIViewController+Keyboard.m */,
-				0DC682141D640EE9003869CC /* NSDate+Kogi.h */,
-				0DC682151D640EE9003869CC /* NSDate+Kogi.m */,
 				8873F7331CC1891B0053EAB8 /* UIViewController+defaultButtons.swift */,
 				BB19EED11E4A7FB100B0BD61 /* Extensions.swift */,
 			);
@@ -698,6 +690,7 @@
 		BB1EF45D1E3A92E400231ACC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BBA2DB381E715AB00066B84B /* Audio */,
 				BB1EF45E1E3A931400231ACC /* Data */,
 				BB1EF45F1E3A931400231ACC /* Fonts */,
 				BB1EF4601E3A931400231ACC /* Images */,
@@ -734,6 +727,7 @@
 		BB1EF46D1E3A963B00231ACC /* 3rdParty */ = {
 			isa = PBXGroup;
 			children = (
+				BBA2DB321E71576B0066B84B /* KogiDate */,
 				BB7EAEAD1E607848007986CD /* Applozic */,
 				BBFBBB7E1E3CBCAA0002BF4B /* AutoCompleteTextField */,
 				BB1EF46E1E3A965400231ACC /* Brizeo-Bridging-Header.h */,
@@ -985,6 +979,23 @@
 			path = Applozic;
 			sourceTree = "<group>";
 		};
+		BBA2DB321E71576B0066B84B /* KogiDate */ = {
+			isa = PBXGroup;
+			children = (
+				BBA2DB331E7157760066B84B /* NSDate+Kogi.h */,
+				BBA2DB341E7157760066B84B /* NSDate+Kogi.m */,
+			);
+			name = KogiDate;
+			sourceTree = "<group>";
+		};
+		BBA2DB381E715AB00066B84B /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				BBA2DB391E715AB00066B84B /* notification_sound.wav */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
 		BBD125751E3FF4D900E17750 /* Moments */ = {
 			isa = PBXGroup;
 			children = (
@@ -1205,6 +1216,7 @@
 				69C215201CCE453D00F4C069 /* CustomLocation.gpx in Resources */,
 				BB4ED5DC1E3B4F81005B3487 /* SourceSansPro-Bold.otf in Resources */,
 				BB1EF4671E3A935F00231ACC /* LikeNotificationList.plist in Resources */,
+				BBA2DB3A1E715AB00066B84B /* notification_sound.wav in Resources */,
 				692B1B471CE5351C00C4906C /* CountryPicker.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1312,6 +1324,7 @@
 				BB3EF5861E6C714A006FB2ED /* APIService.swift in Sources */,
 				8873F72B1CBFFE9C0053EAB8 /* LocalizableString.swift in Sources */,
 				BBCDA9331E6DF16500DCBB5D /* MapTransforms.swift in Sources */,
+				BBA2DB351E7157760066B84B /* NSDate+Kogi.m in Sources */,
 				BB22CF9D1E5081790096A3D3 /* BranchProvider.swift in Sources */,
 				BB22CF991E5072290096A3D3 /* DatePickerDialog.swift in Sources */,
 				BB4ED5FB1E3C0B38005B3487 /* SettingsNormalHeaderView.swift in Sources */,
@@ -1336,7 +1349,6 @@
 				88C188671CDB85240011F3A6 /* PaginationHelper.swift in Sources */,
 				BB19EED21E4A7FB100B0BD61 /* Extensions.swift in Sources */,
 				BB49F9511E412C26009EE6A0 /* SettingsHeaderView.swift in Sources */,
-				0DC682161D640EE9003869CC /* NSDate+Kogi.m in Sources */,
 				BBFBBB8B1E3CD5FA0002BF4B /* ThemeManager.swift in Sources */,
 				BB4ED5BD1E3AB42B005B3487 /* EventTableViewCell.swift in Sources */,
 				BB104CEE1E3F889D0082411E /* UserMatchesViewController.swift in Sources */,
@@ -1395,7 +1407,6 @@
 				BB09A6AC1E660D4C0020F8C5 /* OtherPersonAboutInvitedByTableViewCell.swift in Sources */,
 				88B569021CD904E3003A21EE /* PreferencesProvider.swift in Sources */,
 				BB104CE81E3F87370082411E /* TripsTableViewCell.swift in Sources */,
-				887455721CC53DC800F0D45F /* BrizeoKeys.swift in Sources */,
 				88B568FF1CD904D0003A21EE /* UserProvider.swift in Sources */,
 				BB099F0A1E3F4BAB00133794 /* AboutViewController.swift in Sources */,
 				BBD1257D1E407AD100E17750 /* OtherPersonInterestView.swift in Sources */,
@@ -1411,7 +1422,6 @@
 				69DFBD561CFDD4DB0062208E /* PushNotificationManager.swift in Sources */,
 				BB4ED5E81E3BA27B005B3487 /* SettingsViewController.swift in Sources */,
 				BBFBBB8D1E3CDB750002BF4B /* SettingsCheckmarkCell.swift in Sources */,
-				0DC682131D640EA0003869CC /* UIViewController+Keyboard.m in Sources */,
 				BB09A6AE1E66C08E0020F8C5 /* ChatProvider.swift in Sources */,
 				BB22CF9A1E5072290096A3D3 /* DropMenuButton.swift in Sources */,
 				BB7AD2641E48C3CC00502AE2 /* LikesTableViewCell.swift in Sources */,

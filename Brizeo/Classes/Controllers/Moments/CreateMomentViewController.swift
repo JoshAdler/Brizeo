@@ -82,9 +82,10 @@ class CreateMomentViewController: UIViewController {
         // setup autocomplete text field
         setupLocationTextField()
         
-        resizeViewWhenKeyboardAppears = false
-        
         fetchPassions()
+        
+        // hide keyboard on click anywhere
+        hideKeyboardWhenTappedAround()
     }
     
     // MARK: - Private methods

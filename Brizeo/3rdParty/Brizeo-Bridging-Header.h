@@ -7,7 +7,7 @@
 #import <MSRangeSlider/MSRangeSlider.h>
 #import <Google/Analytics.h>
 
-#import "UIViewController+Keyboard.h"
+// Date mamagement
 #import "NSDate+Kogi.h"
 
 // Applozic
@@ -19,5 +19,6 @@
 #import "Applozic/ALApplozicSettings.h"
 #import "Applozic/ALAppLocalNotifications.h"
 #import "Applozic/ALConversationService.h"
+#import "Applozic/ALChannelService.h"
 
 
