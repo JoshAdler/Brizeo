@@ -61,8 +61,6 @@ class MediaViewController: UIViewController {
             media = [FileObject(info: moment!.file)]
         }
         
-        //TODO: ask Josh about: when is it possible to edit and when sharing?
-        
         addDismissKeyboardGestureRecognizer()
         
         //TODO: place below in some place
@@ -215,8 +213,6 @@ extension MediaViewController: UICollectionViewDataSource {
             break
         }
 
-        // TODO: ask Josh what kind of resources can be used to a moment - image or video also?
-        // TODO: ask Josh about what text should be placed on the media? Only if moment?
         descriptionTextView.text = moment != nil ? moment?.capture : nil
         
         return cell

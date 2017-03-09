@@ -26,8 +26,7 @@ struct ThemeConstants {
     static let carbonMenuIndicatorHeight: CGFloat = 2.0
     static let carbonMenuIndicatorColor = HexColor("0356a2")
 }
-
-// TODO: rewrite result and add code,   
+   
 enum Result<T> {
     case success(T)
     case failure(APIError)

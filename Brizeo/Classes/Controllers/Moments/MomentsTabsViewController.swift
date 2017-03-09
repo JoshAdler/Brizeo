@@ -140,19 +140,6 @@ class MomentsTabsViewController: BasicViewController {
         createMomentController.image = image
         Helper.initialNavigationController().pushViewController(createMomentController, animated: true)
     }
-    
-    // MARK: - Public methods
-    
-    func showPopupGuidence(){
-        allMomentsController.gotoFirst()
-        
-        // TODO: what to do here?
-        /*var tempCenter: CGPoint
-        tempCenter = self.btnCamera.center
-        tempCenter.y += tempCenter.y + 90.0
-        MomentPopupView.show(withColor: UIColor.black, center: tempCenter, size: CGSize(width: 50.0, height: 50.0), cornerRadius: nil, message: "Please upload a fun or travel pic") { (dismissed) -> Void in
-        }*/
-    }
 }
 
 extension MomentsTabsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

@@ -57,7 +57,7 @@ class User: Mappable {
     // MARK: - Properties
     
     // ids
-    var objectId: String!
+    var objectId: String = "0"
     var facebookId: String!
     
     // basic information

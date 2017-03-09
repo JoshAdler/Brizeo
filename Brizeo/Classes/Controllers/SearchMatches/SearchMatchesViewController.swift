@@ -167,8 +167,12 @@ class SearchMatchesViewController: BasicViewController {
     }
     
     @IBAction func onShareButtonClicked(sender: UIButton) {
-        // TODO: place real user id
-        BranchProvider.generateInviteURL(forUserId: /*user.userID*/"0") { (url) in
+        guard matches != nil, let user = matches?.first else {
+            print("No user for sharing")
+            return
+        }
+        
+        BranchProvider.generateInviteURL(forUserId: user.objectId) { (url) in
             if let url = url {
                 if MFMessageComposeViewController.canSendText() {
                     let messageComposeVC = MFMessageComposeViewController()

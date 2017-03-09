@@ -154,14 +154,12 @@
 		BBD428191E41DDFD00DA6E6C /* OtherPersonAboutInviteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD428181E41DDFD00DA6E6C /* OtherPersonAboutInviteTableViewCell.swift */; };
 		BBD4281B1E41DE5100DA6E6C /* OtherPersonAboutInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD4281A1E41DE5100DA6E6C /* OtherPersonAboutInfoTableViewCell.swift */; };
 		BBD4281D1E41EEF100DA6E6C /* SearchMatchesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD4281C1E41EEF100DA6E6C /* SearchMatchesViewController.swift */; };
-		BBD4281F1E420BA000DA6E6C /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD4281E1E420BA000DA6E6C /* ChatViewController.swift */; };
 		BBFBBB801E3CBCAA0002BF4B /* AutoCompleteTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFBBB7F1E3CBCAA0002BF4B /* AutoCompleteTextField.swift */; };
 		BBFBBB821E3CBD460002BF4B /* SettingsSearchLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFBBB811E3CBD460002BF4B /* SettingsSearchLocationCell.swift */; };
 		BBFBBB861E3CCAD70002BF4B /* SettingsLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFBBB851E3CCAD70002BF4B /* SettingsLocationCell.swift */; };
 		BBFBBB891E3CD3B30002BF4B /* GenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFBBB881E3CD3B30002BF4B /* GenderViewController.swift */; };
 		BBFBBB8B1E3CD5FA0002BF4B /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFBBB8A1E3CD5FA0002BF4B /* ThemeManager.swift */; };
 		BBFBBB8D1E3CDB750002BF4B /* SettingsCheckmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFBBB8C1E3CDB750002BF4B /* SettingsCheckmarkCell.swift */; };
-		BBFBBB901E3D35F50002BF4B /* InviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFBBB8F1E3D35F50002BF4B /* InviteViewController.swift */; };
 		D1641CEBC257ED884DC91E75 /* Pods_Brizeo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF77DB0EB2C6249A6F0A358D /* Pods_Brizeo.framework */; };
 /* End PBXBuildFile section */
 
@@ -343,14 +341,12 @@
 		BBD428181E41DDFD00DA6E6C /* OtherPersonAboutInviteTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherPersonAboutInviteTableViewCell.swift; sourceTree = "<group>"; };
 		BBD4281A1E41DE5100DA6E6C /* OtherPersonAboutInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherPersonAboutInfoTableViewCell.swift; sourceTree = "<group>"; };
 		BBD4281C1E41EEF100DA6E6C /* SearchMatchesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchMatchesViewController.swift; sourceTree = "<group>"; };
-		BBD4281E1E420BA000DA6E6C /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		BBFBBB7F1E3CBCAA0002BF4B /* AutoCompleteTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteTextField.swift; sourceTree = "<group>"; };
 		BBFBBB811E3CBD460002BF4B /* SettingsSearchLocationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSearchLocationCell.swift; sourceTree = "<group>"; };
 		BBFBBB851E3CCAD70002BF4B /* SettingsLocationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsLocationCell.swift; sourceTree = "<group>"; };
 		BBFBBB881E3CD3B30002BF4B /* GenderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenderViewController.swift; sourceTree = "<group>"; };
 		BBFBBB8A1E3CD5FA0002BF4B /* ThemeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		BBFBBB8C1E3CDB750002BF4B /* SettingsCheckmarkCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsCheckmarkCell.swift; sourceTree = "<group>"; };
-		BBFBBB8F1E3D35F50002BF4B /* InviteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteViewController.swift; sourceTree = "<group>"; };
 		CEC875E4358766A8BAFF3D7D /* Pods-Brizeo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brizeo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Brizeo/Pods-Brizeo.debug.xcconfig"; sourceTree = "<group>"; };
 		EF77DB0EB2C6249A6F0A358D /* Pods_Brizeo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Brizeo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -491,7 +487,6 @@
 				BB104CEC1E3F889D0082411E /* UserMatches */,
 				BB104CE11E3F7F120082411E /* Trips */,
 				BB099F081E3F4BA200133794 /* About */,
-				BBFBBB8E1E3D35EC0002BF4B /* Invite */,
 				BB4ED5E91E3BA334005B3487 /* Personal */,
 				BB4ED5BE1E3AB636005B3487 /* NavigationViewController */,
 				BB1EF4861E3AA58D00231ACC /* TabBarController */,
@@ -507,7 +502,6 @@
 		8873F6FF1CBFDFCD0053EAB8 /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				BBD4281E1E420BA000DA6E6C /* ChatViewController.swift */,
 				BB49F94D1E409E16009EE6A0 /* ChatListViewController.swift */,
 			);
 			path = Chat;
@@ -1046,14 +1040,6 @@
 			name = Gender;
 			sourceTree = "<group>";
 		};
-		BBFBBB8E1E3D35EC0002BF4B /* Invite */ = {
-			isa = PBXGroup;
-			children = (
-				BBFBBB8F1E3D35F50002BF4B /* InviteViewController.swift */,
-			);
-			path = Invite;
-			sourceTree = "<group>";
-		};
 		BDDFE09F23659A9CFB6CA708 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1419,7 +1405,6 @@
 				BB4ED5EC1E3BA382005B3487 /* PersonalTabsViewController.swift in Sources */,
 				BB1FF6E31E51AF2F002343CE /* NoDescriptionView.swift in Sources */,
 				BBD428131E41CF6B00DA6E6C /* OtherPersonDetailsTabsViewController.swift in Sources */,
-				BBFBBB901E3D35F50002BF4B /* InviteViewController.swift in Sources */,
 				BB3EF5841E6AB8C7006FB2ED /* FileObjectInfo.swift in Sources */,
 				69EFA9741CDA99FA00885EEA /* LocationManager.swift in Sources */,
 				BB4ED6061E3C0E95005B3487 /* SettingsInvitationCell.swift in Sources */,
@@ -1427,7 +1412,6 @@
 				BB4ED5E81E3BA27B005B3487 /* SettingsViewController.swift in Sources */,
 				BBFBBB8D1E3CDB750002BF4B /* SettingsCheckmarkCell.swift in Sources */,
 				0DC682131D640EA0003869CC /* UIViewController+Keyboard.m in Sources */,
-				BBD4281F1E420BA000DA6E6C /* ChatViewController.swift in Sources */,
 				BB09A6AE1E66C08E0020F8C5 /* ChatProvider.swift in Sources */,
 				BB22CF9A1E5072290096A3D3 /* DropMenuButton.swift in Sources */,
 				BB7AD2641E48C3CC00502AE2 /* LikesTableViewCell.swift in Sources */,

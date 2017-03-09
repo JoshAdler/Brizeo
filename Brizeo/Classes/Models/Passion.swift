@@ -34,6 +34,14 @@ class Passion : Mappable {
     var colorHex: String?
     var iconURL: String?
     
+    var iconLink: URL? {
+        guard iconURL != nil else {
+            return nil
+        }
+        
+        return URL(string: iconURL!)
+    }
+    
     var color: UIColor {
         let hex = colorHex ?? "ffffff"
         return HexColor(hex)!

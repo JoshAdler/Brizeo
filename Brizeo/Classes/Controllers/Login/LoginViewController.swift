@@ -80,7 +80,9 @@ class LoginViewController: UIViewController {
                 if error.localizedDescription != APIError.notFound.localizedDescription {
                     SVProgressHUD.showError(withStatus: error.localizedDescription)
                 } else {
-                    SVProgressHUD.dismiss()
+                    if failureCompletion == nil {
+                        SVProgressHUD.dismiss()
+                    }
                     failureCompletion?()
                 }
                 break
@@ -131,7 +133,6 @@ class LoginViewController: UIViewController {
             signUpWithFacebook()
         }
     }
-    //TODO: check the place with loading
     
     @IBAction func termsButtonTapped(_ sender: UIButton) {
         let termsURL = URL(string: Configurations.General.termsOfUseURL)!

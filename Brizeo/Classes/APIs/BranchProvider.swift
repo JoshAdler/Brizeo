@@ -107,10 +107,6 @@ class BranchProvider: NSObject {
     }
     
     class func checkUserReward() {
-        guard let currentUser = UserProvider.shared.currentUser else {
-            print("Error: no current user for 'checkUserReward'")
-            return
-        }
         
         loadReward { (invitedCount, error) in
             guard invitedCount != nil else {
@@ -123,18 +119,7 @@ class BranchProvider: NSObject {
                 return
             }
             
-            //TODO: use method for sending emails
-            //            UserProvider.sendDownloadEvent(currentUser, timesDownloaded: credits, completion: { (result) in
-            //
-            //                switch result {
-            //                case .success(_):
-            //                    break
-            //                case .failure(let error):
-            //                    //Error sending download event call
-            //                    CLSNSLogv("ERROR: error occurred sending download event to api: %@", getVaList([error]))
-            //                    break
-            //                }
-            //            })
+            InfoProvider.notifyAdminAboutDownloads(count: invitedCount!, completion: nil)
         }
     }
     
@@ -154,11 +139,11 @@ class BranchProvider: NSObject {
                 // operate who has invited the current user
                 if let invitedByUserId = installParams?[MetadataKeys.invitedByUserId.rawValue] as? String, let invitedByUserName = installParams?[MetadataKeys.invitedByUserName.rawValue] as? String {
                     print("User was invited by \(invitedByUserId) - \(invitedByUserName)")
-                    //TODO: save this data in the user
+                    
                     user.invitedByUserId = invitedByUserId
                     user.invitedByUserName = invitedByUserName
                     
-                    //TODO: save user
+                    UserProvider.updateUser(user: user, completion: nil)
                 }
             }
         }

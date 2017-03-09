@@ -96,7 +96,7 @@ extension NotificationsViewController: UITableViewDataSource {
         }
     }
 }
-//TODO: replace alamofire with sdwebimage
+
 // MARK: - UITableViewDelegate
 extension NotificationsViewController: UITableViewDelegate {
     

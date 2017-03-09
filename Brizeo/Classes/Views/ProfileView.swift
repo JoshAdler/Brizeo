@@ -30,7 +30,6 @@ class ProfileView: UIView {
         if user.hasProfileImage {
             profileImageView.sd_setImage(with: user.profileUrl!)
         } else {
-            // TODO: place here something. Ask Josh
             profileImageView.image = nil
         }
     }

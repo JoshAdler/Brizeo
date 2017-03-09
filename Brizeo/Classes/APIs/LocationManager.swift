@@ -111,15 +111,14 @@ class LocationManager: NSObject {
     // MARK: Public methods
     
     class func updateUserLocation() {
-        guard let currentUser = UserProvider.shared.currentUser else {
-            print("Error: no current user for 'updateUserLocationIfPossible'")
-            return
-        }
-        
         _ = LocationManager.shared.requestCurrentLocation { (locationString, location) in
             if let location = location {
                 print("Current location: \(locationString) | \(location)")
-                //TODO: update current location for user
+                
+                if let user = UserProvider.shared.currentUser {
+                    user.location = location
+                    UserProvider.updateUser(user: user, completion: nil)
+                }
             }
         }
     }
@@ -190,7 +189,8 @@ class LocationManager: NSObject {
             completion(searchLocation)
         }
     }
-    //TODO: check the latest realization for this part
+    //TODO: check the latest realization for this part / check on device whether this part is working
+    //TODO: make firt entrance screen
     func getLocationsForText(_ text: String, completion:@escaping (([String]) -> Void))  {
         request?.cancel()
         

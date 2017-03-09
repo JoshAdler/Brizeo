@@ -17,11 +17,11 @@ class InfoProvider: NSObject {
     
     // MARK: - Class methods
     
-    class func notifyAdminAboutDownloads(count: Int, completion: @escaping EmptyCompletion) {
+    class func notifyAdminAboutDownloads(count: Int, completion: EmptyCompletion?) {
         
         guard let user = UserProvider.shared.currentUser else {
             print("Error: Can't report moment without current user")
-            completion(.failure(APIError(code: 0, message: "Can't report moment without current user")))
+            completion?(.failure(APIError(code: 0, message: "Can't report moment without current user")))
             return
         }
         
@@ -29,10 +29,16 @@ class InfoProvider: NSObject {
         provider.request(.notifyAdminAboutDownloads(userId: user.objectId, count: count)) { (result) in
             switch result {
             case .success(let response):
-                completion(.success())
+                
+                guard response.statusCode == 200 else {
+                    completion?(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
+                completion?(.success())
                 break
             case .failure(let error):
-                completion(.failure(APIError(error: error)))
+                completion?(.failure(APIError(error: error)))
                 break
             }
         }

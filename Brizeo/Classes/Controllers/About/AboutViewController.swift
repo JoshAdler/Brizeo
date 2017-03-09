@@ -58,7 +58,6 @@ class AboutViewController: UIViewController {
     fileprivate var mutualFriends = [(name:String, pictureURL:String)]()
     fileprivate var selectedPassion = [String: Int]()
     fileprivate var passions: [Passion]?
-    //TODO: do something with a user
     
     // MARK: - Controller lifecycle
     
@@ -99,7 +98,7 @@ class AboutViewController: UIViewController {
             }
         }
     }
-    //TODO: ask Josh about saving - in case of error? Whether we should go back?
+
     // MARK: - Private methods
     
     fileprivate func setSelectedPassions() {
@@ -138,7 +137,6 @@ class AboutViewController: UIViewController {
         
         user.assignPassionIds(dict: selectedPassion)
         UserProvider.updateUser(user: user, completion: nil)
-        //TODO: ask Josh about the default passions
     }
     
     fileprivate func applyPlaceholder() {

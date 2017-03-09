@@ -10,6 +10,7 @@ import UIKit
 import ChameleonFramework
 import MessageUI
 import SVProgressHUD
+import SDWebImage
 
 class OtherProfileViewController: BasicViewController {
 
@@ -113,15 +114,21 @@ class OtherProfileViewController: BasicViewController {
                     
                     // try to get top passion
                     if let topPassionId = weak.user.topPassionId, let userPassion = weak.passions?.filter({ topPassionId == $0.objectId! }).first {
-//                        weak.interestView.image = userPassion.imageIcon
+                        
+                        if let iconLink = userPassion.iconLink {
+                            weak.interestView.interestImageView.sd_setImage(with: iconLink)
+                        }
                         
                         weak.interestView.title = userPassion.displayName
                         weak.interestView.interestColor = userPassion.color
                     }
                     else { // set default passion "Travel"
                         if let defaultPassion = weak.passions?.filter({ $0.displayName == "Travel" }).first {
-                            //                        weak.interestView.image = userPassion.imageIcon
-                            //TODO: load it from the web
+                        
+                            if let iconLink = defaultPassion.iconLink {
+                                weak.interestView.interestImageView.sd_setImage(with: iconLink)
+                            }
+                            
                             weak.interestView.title = defaultPassion.displayName
                             weak.interestView.interestColor = defaultPassion.color
                         } else {
@@ -268,7 +275,7 @@ class OtherProfileViewController: BasicViewController {
         
         approveUser()
     }
-    //TODO: ask Josh about how it should work on moments
+    
     @IBAction func onShareButtonClicked(_ sender: UIButton) {
         BranchProvider.generateInviteURL(forUserId: user.objectId) { (url) in
             if let url = url {

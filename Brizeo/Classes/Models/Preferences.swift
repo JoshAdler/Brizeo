@@ -25,7 +25,7 @@ class Preferences: Mappable {
     }
     
     // MARK: - Properties
-    //TODO: check whether there is a object id?
+    
     var objectId: String = "0"
     var ageLowerLimit: Int = 0
     var ageUpperLimit: Int = 0

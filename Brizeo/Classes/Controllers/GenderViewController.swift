@@ -64,7 +64,7 @@ extension GenderViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
-    //TODO: rewrite table view header/footer views
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellId, for: indexPath) as! SettingsCheckmarkCell
         
@@ -136,9 +136,8 @@ extension GenderViewController: UITableViewDelegate {
             } else {
                 preferences.genders.append(gender)
             }
+            
             tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
-            //TODO: connect gender to current state
-
             PreferencesProvider.updatePreferences(preferences: preferences, completion: nil)
         }
     }

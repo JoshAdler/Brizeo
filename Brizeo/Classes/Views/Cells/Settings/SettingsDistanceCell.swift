@@ -8,6 +8,4 @@
 
 import UIKit
 
-class SettingsDistanceCell: UITableViewCell {
-}
-//TODO: check whether this class is using
+class SettingsDistanceCell: UITableViewCell {}

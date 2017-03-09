@@ -146,7 +146,6 @@ class MomentsViewController: UIViewController {
         sender.endRefreshing()
         resetMoments()
     }
-    // TODO: ask Josh about readStatus. what is this?
     
     // MARK: - Private methods
     
@@ -225,13 +224,11 @@ class MomentsViewController: UIViewController {
             }
         }
     }
-    //TODO: retry buttons for error alerts
+    
     fileprivate func initFilterButton() {
         guard passions != nil else {
             return
         }
-        
-//        selectedPassion = passions!.filter({ $0.displayName == "Travel" }).first ?? passions!.first!
         
         // set default value
         filterButton.setTitle(Constants.defaultFilterTitle, for: .normal)
@@ -400,7 +397,7 @@ extension MomentsViewController: MomentTableViewCellDelegate {
             print("No moment for this index path")
             return
         }
-        //TODO: ask Josh about read status of moments and perhaps others?
+
         //checkReadStatus(moment)
         
         let likersController: LikesViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.likesControllerId)!
@@ -443,7 +440,7 @@ extension MomentsViewController: MomentTableViewCellDelegate {
         }
         
         let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        //TODO: anyway we need to load users for a migrated users
+        
         if moment.ownerId != currentUser.objectId {
             alertVC.addAction(UIAlertAction(title: LocalizableString.Report.localizedString, style: .default, handler: { alert in
                 self.showBlackLoader()
@@ -461,7 +458,6 @@ extension MomentsViewController: MomentTableViewCellDelegate {
                         break
                     }
                 })
-                //TODO: perhaps it is a good idea to block reporting moment more than 1 time
             }))
         } else {
             alertVC.addAction(UIAlertAction(title: LocalizableString.DeleteMoment.localizedString, style: .default, handler: { alert in

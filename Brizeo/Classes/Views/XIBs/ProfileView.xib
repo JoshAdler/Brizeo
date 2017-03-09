@@ -32,7 +32,7 @@
                     <rect key="frame" x="0.0" y="498" width="375" height="55"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zwd-lB-RaE">
-                            <rect key="frame" x="133" y="0.0" width="55" height="55"/>
+                            <rect key="frame" x="152.5" y="9.5" width="35.5" height="36"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="Zwd-lB-RaE" secondAttribute="height" multiplier="1:1" id="a28-b1-Mua"/>
                             </constraints>
@@ -40,13 +40,13 @@
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="huO-Gz-eAv">
                             <rect key="frame" x="198" y="0.0" width="0.0" height="55"/>
                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="18"/>
-                            <nil key="textColor"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="Zwd-lB-RaE" firstAttribute="height" secondItem="WLC-rv-DVa" secondAttribute="height" id="5Yr-tc-NTP"/>
+                        <constraint firstItem="Zwd-lB-RaE" firstAttribute="height" secondItem="WLC-rv-DVa" secondAttribute="height" multiplier="0.65" id="5Yr-tc-NTP"/>
                         <constraint firstItem="Zwd-lB-RaE" firstAttribute="centerY" secondItem="WLC-rv-DVa" secondAttribute="centerY" id="Ejx-VY-8Cf"/>
                         <constraint firstItem="huO-Gz-eAv" firstAttribute="centerY" secondItem="WLC-rv-DVa" secondAttribute="centerY" id="Pp0-al-nHa"/>
                         <constraint firstItem="huO-Gz-eAv" firstAttribute="leading" secondItem="Zwd-lB-RaE" secondAttribute="trailing" constant="10" id="Vi8-ru-f3g"/>
@@ -84,13 +84,13 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r5b-2n-hGM">
-                    <rect key="frame" x="340" y="562.5" width="10" height="23"/>
+                    <rect key="frame" x="340" y="562" width="10" height="23"/>
                     <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_social" translatesAutoresizingMaskIntoConstraints="NO" id="7ls-zJ-Tqm">
-                    <rect key="frame" x="312" y="567.5" width="20" height="16"/>
+                    <rect key="frame" x="312" y="567" width="20" height="16"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HHU-ZZ-9gF">
                     <rect key="frame" x="350" y="567" width="25" height="100"/>

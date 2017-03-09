@@ -124,7 +124,8 @@ extension APIService: TargetType {
         case .updatePreferences(_, let preferences):
             return preferences.toJSON()
         case .updateUser(let user):
-            return user.toJSON()
+            let dict = ["newuser": user.toJSON()]
+            return dict
         case .addCountryForUser(let country, _):
             let dict = ["country": country.code]
             return dict

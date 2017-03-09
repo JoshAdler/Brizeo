@@ -93,20 +93,36 @@ class CreateMomentViewController: UIViewController {
         showBlackLoader()
         
         PassionsProvider.shared.retrieveAllPassions(true) { [weak self] (result) in
-            DispatchQueue.main.async {
-                self?.hideLoader()
-                
-                switch result {
-                case .success(let passions):
-                    self?.passions = passions
-                    self?.initFilterButton()
-                case .failure(let error):
-                    self?.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
-                default:
-                    break
+            if let welf = self {
+                DispatchQueue.main.async {
+                    welf.hideLoader()
+                    
+                    switch result {
+                    case .success(let passions):
+                        welf.passions = passions
+                        welf.initFilterButton()
+                    case .failure(let error):
+                        welf.presentErrorAlert(message: error.localizedDescription)
+                    default:
+                        break
+                    }
                 }
             }
         }
+    }
+    
+    fileprivate func presentErrorAlert(message: String?) {
+        let alert = UIAlertController(title: LocalizableString.Error.localizedString, message: message, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: LocalizableString.TryAgain.localizedString, style: .default, handler: { (action) in
+            self.fetchPassions()
+        }))
+        
+        alert.addAction(UIAlertAction(title: LocalizableString.Dismiss.localizedString, style: .cancel, handler: { (action) in
+            _ = self.navigationController?.popViewController(animated: true)
+        }))
+        
+        present(alert, animated: true, completion: nil)
     }
     
     fileprivate func showPlaceholder() {
@@ -180,34 +196,6 @@ class CreateMomentViewController: UIViewController {
             noDescriptionView.present(on: Helper.initialNavigationController().view)
             return
         }
-        
-        
-        
-        
-        /*
-        if captionTextView.text.numberOfCharactersWithoutSpaces() != 0 && captionTextView.text != LocalizableString.WriteACapture.localizedString {
-            
-            showBlackLoader()
-            MomentsProvider.createMomentWithImage(image, andDescription: captionTextView.text, forUser: user, completion: { (result) in
-                
-                self.hideLoader()
-                switch result {
-                case .success(let value):
-                    GoogleAnalyticsManager.userCreateNewMoment.sendEvent()
-                    //TODO: go next
-                    //self.navigationCoordinator?.performTransition(Transition.momentUploadFinished(moment: value))
-                    break
-                case .failure(let error):
-                    self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
-                    break
-                }
-            })
-        } else {
-            showAlert("", message: LocalizableString.MomentsMustHaveADescription.localizedString, dismissTitle: LocalizableString.Ok.localizedString, completion: {
-                
-                self.captionTextView.becomeFirstResponder()
-            })
-        }*/
     }
 }
 

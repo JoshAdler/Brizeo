@@ -11,9 +11,7 @@ import Branch
 import Mixpanel
 import Fabric
 import Crashlytics
-import Parse
 import Google
-//TODO: remove unnecesary imports
 import UserNotifications
 import FBSDKLoginKit
 import Localytics
@@ -50,8 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
         registerForPushNotifications()
-        // TODO: replace chat initialization on login
-        //LayerManager.sharedManager.loginLayer()
 
         // TODO: replace GoogleAnalytics
 //        GoogleAnalyticsManager.setupGoogleAnalytics()
@@ -102,18 +98,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         FBSDKAppEvents.activateApp()
-
-        
-        //TODO: use API method to make badge count = 0
-//        guard let currentInstallation = PFInstallation.current() else {
-//            assertionFailure("Error: no current installation from backend")
-//            return
-//        }
-//        
-//        if currentInstallation.badge != 0 {
-//            currentInstallation.badge = 0
-//            currentInstallation.saveEventually()
-//        }
     }
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
@@ -143,7 +127,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
 }
-//TODO: ask Josh about whether we will use push notifications from Firebase
+
 //MARK: - Utils
 extension AppDelegate: UNUserNotificationCenterDelegate {
     

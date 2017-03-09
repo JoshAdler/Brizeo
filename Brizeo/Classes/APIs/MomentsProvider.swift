@@ -293,8 +293,6 @@ class MomentsProvider {
         }
     }
     
-    //TODO: check to be sure that the current user can't like his moment
-    
     class func getMoments(with type: MomentsListType, sortingFlag: MomentsSortingFlag, filterPassion: Passion?, paginator: PaginationHelper, completion: @escaping MomentsCompletion) {
         
         switch type {

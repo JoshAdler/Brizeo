@@ -12,7 +12,7 @@ import Applozic
 class ChatProvider: NSObject {
 
     // MARK: - Class methods
-    //TODO: place this registration in the correct place
+    
     class func registerUserInChat() {
         guard let currentUser = UserProvider.shared.currentUser else {
             print("Error: can't register user in chat because current user is nil")

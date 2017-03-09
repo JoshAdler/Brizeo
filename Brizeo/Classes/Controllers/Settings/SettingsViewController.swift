@@ -157,10 +157,7 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
 
         registerHeaderViews()
-        
         LocationManager.shared.updateLocation()
-        // TODO: ask Josh about search location? It is changing every time we pass settings
-        
         loadPreferences()
     }
     
@@ -336,7 +333,7 @@ extension SettingsViewController: UITableViewDataSource {
                     for gender in [Gender.Man, Gender.Woman, Gender.Couple] {
                         if preferences.genders.contains(gender) {
                             genderString += gender.title
-                            genderString += " and"
+                            genderString += " and "
                         }
                     }
                     
