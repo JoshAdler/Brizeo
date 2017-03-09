@@ -10,6 +10,7 @@ import UIKit
 import ChameleonFramework
 import MapKit
 import ZTDropDownTextField
+import SVProgressHUD
 
 class CreateMomentViewController: UIViewController {
 
@@ -59,8 +60,7 @@ class CreateMomentViewController: UIViewController {
         }
     }
     
-    var image: UIImage?
-    var user: User?
+    var image: UIImage!
     var selectedPassion: Passion?
     var passions: [Passion]?
     var autocompleteLocationsResults: [MKMapItem]?
@@ -162,6 +162,43 @@ class CreateMomentViewController: UIViewController {
         }
     }
     
+    fileprivate func createMoment() {
+        showBlackLoader()
+        
+        let moment = Moment()
+        
+        moment.capture = captionText()!
+        moment.passionId = selectedPassion?.objectId
+        moment.viewableByApp = switcher.isOn
+        moment.ownerId = UserProvider.shared.currentUser!.objectId
+        moment.locationLongitude = selectedLocation?.longitude
+        moment.locationLatitude = selectedLocation?.latitude
+        moment.fileRawDataArray = [UIImagePNGRepresentation(image)!]
+        moment.image = image
+        
+        MomentsProvider.create(new: moment) { (result) in
+            switch(result) {
+            case .success(_):
+                SVProgressHUD.showSuccess(withStatus: LocalizableString.NewMomentCreated.localizedString)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    // set defaults
+                    if let momentHolderController = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)! - 1] as? MomentsTabsViewController {
+                        momentHolderController.setDefaultsForMomentViews()
+                    }
+                    _ = self.navigationController?.popViewController(animated: true)
+                }
+                
+                break
+            case .failure(let error):
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                break
+            default:
+                break
+            }
+        }
+    }
+
     // MARK: - Actions
     
     @IBAction func onBackButtonClicked(_ sender: UIBarButtonItem) {
@@ -197,6 +234,8 @@ class CreateMomentViewController: UIViewController {
             noDescriptionView.present(on: Helper.initialNavigationController().view)
             return
         }
+        
+        createMoment()
     }
 }
 

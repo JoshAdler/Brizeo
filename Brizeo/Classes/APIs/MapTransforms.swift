@@ -120,3 +120,29 @@ class LikersTransform: TransformType {
         return nil
     }
 }
+
+class MomentRawDataTransform: TransformType {
+    
+    public typealias Object = Data
+    public typealias JSON = String
+    
+    public init() {}
+    
+    
+    public func transformFromJSON(_ value: Any?) -> Data? {
+        if let value = value as? String {
+            let data = Data(base64Encoded: value)
+            return data
+        }
+        
+        return nil
+    }
+    
+    public func transformToJSON(_ value: Data?) -> String? {
+        if let value = value {
+            return value.base64EncodedString()
+        }
+        
+        return nil
+    }
+}

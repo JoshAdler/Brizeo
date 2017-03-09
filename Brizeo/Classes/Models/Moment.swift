@@ -32,6 +32,7 @@ class Moment: Mappable, Equatable {
         case passionId = "passionId"
         case latitude = "currentLocation.latitude"
         case longitude = "currentLocation.longitude"
+        case uploadFile = "uploadFile"
     }
     
     // MARK: - Properties
@@ -48,6 +49,8 @@ class Moment: Mappable, Equatable {
     var locationLatitude: Double?
     var file: FileObjectInfo!
     var user: User!
+    var fileRawDataArray: [Data]?
+    var image: UIImage?
     
     var hasLocation: Bool {
         if locationLongitude != nil && locationLatitude != nil {
@@ -77,6 +80,8 @@ class Moment: Mappable, Equatable {
     }
     
     // MARK: - Init methods
+    
+    init() {}
     
     required init?(map: Map) { }
     
@@ -110,6 +115,7 @@ class Moment: Mappable, Equatable {
         
         // uploaded image url
         file <- (map[JSONKeys.momentsUploadImage.rawValue], FileObjectInfoTransform())
+//        fileRawData <- (map[JSONKeys.uploadFile.rawValue], MomentRawDataTransform())
     }
     
     init(with JSON: [String: Any]) {

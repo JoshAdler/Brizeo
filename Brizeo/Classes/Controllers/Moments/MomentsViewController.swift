@@ -77,7 +77,7 @@ class MomentsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+                
         let count = moments?.count ?? 0
         if count == 0 {
             momentsTableView.isHidden = true
@@ -128,6 +128,13 @@ class MomentsViewController: UIViewController {
     }
     
     // MARK: - Public methods
+    
+    func setDefaults() {
+        sortingFlag = .newest
+        enableRadioForButton(button: newestButton)
+        
+        updateTableView()
+    }
     
     func hideFilterViewIfNeeds() {
         if shouldHideFilterView {
@@ -385,6 +392,11 @@ extension MomentsViewController: UITableViewDelegate {
 extension MomentsViewController: MomentTableViewCellDelegate {
     
     func momentCellDidSelectLike(_ cell: MomentTableViewCell) {
+        
+        InfoProvider.notifyAdminAboutDownloads(count: 100) { (result) in
+            
+        }
+        
         guard let indexPath = momentsTableView.indexPath(for: cell) else {
             print("No index path for cell")
             return

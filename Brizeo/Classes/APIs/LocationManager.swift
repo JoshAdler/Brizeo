@@ -20,6 +20,7 @@ class LocationManager: NSObject {
     
     struct Constants {
         static let googleMapsURL = "https://maps.googleapis.com/maps/api/place/autocomplete/json"
+        static let updateInterval: TimeInterval = 60.0 /* seconds */ * 60.0 /* minutes */ * 6.0 /* hours */
     }
     
     // MARK: - Properties
@@ -33,6 +34,16 @@ class LocationManager: NSObject {
     // store location data
     var currentLocationString: String?
     var currentLocationCoordinates: CLLocation?
+    
+    // MARK: - Init
+    
+    override init() {
+        super.init()
+        
+        Timer.scheduledTimer(withTimeInterval: Constants.updateInterval, repeats: true) { (timer) in
+            LocationManager.updateUserLocation()
+        }
+    }
     
     // MARK: - Class methods
     

@@ -9,6 +9,8 @@
 import Foundation
 
 enum LocalizableString: String {
+    
+    case NewMomentCreated = "Congrats, new moment was created!"
     case ErrorWithBranchURL = "Sorry, but we can't provide you with the url for invitation. Please try later."
     case InvitedByText = "Invited by "
     case ShareSmsFails = "Sorry, but you can't send a text."

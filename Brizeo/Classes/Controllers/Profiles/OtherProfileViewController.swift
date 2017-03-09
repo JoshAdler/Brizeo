@@ -59,6 +59,19 @@ class OtherProfileViewController: BasicViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loadUserIfNeeds()
+        
+        //add mutual friends observer
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceivedMutualFriendsNotification(notification:)), name: NSNotification.Name(rawValue: mutualFriendsNotification), object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    // MARK: - Private methods
+    
+    fileprivate func loadUserIfNeeds() {
         loadStatusBetweenUsers { [weak self] in
             
             if let welf = self {
@@ -73,16 +86,21 @@ class OtherProfileViewController: BasicViewController {
                 welf.applyUserData()
             }
         }
+    }
+    
+    fileprivate func presentErrorAlert(message: String?) {
+        let alert = UIAlertController(title: LocalizableString.Error.localizedString, message: message, preferredStyle: .alert)
         
-        //add mutual friends observer
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceivedMutualFriendsNotification(notification:)), name: NSNotification.Name(rawValue: mutualFriendsNotification), object: nil)
+        alert.addAction(UIAlertAction(title: LocalizableString.TryAgain.localizedString, style: .default, handler: { (action) in
+            self.loadUserIfNeeds()
+        }))
+        
+        alert.addAction(UIAlertAction(title: LocalizableString.Dismiss.localizedString, style: .cancel, handler: { (action) in
+            self.tabBarController?.selectedIndex = 2 /* go to moments */
+        }))
+        
+        present(alert, animated: true, completion: nil)
     }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    // MARK: - Private methods
     
     fileprivate func applyUserData() {
         guard let user = user else {
@@ -213,7 +231,8 @@ class OtherProfileViewController: BasicViewController {
                     completion()
                     break
                 case .failure(let error):
-                    //TODO: place retpy here
+                    
+                    welf.presentErrorAlert(message: error.localizedDescription)
                     break
                 default: break
                 }

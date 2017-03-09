@@ -50,6 +50,14 @@ class MomentsTabsViewController: BasicViewController {
         initContent()
     }
     
+    // MARK: - Public methods
+    
+    func setDefaultsForMomentViews() {
+        allMomentsController.setDefaults()
+        myMatchesMomentsController.setDefaults()
+        myMomentsController.setDefaults()
+    }
+    
     // MARK: - Private methods
     
     fileprivate func initContent() {

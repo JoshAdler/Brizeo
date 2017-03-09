@@ -139,7 +139,18 @@ class MomentsProvider {
         provider.request(.createNewMoment(moment: moment)) { (result) in
             switch result {
             case .success(let response):
-//                                completion(.success())
+                
+                guard response.statusCode == 200 else {
+                    completion(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
+                do {
+                    let moment = try response.mapObject(Moment.self)
+                    completion(.success(moment))
+                } catch (let error) {
+                    completion(.failure(APIError(error: error)))
+                }
                 break
             case .failure(let error):
                 completion(.failure(APIError(error: error)))
@@ -313,59 +324,6 @@ class MomentsProvider {
         case .myMoments(let userId):
             getMoments(for: userId, sortingFlag: sortingFlag, filterFlag: filterPassion?.objectId, completion: completion)
         }
-    }
-    
-    static func createMomentWithImage(_ image: UIImage, andDescription description: String, forUser user: User, completion: @escaping (Result<Moment>) -> Void) {
-        
-//        guard let imageData = UIImageJPEGRepresentation(image, 0.8) else {
-//            CLSNSLogv("ERROR: Can't save new MomentImage!", getVaList([]))
-//            completion(.failure(LocalizableString.UnableToSaveMoment.localizedString))
-//            return
-//        }
-//        
-//        let params: [String : AnyObject] = [UserParameterKey.UserIdKey : user.objectId! as AnyObject]
-//        
-//        PFCloud.callFunction(inBackground: ParseFunction.GetCountUserMoments.name, withParameters: params) { (result, error) in
-//            
-//            if let error = error {
-//                completion(.failure(error.localizedDescription))
-//            } else {
-//                if let limit = result as? Int {
-//                    if limit < Constants.momentsLimitAmount {
-//                        let moment = Moment()
-//                        guard let imageFile = PFFile(name: "upload.jpg", data: imageData) else {
-//                            completion(.failure("Can't create PFFile with image"))
-//                            return
-//                        }
-//                        
-//                        moment.momentUploadImages = imageFile
-//                        moment.momentDescription = description
-//                        moment.user = user
-//                        moment.numberOfLikes = 0
-//                        moment.readStatus = true
-//                        moment.saveInBackground(block: { (success, error) in
-//                            
-//                            if success {
-//                                CLSNSLogv("Successfully saved new Moment %@", getVaList([moment.objectId!]))
-//                                completion(.success(moment))
-//                                if user.superUser {
-//                                    let params: [String : AnyObject] = [UserParameterKey.UserIdKey : user.objectId! as AnyObject, MomentsKey.MomentId: moment.objectId! as AnyObject]
-//                                    PFCloud.callFunction(inBackground: ParseFunction.SuperUserMoment.name, withParameters: params) { (result, error) in
-//                                    }
-//                                }
-//                            } else {
-//                                CLSNSLogv("ERROR: Could not save new moment: %@", getVaList([error! as CVarArg]))
-//                                completion(.failure(LocalizableString.UnableToSaveMoment.localizedString))
-//                            }
-//                        })
-//                    } else {
-//                        completion(.failure(LocalizableString.MomentsLimit.localizedString))
-//                    }
-//                } else {
-//                    completion(.failure(LocalizableString.UnableToSaveMoment.localizedString))
-//                }
-//            }
-//        }
     }
 }
 

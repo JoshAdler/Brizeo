@@ -133,8 +133,9 @@ extension APIService: TargetType {
         case .deleteCountryForUser(let country, _):
             let dict = ["country": country.code]
             return dict
-        case .createNewMoment(_):
-            return nil
+        case .createNewMoment(let moment):
+            let dict = ["newmoment": moment.toJSON()]
+            return dict
         default:
             return nil
         }
@@ -149,10 +150,31 @@ extension APIService: TargetType {
         }
     }
     
+    var multipartBody: [MultipartFormData]? {
+        
+        switch self {
+        case .createNewMoment(let moment):
+            
+            guard let image = moment.fileRawDataArray else {
+                return []
+            }
+
+            let formData: [MultipartFormData] = image.map { MultipartFormData(provider: .data($0), name: "images", fileName: "uploadFile.jpg", mimeType: "image/jpeg")}
+            return formData
+        default:
+            return nil
+        }
+    }
+    
     var sampleData: Data {
         return "No test data".utf8Encoded
     }
     var task: Task {
-        return .request
+        switch self {
+        case .createNewMoment:
+            return .upload(UploadType.multipart(multipartBody!))
+            default:
+            return .request
+        }
     }
 }
