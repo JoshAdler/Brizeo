@@ -82,7 +82,7 @@ class PreferencesProvider: NSObject {
                 }
                 
                 do {
-                    let preferences = try response.mapObject(Preferences.self)
+//                    let preferences = try response.mapObject(Preferences.self)
                     shared.currentUserPreferences = preferences
                     completion?(.success(preferences))
                     

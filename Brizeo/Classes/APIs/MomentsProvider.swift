@@ -229,7 +229,7 @@ class MomentsProvider {
         }
     }
     
-    class func like(moment: Moment, completion: @escaping MomentCompletion) {
+    class func like(momentToLike: Moment, completion: @escaping MomentCompletion) {
         
         guard let user = UserProvider.shared.currentUser else {
             print("Error: Can't like moment without current user")
@@ -238,7 +238,7 @@ class MomentsProvider {
         }
         
         let provider = MoyaProvider<APIService>()
-        provider.request(.likeMoment(moment: moment, userId: user.objectId)) { (result) in
+        provider.request(.likeMoment(moment: momentToLike, userId: user.objectId)) { (result) in
             switch result {
             case .success(let response):
                 
@@ -249,6 +249,11 @@ class MomentsProvider {
                 
                 do {
                     let moment = try response.mapObject(Moment.self)
+                    
+                    if moment.objectId == momentToLike.objectId {
+                        moment.user = momentToLike.user
+                    }
+                    
                     completion(.success(moment))
                 } catch (let error) {
                     completion(.failure(APIError(error: error)))
@@ -261,7 +266,7 @@ class MomentsProvider {
         }
     }
     
-    class func unlike(moment: Moment, completion: @escaping MomentCompletion) {
+    class func unlike(momentToUnlike: Moment, completion: @escaping MomentCompletion) {
         
         guard let user = UserProvider.shared.currentUser else {
             print("Error: Can't unlike moment without current user")
@@ -270,7 +275,7 @@ class MomentsProvider {
         }
         
         let provider = MoyaProvider<APIService>()
-        provider.request(.unlikeMoment(moment: moment, userId: user.objectId)) { (result) in
+        provider.request(.unlikeMoment(moment: momentToUnlike, userId: user.objectId)) { (result) in
             switch result {
             case .success(let response):
                 
@@ -281,6 +286,11 @@ class MomentsProvider {
                 
                 do {
                     let moment = try response.mapObject(Moment.self)
+                    
+                    if moment.objectId == momentToUnlike.objectId {
+                        moment.user = momentToUnlike.user
+                    }
+                    
                     completion(.success(moment))
                 } catch (let error) {
                     completion(.failure(APIError(error: error)))

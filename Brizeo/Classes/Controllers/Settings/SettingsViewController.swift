@@ -166,7 +166,7 @@ class SettingsViewController: UIViewController {
             if let locationString = locationString {
                 if self != nil {
                     self?.currentLocationString = locationString
-                    self?.tableView.reloadData()
+                    self?.tableView.reloadRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
                     
                     // update user
                     self?.user.location = location
@@ -177,7 +177,7 @@ class SettingsViewController: UIViewController {
         
         if let location = result.0 {
             self.currentLocationString = location
-            self.tableView.reloadData()
+            self.tableView.reloadRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
         }
     }
     
@@ -351,7 +351,7 @@ extension SettingsViewController: UITableViewDataSource {
             let notificationInfo = preferences.getNotificationInfo(for: indexPath.row)
             
             typeCell.delegate = self
-            typeCell.switcher.setOn(notificationInfo.1, animated: false)
+            typeCell.switcher.setOn(notificationInfo.1, animated: true)
             typeCell.titleLabel.text = notificationInfo.0
             return cell
         case .logout:

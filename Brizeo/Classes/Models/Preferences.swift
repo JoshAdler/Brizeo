@@ -82,7 +82,7 @@ class Preferences: Mappable {
     // MARK: - Public methods
     
     func getNotificationInfo(for index: Int) -> (String, Bool) {
-        
+        print("index \(index)")
         switch index {
         case 0:
             return (LocalizableString.NewMatches.localizedString, isNotificationsNewMatchesOn)

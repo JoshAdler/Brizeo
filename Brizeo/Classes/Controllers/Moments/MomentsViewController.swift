@@ -183,7 +183,7 @@ class MomentsViewController: UIViewController {
     fileprivate func likeMoment(_ moment: Moment) {
         showBlackLoader()
         
-        MomentsProvider.like(moment: moment) { (result) in
+        MomentsProvider.like(momentToLike: moment) { (result) in
             self.hideLoader()
             
             switch result {
@@ -207,7 +207,7 @@ class MomentsViewController: UIViewController {
     fileprivate func unlikeMoment(_ moment: Moment) {
         showBlackLoader()
         
-        MomentsProvider.unlike(moment: moment) { (result) in
+        MomentsProvider.unlike(momentToUnlike: moment) { (result) in
             self.hideLoader()
         
             switch result {
