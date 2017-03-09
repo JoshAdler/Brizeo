@@ -48,7 +48,8 @@ class OtherProfileViewController: BasicViewController {
         }
     }
     
-    var user: User!
+    var user: User?
+    var userId: String?
     var mutualFriends: [(String, String)]?
     var passions: [Passion]?
     var detailsController: OtherPersonDetailsTabsViewController!
@@ -58,11 +59,20 @@ class OtherProfileViewController: BasicViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        fetchMutualFriends()
-        fetchPassions()
-        applyUserData()
-        
-        loadStatusBetweenUsers()
+        loadStatusBetweenUsers { [weak self] in
+            
+            if let welf = self {
+                
+                // check whether the user has been already matched
+                if false {
+                    welf.increaseProfileViewHeight(false)
+                }
+                
+                welf.fetchMutualFriends()
+                welf.fetchPassions()
+                welf.applyUserData()
+            }
+        }
         
         //add mutual friends observer
         NotificationCenter.default.addObserver(self, selector: #selector(didReceivedMutualFriendsNotification(notification:)), name: NSNotification.Name(rawValue: mutualFriendsNotification), object: nil)
@@ -75,6 +85,10 @@ class OtherProfileViewController: BasicViewController {
     // MARK: - Private methods
     
     fileprivate func applyUserData() {
+        guard let user = user else {
+            return
+        }
+        
         nameLabel.text = "\(user.displayName), \(user.age)"
         studyLabel.text = user.studyInfo
         workLabel.text = user.workInfo
@@ -89,6 +103,10 @@ class OtherProfileViewController: BasicViewController {
     }
     
     fileprivate func fetchMutualFriends() {
+        guard let user = user else {
+            return
+        }
+        
         let currentUser = UserProvider.shared.currentUser!
         UserProvider.getMutualFriendsOfCurrentUser(currentUser, andSecondUser: user, completion: { (result) in
             switch result {
@@ -105,6 +123,10 @@ class OtherProfileViewController: BasicViewController {
     }
     
     fileprivate func fetchPassions() {
+        guard user != nil else {
+            return
+        }
+        
         PassionsProvider.shared.retrieveAllPassions(true) { [weak self] (result) in
             
             if let weak = self {
@@ -113,7 +135,7 @@ class OtherProfileViewController: BasicViewController {
                     weak.passions = passions
                     
                     // try to get top passion
-                    if let topPassionId = weak.user.topPassionId, let userPassion = weak.passions?.filter({ topPassionId == $0.objectId! }).first {
+                    if let topPassionId = weak.user!.topPassionId, let userPassion = weak.passions?.filter({ topPassionId == $0.objectId! }).first {
                         
                         if let iconLink = userPassion.iconLink {
                             weak.interestView.interestImageView.sd_setImage(with: iconLink)
@@ -170,10 +192,16 @@ class OtherProfileViewController: BasicViewController {
         }
     }
     
-    fileprivate func loadStatusBetweenUsers() {
+    fileprivate func loadStatusBetweenUsers(completion: @escaping (Void) -> Void) {
         showBlackLoader()
         
-        UserProvider.getUserWithStatus(for: user.objectId) { [weak self] (result) in
+        guard let userIdentifier = userId ?? user?.objectId else {
+            print("Can't load user without id")
+            hideLoader()
+            return
+        }
+        
+        UserProvider.getUserWithStatus(for: userIdentifier) { [weak self] (result) in
             if let welf = self {
                 
                 welf.hideLoader()
@@ -181,13 +209,11 @@ class OtherProfileViewController: BasicViewController {
                 switch(result) {
                 case .success(let user):
                     
-                    // check whether the user has been already matched
-                    if false {
-                        welf.increaseProfileViewHeight(false)
-                    }
-                    
+                    welf.user = user
+                    completion()
                     break
                 case .failure(let error):
+                    //TODO: place retpy here
                     break
                 default: break
                 }
@@ -198,7 +224,7 @@ class OtherProfileViewController: BasicViewController {
     fileprivate func declineUser() {
         showBlackLoader()
         
-        MatchesProvider.declineMatch(for: user) { [weak self] (result) in
+        MatchesProvider.declineMatch(for: user!) { [weak self] (result) in
             
             if let welf = self {
                 
@@ -221,7 +247,7 @@ class OtherProfileViewController: BasicViewController {
     fileprivate func approveUser() {
         showBlackLoader()
         
-        MatchesProvider.approveMatch(for: user) { [weak self] (result) in
+        MatchesProvider.approveMatch(for: user!) { [weak self] (result) in
             
             if let welf = self {
                 
@@ -244,11 +270,15 @@ class OtherProfileViewController: BasicViewController {
     // MARK: - Public methods
 
     func didReceivedMutualFriendsNotification(notification: UIKit.Notification) {
+        guard user != nil else {
+            return
+        }
+        
         if let userInfo = notification.userInfo as? [String: Any] {
             let friends = userInfo["mutualFriends"] as? [(String, String)]
             let userId = userInfo["userId"] as? String? ?? "-1"
             
-            if userId == user.objectId {
+            if userId == user!.objectId {
                 self.mutualFriends = friends
                 self.friendsCountLabel.text = "\(mutualFriends?.count ?? 0)"
             }
@@ -258,8 +288,12 @@ class OtherProfileViewController: BasicViewController {
     // MARK: - Actions
     
     @IBAction func onProfilePictureButtonClicked(sender: UIButton) {
+        guard user != nil else {
+            return
+        }
+        
         let mediaController: MediaViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.mediaControllerId)!
-        mediaController.media = user.allMedia
+        mediaController.media = user!.allMedia
         
         Helper.initialNavigationController().pushViewController(mediaController, animated: true)
     }
@@ -277,7 +311,11 @@ class OtherProfileViewController: BasicViewController {
     }
     
     @IBAction func onShareButtonClicked(_ sender: UIButton) {
-        BranchProvider.generateInviteURL(forUserId: user.objectId) { (url) in
+        guard user != nil else {
+            return
+        }
+        
+        BranchProvider.generateInviteURL(forUserId: user!.objectId) { (url) in
             if let url = url {
                 let modifiedURL = "\(LocalizableString.BrizeoInvite.localizedString) \n\n \(url)"
                 
@@ -296,12 +334,16 @@ class OtherProfileViewController: BasicViewController {
     }
     
     @IBAction func onMoreButtonClicked(_ sender: UIButton) {
+        guard user != nil else {
+            return
+        }
+        
         let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         alertVC.addAction(UIAlertAction(title: LocalizableString.Report.localizedString, style: .default, handler: { alert in
             self.showBlackLoader()
             
-            UserProvider.report(user: self.user, completion: { (result) in
+            UserProvider.report(user: self.user!, completion: { (result) in
                 self.hideLoader()
                 
                 switch result {

@@ -155,7 +155,7 @@ class MomentsViewController: UIViewController {
         // check whether we need to present user or moment
         
         if let userId = BranchProvider.userIdToPresent() {
-            showUserProfile(with: userId)
+            showUserProfile(with: userId, orMoment: nil)
         }
         
         if let momentId = BranchProvider.momentIdToPresent() {
@@ -164,13 +164,16 @@ class MomentsViewController: UIViewController {
         }
     }
     
-    fileprivate func showUserProfile(with userId: String) {
-        if userId == currentUser.objectId { // show my profile
+    fileprivate func showUserProfile(with userId: String?, orMoment moment: Moment?) {
+        let userIdentifier = userId ?? moment?.ownerId ?? "-1"
+        
+        if userIdentifier == currentUser.objectId { // show my profile
             let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
             Helper.initialNavigationController().pushViewController(profileController, animated: true)
         } else {
             let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
-            otherPersonProfileController.user = UserProvider.shared.currentUser!
+            otherPersonProfileController.user = moment?.user
+            otherPersonProfileController.userId = userIdentifier
             Helper.initialNavigationController().pushViewController(otherPersonProfileController, animated: true)
         }
         GoogleAnalyticsManager.userGoToProfileFromMoment.sendEvent()
@@ -337,18 +340,15 @@ extension MomentsViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: MomentTableViewCell.identifier) as! MomentTableViewCell
         
         cell.delegate = self
-        //cell.ownerNameLabel.text = moment.user.displayName
+        cell.ownerNameLabel.text = moment.user.displayName
         cell.momentDescriptionLabel.text = moment.capture
         cell.numberOfLikesButton.setTitle("\(moment.likesCount)", for: .normal)
         cell.likeButton.isHidden = moment.ownerId == currentUser.objectId
         cell.setButtonHighligted(isHighligted: moment.isLikedByCurrentUser)
+        cell.actionButton.isEnabled = !moment.user.isSuperUser
         
         cell.momentImageView.sd_setImage(with: moment.imageUrl)
-//        cell.ownerLogoButton.sd_setImage(with: moment.user.profileUrl, for: .normal)
-        
-        //TODO: block action button only in case the owner is superuser
-        //cell.actionButton.isEnabled = moment.ownerId != currentUser.objectId
-        //if moment.ownerId != currentUser.objectId/* && moment.user.isSuperUser*/ {
+        cell.ownerLogoButton.sd_setImage(with: moment.user.profileUrl, for: .normal)
         
         cell.notificationView.isHidden = true
         
@@ -432,7 +432,7 @@ extension MomentsViewController: MomentTableViewCellDelegate {
             return
         }
         
-        showUserProfile(with: moment.ownerId)
+        showUserProfile(with: moment.ownerId, orMoment: moment)
 //        switch listType {
 //        case .myMoments(let userId):
 //            if userId != moment.ownerId {

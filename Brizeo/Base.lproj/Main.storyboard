@@ -415,7 +415,7 @@
                                                         <constraint firstItem="zfZ-aR-z7W" firstAttribute="centerY" secondItem="vnv-Ck-zVg" secondAttribute="centerY" id="82Y-zL-ewR"/>
                                                         <constraint firstItem="rfw-v4-bMG" firstAttribute="centerY" secondItem="vnv-Ck-zVg" secondAttribute="centerY" id="8tN-F0-kWN"/>
                                                         <constraint firstItem="rfw-v4-bMG" firstAttribute="height" secondItem="vnv-Ck-zVg" secondAttribute="height" id="BWo-je-p6E"/>
-                                                        <constraint firstItem="zfZ-aR-z7W" firstAttribute="width" secondItem="vnv-Ck-zVg" secondAttribute="width" multiplier="92/750" priority="750" id="FIM-bZ-ph3"/>
+                                                        <constraint firstItem="zfZ-aR-z7W" firstAttribute="width" secondItem="vnv-Ck-zVg" secondAttribute="width" multiplier="92/750" id="FIM-bZ-ph3"/>
                                                         <constraint firstItem="cZE-6o-PZS" firstAttribute="leading" secondItem="uP2-6z-RN6" secondAttribute="trailing" constant="12" id="Fre-YF-7tT"/>
                                                         <constraint firstItem="E5F-JI-wX2" firstAttribute="top" secondItem="uP2-6z-RN6" secondAttribute="top" constant="5" id="Giv-P0-rbR"/>
                                                         <constraint firstItem="6cR-3S-jJg" firstAttribute="height" secondItem="vnv-Ck-zVg" secondAttribute="height" id="HAo-WL-Bo8"/>
@@ -2192,7 +2192,7 @@
                                                             <rect key="frame" x="75" y="9.5" width="25" height="25"/>
                                                             <subviews>
                                                                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jS3-xo-ZMp">
-                                                                    <rect key="frame" x="4.5" y="5.5" width="15" height="15"/>
+                                                                    <rect key="frame" x="5" y="6" width="14" height="14"/>
                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" secondItem="jS3-xo-ZMp" secondAttribute="height" multiplier="1:1" id="dQj-gZ-YsY"/>
