@@ -122,7 +122,8 @@ extension APIService: TargetType {
             let dict = ["newuser": user.toJSON()]
             return dict
         case .updatePreferences(_, let preferences):
-            return preferences.toJSON()
+            let dict = ["newpref": preferences.toJSON()]
+            return dict
         case .updateUser(let user):
             let dict = ["newuser": user.toJSON()]
             return dict

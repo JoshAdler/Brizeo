@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol SettingsNotificationCellDelegate: class {
+    func notificationCell(cell: SettingsNotificationCell, didChangedValueTo value: Bool)
+}
+
 class SettingsNotificationCell: UITableViewCell {
 
     // MARK: - Properties
@@ -17,6 +21,14 @@ class SettingsNotificationCell: UITableViewCell {
         didSet {
             switcher.transform = CGAffineTransform(scaleX: 0.816, y: 0.69)
         }
+    }
+    
+    weak var delegate: SettingsNotificationCellDelegate?
+    
+    // MARK: - Actions
+    
+    @IBAction func didSwitcherValueChanged(switcher: UISwitch) {
+        delegate?.notificationCell(cell: self, didChangedValueTo: switcher.isOn)
     }
 }
 // TODO: update user about switcher change

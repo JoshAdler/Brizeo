@@ -66,8 +66,8 @@ class PreferencesProvider: NSObject {
     class func updatePreferences(preferences: Preferences, completion: ((Result<Preferences>) -> Void)?) {
         
         guard let currentUser = UserProvider.shared.currentUser else {
-            print("Error: Can't like moment without current user")
-            completion?(.failure(APIError(code: 0, message: "Can't like moment without current user")))
+            print("Error: Can't update preferences without current user.")
+            completion?(.failure(APIError(code: 0, message: "Can't update preferences without current user.")))
             return
         }
         

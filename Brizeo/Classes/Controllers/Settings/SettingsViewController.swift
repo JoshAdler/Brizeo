@@ -148,9 +148,6 @@ class SettingsViewController: UIViewController {
     var currentLocationString = LocalizableString.Location.localizedString
     var searchLocationString = ""
     
-    // for notifications
-    var userNotificationSetting: [Bool] = [Bool]()
-    
     // MARK: - Controller lifecycle
     
     override func viewDidLoad() {
@@ -319,6 +316,7 @@ extension SettingsViewController: UITableViewDataSource {
             } else if indexPath.row == 1 { // age range
                 let typeCell = cell as! SettingsRangeCell
                 typeCell.ageRangeLabel?.text = LocalizableString.AgeRange.localizedString.capitalized
+                
                 if let preferences = preferences {
                     typeCell.setupWithRange(preferences.ageLowerLimit, maxAgeRange: preferences.ageUpperLimit, distanceRange: preferences.maxSearchDistance)
                 }
@@ -350,14 +348,11 @@ extension SettingsViewController: UITableViewDataSource {
             }
         case .notifications:
             let typeCell = cell as! SettingsNotificationCell
-            var notificationValue = true
+            let notificationInfo = preferences.getNotificationInfo(for: indexPath.row)
             
-            if userNotificationSetting.count > 0 {
-                notificationValue = userNotificationSetting[indexPath.row - 1]
-            }
-            
-            typeCell.switcher.setOn(notificationValue, animated: false)
-            typeCell.titleLabel.text = [LocalizableString.NewMatches.localizedString, LocalizableString.Messages.localizedString, LocalizableString.MomentsMatches.localizedString][indexPath.row]
+            typeCell.delegate = self
+            typeCell.switcher.setOn(notificationInfo.1, animated: false)
+            typeCell.titleLabel.text = notificationInfo.0
             return cell
         case .logout:
             return cell
@@ -472,5 +467,19 @@ extension SettingsViewController: SettingsSearchLocationCellDelegate {
         LocationManager.shared.getLocationsForText(text) { (suggestions) in
             completion?(suggestions)
         }
+    }
+}
+
+// MARK: - SettingsNotificationCellDelegate
+extension SettingsViewController: SettingsNotificationCellDelegate {
+    
+    func notificationCell(cell: SettingsNotificationCell, didChangedValueTo value: Bool) {
+        
+        guard let indexPath = tableView.indexPath(for: cell) else {
+            return
+        }
+        
+        preferences.setNotificationValue(value: value, for: indexPath.row)
+        PreferencesProvider.updatePreferences(preferences: preferences, completion: nil)
     }
 }

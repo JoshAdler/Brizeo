@@ -22,6 +22,9 @@ class Preferences: Mappable {
         case maxSearchDistance = "maxSearchDistance"
         case searchLocationLatitude = "searchLocation.latitude"
         case searchLocationLongitude = "searchLocation.longitude"
+        case isNotificationsNewMatchesOn = "isNotificationsNewMatchesOn"
+        case isNotificationsMessagesOn = "isNotificationsMessagesOn"
+        case isNotificationsMomentsLikesOn = "isNotificationsMomentsLikesOn"
     }
     
     // MARK: - Properties
@@ -33,6 +36,9 @@ class Preferences: Mappable {
     var maxSearchDistance: Int = 100
     var longitude: Double?
     var latitude: Double?
+    var isNotificationsNewMatchesOn: Bool = true
+    var isNotificationsMessagesOn: Bool = true
+    var isNotificationsMomentsLikeOn: Bool = true
 
     var hasLocation: Bool {
         if longitude != nil && latitude != nil {
@@ -68,6 +74,38 @@ class Preferences: Mappable {
         maxSearchDistance <- map[JSONKeys.maxSearchDistance.rawValue]
         longitude <- map[JSONKeys.searchLocationLongitude.rawValue]
         latitude <- map[JSONKeys.searchLocationLatitude.rawValue]
+        isNotificationsNewMatchesOn <- map[JSONKeys.isNotificationsNewMatchesOn.rawValue]
+        isNotificationsMessagesOn <- map[JSONKeys.isNotificationsMessagesOn.rawValue]
+        isNotificationsMomentsLikeOn <- map[JSONKeys.isNotificationsMomentsLikesOn.rawValue]
+    }
+    
+    // MARK: - Public methods
+    
+    func getNotificationInfo(for index: Int) -> (String, Bool) {
+        
+        switch index {
+        case 0:
+            return (LocalizableString.NewMatches.localizedString, isNotificationsNewMatchesOn)
+        case 1:
+            return (LocalizableString.Messages.localizedString, isNotificationsMessagesOn)
+        case 2:
+            return (LocalizableString.MomentsMatches.localizedString, isNotificationsMomentsLikeOn)
+        default:
+            return ("", false)
+        }
+    }
+    
+    func setNotificationValue(value: Bool, for index: Int) {
+        switch index {
+        case 0:
+            isNotificationsNewMatchesOn = value
+        case 1:
+            isNotificationsMessagesOn = value
+        case 2:
+            isNotificationsMomentsLikeOn = value
+        default:
+            break
+        }
     }
 }
 

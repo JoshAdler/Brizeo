@@ -36,17 +36,18 @@ class Moment: Mappable, Equatable {
     
     // MARK: - Properties
     
-    var objectId: String = "0"
+    var objectId: String = "-1"
+    var ownerId: String = "-1"
     var isLikedByCurrentUser: Bool = false
     var capture: String = ""
     var likesCount: Int = 0
     var readStatus: Bool = false
     var viewableByApp: Bool = true
     var passionId: String?
-    var ownerId: String!
     var locationLongitude: Double?
     var locationLatitude: Double?
     var file: FileObjectInfo!
+    var user: User!
     
     var hasLocation: Bool {
         if locationLongitude != nil && locationLatitude != nil {
@@ -85,14 +86,7 @@ class Moment: Mappable, Equatable {
         objectId <- map[JSONKeys.objectId.rawValue]
         passionId <- map[JSONKeys.passionId.rawValue]
         ownerId <- map[JSONKeys.userId.rawValue]
-        
-//        if let userId = JSON[JSONKeys.userId.rawValue] as? String { // new data
-//            ownerId = userId
-//        } else { // old migrated data
-//            if let userDict = JSON[JSONKeys.user.rawValue] as? [String: String] {
-//                ownerId = userDict[JSONKeys.objectId.rawValue]! as String
-//            }
-//        }
+        user <- map[JSONKeys.user.rawValue]
         
         // likes information
         isLikedByCurrentUser <- (map[JSONKeys.likedByCurrentUser.rawValue], LikersTransform())
@@ -123,14 +117,6 @@ class Moment: Mappable, Equatable {
         // ids
         objectId = JSON[JSONKeys.objectId.rawValue] as! String
         passionId = JSON[JSONKeys.passionId.rawValue] as? String
-        
-        if let userId = JSON[JSONKeys.userId.rawValue] as? String { // new data
-            ownerId = userId
-        } else { // old migrated data
-            if let userDict = JSON[JSONKeys.user.rawValue] as? [String: String] {
-                ownerId = userDict[JSONKeys.objectId.rawValue]! as String
-            }
-        }
         
         // likes information
         isLikedByCurrentUser = JSON[JSONKeys.likedByCurrentUser.rawValue] as! Bool
