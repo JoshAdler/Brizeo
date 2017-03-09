@@ -102,7 +102,7 @@ extension LikesViewController: UITableViewDataSource {
             cell.profileLogoImageView.image = nil
         }
         
-        cell.likesView.isHidden = user.objectId == currentUser.objectId
+        cell.likesView.isHidden = user.isCurrent
         cell.likesView.isMatched = false
         
         return cell
@@ -161,16 +161,23 @@ extension LikesViewController: LikesTableViewCellDelegate {
             print("No index path for liker user")
             return
         }
+        
         let user = users[indexPath.row]
         
+        showBlackLoader()
+        
         MatchesProvider.approveMatch(for: user) { (result) in
-            self.hideLoader()
             
             switch result {
             case .success(_):
+                
+                self.hideLoader()
+                likerView.isMatched = true
                 break
             case .failure(let error):
-                self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
+                
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                break
             default:
                 break
             }
@@ -184,16 +191,23 @@ extension LikesViewController: LikesTableViewCellDelegate {
             print("No index path for liker user")
             return
         }
+        
         let user = users[indexPath.row]
         
+        showBlackLoader()
+        
         MatchesProvider.declineMatch(for: user) { (result) in
-            self.hideLoader()
             
             switch result {
             case .success(_):
+                
+                self.hideLoader()
+                likerView.isMatched = true
                 break
             case .failure(let error):
-                self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
+                
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                break
             default:
                 break
             }

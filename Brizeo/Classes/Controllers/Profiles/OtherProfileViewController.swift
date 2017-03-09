@@ -96,7 +96,7 @@ class OtherProfileViewController: BasicViewController {
         }))
         
         alert.addAction(UIAlertAction(title: LocalizableString.Dismiss.localizedString, style: .cancel, handler: { (action) in
-            self.tabBarController?.selectedIndex = 2 /* go to moments */
+            _ = self.navigationController?.popViewController(animated: true)
         }))
         
         present(alert, animated: true, completion: nil)

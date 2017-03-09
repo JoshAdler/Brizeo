@@ -65,7 +65,7 @@ extension APIService: TargetType {
         case .updateUser(let user):
             return "/users/\(user.objectId)"
         case .getUserWithStatus(let searchedUserId, let searchingUserId):
-            return "/notifications/\(searchedUserId)/\(searchingUserId)"
+            return "/match/\(searchedUserId)/\(searchingUserId)"
         case .reportUser(let reporterId, let reportedId):
             return "/reportuser/\(reporterId)/\(reportedId)"
         case .getPreferences(let userId), .updatePreferences(let userId, _):
