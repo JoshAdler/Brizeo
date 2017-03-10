@@ -225,6 +225,10 @@ class User: Mappable {
         }
     }
     
+    var isDeclinedByCurrentUser: Bool {
+        return status == .didApproveButCurrentReject || status == .didRejectEachOther || status == .isRejectedByCurrentUser
+    }
+    
     // MARK: - Init methods
     
     required init?(map: Map) { }

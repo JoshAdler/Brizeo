@@ -1705,7 +1705,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IxX-Lf-wNE">
-                                                    <rect key="frame" x="301" y="12.5" width="37" height="20.5"/>
+                                                    <rect key="frame" x="301" y="11.5" width="37" height="20.5"/>
                                                     <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="16"/>
                                                     <color key="textColor" red="0.50588235294117645" green="0.50588235294117645" blue="0.50588235294117645" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1750,7 +1750,7 @@
                                         <rect key="frame" x="0.0" y="236" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fee-9S-9NM" id="iMd-T5-0Jf">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7mS-ch-Qep">
@@ -1758,7 +1758,7 @@
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOG OUT" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vFz-gj-buf">
-                                                    <rect key="frame" x="22" y="10.5" width="343" height="23.5"/>
+                                                    <rect key="frame" x="22" y="9" width="343" height="26"/>
                                                     <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="20"/>
                                                     <color key="textColor" red="0.1215686275" green="0.29411764709999999" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -2075,7 +2075,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SELECT YOUR PRIMARY PASSIONS:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zfd-gE-sQJ">
-                                        <rect key="frame" x="38" y="30" width="181" height="15.5"/>
+                                        <rect key="frame" x="38" y="30" width="181" height="16"/>
                                         <fontDescription key="fontDescription" name="SourceSansPro-Bold" family="Source Sans Pro" pointSize="12"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -2084,21 +2084,21 @@
                                         <rect key="frame" x="153" y="52" width="175" height="53"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fXP-fd-XCZ">
-                                                <rect key="frame" x="0.0" y="27.5" width="58.5" height="15.5"/>
+                                                <rect key="frame" x="0.0" y="27" width="58" height="16"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="12"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Second" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0G0-az-jJF">
-                                                <rect key="frame" x="58.5" y="27.5" width="58" height="15.5"/>
+                                                <rect key="frame" x="58" y="27" width="59" height="16"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="12"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Third" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gvG-2E-aoD">
-                                                <rect key="frame" x="116.5" y="27.5" width="58.5" height="15.5"/>
+                                                <rect key="frame" x="117" y="27" width="58" height="16"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="12"/>
                                                 <nil key="textColor"/>
@@ -2377,7 +2377,7 @@
                                 <rect key="frame" x="0.0" y="574" width="375" height="93"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lwn-fG-6lw">
-                                        <rect key="frame" x="-0.5" y="0.0" width="375" height="1"/>
+                                        <rect key="frame" x="-1" y="0.0" width="376" height="1"/>
                                         <color key="backgroundColor" red="0.8784313725490196" green="0.8784313725490196" blue="0.8784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="vEk-GU-BBU"/>
@@ -2949,7 +2949,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ProfileImageCollectionViewCell" id="5jf-Nr-PS8" customClass="ProfileImageCollectionViewCell" customModule="Brizeo" customModuleProvider="target">
-                                        <rect key="frame" x="7" y="10.5" width="161" height="105"/>
+                                        <rect key="frame" x="7" y="11" width="161" height="105"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="161" height="105"/>
@@ -3606,7 +3606,7 @@
                         <inset key="imageInsets" minX="0.0" minY="5" maxX="0.0" maxY="-5"/>
                     </tabBarItem>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Kvp-qK-5yI">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Kvp-qK-5yI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -4306,11 +4306,11 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ioG-dy-Y41">
-                                                    <rect key="frame" x="0.0" y="0.0" width="38" height="99"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="36" height="99"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KZA-sj-HMu">
-                                                    <rect key="frame" x="38" y="2" width="307" height="95"/>
+                                                    <rect key="frame" x="36" y="5" width="309" height="89.5"/>
                                                     <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="12"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -4326,11 +4326,11 @@
                                                 <constraint firstItem="ioG-dy-Y41" firstAttribute="centerY" secondItem="G3S-p1-IqL" secondAttribute="centerY" id="7vc-Cd-UcP"/>
                                                 <constraint firstItem="KZA-sj-HMu" firstAttribute="leading" secondItem="ioG-dy-Y41" secondAttribute="trailing" id="Gd0-Tr-oFY"/>
                                                 <constraint firstItem="ioG-dy-Y41" firstAttribute="height" secondItem="G3S-p1-IqL" secondAttribute="height" id="Pr4-Ze-SJT"/>
-                                                <constraint firstItem="KZA-sj-HMu" firstAttribute="top" secondItem="G3S-p1-IqL" secondAttribute="top" constant="2" id="QlT-XN-scq"/>
+                                                <constraint firstItem="KZA-sj-HMu" firstAttribute="top" secondItem="G3S-p1-IqL" secondAttribute="top" constant="5" id="QlT-XN-scq"/>
                                                 <constraint firstItem="TRm-xd-JrT" firstAttribute="centerY" secondItem="G3S-p1-IqL" secondAttribute="centerY" id="RUH-KD-hjp"/>
                                                 <constraint firstItem="TRm-xd-JrT" firstAttribute="leading" secondItem="KZA-sj-HMu" secondAttribute="trailing" id="ebN-lN-LPt"/>
-                                                <constraint firstItem="ioG-dy-Y41" firstAttribute="width" secondItem="G3S-p1-IqL" secondAttribute="width" multiplier="75/750" id="fno-Z2-Ah9"/>
-                                                <constraint firstAttribute="bottom" secondItem="KZA-sj-HMu" secondAttribute="bottom" constant="2" id="gkg-Bw-6FW"/>
+                                                <constraint firstItem="ioG-dy-Y41" firstAttribute="width" secondItem="G3S-p1-IqL" secondAttribute="width" multiplier="72/750" id="fno-Z2-Ah9"/>
+                                                <constraint firstAttribute="bottom" secondItem="KZA-sj-HMu" secondAttribute="bottom" priority="750" constant="5" id="gkg-Bw-6FW"/>
                                                 <constraint firstItem="ioG-dy-Y41" firstAttribute="leading" secondItem="G3S-p1-IqL" secondAttribute="leading" id="oKS-oM-kWq"/>
                                                 <constraint firstItem="TRm-xd-JrT" firstAttribute="height" secondItem="G3S-p1-IqL" secondAttribute="height" id="rhS-1b-khK"/>
                                             </constraints>
@@ -4652,7 +4652,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Krb-bt-1Bk" customClass="MainNavigationViewController" customModule="Brizeo" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Oph-Fo-JQ4">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Oph-Fo-JQ4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

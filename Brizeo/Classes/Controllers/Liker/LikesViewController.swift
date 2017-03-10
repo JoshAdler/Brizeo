@@ -102,8 +102,11 @@ extension LikesViewController: UITableViewDataSource {
             cell.profileLogoImageView.image = nil
         }
         
-        cell.likesView.isHidden = user.isCurrent
-        cell.likesView.isMatched = false
+        if user.isCurrent {
+            cell.likesView.hideEverything()
+        } else {
+            cell.likesView.operateStatus(status: user.status)
+        }
         
         return cell
     }

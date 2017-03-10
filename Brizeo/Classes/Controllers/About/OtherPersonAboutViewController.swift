@@ -15,10 +15,10 @@ class OtherPersonAboutViewController: UIViewController {
     // MARK: - Types
     
     struct Constants {
-        static let inviteCellHeightCoef: CGFloat = 110.0 / 985.0
-        static let infoCellHeightCoef: CGFloat = 234.0 / 985.0
-        static let invitedByCellHeightCoef: CGFloat = 74.0 / 985.0
-        static let headerViewHeightCoef: CGFloat = 74.0 / 985.0
+        static let inviteCellHeight: CGFloat = 55.0
+        static let infoCellHeight: CGFloat = 117.0
+        static let invitedByCellHeight: CGFloat = 38.0
+        static let headerViewHeight: CGFloat = 38.0
     }
     
     struct StoryboardIds {
@@ -40,6 +40,9 @@ class OtherPersonAboutViewController: UIViewController {
         super.viewDidLoad()
         
         registerHeaderViews()
+        
+        passionsTableView.rowHeight = UITableViewAutomaticDimension
+        passionsTableView.estimatedRowHeight = 55.0
         
         if mutualFriends == nil {
             fetchMutualFriends()
@@ -121,7 +124,7 @@ extension OtherPersonAboutViewController: UITableViewDataSource {
                 let cell = tableView.dequeueReusableCell(withIdentifier: OtherPersonAboutInvitedByTableViewCell.identifier, for: indexPath) as! OtherPersonAboutInvitedByTableViewCell
                 
                 cell.delegate = self
-                cell.invitedByName = "Roger"
+                cell.invitedByName = user.invitedByUserName ?? ""
                 
                 return cell
             }
@@ -142,12 +145,12 @@ extension OtherPersonAboutViewController: UITableViewDelegate {
             return UITableViewAutomaticDimension
         } else if indexPath.section == 1 { // info cell
             if indexPath.row == 0 { // details
-                return tableView.bounds.height * Constants.infoCellHeightCoef
+                return Constants.infoCellHeight
             } else { // invited by
-                return tableView.bounds.height * Constants.invitedByCellHeightCoef
+                return Constants.invitedByCellHeight
             }
         } else {
-            return tableView.bounds.height * Constants.inviteCellHeightCoef
+            return Constants.inviteCellHeight
         }
     }
     
@@ -156,7 +159,7 @@ extension OtherPersonAboutViewController: UITableViewDelegate {
             return 0
         }
         
-        return tableView.bounds.height * Constants.headerViewHeightCoef
+        return Constants.headerViewHeight
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -174,12 +177,13 @@ extension OtherPersonAboutViewController: UITableViewDelegate {
 extension OtherPersonAboutViewController: InvitedByCellDelegate {
     
     func onInvitedByCellClicked(cell: OtherPersonAboutInvitedByTableViewCell) {
-        // push user profile
-        if true {//User.userIsCurrentUser(user.invited) { // show my profile
+        
+        if user.invitedByUserId! == UserProvider.shared.currentUser?.objectId {
             let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
             Helper.initialNavigationController().pushViewController(profileController, animated: true)
         } else { // other person profile
             let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
+            otherPersonProfileController.userId = user.invitedByUserId!
             Helper.initialNavigationController().pushViewController(otherPersonProfileController, animated: true)
         }
     }
