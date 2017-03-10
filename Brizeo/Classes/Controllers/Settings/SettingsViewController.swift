@@ -307,7 +307,12 @@ extension SettingsViewController: UITableViewDataSource {
             if indexPath.row == 0 { // maximum distance
                 let typeCell = cell as! SettingsRangeCell
                 typeCell.delegate = self
-                typeCell.distanceLabel?.text = LocalizableString.MaximumDistance.localizedString
+                
+                if let preferences = preferences {
+                    typeCell.setupWithRange(preferences.ageLowerLimit, maxAgeRange: preferences.ageUpperLimit, distanceRange: preferences.maxSearchDistance)
+                }
+                
+                typeCell.delegate = self
                 return typeCell
             } else if indexPath.row == 1 { // age range
                 let typeCell = cell as! SettingsRangeCell

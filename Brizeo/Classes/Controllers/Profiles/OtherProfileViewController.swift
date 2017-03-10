@@ -76,13 +76,14 @@ class OtherProfileViewController: BasicViewController {
             
             if let welf = self {
                 
-                // check whether the user has been already matched
-                if false {
-                    welf.increaseProfileViewHeight(false)
+                // hide/show action buttons
+                if !welf.user!.shouldBeAction {
+                    welf.increaseProfileViewHeight(true)
                 }
                 
                 welf.fetchMutualFriends()
                 welf.fetchPassions()
+                
                 welf.applyUserData()
             }
         }
@@ -262,7 +263,7 @@ class OtherProfileViewController: BasicViewController {
             }
         }
     }
-    
+
     fileprivate func approveUser() {
         showBlackLoader()
         
@@ -318,14 +319,10 @@ class OtherProfileViewController: BasicViewController {
     }
     
     @IBAction func onDeclineButtonClicked(_ sender: UIButton) {
-        increaseProfileViewHeight(true)
-        
         declineUser()
     }
     
     @IBAction func onAcceptButtonClicked(_ sender: UIButton) {
-        increaseProfileViewHeight(true)
-        
         approveUser()
     }
     

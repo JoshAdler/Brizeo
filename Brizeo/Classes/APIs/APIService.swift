@@ -27,11 +27,12 @@ enum APIService {
     case getAllMoments(sortingFlag: MomentsSortingFlag, filterFlag: String)
     case getMatchedMoments(userId: String, sortingFlag: MomentsSortingFlag, filterFlag: String)
     case createNewMoment(moment: Moment)
-    case getLikersForMoment(moment: Moment)
+    case getLikersForMoment(moment: Moment, userId: String)
     case reportMoment(moment: Moment, reporterId: String)
     case likeMoment(moment: Moment, userId: String)
     case unlikeMoment(moment: Moment, userId: String)
     case deleteMoment(moment: Moment, userId: String)
+    case getMoment(momentId: String)
     
     // matching
     case approveMatch(approverId: String, userId: String)
@@ -82,8 +83,10 @@ extension APIService: TargetType {
             return "/matchedmoments/\(userId)/\(sortingFlag.rawValue)/\(filterFlag)"
         case .createNewMoment(_):
             return "/moments"
-        case .getLikersForMoment(let moment):
-            return "/likemoments/users/\(moment.objectId)"
+        case .getMoment(let momentId):
+            return "/moments/\(momentId)"
+        case .getLikersForMoment(let moment, let userId):
+            return "/likemoments/users/\(moment.objectId)/\(userId)"
         case .reportMoment(let moment, let reporterId):
             return "/reportmoment/\(moment.objectId)/\(reporterId)"
         case .deleteMoment(let moment, let userId):

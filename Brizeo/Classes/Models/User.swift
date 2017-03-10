@@ -18,6 +18,18 @@ struct UserParameterKey {
     static let totalKey = "total"
 }
 
+enum MatchingStatus: Int {
+    case noActionsBetweenUsers = 1
+    case didRejectCurrentUser
+    case didApproveCurrentUser
+    case isRejectedByCurrentUser
+    case didRejectEachOther
+    case didApproveButCurrentReject
+    case isApprovedByCurrentUser
+    case didRejectButCurrentApprove
+    case isMatched
+}
+
 class User: Mappable {
     
     // MARK: - Types
@@ -50,6 +62,7 @@ class User: Mappable {
         case numberOfMatches = "numberOfMatches"
         case invitedByUserId = "invitedByUserId"
         case invitedByUserName = "invitedByUserName"
+        case status = "status"
         
         //TODO: check about unused fields like "numberOfMatches", etc
     }
@@ -91,6 +104,9 @@ class User: Mappable {
     // files
     var profileImage: FileObjectInfo?
     var uploadFiles: [FileObject]?
+    
+    // match status
+    var status: MatchingStatus = .noActionsBetweenUsers
     
     // helper variables
     
@@ -200,6 +216,15 @@ class User: Mappable {
         return nil
     }
     
+    var shouldBeAction: Bool {
+        switch status {
+        case .noActionsBetweenUsers, .didRejectCurrentUser, .didApproveCurrentUser:
+            return true
+        default:
+            return false
+        }
+    }
+    
     // MARK: - Init methods
     
     required init?(map: Map) { }
@@ -215,73 +240,6 @@ class User: Mappable {
         self.displayName = displayName ?? "Mr./Mrs"
         
         // files
-    }
-    
-    init(with JSON: [String: Any]) {
-        
-        // ids
-        objectId = JSON[JSONKeys.objectId.rawValue] as! String
-        facebookId = JSON[JSONKeys.facebookId.rawValue] as? String
-        
-        // basic information
-        username = JSON[JSONKeys.username.rawValue] as? String
-        displayName = JSON[JSONKeys.displayName.rawValue] as? String ?? "Mr./Mrs"
-        gender = Gender(rawValue: JSON[JSONKeys.gender.rawValue] as! String)!
-        age = JSON[JSONKeys.age.rawValue] as! Int
-        email = JSON[JSONKeys.email.rawValue] as! String
-        personalText = JSON[JSONKeys.personalText.rawValue] as! String
-        isSuperUser = (JSON[JSONKeys.isSuperUser.rawValue] as? Bool) ?? false
-        workInfo = JSON[JSONKeys.workInfo.rawValue] as? String
-        studyInfo = JSON[JSONKeys.studyInfo.rawValue] as? String
-        
-        // countries
-        if let countriesDict = JSON[JSONKeys.countries.rawValue] as? [String: String] {
-            for (key, value) in countriesDict {
-                let country = Country.initWith(value)
-                country.sortingIndex = Int(key) ?? 0
-                countries.append(country)
-            }
-        }
-        
-        // passions
-        primaryPassionId = JSON[JSONKeys.primaryPassionId.rawValue] as? String
-        secondaryPassionId = JSON[JSONKeys.secondaryPassionId.rawValue] as? String
-        thirdPassionId = JSON[JSONKeys.thirdPassionId.rawValue] as? String
-        
-        // addiotional info
-        numberOfMatches = JSON[JSONKeys.numberOfMatches.rawValue] as? Int ?? 0
-        
-        if let lastActiveTimeStr = JSON[JSONKeys.lastActiveTime.rawValue] as? String {
-            lastActiveTime = Helper.convertStringToDate(string: lastActiveTimeStr)
-        }
-
-        // invited info
-        invitedByUserId = JSON[JSONKeys.invitedByUserId.rawValue] as? String
-        invitedByUserName = JSON[JSONKeys.invitedByUserName.rawValue] as? String
-
-        // location 
-        if let currentLocation = JSON[JSONKeys.location.rawValue] as? [String: Any] {
-            locationLongitude = currentLocation[JSONKeys.longitude.rawValue] as? Double
-            locationLatitude = currentLocation[JSONKeys.latitude.rawValue] as? Double
-        }
-        
-        // files
-//        if let profileDict = JSON[JSONKeys.profileImage.rawValue] as? [String: String] {
-//            profileImage = FileObjectInfo(with: profileDict)
-//        }
-        
-        if let profileDict = JSON[JSONKeys.profileImage.rawValue] as? String {
-            profileImage = FileObjectInfo(url: profileDict)
-        }
-        
-        if let uploadedFilesDict = JSON[JSONKeys.uploadImages.rawValue] as? [String: [String: Any]] {
-            for (key, value) in uploadedFilesDict {
-                let file = FileObject(with: value)
-                file.sortingIndex = Int(key) ?? 0
-                
-                uploadFiles?.append(file)
-            }
-        }
     }
     
     func mapping(map: Map) {
@@ -340,6 +298,8 @@ class User: Mappable {
 //                uploadFiles?.append(file)
 //            }
 //        }
+        
+        status <- (map[JSONKeys.status.rawValue], EnumTransform<MatchingStatus>())
     }
     
     // MARK: - Public methods

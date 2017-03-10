@@ -7,20 +7,3 @@
 */
 
 
-ERROR_EMAIL_ID = "Hibás e-mail ID";
-
-ERROR_USER_ID = "Hibás felhasználói azonosító";
-
-UI_TEXTFIELD_USERID_PLACEHOLDER = "Felhasználói azonosító";
-
-UI_TEXTFIELD_EMAILID_PLACEHOLDER = "Email cím";
-
-UI_TEXTFIELD_PASSWORD_PLACEHOLDER = "Jelszó";
-
-UI_BUTTON_TITTLE = "Fogj neki";
-
-MEDIA_TYPE_IMAGE = "Kép";
-
-MEDIA_TYPE_VIDEO = "videó";
-
-MEDIA_TYPE_ATTACHMENT = "Attachment";

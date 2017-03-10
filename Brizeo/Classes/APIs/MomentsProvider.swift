@@ -107,6 +107,32 @@ class MomentsProvider {
         }
     }
     
+    class func getMoment(with momentId: String, completion: @escaping MomentCompletion) {
+        
+        let provider = MoyaProvider<APIService>()
+        provider.request(.getMoment(momentId: momentId)) { (result) in
+            switch result {
+            case .success(let response):
+                
+                guard response.statusCode == 200 else {
+                    completion(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
+                do {
+                    let moments = try response.mapObject(Moment.self)
+                    completion(.success(moments))
+                } catch (let error) {
+                    completion(.failure(APIError(error: error)))
+                }
+                break
+            case .failure(let error):
+                completion(.failure(APIError(error: error)))
+                break
+            }
+        }
+    }
+    
     class func getMatchedMoments(userId: String, sortingFlag: MomentsSortingFlag, filterFlag: String?, completion: @escaping MomentsCompletion) {
         
         let provider = MoyaProvider<APIService>()
@@ -191,8 +217,14 @@ class MomentsProvider {
     //TODO: user everywhere this solution like MomentCompletion
     class func getLikers(for moment: Moment, completion: @escaping MomentLikersCompletion) {
         
+        guard let user = UserProvider.shared.currentUser else {
+            print("Error: Can't delete moment without current user")
+            completion(.failure(APIError(code: 0, message: "Can't delete moment without current user")))
+            return
+        }
+        
         let provider = MoyaProvider<APIService>()
-        provider.request(.getLikersForMoment(moment: moment)) { (result) in
+        provider.request(.getLikersForMoment(moment: moment, userId: user.objectId)) { (result) in
             switch result {
             case .success(let response):
                 
