@@ -92,7 +92,7 @@ class LocationManager: NSObject {
             formatter.maximumFractionDigits = 0
             
             if distanceValue == 1 {
-                return LocalizableString.OneMilesAway.localizedString
+                return LocalizableString.OneMileAwayWithNumber.localizedString
             } else {
                 return LocalizableString.MilesAway.localizedStringWithArguments([formatter.string(from: NSNumber(value: distanceValue as Int))!])
             }

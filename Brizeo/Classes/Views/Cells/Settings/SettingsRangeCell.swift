@@ -98,7 +98,7 @@ class SettingsRangeCell: UITableViewCell {
             let distanceValue = Int(distanceSlider.value)
             
             if distanceValue == 1 {
-                distanceValueLabel?.text = LocalizableString.OneMilesAway.localizedString
+                distanceValueLabel?.text = LocalizableString.OneMileAwayWithNumber.rawValue
             } else {
                 distanceValueLabel?.text = LocalizableString.MilesAway.localizedStringWithArguments([String(format: "%d", distanceValue)])
             }

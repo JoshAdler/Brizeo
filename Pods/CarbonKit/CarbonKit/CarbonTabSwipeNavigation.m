@@ -26,6 +26,7 @@
 
 @interface CarbonTabSwipeNavigation () <UIPageViewControllerDelegate, UIToolbarDelegate,
                                         UIPageViewControllerDataSource, UIScrollViewDelegate>
+
 @end
 
 @implementation CarbonTabSwipeNavigation {
@@ -34,6 +35,8 @@
     NSInteger selectedIndex;
     CGPoint previewsOffset;
 }
+
+
 
 - (void)insertIntoRootViewController:(UIViewController *)rootViewController {
     [self willMoveToParentViewController:rootViewController];
@@ -68,10 +71,10 @@
     [rootViewController addChildViewController:self];
     [targetView addSubview:self.view];
     [self didMoveToParentViewController:rootViewController];
-
+    
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
     id views = @{ @"carbonTabSwipe" : self.view };
-
+    
     [targetView
         addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[carbonTabSwipe]|"
                                                                options:0

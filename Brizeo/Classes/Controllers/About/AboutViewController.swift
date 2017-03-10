@@ -19,7 +19,7 @@ class AboutViewController: UIViewController {
         static let placeholderText = LocalizableString.TypeHere.localizedString
         static let placeholderTextColor = HexColor("dbdbdb")
         static let defaultTextColor = UIColor.black
-        static let cellHeightCoef: CGFloat = 68.0 / 984.0
+        static let cellHeight: CGFloat = 40.0
     }
     
     // MARK: - Properties
@@ -279,7 +279,7 @@ extension AboutViewController: UITableViewDataSource {
 extension AboutViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return Constants.cellHeightCoef * view.frame.height
+        return Constants.cellHeight
     }
 }
 

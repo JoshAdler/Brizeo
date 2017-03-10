@@ -18,9 +18,9 @@ class SettingsViewController: UIViewController {
     // MARK: - Types
     
     struct Constants {
-        static let bigSectionHeightCoef: CGFloat = 74.0 / 1100.0
-        static let normalSectionHeightCoef: CGFloat = 52.0 / 1100.0
-        static let smallSectionHeightCoef: CGFloat = 26.0 / 1100.0
+        static let bigSectionHeight: CGFloat = 38.0
+        static let normalSectionHeight: CGFloat = 28.0
+        static let smallSectionHeight: CGFloat = 15.0
     }
     
     struct StoryboardIds {
@@ -39,18 +39,14 @@ class SettingsViewController: UIViewController {
             case small
             case big
             
-            func height(tableViewHeight: CGFloat) -> CGFloat {
-                var coef: CGFloat
+            var height: CGFloat {
                 
                 switch self {
-                case .big:
-                    coef = Constants.bigSectionHeightCoef
-                case .normal:
-                    coef = Constants.normalSectionHeightCoef
-                case .small:
-                    coef = Constants.smallSectionHeightCoef
+                case .big: return Constants.bigSectionHeight
+                case .normal: return Constants.normalSectionHeight
+                case .small: return Constants.smallSectionHeight
+                default: return 0.0
                 }
-                return tableViewHeight * coef
             }
         }
     
@@ -101,20 +97,20 @@ class SettingsViewController: UIViewController {
             }
         }
         
-        func cellHeightCoef(for row: Int) -> CGFloat {
+        func cellHeight(for row: Int) -> CGFloat {
             switch self {
             case .currentLocation:
-                return 78.0 / 1120.0
+                return 39.0
             case .searchLocation,
                  .logout:
-                return 76.0 / 1120.0
+                return 38.0
             case .discovery:
-                if row == 0 { return 125.0 / 1120.0 }
-                else if row == 1 { return 128.0 / 1120.0 }
-                else { return 74.0 / 1120.0 }
+                if row == 0 { return 63.0 }
+                else if row == 1 { return 64.0 }
+                else { return 37.0 }
             case .notifications:
-                if row == 0 { return 77.0 / 1120.0 }
-                else { return 70.0 / 1120.0 }
+                if row == 0 { return 39.0 }
+                else { return 35.0 }
             }
         }
         
@@ -367,14 +363,14 @@ extension SettingsViewController: UITableViewDelegate {
         guard let section = createSection(from: indexPath.section) else {
             return 0.0
         }
-        return section.cellHeightCoef(for: indexPath.row) * tableView.bounds.height
+        return section.cellHeight(for: indexPath.row)
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         guard let section = createSection(from: section) else {
             return 0.0
         }
-        return section.type.height(tableViewHeight: tableView.bounds.height)
+        return section.type.height
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -382,7 +378,7 @@ extension SettingsViewController: UITableViewDelegate {
             return 0.0
         }
         
-        return section.type.height(tableViewHeight: tableView.bounds.height)
+        return section.type.height
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -392,7 +388,7 @@ extension SettingsViewController: UITableViewDelegate {
         
         let headerView: SettingsHeaderView = tableView.dequeueReusableHeaderFooterView(withIdentifier: section.headerViewId)
         
-        headerView.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: tableView.frame.width, height: section.type.height(tableViewHeight: tableView.frame.height)))
+        headerView.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: tableView.frame.width, height: section.type.height))
         headerView.titleLabel.text = section.title
         return headerView
     }
@@ -404,7 +400,7 @@ extension SettingsViewController: UITableViewDelegate {
         
         let footerView: SettingsNormalHeaderView = tableView.dequeueReusableHeaderFooterView(withIdentifier: SettingsNormalHeaderView.nibName)
         
-        footerView.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: tableView.frame.width, height: section.type.height(tableViewHeight: tableView.frame.height)))
+        footerView.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: tableView.frame.width, height: section.type.height))
         footerView.titleLabel.text = nil
         return footerView
     }

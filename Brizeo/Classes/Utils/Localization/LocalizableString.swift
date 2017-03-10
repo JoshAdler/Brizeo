@@ -130,6 +130,7 @@ enum LocalizableString: String {
     case Years = "%d year(s)"
     case MilesAway = "%@ miles away"
     case OneMilesAway = "One mile away"
+    case OneMileAwayWithNumber = "1 mile away"
     case InterestedIn = "Interested in:"
     case GoBackInterests = "⬅︎ Interests"
     case MutualFriends = "Mutual Friends"
