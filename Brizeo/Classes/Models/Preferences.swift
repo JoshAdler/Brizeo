@@ -89,7 +89,7 @@ class Preferences: Mappable {
         case 1:
             return (LocalizableString.Messages.localizedString, isNotificationsMessagesOn)
         case 2:
-            return (LocalizableString.MomentsMatches.localizedString, isNotificationsMomentsLikeOn)
+            return (LocalizableString.MomentsLikes.localizedString, isNotificationsMomentsLikeOn)
         default:
             return ("", false)
         }

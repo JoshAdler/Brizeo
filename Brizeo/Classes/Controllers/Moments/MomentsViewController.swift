@@ -99,14 +99,47 @@ class MomentsViewController: UIViewController {
     
     // MARK: - Actions
     
-    func onFilterButtonClicked(_ index: Int) {
-        if index == 0 { // no filtering
-            selectedPassion = nil
-        } else {
-            selectedPassion = passions?[index - 1]
+//    func onFilterButtonClicked(_ index: Int) {
+//        if index == 0 { // no filtering
+//            selectedPassion = nil
+//        } else {
+//            selectedPassion = passions?[index - 1]
+//        }
+//        
+//        resetMoments()
+//    }
+    
+    @IBAction func onFilterButtonClicked(_ sender: UIButton) {
+
+        guard passions != nil && passions!.count > 0 else {
+            print("No interests")
+            return
         }
         
-        resetMoments()
+        let alertController = UIAlertController(title: nil, message: LocalizableString.SelectInterest.localizedString, preferredStyle: UIAlertControllerStyle.actionSheet)
+        
+        // add action for case "All"
+        alertController.addAction(UIAlertAction(title: Constants.defaultFilterTitle, style: .default, handler: { (action) in
+            
+            self.selectedPassion = nil
+            sender.setTitle(action.title, for: .normal)
+            
+            self.resetMoments()
+        }))
+        
+        for passion in passions! {
+            alertController.addAction(UIAlertAction(title: passion.displayName, style: .default, handler: { (action) in
+                
+                self.selectedPassion = self.passions!.filter({ $0.displayName == action.title }).first
+                sender.setTitle(action.title, for: .normal)
+                
+                self.resetMoments()
+            }))
+        }
+        
+        alertController.addAction(UIAlertAction(title: LocalizableString.Cancel.localizedString, style: UIAlertActionStyle.cancel, handler: nil))
+        
+        present(alertController, animated: true, completion: nil)
     }
     
     @IBAction func onCreateButtonClicked(_ sender: UIButton) {
@@ -259,21 +292,21 @@ class MomentsViewController: UIViewController {
         filterButton.setTitle(Constants.defaultFilterTitle, for: .normal)
         filterButton.isEnabled = true
         
-        var handlers = [() -> Void]()
+//        var handlers = [() -> Void]()
+//        
+//        // set 0 handler for "All" filter
+//        handlers.append({ [weak self] () -> (Void) in
+//            self?.onFilterButtonClicked(0)
+//        })
+//        
+//        for i in 1 ..< passions!.count + 1 {
+//            handlers.append({ [weak self] () -> (Void) in
+//                self?.onFilterButtonClicked(i)
+//            })
+//        }
         
-        // set 0 handler for "All" filter
-        handlers.append({ [weak self] () -> (Void) in
-            self?.onFilterButtonClicked(0)
-        })
-        
-        for i in 1 ..< passions!.count + 1 {
-            handlers.append({ [weak self] () -> (Void) in
-                self?.onFilterButtonClicked(i)
-            })
-        }
-        
-        let passionStrings = [Constants.defaultFilterTitle] + passions!.map({ $0.displayName })
-        filterButton.initMenu(passionStrings, actions: handlers)
+//        let passionStrings = [Constants.defaultFilterTitle] + passions!.map({ $0.displayName })
+//        filterButton.initMenu(passionStrings, actions: handlers)
     }
     
     fileprivate func enableRadioForButton(button: UIButton) {
@@ -392,10 +425,6 @@ extension MomentsViewController: UITableViewDelegate {
 extension MomentsViewController: MomentTableViewCellDelegate {
     
     func momentCellDidSelectLike(_ cell: MomentTableViewCell) {
-        
-        InfoProvider.notifyAdminAboutDownloads(count: 100) { (result) in
-            
-        }
         
         guard let indexPath = momentsTableView.indexPath(for: cell) else {
             print("No index path for cell")

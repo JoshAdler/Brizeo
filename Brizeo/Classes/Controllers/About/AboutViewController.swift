@@ -135,30 +135,31 @@ class AboutViewController: UIViewController {
         // init selected passions
         let ids = user.passionsIds
         if ids.count == 0 { // set default passions
+            // try to set travel, foodie and fitness
             if let travelPassion = passions!.filter({ $0.displayName == "Travel" }).first {
                 selectedPassion[travelPassion.objectId] = 0
-                
-                let leftPassions = passions!.filter({ $0.objectId != travelPassion.objectId })
-                selectedPassion[leftPassions[1].objectId] = 1
-                selectedPassion[leftPassions[2].objectId] = 2
-            } else {
-                selectedPassion[passions![0].objectId] = 0
-                selectedPassion[passions![1].objectId] = 1
-                selectedPassion[passions![2].objectId] = 2
+            }
+            
+            if let travelPassion = passions!.filter({ $0.displayName == "Foodie" }).first {
+                selectedPassion[travelPassion.objectId] = 1
+            }
+            
+            if let travelPassion = passions!.filter({ $0.displayName == "Fitness" }).first {
+                selectedPassion[travelPassion.objectId] = 2
             }
         } else {
             for i in 0 ..< ids.count {
                 selectedPassion[ids[i]] = i
             }
-            
-            if selectedPassion.count < 3 {
-                for i in 0 ..< (3 - selectedPassion.count) {
-                    let restPassions = passions!.filter({ !Array(selectedPassion.keys).contains($0.objectId) })
-                    selectedPassion[restPassions.first!.objectId] = selectedPassion.count + i
-                }
-            }
         }
         
+        if selectedPassion.count < 3 {
+            for i in 0 ..< (3 - selectedPassion.count) {
+                let restPassions = passions!.filter({ !Array(selectedPassion.keys).contains($0.objectId) })
+                selectedPassion[restPassions.first!.objectId] = selectedPassion.count + i
+            }
+        }
+    
         user.assignPassionIds(dict: selectedPassion)
         UserProvider.updateUser(user: user, completion: nil)
     }

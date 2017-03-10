@@ -173,7 +173,6 @@ class CreateMomentViewController: UIViewController {
         moment.ownerId = UserProvider.shared.currentUser!.objectId
         moment.locationLongitude = selectedLocation?.longitude
         moment.locationLatitude = selectedLocation?.latitude
-        moment.fileRawDataArray = [UIImagePNGRepresentation(image)!]
         moment.image = image
         
         MomentsProvider.create(new: moment) { (result) in

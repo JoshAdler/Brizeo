@@ -146,7 +146,9 @@ class MomentsProvider {
                 }
                 
                 do {
-                    let moment = try response.mapObject(Moment.self)
+                    let newMomentId = try response.mapString()
+                    
+                    moment.objectId = newMomentId
                     completion(.success(moment))
                 } catch (let error) {
                     completion(.failure(APIError(error: error)))

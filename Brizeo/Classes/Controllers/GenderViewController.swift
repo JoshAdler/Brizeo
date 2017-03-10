@@ -71,14 +71,14 @@ extension GenderViewController: UITableViewDataSource {
         if indexPath.section == 0 { // I am
             let gender = Gender.gender(for: indexPath.row)
             
-            cell.titleLabel.text = gender.title
+            cell.titleLabel.text = gender.titleSingle
             cell.isChecked = gender == user.gender
             
             return cell
         } else { // gender search
             let gender = Gender.gender(for: indexPath.row)
             
-            cell.titleLabel.text = gender.title
+            cell.titleLabel.text = gender.titlePlural
             cell.isChecked = preferences.genders.contains(gender)
             
             return cell

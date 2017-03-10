@@ -155,11 +155,11 @@ extension APIService: TargetType {
         switch self {
         case .createNewMoment(let moment):
             
-            guard let image = moment.fileRawDataArray else {
+            guard let image = moment.image, let imageData = UIImagePNGRepresentation(image) else {
                 return []
             }
-
-            let formData: [MultipartFormData] = image.map { MultipartFormData(provider: .data($0), name: "images", fileName: "uploadFile.jpg", mimeType: "image/jpeg")}
+            
+            let formData: [MultipartFormData] = [MultipartFormData(provider: .data(imageData), name: "uploadFile", fileName: "uploadFile.jpg", mimeType: "image/jpeg")]
             return formData
         default:
             return nil

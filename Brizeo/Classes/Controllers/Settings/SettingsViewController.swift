@@ -330,7 +330,7 @@ extension SettingsViewController: UITableViewDataSource {
                 if let preferences = preferences {
                     for gender in [Gender.Man, Gender.Woman, Gender.Couple] {
                         if preferences.genders.contains(gender) {
-                            genderString += gender.title
+                            genderString += gender.titlePlural
                             genderString += " and "
                         }
                     }

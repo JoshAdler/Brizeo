@@ -22,7 +22,6 @@ class Moment: Mappable, Equatable {
         case objectId = "objectId"
         case likedByCurrentUser = "likedBycurrentUser"
         case momentDescription = "momentDescription"
-        case momentUploadImages = "momentUploadImages"
         case momentsUploadImage = "momentsUploadImage"
         case numberOfLikes = "numberOfLikes"
         case readStatus = "readStatus"
@@ -49,7 +48,6 @@ class Moment: Mappable, Equatable {
     var locationLatitude: Double?
     var file: FileObjectInfo!
     var user: User!
-    var fileRawDataArray: [Data]?
     var image: UIImage?
     
     var hasLocation: Bool {
@@ -108,41 +106,8 @@ class Moment: Mappable, Equatable {
         locationLongitude <- map[JSONKeys.longitude.rawValue]
         locationLatitude <- map[JSONKeys.latitude.rawValue]
         
-        // file
-//        if let fileDict = JSON[JSONKeys.momentUploadImages.rawValue] as? [String: String] {
-//            file = FileObjectInfo(with: fileDict)
-//        }
-        
         // uploaded image url
         file <- (map[JSONKeys.momentsUploadImage.rawValue], FileObjectInfoTransform())
-//        fileRawData <- (map[JSONKeys.uploadFile.rawValue], MomentRawDataTransform())
-    }
-    
-    init(with JSON: [String: Any]) {
-        
-        // ids
-        objectId = JSON[JSONKeys.objectId.rawValue] as! String
-        passionId = JSON[JSONKeys.passionId.rawValue] as? String
-        
-        // likes information
-        isLikedByCurrentUser = JSON[JSONKeys.likedByCurrentUser.rawValue] as! Bool
-        likesCount = JSON[JSONKeys.numberOfLikes.rawValue] as! Int
-        
-        // availability information
-        readStatus = JSON[JSONKeys.readStatus.rawValue] as! Bool
-        viewableByApp = JSON[JSONKeys.viewableByApp.rawValue] as! Bool
-        
-        // basic information
-        capture = JSON[JSONKeys.momentDescription.rawValue] as! String
-        
-        // location
-        locationLongitude = JSON[JSONKeys.longitude.rawValue] as? Double
-        locationLatitude = JSON[JSONKeys.latitude.rawValue] as? Double
-        
-        // file
-        if let fileDict = JSON[JSONKeys.momentUploadImages.rawValue] as? [String: String] {
-            file = FileObjectInfo(with: fileDict)
-        }
     }
     
     // MARK: - Override methods

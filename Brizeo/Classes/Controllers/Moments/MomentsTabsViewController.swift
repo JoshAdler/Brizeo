@@ -103,8 +103,9 @@ class MomentsTabsViewController: BasicViewController {
         }))
         
         // camera source
+        //TODO: make it possible to upload video
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) == true {
-            alertView.addAction(UIAlertAction(title: LocalizableString.TakeAPhoto.localizedString, style: UIAlertActionStyle.default, handler: {
+            alertView.addAction(UIAlertAction(title: LocalizableString.TakeAPhotoVideo.localizedString, style: UIAlertActionStyle.default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 imagePicker.allowsEditing = true
                 imagePicker.sourceType = .camera

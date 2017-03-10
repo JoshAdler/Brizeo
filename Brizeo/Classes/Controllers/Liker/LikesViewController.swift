@@ -143,6 +143,7 @@ extension LikesViewController: UITableViewDelegate {
         let lblTitle = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: Constants.headerViewHeight))
         lblTitle.backgroundColor = UIColor.clear
         lblTitle.text = "Click Avatar to View Profile"
+        lblTitle.font = UIFont(name: "SourceSansPro-Semibold", size: lblTitle.font.pointSize)
         lblTitle.textAlignment = .center
         lblTitle.textColor = UIColor.black
         viewHeader.addSubview(lblTitle)

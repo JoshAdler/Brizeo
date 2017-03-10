@@ -24,12 +24,23 @@ enum Gender: String {
         }
     }
     
-    var title: String {
+    var titleSingle: String {
         switch self {
         case .Man:
             return "Man"
         case .Woman:
             return "Woman"
+        case .Couple:
+            return "Couple"
+        }
+    }
+    
+    var titlePlural: String {
+        switch self {
+        case .Man:
+            return "Men"
+        case .Woman:
+            return "Women"
         case .Couple:
             return "Couple"
         }
