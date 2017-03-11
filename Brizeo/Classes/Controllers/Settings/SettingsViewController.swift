@@ -175,6 +175,9 @@ class SettingsViewController: UIViewController {
             self.currentLocationString = location
             self.tableView.reloadRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
         }
+        
+        // reload gender
+        tableView.reloadRows(at: [IndexPath(row: 2, section: 2)], with: .automatic)
     }
     
     override func viewWillDisappear(_ animated: Bool) {

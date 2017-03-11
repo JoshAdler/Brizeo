@@ -186,8 +186,14 @@ class SearchMatchesViewController: BasicViewController {
                         welf.matches?.removeFirst()
                     }
                     
+                    if user.status == .isMatched {
+                        let matchingController: MatchViewController = Helper.controllerFromStoryboard(controllerId: "MatchViewController")!
+                        matchingController.user = user
+                        Helper.initialNavigationController().pushViewController(matchingController, animated: true)
+                    } else {
+                        welf.loadMatchesIfNeeds()
+                    }
                     welf.hideLoader()
-                    welf.loadMatchesIfNeeds()
                     
                     break
                 case .failure(let error):
@@ -300,7 +306,7 @@ extension SearchMatchesViewController: DMSwipeCardsViewDelegate {
     
     func cardTapped(_ object: Any) {
         let mediaController: MediaViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.mediaControllerId)!
-        mediaController.isSharingEnabled = true
+//        mediaController.isSharingEnabled = true
         mediaController.media = (object as! User).allMedia
         
         Helper.initialNavigationController().pushViewController(mediaController, animated: true)

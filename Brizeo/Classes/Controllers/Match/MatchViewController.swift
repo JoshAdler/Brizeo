@@ -35,9 +35,11 @@ class MatchViewController: BasicViewController {
     
     @IBAction func onChatButtonClicked(sender: UIButton) {
         ChatProvider.startChat(with: user.objectId, from: self)
+        
+        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func onReturnButtonClicked(sender: UIButton) {
-        
+        navigationController?.popViewController(animated: true)
     }
 }

@@ -40,11 +40,11 @@ class ChatProvider: NSObject {
     
     class func startChat(with userId: String?, from controller: UIViewController) {
         let chatManager : ALChatManager = ALChatManager(applicationKey: Configurations.Applozic.appKey as NSString)
-        if userId != nil {
-            chatManager.registerUserAndLaunchChat(nil, fromController: controller, forUser: "applozic")
-        } else {
+//        if userId != nil {
             chatManager.registerUserAndLaunchChat(nil, fromController: controller, forUser: userId)
-        }
+//        } else {
+//            chatManager.registerUserAndLaunchChat(nil, fromController: controller, forUser: userId)
+//        }
     }
     
     class func createChatWithSuperuser() {

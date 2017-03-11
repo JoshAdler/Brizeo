@@ -152,7 +152,7 @@ class OtherProfileViewController: BasicViewController {
                 switch result {
                 case .success(let passions):
                     weak.passions = passions
-                    
+                    //TODO: add delete button to matches
                     // try to get top passion
                     if let topPassionId = weak.user!.topPassionId, let userPassion = weak.passions?.filter({ topPassionId == $0.objectId! }).first {
                         

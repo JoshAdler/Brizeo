@@ -12,6 +12,10 @@ import Social
 
 class MainNavigationViewController: UINavigationController {
     
+    // MARK: - Properties
+    
+    var loadingView: UIView?
+    
     // MARK: - Controller lifecycle
     
     override func viewDidLoad() {
@@ -19,6 +23,19 @@ class MainNavigationViewController: UINavigationController {
 
         navigationBar.isTranslucent = false
         navigationBar.barStyle = .default
+    }
+    
+    // MARK: - Public methods
+    
+    func presentHalfBlackView(isVisible: Bool) {
+        if loadingView == nil {
+            loadingView = UIView(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)))
+            loadingView!.backgroundColor = UIColor.black.withAlphaComponent(0.75)
+            loadingView?.isHidden = true
+            view.addSubview(loadingView!)
+        }
+        
+        view.isHidden = !isVisible
     }
 }
 

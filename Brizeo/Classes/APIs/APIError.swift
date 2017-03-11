@@ -60,7 +60,7 @@ extension APIError: LocalizedError {
         case .firebaseError:
             return "Server error took place during operation."
         case .notFound:
-            return "The object is not founded."
+            return "The object is not found."
         case .moyaError(let message):
             return message
         case .unknown(let message):

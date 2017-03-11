@@ -41,6 +41,7 @@ class MomentsViewController: UIViewController {
     @IBOutlet weak fileprivate var newestButton: UIButton!
     @IBOutlet weak fileprivate var popularButton: UIButton!
     @IBOutlet weak fileprivate var filterButton: DropMenuButton!
+    @IBOutlet weak var uploadMomentHelpView: UIView!
     
     var listType: MomentsListType = .allMoments
     var currentUser: User! = UserProvider.shared.currentUser!
@@ -116,7 +117,7 @@ class MomentsViewController: UIViewController {
             return
         }
         
-        let alertController = UIAlertController(title: nil, message: LocalizableString.SelectInterest.localizedString, preferredStyle: UIAlertControllerStyle.actionSheet)
+        let alertController = UIAlertController(title: nil, message: LocalizableString.SelectFitlerPassion.localizedString, preferredStyle: UIAlertControllerStyle.actionSheet)
         
         // add action for case "All"
         alertController.addAction(UIAlertAction(title: Constants.defaultFilterTitle, style: .default, handler: { (action) in
