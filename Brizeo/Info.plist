@@ -106,6 +106,8 @@
 	<string>Application would like to use your current location.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Application would like to use your photo.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Application would like to use your microphone.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

@@ -158,12 +158,18 @@ extension APIService: TargetType {
         switch self {
         case .createNewMoment(let moment):
             
-            guard let image = moment.image, let imageData = UIImagePNGRepresentation(image) else {
-                return []
+            if let image = moment.image, let imageData = UIImagePNGRepresentation(image) {
+                let formData: [MultipartFormData] = [MultipartFormData(provider: .data(imageData), name: "uploadFile")]
+                return formData
             }
             
-            let formData: [MultipartFormData] = [MultipartFormData(provider: .data(imageData), name: "uploadFile", fileName: "uploadFile.jpg", mimeType: "image/jpeg")]
-            return formData
+            if let videoURL = moment.videoURL {
+                let formData: [MultipartFormData] = [MultipartFormData(provider: .file(videoURL), name: "uploadFile")]
+                return formData
+            }
+            
+            return []
+            break
         case .createNewUser(let newUser):
             
             var formData = [MultipartFormData]()

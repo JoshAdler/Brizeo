@@ -20,7 +20,7 @@ class MatchesProvider {
     
     // MARK: - Class methods
     
-    class func approveMatch(for user: User, completion: @escaping EmptyCompletion) {
+    class func approveMatch(for user: User, completion: @escaping MatchUserCompletion) {
         
         guard let currentUser = UserProvider.shared.currentUser else {
             print("Error: Can't approve match without current user")
@@ -38,7 +38,14 @@ class MatchesProvider {
                     return
                 }
                 
-                completion(.success())
+                do {
+                    let status = try response.mapString()
+                    
+                    user.status = MatchingStatus(rawValue: Int(status)!)!
+                    completion(.success(user))
+                } catch (let error) {
+                    completion(.failure(APIError(error: error)))
+                }
                 break
             case .failure(let error):
                 completion(.failure(APIError(error: error)))
@@ -47,7 +54,7 @@ class MatchesProvider {
         }
     }
     
-    class func declineMatch(for user: User, completion: @escaping EmptyCompletion) {
+    class func declineMatch(for user: User, completion: @escaping MatchUserCompletion) {
         
         guard let currentUser = UserProvider.shared.currentUser else {
             print("Error: Can't decline match without current user")
@@ -65,7 +72,14 @@ class MatchesProvider {
                     return
                 }
                 
-                completion(.success())
+                do {
+                    let status = try response.mapString()
+                    
+                    user.status = MatchingStatus(rawValue: Int(status)!)!
+                    completion(.success(user))
+                } catch (let error) {
+                    completion(.failure(APIError(error: error)))
+                }
                 break
             case .failure(let error):
                 completion(.failure(APIError(error: error)))

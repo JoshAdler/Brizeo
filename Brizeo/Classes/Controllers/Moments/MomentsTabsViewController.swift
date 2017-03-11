@@ -92,7 +92,7 @@ class MomentsTabsViewController: BasicViewController {
         // library source
         alertView.addAction(UIAlertAction(title: LocalizableString.PhotoLibrary.localizedString, style: UIAlertActionStyle.default, handler: {
             (alert: UIAlertAction!) -> Void in
-            //shows the photo library
+            
             imagePicker.allowsEditing = true
             imagePicker.videoQuality = UIImagePickerControllerQualityType.typeHigh
             imagePicker.videoMaximumDuration = 14
@@ -103,13 +103,12 @@ class MomentsTabsViewController: BasicViewController {
         }))
         
         // camera source
-        //TODO: make it possible to upload video
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) == true {
             alertView.addAction(UIAlertAction(title: LocalizableString.TakeAPhotoVideo.localizedString, style: UIAlertActionStyle.default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 imagePicker.allowsEditing = true
                 imagePicker.sourceType = .camera
-                imagePicker.mediaTypes = [kUTTypeImage as String]
+                imagePicker.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String]
                 imagePicker.modalPresentationStyle = .popover
                 self.present(imagePicker, animated: true, completion: nil)
             }))
@@ -139,14 +138,10 @@ class MomentsTabsViewController: BasicViewController {
         present(alertView, animated: true, completion: nil)
     }
     
-    fileprivate func createNewMoment(with image: UIImage?) {
-        guard image != nil else {
-            print("Some error during getting image for a new moment")
-            return
-        }
-        
+    fileprivate func createNewMoment(with image: UIImage?, videoURL: URL?) {
         let createMomentController: CreateMomentViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.createMomentControllerId)!
         createMomentController.image = image
+        createMomentController.videoURL = videoURL
         Helper.initialNavigationController().pushViewController(createMomentController, animated: true)
     }
 }
@@ -157,8 +152,15 @@ extension MomentsTabsViewController: UIImagePickerControllerDelegate, UINavigati
         
         picker.dismiss(animated: true, completion: nil)
         
-        let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage
-        createNewMoment(with: pickedImage)
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            createNewMoment(with: pickedImage, videoURL: nil)
+            return
+        }
+        
+        if let videoURL = info[UIImagePickerControllerMediaURL] as? URL {
+            createNewMoment(with: nil, videoURL: videoURL)
+            return
+        }
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -196,7 +198,7 @@ extension MomentsTabsViewController: GBHFacebookImagePickerDelegate {
         print("Image URL : \(imageModel.fullSizeUrl), Image Id: \(imageModel.imageId)")
         
         if let pickedImage = imageModel.image {
-            createNewMoment(with: pickedImage)
+            createNewMoment(with: pickedImage, videoURL: nil)
         }
     }
     
@@ -249,7 +251,7 @@ extension MomentsTabsViewController: OLInstagramImagePickerControllerDelegate {
                 SVProgressHUD.dismiss()
                 
                 if image != nil {
-                    self.createNewMoment(with: image)
+                    self.createNewMoment(with: image, videoURL: nil)
                 }
             }
         }

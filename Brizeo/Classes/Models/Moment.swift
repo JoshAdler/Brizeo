@@ -48,7 +48,11 @@ class Moment: Mappable, Equatable {
     var locationLatitude: Double?
     var file: FileObjectInfo!
     var user: User!
+    
+    //variables for uploading
     var image: UIImage?
+    var videoURL: URL?
+    var thumbnailImage: UIImage?
     
     var hasLocation: Bool {
         if locationLongitude != nil && locationLatitude != nil {

@@ -139,6 +139,7 @@
 		BB8B6AD61E51047A00417D54 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB8B6AD41E51047A00417D54 /* Main.storyboard */; };
 		BBA2DB351E7157760066B84B /* NSDate+Kogi.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA2DB341E7157760066B84B /* NSDate+Kogi.m */; };
 		BBA2DB3A1E715AB00066B84B /* notification_sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = BBA2DB391E715AB00066B84B /* notification_sound.wav */; };
+		BBAA14181E744056002585C5 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAA14171E744056002585C5 /* LocationViewController.swift */; };
 		BBCDA9311E6DDDF800DCBB5D /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCDA9301E6DDDF800DCBB5D /* APIError.swift */; };
 		BBCDA9331E6DF16500DCBB5D /* MapTransforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCDA9321E6DF16500DCBB5D /* MapTransforms.swift */; };
 		BBD125771E3FF4D900E17750 /* MomentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD125761E3FF4D900E17750 /* MomentTableViewCell.swift */; };
@@ -324,6 +325,7 @@
 		BBA2DB331E7157760066B84B /* NSDate+Kogi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+Kogi.h"; path = "KogiDate/NSDate+Kogi.h"; sourceTree = "<group>"; };
 		BBA2DB341E7157760066B84B /* NSDate+Kogi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+Kogi.m"; path = "KogiDate/NSDate+Kogi.m"; sourceTree = "<group>"; };
 		BBA2DB391E715AB00066B84B /* notification_sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = notification_sound.wav; sourceTree = "<group>"; };
+		BBAA14171E744056002585C5 /* LocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		BBCDA9301E6DDDF800DCBB5D /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		BBCDA9321E6DF16500DCBB5D /* MapTransforms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTransforms.swift; sourceTree = "<group>"; };
 		BBD125761E3FF4D900E17750 /* MomentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MomentTableViewCell.swift; sourceTree = "<group>"; };
@@ -898,6 +900,7 @@
 			isa = PBXGroup;
 			children = (
 				BB4ED5E71E3BA27B005B3487 /* SettingsViewController.swift */,
+				BBAA14171E744056002585C5 /* LocationViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1351,6 +1354,7 @@
 				BB49F9511E412C26009EE6A0 /* SettingsHeaderView.swift in Sources */,
 				BBFBBB8B1E3CD5FA0002BF4B /* ThemeManager.swift in Sources */,
 				BB4ED5BD1E3AB42B005B3487 /* EventTableViewCell.swift in Sources */,
+				BBAA14181E744056002585C5 /* LocationViewController.swift in Sources */,
 				BB104CEE1E3F889D0082411E /* UserMatchesViewController.swift in Sources */,
 				BB4ED5C51E3B3B12005B3487 /* NotificationTabsViewController.swift in Sources */,
 				BB099F0F1E3F6E0500133794 /* AboutTableViewCell.swift in Sources */,

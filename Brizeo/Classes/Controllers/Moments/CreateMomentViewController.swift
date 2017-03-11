@@ -60,7 +60,8 @@ class CreateMomentViewController: UIViewController {
         }
     }
     
-    var image: UIImage!
+    var videoURL: URL?
+    var image: UIImage?
     var selectedPassion: Passion?
     var passions: [Passion]?
     var autocompleteLocationsResults: [MKMapItem]?
@@ -174,6 +175,7 @@ class CreateMomentViewController: UIViewController {
         moment.locationLongitude = selectedLocation?.longitude
         moment.locationLatitude = selectedLocation?.latitude
         moment.image = image
+        moment.videoURL = videoURL
         
         MomentsProvider.create(new: moment) { (result) in
             switch(result) {
