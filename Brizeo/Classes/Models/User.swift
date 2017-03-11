@@ -104,6 +104,10 @@ class User: Mappable {
     // files
     var profileImage: FileObjectInfo?
     var uploadFiles: [FileObject]?
+
+    var profileUploadImage: UIImage?
+    var profileUploadImageURL: URL?
+    var uploadImages: [URL]?
     
     // match status
     var status: MatchingStatus = .noActionsBetweenUsers
@@ -243,6 +247,9 @@ class User: Mappable {
         self.lastActiveTime = lastActiveDate
         self.displayName = displayName ?? "Mr./Mrs"
         
+        profileUploadImageURL = URL(string: profileImageURL!)
+        uploadImages = uploadedURLs
+        
         // files
     }
     
@@ -337,37 +344,4 @@ class User: Mappable {
             }
         }
     }
-    
-    // MARK:
-    
-//    class func saveParseUser(_ completion: @escaping (Result<Void>) -> Void) {
-//        User.current()?.saveInBackground { (success, error) in
-//            if(success) {
-//                
-//                //                let priority = DispatchQueue.GlobalQueuePriority.default
-//                
-//                DispatchQueue.global().async {
-//                    // do some task
-//                    do {
-//                        try PFUser.current()?.fetch()
-//                        DispatchQueue.main.async {
-//                            completion(.success())
-//                        }
-//                        
-//                    } catch(let error as NSError) {
-//                        
-//                        DispatchQueue.main.async {
-//                            CLSNSLogv("ERROR: Unable to refresh current user: %@", getVaList([error]))
-//                            completion(.failure(error.localizedDescription))// update some UI
-//                        }
-//                    }
-//                }
-//                
-//                DispatchQueue.global()
-//                
-//            } else {
-//                completion(.failure(error!.localizedDescription))
-//            }
-//        }
-//    }
 }

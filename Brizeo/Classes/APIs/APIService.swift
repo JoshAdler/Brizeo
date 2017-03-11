@@ -100,7 +100,7 @@ extension APIService: TargetType {
         case .approveMatch(let approverId, let userId), .declineMatch(let approverId, let userId):
             return "/match/\(approverId)/\(userId)"
         case .getUsersForMatch(let userId):
-            return "/approveuserformatch/\(userId)"
+            return /*"/likemoments/users/\("Qy5CiinuRA")/\(userId)"*/"/approveuserformatch/\(userId)"
         case .getMatchesForUser(let userId):
             return "/approvematchforuser/\(userId)"
         }
@@ -164,6 +164,19 @@ extension APIService: TargetType {
             
             let formData: [MultipartFormData] = [MultipartFormData(provider: .data(imageData), name: "uploadFile", fileName: "uploadFile.jpg", mimeType: "image/jpeg")]
             return formData
+        case .createNewUser(let newUser):
+            
+            var formData = [MultipartFormData]()
+//            
+//            if let profileImageURL = newUser.profileUploadImageURL {
+//                formData.append(MultipartFormData(provider: .file(profileImageURL), name: "mainProfileImage"))
+//            }
+//            
+//            if let uploadImageURLs = newUser.uploadImages {
+//                formData.append(contentsOf: (uploadImageURLs.map({ MultipartFormData(provider: .file($0), name: "otherProfileImages", fileName: "otherProfileImages.jpg", mimeType: "image/jpeg") })))
+//            }
+            
+            return formData
         default:
             return nil
         }
@@ -175,6 +188,8 @@ extension APIService: TargetType {
     var task: Task {
         switch self {
         case .createNewMoment:
+            return .upload(UploadType.multipart(multipartBody!))
+        case .createNewUser:
             return .upload(UploadType.multipart(multipartBody!))
             default:
             return .request

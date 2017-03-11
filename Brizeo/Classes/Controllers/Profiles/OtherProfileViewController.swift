@@ -286,7 +286,7 @@ class OtherProfileViewController: BasicViewController {
             }
         }
     }
-    //TODO: check text cell for many text
+    
     // MARK: - Public methods
 
     func didReceivedMutualFriendsNotification(notification: UIKit.Notification) {

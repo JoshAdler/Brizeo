@@ -42,7 +42,7 @@ class SearchMatchesViewController: BasicViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        fetchMatchesList()
+        loadMatchesIfNeeds()
     }
     
     // MARK: - Private methods
@@ -90,8 +90,8 @@ class SearchMatchesViewController: BasicViewController {
             
             let viewGenerator = { (element: Any, frame: CGRect) -> (UIView) in
                 let profileView: ProfileView = ProfileView.loadFromNib()
-                profileView.frame = frame
                 
+                profileView.frame = frame
                 profileView.applyUser(user: element as! User)
                 
                 return profileView
@@ -137,6 +137,66 @@ class SearchMatchesViewController: BasicViewController {
         detailsButton.isHidden = isHidden
         actionsButton.isHidden = isHidden
         shareButton.isHidden = isHidden
+    }
+    
+    fileprivate func loadMatchesIfNeeds() {
+        if matches == nil || matches?.count == 0 {
+            fetchMatchesList()
+        }
+    }
+    
+    fileprivate func declineUser(user: User) {
+        showBlackLoader()
+        
+        MatchesProvider.declineMatch(for: user) { [weak self] (result) in
+            
+            if let welf = self {
+                
+                switch(result) {
+                case .success(_):
+                    
+                    if (welf.matches?.count ?? 0) > 0 {
+                        welf.matches?.removeFirst()
+                    }
+                    
+                    welf.hideLoader()
+                    welf.loadMatchesIfNeeds()
+                    
+                    break
+                case .failure(let error):
+                    SVProgressHUD.showError(withStatus: error.localizedDescription)
+                    break
+                default: break
+                }
+            }
+        }
+    }
+    
+    fileprivate func approveUser(user: User) {
+        showBlackLoader()
+        
+        MatchesProvider.approveMatch(for: user) { [weak self] (result) in
+            
+            if let welf = self {
+                
+                switch(result) {
+                case .success(_):
+                    
+                    if (welf.matches?.count ?? 0) > 0 {
+                        welf.matches?.removeFirst()
+                    }
+                    
+                    welf.hideLoader()
+                    welf.loadMatchesIfNeeds()
+                    
+                    break
+                case .failure(let error):
+                    SVProgressHUD.showError(withStatus: error.localizedDescription)
+                    break
+                default: break
+                }
+            }
+        }
     }
     
     // MARK: - Actions
@@ -227,19 +287,21 @@ class SearchMatchesViewController: BasicViewController {
 extension SearchMatchesViewController: DMSwipeCardsViewDelegate {
     
     func swipedLeft(_ object: Any) {
-        //matches?.removeFirst()
         print("left")
+        
+        declineUser(user: object as! User)
     }
     
     func swipedRight(_ object: Any) {
-        //matches?.removeFirst()
         print("right")
+        
+        approveUser(user: object as! User)
     }
     
     func cardTapped(_ object: Any) {
         let mediaController: MediaViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.mediaControllerId)!
         mediaController.isSharingEnabled = true
-        mediaController.media = (object as! User).uploadFiles
+        mediaController.media = (object as! User).allMedia
         
         Helper.initialNavigationController().pushViewController(mediaController, animated: true)
     }
