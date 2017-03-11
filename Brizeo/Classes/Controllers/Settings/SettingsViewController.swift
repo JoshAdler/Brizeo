@@ -12,6 +12,8 @@ import Parse
 import Branch
 import FBSDKShareKit
 import ChameleonFramework
+import GooglePlacesAutocomplete
+import SVProgressHUD
 
 class SettingsViewController: UIViewController {
 
@@ -45,7 +47,6 @@ class SettingsViewController: UIViewController {
                 case .big: return Constants.bigSectionHeight
                 case .normal: return Constants.normalSectionHeight
                 case .small: return Constants.smallSectionHeight
-                default: return 0.0
                 }
             }
         }
@@ -143,6 +144,7 @@ class SettingsViewController: UIViewController {
     // for location
     var currentLocationString = LocalizableString.Location.localizedString
     var searchLocationString = ""
+    var gpaViewController: GooglePlacesAutocomplete?
     
     // MARK: - Controller lifecycle
     
@@ -421,6 +423,22 @@ extension SettingsViewController: UITableViewDelegate {
         }
         
         switch section {
+        case .searchLocation:
+            if indexPath.row == 0 {
+                
+                if gpaViewController == nil {
+                    gpaViewController = GooglePlacesAutocomplete(
+                        apiKey: Configurations.GooglePlaces.key,
+                        placeType: .cities//.address
+                    )
+                    
+                    gpaViewController!.placeDelegate = self
+                }
+                
+                ThemeManager.placeLogo(on: gpaViewController!.navigationItem)
+                present(gpaViewController!, animated: true, completion: nil)
+            }
+            break
         case .logout:
             UserProvider.logout()
             Helper.goToInitialController(true)
@@ -485,5 +503,45 @@ extension SettingsViewController: SettingsNotificationCellDelegate {
         
         preferences.setNotificationValue(value: value, for: indexPath.row)
         PreferencesProvider.updatePreferences(preferences: preferences, completion: nil)
+    }
+}
+
+// MARK: - GooglePlacesAutocompleteDelegate
+extension SettingsViewController: GooglePlacesAutocompleteDelegate {
+    
+    func placeSelected(_ place: Place) {
+        searchLocationString = place.description
+        
+        showBlackLoader()
+        
+        place.getDetails { [weak self] (result) in
+            if let welf = self {
+                // set new values
+                welf.preferences.searchLocation = CLLocation(latitude: result.latitude, longitude: result.longitude)
+                
+                // update preferences
+                PreferencesProvider.updatePreferences(preferences: welf.preferences, completion: { (result) in
+                    switch(result) {
+                    case .success(_):
+                        welf.hideLoader()
+                        welf.tableView.reloadRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
+                        break
+                    case .failure(let error):
+                        SVProgressHUD.showError(withStatus: error.localizedDescription)
+                        break
+                    default: break
+                    }
+                    
+                    welf.dismiss(animated: true) {
+                        welf.gpaViewController?.reset()
+                    }
+                })
+            }
+        }
+    }
+    
+    func placeViewClosed() {
+        gpaViewController?.view.endEditing(true)
+        gpaViewController?.dismiss(animated: true, completion: nil)
     }
 }

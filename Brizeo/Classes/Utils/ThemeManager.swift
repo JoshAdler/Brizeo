@@ -45,4 +45,15 @@ class ThemeManager: NSObject {
         // loading HUD
         SVProgressHUD.setDefaultMaskType(.gradient)
     }
+    
+    class func placeLogo(on navigationItem: UINavigationItem) {
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "ic_nav_logo"))
+        imageView.contentMode = .scaleAspectFit
+        
+        let titleView = UIView(frame: CGRect(x: 0, y: 0, width: 90, height: 44))
+        imageView.frame = titleView.bounds
+        titleView.addSubview(imageView)
+        
+        navigationItem.titleView = titleView
+    }
 }

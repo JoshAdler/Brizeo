@@ -48,6 +48,7 @@ PODS:
   - Google/Core (3.0.3):
     - FirebaseAnalytics (~> 3.2)
   - GoogleAnalytics (3.17.0)
+  - GooglePlacesAutocomplete (0.3.0)
   - GoogleToolboxForMac/Defines (2.1.1)
   - GoogleToolboxForMac/NSData+zlib (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
@@ -114,6 +115,7 @@ DEPENDENCIES:
   - FBSDKShareKit
   - GBHFacebookImagePicker
   - Google/Analytics
+  - GooglePlacesAutocomplete (from `https://github.com/danielkiedrowski/ios_google_places_autocomplete.git`)
   - IGLDropDownMenu
   - InstagramImagePicker
   - Localytics
@@ -136,11 +138,16 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   ChameleonFramework:
     :git: https://github.com/ViccAlexander/Chameleon.git
+  GooglePlacesAutocomplete:
+    :git: https://github.com/danielkiedrowski/ios_google_places_autocomplete.git
 
 CHECKOUT OPTIONS:
   ChameleonFramework:
     :commit: acc480fbe023c6e5fe40f68593f4a70a8c4c7ad5
     :git: https://github.com/ViccAlexander/Chameleon.git
+  GooglePlacesAutocomplete:
+    :commit: 30d9701a566f1da094cef60de71628703ae6e19d
+    :git: https://github.com/danielkiedrowski/ios_google_places_autocomplete.git
 
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
@@ -165,6 +172,7 @@ SPEC CHECKSUMS:
   GBHFacebookImagePicker: 52d20a64f5a0120d6e41b3033f0ab23fa8f47248
   Google: 813c467362eabc11385f5a5cc9ad0cb651a58f4e
   GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
+  GooglePlacesAutocomplete: 7694636fce561c9d8ac807b8e490d299a730a633
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   IGLDropDownMenu: ae118618ae858fa66ce7c2ac80ed9124a710b228
   InstagramImagePicker: 3b1afb10b1b3e5625b8ef64dfabd13464467020d
@@ -189,6 +197,6 @@ SPEC CHECKSUMS:
   UIScrollView-InfiniteScroll: 14e204c50ca4040467e1cbfa141dad7a18919b56
   ZTDropDownTextField: a9cb5db41b66eb28a7c38afaf4c334fb2a81034e
 
-PODFILE CHECKSUM: 75032418ac0de59f732a7ee656547db1e20c5cc7
+PODFILE CHECKSUM: aa02bec300f8ed1e350623074b03d2697e9f709a
 
 COCOAPODS: 1.2.0

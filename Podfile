@@ -57,4 +57,7 @@ target 'Brizeo' do
     
     # very useful to work with date
     pod 'SwiftDate', '~> 4.0'
+    
+    # google places for location
+    pod 'GooglePlacesAutocomplete', :git => 'https://github.com/danielkiedrowski/ios_google_places_autocomplete.git'
 end

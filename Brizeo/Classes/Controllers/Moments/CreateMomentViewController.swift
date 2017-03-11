@@ -11,6 +11,7 @@ import ChameleonFramework
 import MapKit
 import ZTDropDownTextField
 import SVProgressHUD
+import GooglePlacesAutocomplete
 
 class CreateMomentViewController: UIViewController {
 
@@ -42,6 +43,7 @@ class CreateMomentViewController: UIViewController {
             interestButton.imageView?.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
         }
     }
+    
     @IBOutlet weak var switcher: UISwitch! {
         didSet {
             let scaleX = (Constants.switcherWidthCoef * UIScreen.main.bounds.width) / switcher.bounds.width
@@ -67,6 +69,7 @@ class CreateMomentViewController: UIViewController {
     var autocompleteLocationsResults: [MKMapItem]?
     var selectedLocation: CLLocationCoordinate2D?
     var suggestions: [String]?
+    var gpaViewController: GooglePlacesAutocomplete?
 
     // MARK: - Controller lifecycle
     
@@ -238,6 +241,21 @@ class CreateMomentViewController: UIViewController {
         
         createMoment()
     }
+    
+    @IBAction func onLocationClicked(sender: UIButton) {
+        
+        if gpaViewController == nil {
+            gpaViewController = GooglePlacesAutocomplete(
+                apiKey: Configurations.GooglePlaces.key,
+                placeType: .cities
+            )
+            
+            gpaViewController!.placeDelegate = self
+        }
+        
+        ThemeManager.placeLogo(on: gpaViewController!.navigationItem)
+        present(gpaViewController!, animated: true, completion: nil)
+    }
 }
 
 // MARK: - UITextViewDelegate
@@ -347,3 +365,27 @@ extension CreateMomentViewController: ZTDropDownTextFieldDataSourceDelegate {
     }
 }
 
+// MARK: - GooglePlacesAutocompleteDelegate
+extension CreateMomentViewController: GooglePlacesAutocompleteDelegate {
+    
+    func placeSelected(_ place: Place) {
+        
+        addLocationTextField.text = place.description
+        
+        place.getDetails { [weak self] (result) in
+            if let welf = self {
+                // set new values
+                welf.selectedLocation = CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude)
+                
+                welf.dismiss(animated: true) {
+                    welf.gpaViewController?.reset()
+                }
+            }
+        }
+    }
+    
+    func placeViewClosed() {
+        gpaViewController?.view.endEditing(true)
+        gpaViewController?.dismiss(animated: true, completion: nil)
+    }
+}

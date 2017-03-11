@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'FE9616FEEED9AEECD90EF4E393A9336B'
-               BlueprintName = 'SVProgressHUD'
+               BlueprintIdentifier = '5B65E267B45FEE43A866C6585A729A64'
+               BlueprintName = 'GooglePlacesAutocomplete'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'SVProgressHUD.framework'>
+               BuildableName = 'GooglePlacesAutocomplete.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
