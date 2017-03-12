@@ -56,4 +56,10 @@ class FileObject: NSObject {
     init(info: FileObjectInfo) {
         imageFile = info
     }
+    
+    init(thumbnailImage: FileObjectInfo, videoInfo: FileObjectInfo) {
+        thumbFile = thumbnailImage
+        videoFile = videoInfo
+        type = .video
+    }
 }

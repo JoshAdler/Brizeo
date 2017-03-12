@@ -70,6 +70,7 @@ class MomentsViewController: UIViewController {
 
         NotificationCenter.default.addObserver(self, selector: #selector(MomentsViewController.updateTableView), name: NSNotification.Name(rawValue: updateMomentNotification), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(MomentsViewController.updateTableView), name: NSNotification.Name(rawValue: LocalizableString.SomebodyLikeYourMoment.localizedString), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(setDefaults), name: NSNotification.Name(rawValue: updateMomentsListNotification), object: nil)
         
         fetchPassions()
         initFilterButton()

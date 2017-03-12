@@ -23,6 +23,7 @@ class Moment: Mappable, Equatable {
         case likedByCurrentUser = "likedBycurrentUser"
         case momentDescription = "momentDescription"
         case momentsUploadImage = "momentsUploadImage"
+        case thumbnailImage = "thumbnailImage"
         case numberOfLikes = "numberOfLikes"
         case readStatus = "readStatus"
         case user = "user"
@@ -31,7 +32,6 @@ class Moment: Mappable, Equatable {
         case passionId = "passionId"
         case latitude = "currentLocation.latitude"
         case longitude = "currentLocation.longitude"
-        case uploadFile = "uploadFile"
     }
     
     // MARK: - Properties
@@ -47,12 +47,17 @@ class Moment: Mappable, Equatable {
     var locationLongitude: Double?
     var locationLatitude: Double?
     var file: FileObjectInfo!
+    var thumbnailFile: FileObjectInfo?
     var user: User!
     
     //variables for uploading
     var image: UIImage?
     var videoURL: URL?
     var thumbnailImage: UIImage?
+    
+    var hasVideo: Bool {
+        return thumbnailFile != nil
+    }
     
     var hasLocation: Bool {
         if locationLongitude != nil && locationLatitude != nil {
@@ -62,9 +67,16 @@ class Moment: Mappable, Equatable {
     }
     
     var imageUrl: URL? {
-        guard let url = file?.url else { return nil }
         
-        return URL(string: url)
+        if let url = thumbnailFile?.url { // thumbnail url
+            return URL(string: url)
+        }
+        
+        if let url = file?.url { // image url
+            return URL(string: url)
+        }
+        
+        return  nil
     }
     
     var location: CLLocation? {
@@ -78,6 +90,14 @@ class Moment: Mappable, Equatable {
         set {
             locationLatitude = newValue?.coordinate.latitude
             locationLongitude = newValue?.coordinate.longitude
+        }
+    }
+    
+    var asFileObject: FileObject {
+        if hasVideo {
+            return FileObject(thumbnailImage: thumbnailFile!, videoInfo: file)
+        } else {
+            return FileObject(info: file)
         }
     }
     
@@ -112,6 +132,7 @@ class Moment: Mappable, Equatable {
         
         // uploaded image url
         file <- (map[JSONKeys.momentsUploadImage.rawValue], FileObjectInfoTransform())
+        thumbnailFile <- (map[JSONKeys.thumbnailImage.rawValue], FileObjectInfoTransform())
     }
     
     // MARK: - Override methods

@@ -78,7 +78,7 @@ class CreateMomentViewController: UIViewController {
         super.viewDidLoad()
 
         // apply image/location
-        momentImageView.image = image
+        momentImageView.image = image ?? thumbnailImage
         selectedLocation = LocationManager.shared.currentLocationCoordinates?.coordinate
         
         // set placeholder to text view
@@ -190,10 +190,11 @@ class CreateMomentViewController: UIViewController {
                 FirstEntranceProvider.shared.isFirstEntrancePassed = true
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    
                     // set defaults
-                    if let momentHolderController = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)! - 1] as? MomentsTabsViewController {
-                        momentHolderController.setDefaultsForMomentViews()
-                    }
+                    Helper.sendNotification(with: updateMomentsListNotification, object: nil, dict: nil)
+                    
+                    // go back
                     _ = self.navigationController?.popViewController(animated: true)
                 }
                 

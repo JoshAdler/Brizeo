@@ -19,6 +19,8 @@ protocol MomentsTabsViewControllerDelegate: class {
     func onCreateMoment()
 }
 
+let updateMomentsListNotification = "updateMomentsListNotification"
+
 class MomentsTabsViewController: BasicViewController {
 
     // MARK: - Types
@@ -56,14 +58,6 @@ class MomentsTabsViewController: BasicViewController {
         super.viewDidAppear(animated)
         
         firstEntranceLogicIfNeeds()
-    }
-    
-    // MARK: - Public methods
-    //TODO: whether this method is called
-    func setDefaultsForMomentViews() {
-        allMomentsController.setDefaults()
-        myMatchesMomentsController.setDefaults()
-        myMomentsController.setDefaults()
     }
     
     // MARK: - Private methods

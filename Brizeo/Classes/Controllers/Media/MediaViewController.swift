@@ -15,6 +15,7 @@ import Branch
 import SDWebImage
 import MessageUI
 import SVProgressHUD
+import AVKit
 
 class MediaViewController: UIViewController {
     
@@ -58,10 +59,10 @@ class MediaViewController: UIViewController {
         descriptionTextView.isEditable = moment != nil && UserProvider.shared.currentUser!.objectId == moment!.ownerId
         
         if moment != nil {
-            media = [FileObject(info: moment!.file)]
+            media = [moment!.asFileObject]
         }
         
-        hideKeyboardWhenTappedAround()
+//        hideKeyboardWhenTappedAround()
         
         //TODO: place below in some place
         // track keyboard
@@ -138,14 +139,15 @@ class MediaViewController: UIViewController {
 
     // MARK: - Private methods
     
-    fileprivate func playVideo(_ url: URL!) {
-        guard let moviePlayer = MPMoviePlayerViewController(contentURL: url) else {
-            print("Error. Can't initialize movie player")
-            return
-        }
+    fileprivate func playVideo(with url: URL!) {
         
-        moviePlayer.view.frame = self.view.bounds
-        present(moviePlayer, animated: true, completion: nil)
+        let player = AVPlayer(url: url)
+        let playerViewController = AVPlayerViewController()
+        playerViewController.player = player
+        
+        present(playerViewController, animated: true) {
+            playerViewController.player!.play()
+        }
     }
     
     // MARK: - Segue methods
@@ -242,7 +244,7 @@ extension MediaViewController: UICollectionViewDelegate {
         switch item.type {
         case .video:
             if let urlStr = item.videoFile?.url, let url = URL(string: urlStr) {
-                playVideo(url)
+                playVideo(with: url)
             }
             break
         default:
@@ -259,12 +261,12 @@ extension MediaViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-    // MARK: - MFMessageComposeViewControllerDelegate
-    extension MediaViewController: MFMessageComposeViewControllerDelegate, UINavigationControllerDelegate {
-        
-        func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
-            controller.dismiss(animated: true, completion: nil)
-        }
+// MARK: - MFMessageComposeViewControllerDelegate
+extension MediaViewController: MFMessageComposeViewControllerDelegate, UINavigationControllerDelegate {
+    
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        controller.dismiss(animated: true, completion: nil)
+    }
 }
 
 
