@@ -9,6 +9,8 @@
 import CarbonKit
 import ChameleonFramework
 import SwiftDate
+import AVFoundation
+import AssetsLibrary
 
 struct Resources {
     static let pushNotificationSound = "new_message.wav"
@@ -183,6 +185,23 @@ class Helper: NSObject {
     
     class func sendNotification(with name: String, object: Any?, dict: [String: Any]?) {
         NotificationCenter.default.post(name: Foundation.Notification.Name(rawValue: name), object: object, userInfo: dict)
+    }
+    
+    // MARK: - Video
+    
+    class func generateThumbnail(from path: URL) -> UIImage? {
+        do {
+            let asset = AVURLAsset(url: path , options: nil)
+            let imgGenerator = AVAssetImageGenerator(asset: asset)
+            imgGenerator.appliesPreferredTrackTransform = true
+            let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(0, 1), actualTime: nil)
+            let thumbnail = UIImage(cgImage: cgImage)
+            
+            return thumbnail
+        } catch let error {
+            print("*** Error generating thumbnail: \(error.localizedDescription)")
+            return nil
+        }
     }
 }
 

@@ -161,17 +161,17 @@ extension APIService: TargetType {
             var formDataArray = [MultipartFormData]()
             
             if let image = moment.image, let imageData = UIImagePNGRepresentation(image) {
-                let formData = MultipartFormData(provider: .data(imageData), name: "uploadFile")
+                let formData = MultipartFormData(provider: .data(imageData), name: "uploadFile", fileName: "uploadFile", mimeType: "image/jpeg")
                 formDataArray.append(formData)
             }
             
             if let videoURL = moment.videoURL {
-                let formData = MultipartFormData(provider: .file(videoURL), name: "uploadFile")
+                let formData = MultipartFormData(provider: .file(videoURL), name: "uploadFile", fileName: "uploadFile", mimeType: "video/quicktime")
                 formDataArray.append(formData)
             }
             
             if let thumbnail = moment.thumbnailImage, let thumbnailData = UIImagePNGRepresentation(thumbnail) {
-                let formData = MultipartFormData(provider: .data(thumbnailData), name: "uploadFile")
+                let formData = MultipartFormData(provider: .data(thumbnailData), name: "thumbnailImage", fileName: "thumbnailImage", mimeType: "image/jpeg")
                 formDataArray.append(formData)
             }
 

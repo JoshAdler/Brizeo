@@ -178,6 +178,13 @@ class MomentsTabsViewController: BasicViewController {
         let createMomentController: CreateMomentViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.createMomentControllerId)!
         createMomentController.image = image
         createMomentController.videoURL = videoURL
+        
+        if let videoURL = videoURL {
+            // generate thumbnail from video url
+            let thumbnailImage = Helper.generateThumbnail(from: videoURL)
+            createMomentController.thumbnailImage = thumbnailImage
+        }
+        
         Helper.initialNavigationController().pushViewController(createMomentController, animated: true)
     }
 }

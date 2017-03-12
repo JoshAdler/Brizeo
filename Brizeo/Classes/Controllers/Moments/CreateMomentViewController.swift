@@ -62,6 +62,7 @@ class CreateMomentViewController: UIViewController {
         }
     }
     
+    var thumbnailImage: UIImage?
     var videoURL: URL?
     var image: UIImage?
     var selectedPassion: Passion?
@@ -179,6 +180,7 @@ class CreateMomentViewController: UIViewController {
         moment.locationLatitude = selectedLocation?.latitude
         moment.image = image
         moment.videoURL = videoURL
+        moment.thumbnailImage = thumbnailImage
         
         MomentsProvider.create(new: moment) { (result) in
             switch(result) {
