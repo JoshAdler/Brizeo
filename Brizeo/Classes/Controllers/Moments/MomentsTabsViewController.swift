@@ -59,7 +59,7 @@ class MomentsTabsViewController: BasicViewController {
     }
     
     // MARK: - Public methods
-    
+    //TODO: whether this method is called
     func setDefaultsForMomentViews() {
         allMomentsController.setDefaults()
         myMatchesMomentsController.setDefaults()
