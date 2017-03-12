@@ -107,8 +107,8 @@ class Moment: Mappable, Equatable {
         capture <- map[JSONKeys.momentDescription.rawValue]
         
         // location
-        locationLongitude <- map[JSONKeys.longitude.rawValue]
-        locationLatitude <- map[JSONKeys.latitude.rawValue]
+        locationLongitude <- (map[JSONKeys.longitude.rawValue], LocationTransform())
+        locationLatitude <- (map[JSONKeys.latitude.rawValue], LocationTransform())
         
         // uploaded image url
         file <- (map[JSONKeys.momentsUploadImage.rawValue], FileObjectInfoTransform())

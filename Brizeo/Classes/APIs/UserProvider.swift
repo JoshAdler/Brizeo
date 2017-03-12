@@ -182,7 +182,6 @@ class UserProvider: NSObject {
                                     PreferencesProvider.loadPreferences(for: user.objectId, fromCache: false, completion: nil)
                                     
                                     BranchProvider.operateFirstEntrance(with: user)
-                                    //TODO: create chat with the admin
                                     ChatProvider.createChatWithSuperuser()
                                     
                                     completion(.success(user))

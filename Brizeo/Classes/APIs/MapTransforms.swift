@@ -146,3 +146,33 @@ class MomentRawDataTransform: TransformType {
         return nil
     }
 }
+
+class LocationTransform: TransformType {
+    
+    public typealias Object = Double
+    public typealias JSON = Double
+    
+    public init() {}
+    
+    public func transformFromJSON(_ value: Any?) -> Double? {
+        
+        if let doubleValue = value as? Double {
+            return doubleValue
+        }
+        
+        if let strValue = value as? String, let doubleValue = Double(strValue) {
+            return doubleValue
+        }
+        
+        return nil
+    }
+    
+    public func transformToJSON(_ value: Double?) -> Double? {
+        
+        if value != nil {
+            return value
+        }
+        
+        return nil
+    }
+}

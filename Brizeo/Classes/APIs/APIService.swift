@@ -176,19 +176,19 @@ extension APIService: TargetType {
             }
 
             return formDataArray
-        case .createNewUser(let newUser):
-            
-            var formData = [MultipartFormData]()
+//        case .createNewUser(let newUser):
 //            
-//            if let profileImageURL = newUser.profileUploadImageURL {
-//                formData.append(MultipartFormData(provider: .file(profileImageURL), name: "mainProfileImage"))
-//            }
+//            var formData = [MultipartFormData]()
+////            
+////            if let profileImageURL = newUser.profileUploadImageURL {
+////                formData.append(MultipartFormData(provider: .file(profileImageURL), name: "mainProfileImage"))
+////            }
+////            
+////            if let uploadImageURLs = newUser.uploadImages {
+////                formData.append(contentsOf: (uploadImageURLs.map({ MultipartFormData(provider: .file($0), name: "otherProfileImages", fileName: "otherProfileImages.jpg", mimeType: "image/jpeg") })))
+////            }
 //            
-//            if let uploadImageURLs = newUser.uploadImages {
-//                formData.append(contentsOf: (uploadImageURLs.map({ MultipartFormData(provider: .file($0), name: "otherProfileImages", fileName: "otherProfileImages.jpg", mimeType: "image/jpeg") })))
-//            }
-            
-            return formData
+//            return formData
         default:
             return nil
         }
@@ -201,8 +201,8 @@ extension APIService: TargetType {
         switch self {
         case .createNewMoment:
             return .upload(UploadType.multipart(multipartBody!))
-        case .createNewUser:
-            return .upload(UploadType.multipart(multipartBody!))
+//        case .createNewUser:
+//            return .upload(UploadType.multipart(multipartBody!))
             default:
             return .request
         }

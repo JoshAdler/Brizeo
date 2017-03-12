@@ -96,6 +96,8 @@ class LoginViewController: UIViewController {
         LocationManager.updateUserLocation()
         BranchProvider.checkUserReward()
         ChatProvider.registerUserInChat()
+        ChatProvider.createChatWithSuperuser()
+        //TODO: check with a new user after the api method will be done
     }
     
     fileprivate func signUpWithFacebook() {
