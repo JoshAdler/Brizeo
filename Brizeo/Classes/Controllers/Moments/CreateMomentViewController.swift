@@ -185,6 +185,8 @@ class CreateMomentViewController: UIViewController {
             case .success(_):
                 SVProgressHUD.showSuccess(withStatus: LocalizableString.NewMomentCreated.localizedString)
                 
+                FirstEntranceProvider.shared.isFirstEntrancePassed = true
+                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     // set defaults
                     if let momentHolderController = self.navigationController?.viewControllers[(self.navigationController?.viewControllers.count)! - 1] as? MomentsTabsViewController {
@@ -206,6 +208,7 @@ class CreateMomentViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func onBackButtonClicked(_ sender: UIBarButtonItem) {
+        FirstEntranceProvider.shared.goingToCreateMoment = false
         _ = navigationController?.popViewController(animated: true)
     }
     

@@ -26,6 +26,8 @@ class PersonalTabsViewController: BasicViewController {
     var profileController: ProfileViewController!
     var settingsController: SettingsViewController!
     var detailsController: PersonalDetailsTabsViewController!
+    var carbonTabSwipeNavigation: CarbonTabSwipeNavigation!
+    var blockButton: UIButton?
     
     // MARK: - Controller lifecycle
     
@@ -38,9 +40,13 @@ class PersonalTabsViewController: BasicViewController {
         
         settingsController = Helper.controllerFromStoryboard(controllerId: Constants.settingsControllerId)!
         
-        let carbonTabSwipeNavigation = Helper.createCarbonController(with: Constants.titles, self)
+        carbonTabSwipeNavigation = Helper.createCarbonController(with: Constants.titles, self)
         carbonTabSwipeNavigation.insert(intoRootViewController: self)
         carbonTabSwipeNavigation.pagesScrollView?.isScrollEnabled = false
+        
+        if FirstEntranceProvider.shared.currentStep == .profile && FirstEntranceProvider.shared.isFirstEntrancePassed == false {
+            initBlockButton()
+        }
     }
     
     // MARK: - Actions
@@ -49,11 +55,35 @@ class PersonalTabsViewController: BasicViewController {
         
         if FirstEntranceProvider.shared.isFirstEntrancePassed == false && FirstEntranceProvider.shared.currentStep == .profile {
             // show force screen
+            profileController.hideHelpView(isHidden: false)
         } else {
             super.onBackButtonClicked(sender: sender)
         }
     }
     
+    // MARK: - Private methods
+    
+    fileprivate func initBlockButton() {
+        blockButton = UIButton(type: .custom)
+        blockButton?.backgroundColor = .clear
+        blockButton?.addTarget(self, action: #selector(onBlockButtonClicked(sender:)), for: .touchUpInside)
+        blockButton?.frame = CGRect(x: UIScreen.main.bounds.width / 2.0, y: 0, width: UIScreen.main.bounds.width / 2.0, height: Helper.carbonViewHeight())
+        
+        view.addSubview(blockButton!)
+    }
+    
+    fileprivate func removeBlockButton() {
+        if blockButton != nil {
+            blockButton?.removeFromSuperview()
+            blockButton = nil
+        }
+    }
+    
+    @objc fileprivate func onBlockButtonClicked(sender: UIButton) {
+        if FirstEntranceProvider.shared.isFirstEntrancePassed == false && FirstEntranceProvider.shared.currentStep == .profile {
+            profileController.hideHelpView(isHidden: false)
+        }
+    }
 }
 
 // MARK: - ProfileViewControllerDelegate
@@ -71,12 +101,21 @@ extension PersonalTabsViewController: ProfileViewControllerDelegate {
             self.detailsController.view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: self.view.frame.width, height: self.view.frame.height))
         }) { (isFinished) in
             self.detailsController.didControllerChangedPosition(isOpened: true, completionHandler: nil)
+            self.removeBlockButton()
         }
     }
 }
 
 // MARK: - CarbonTabSwipeNavigationDelegate
 extension PersonalTabsViewController: CarbonTabSwipeNavigationDelegate {
+    
+    func carbonTabSwipeNavigation(_ carbonTabSwipeNavigation: CarbonTabSwipeNavigation, shouldMoveAt index: UInt) -> Bool {
+        if index == 1 && FirstEntranceProvider.shared.isFirstEntrancePassed == false && FirstEntranceProvider.shared.currentStep == .profile {
+            profileController.hideHelpView(isHidden: false)
+            return false
+        }
+        return true
+    }
     
     func carbonTabSwipeNavigation(_ carbonTabSwipeNavigation: CarbonTabSwipeNavigation, viewControllerAt index: UInt) -> UIViewController {
         if index == 0 {

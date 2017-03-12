@@ -63,6 +63,11 @@ class PersonalDetailsTabsViewController: BasicViewController {
     // MARK: - Public methods
     
     func didControllerChangedPosition(isOpened: Bool, completionHandler: ((Void) -> Void)?) {
+        
+        if isOpened && FirstEntranceProvider.shared.isFirstEntrancePassed == false {
+            FirstEntranceProvider.shared.currentStep = .moments
+        }
+        
         UIView.animate(withDuration: 0.5, animations: {
             if isOpened {
                 self.closeButton.transform = CGAffineTransform(rotationAngle: CGFloat.pi)

@@ -157,6 +157,11 @@
 #pragma mark - Actions
 
 - (void)segmentedTapped:(CarbonTabSwipeSegmentedControl *)segment {
+    
+    if (![self askDelegateForTargetIndex]) {
+        return;
+    }
+    
     [self moveToIndex:segment.selectedSegmentIndex withAnimation:YES];
 }
 
@@ -639,6 +644,14 @@
         [self.delegate carbonTabSwipeNavigation:self willMoveAtIndex:index];
     }
 }
+    
+    - (BOOL)askDelegateForTargetIndex {
+        if ([self.delegate respondsToSelector:@selector(carbonTabSwipeNavigation:shouldMoveAtIndex:)]) {
+            NSInteger index = self.carbonSegmentedControl.selectedSegmentIndex;
+            return [self.delegate carbonTabSwipeNavigation:self shouldMoveAtIndex:index];
+        }
+        return true;
+    }
 
 - (void)callDelegateForCurrentIndex {
     if ([self.delegate respondsToSelector:@selector(carbonTabSwipeNavigation:didMoveAtIndex:)]) {

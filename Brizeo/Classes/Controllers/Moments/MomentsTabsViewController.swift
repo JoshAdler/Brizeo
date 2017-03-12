@@ -78,8 +78,11 @@ class MomentsTabsViewController: BasicViewController {
                 Helper.initialNavigationController().pushViewController(profileController, animated: true)
                 break
             case .moments:
-                // show helper view
-                allMomentsController.hideHelpView(isHidden: false)
+                if !FirstEntranceProvider.shared.goingToCreateMoment {
+                    
+                    // show helper view
+                    allMomentsController.hideHelpView(isHidden: false)
+                }
                 break
             }
         }
@@ -158,12 +161,20 @@ class MomentsTabsViewController: BasicViewController {
             self.present(imagePicker, animated: true, completion: nil)
         }))
         
-        alertView.addAction(UIAlertAction(title: LocalizableString.Cancel.localizedString, style: UIAlertActionStyle.cancel, handler: nil))
-    
+        alertView.addAction(UIAlertAction(title: LocalizableString.Cancel.localizedString, style: UIAlertActionStyle.cancel, handler: { (action) in
+            // first entrance logic
+            if FirstEntranceProvider.shared.isFirstEntrancePassed == false && FirstEntranceProvider.shared.currentStep == .moments {
+                // show helper view
+                self.allMomentsController.hideHelpView(isHidden: false)
+            }
+        }))
+        
         present(alertView, animated: true, completion: nil)
     }
     
     fileprivate func createNewMoment(with image: UIImage?, videoURL: URL?) {
+        FirstEntranceProvider.shared.goingToCreateMoment = true
+        
         let createMomentController: CreateMomentViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.createMomentControllerId)!
         createMomentController.image = image
         createMomentController.videoURL = videoURL

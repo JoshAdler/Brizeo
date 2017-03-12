@@ -43,6 +43,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet fileprivate weak var profileImageView: UIImageView!
     @IBOutlet fileprivate weak var imagesCollectionView: UICollectionView!
     @IBOutlet fileprivate weak var bottomView: UIView!
+    @IBOutlet fileprivate weak var arrowUpButton: UIButton!
     
     weak var delegate: ProfileViewControllerDelegate?
     var index: Int = 0
@@ -100,14 +101,14 @@ class ProfileViewController: UIViewController {
     
     func hideHelpView(isHidden: Bool) {
         if uploadUserHelpView == nil {
-            uploadUserHelpView = FirstEntranceMomentView.loadFromNib()
+            uploadUserHelpView = FirstEntranceUserView.loadFromNib()
             uploadUserHelpView?.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
             uploadUserHelpView?.isHidden = true
             uploadUserHelpView?.delegate = self
             
             // count distances
-            //let globalPoint = bottomButton.superview!.convert(addMomentButton.frame.origin, to: AppDelegate.shared().window)
-            ///uploadUserHelpView!.bottomDistance = UIScreen.main.bounds.height - globalPoint.y
+            let globalPoint = arrowUpButton.superview!.convert(arrowUpButton.frame.origin, to: AppDelegate.shared().window)
+            uploadUserHelpView!.bottomDistance = UIScreen.main.bounds.height - globalPoint.y - arrowUpButton.frame.height + 5.0 /* difference in sizes between icon image and real button */
             
             AppDelegate.shared().window?.addSubview(uploadUserHelpView!)
         }
@@ -375,7 +376,8 @@ extension ProfileViewController: ProfileImageCollectionViewCellDelegate {
 extension ProfileViewController: FirstEntranceUserViewDelegate {
     
     func userView(view: FirstEntranceUserView, didClickedOnArrowUp button: UIButton) {
-        
+        view.isHidden = true
+        onBottomButtonClicked(arrowUpButton)
     }
 }
 

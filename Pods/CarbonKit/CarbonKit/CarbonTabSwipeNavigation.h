@@ -44,6 +44,16 @@ NS_ASSUME_NONNULL_BEGIN
                                   (nonnull CarbonTabSwipeNavigation *)carbonTabSwipeNavigation
                                  viewControllerAtIndex:(NSUInteger)index;
 
+    @optional
+    /**
+     *  Will move to index
+     *
+     *  @param carbonTabSwipeNavigation CarbonTabSwipeNavigation instance
+     *  @param index Target index
+     */
+- (BOOL)carbonTabSwipeNavigation:(nonnull CarbonTabSwipeNavigation *)carbonTabSwipeNavigation
+                 shouldMoveAtIndex:(NSUInteger)index;
+    
 @optional
 /**
  *  Will move to index

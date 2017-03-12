@@ -200,7 +200,7 @@ class MomentsViewController: UIViewController {
             // count distances 
             let globalPoint = addMomentButton.superview!.convert(addMomentButton.frame.origin, to: AppDelegate.shared().window)
             uploadMomentHelpView!.rightDistance = UIScreen.main.bounds.width - globalPoint.x - addMomentButton.frame.width
-            uploadMomentHelpView!.topDistance = globalPoint.y + 44.0 + Helper.carbonViewHeight() /* navigation bar */
+            uploadMomentHelpView!.topDistance = globalPoint.y /*+ 44.0 +Helper.carbonViewHeight()*/ /* navigation bar */
             
             AppDelegate.shared().window?.addSubview(uploadMomentHelpView!)
         }
@@ -601,6 +601,7 @@ extension MomentsViewController: MomentTableViewCellDelegate {
 extension MomentsViewController: FirstEntranceMomentViewDelegate {
     
     func momentView(view: FirstEntranceMomentView, didClickedOnCreate button: UIButton) {
+        hideHelpView(isHidden: true)
         onCreateButtonClicked(addMomentButton)
     }
 }

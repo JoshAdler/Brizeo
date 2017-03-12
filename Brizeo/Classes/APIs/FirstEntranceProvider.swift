@@ -12,6 +12,7 @@ import SwiftyUserDefaults
 extension DefaultsKeys {
     static let isFirstEntrancePassed = DefaultsKey<Bool>("isFirstEntrancePassed")
     static let currentStep = DefaultsKey<Int>("currentStep")
+    static let goingToCreateMoment = DefaultsKey<Bool>("goingToCreateMoment")
 }
 
 enum FirstEntranceLogicStep: Int {
@@ -30,7 +31,7 @@ class FirstEntranceProvider {
     
     var isFirstEntrancePassed: Bool {
         get {
-            return true//Defaults[.isFirstEntrancePassed]
+            return Defaults[.isFirstEntrancePassed]
         }
         set {
             Defaults[.isFirstEntrancePassed] = newValue
@@ -43,6 +44,15 @@ class FirstEntranceProvider {
         }
         set {
             Defaults[.currentStep] = newValue.rawValue
+        }
+    }
+    
+    var goingToCreateMoment: Bool {
+        get {
+            return Defaults[.goingToCreateMoment]
+        }
+        set {
+            Defaults[.goingToCreateMoment] = newValue
         }
     }
     
