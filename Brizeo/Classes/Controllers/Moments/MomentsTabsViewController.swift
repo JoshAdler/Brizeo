@@ -34,10 +34,12 @@ class MomentsTabsViewController: BasicViewController {
     struct StoryboardIds {
         static let createMomentControllerId = "CreateMomentViewController"
         static let momentsControllerId = "MomentsViewController"
+        static let profileControllerId = "PersonalTabsViewController"
     }
     
     // MARK: - Properties
     
+    var loadingView: UIView?
     var allMomentsController: MomentsViewController!
     var myMatchesMomentsController: MomentsViewController!
     var myMomentsController: MomentsViewController!
@@ -50,6 +52,12 @@ class MomentsTabsViewController: BasicViewController {
         initContent()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        firstEntranceLogicIfNeeds()
+    }
+    
     // MARK: - Public methods
     
     func setDefaultsForMomentViews() {
@@ -59,6 +67,23 @@ class MomentsTabsViewController: BasicViewController {
     }
     
     // MARK: - Private methods
+    
+    fileprivate func firstEntranceLogicIfNeeds() {
+        if !FirstEntranceProvider.shared.isFirstEntrancePassed {
+            
+            switch FirstEntranceProvider.shared.currentStep {
+            case .profile:
+                // go to personal screen
+                let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
+                Helper.initialNavigationController().pushViewController(profileController, animated: true)
+                break
+            case .moments:
+                // show helper view
+                allMomentsController.hideHelpView(isHidden: false)
+                break
+            }
+        }
+    }
     
     fileprivate func initContent() {
         guard let currentUser = UserProvider.shared.currentUser else {

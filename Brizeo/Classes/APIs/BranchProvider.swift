@@ -95,6 +95,10 @@ class BranchProvider: NSObject {
                 return
             }
             
+            if FirstEntranceProvider.shared.isFirstEntrancePassed == false {
+                return
+            }
+            
             // check params for userId or momentId
             print("Setup Branch data: \(params?.description)")
             if let userIdToPresent = params?[MetadataKeys.userId.rawValue] as? String {

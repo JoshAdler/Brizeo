@@ -173,7 +173,7 @@ class MediaViewController: UIViewController {
     
     //TODO: place corrent moment url
     @IBAction func onSharingButtonClicked(_ sender: UIButton) {
-        BranchProvider.generateInviteURL(forMomentId: moment!.objectId, imageURL: nil) { (url) in
+        BranchProvider.generateInviteURL(forMomentId: moment!.objectId, imageURL: moment!.imageUrl?.absoluteString) { (url) in
             if let url = url {
                 let modifiedURL = "\(LocalizableString.BrizeoInvite.localizedString) \n\n \(url)"
                 

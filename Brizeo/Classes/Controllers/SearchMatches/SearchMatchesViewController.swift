@@ -238,7 +238,7 @@ class SearchMatchesViewController: BasicViewController {
             return
         }
         
-        BranchProvider.generateInviteURL(forUserId: user.objectId) { (url) in
+        BranchProvider.generateInviteURL(forUserId: user.objectId, imageURL: user.profileUrl?.absoluteString) { (url) in
             if let url = url {
                 let modifiedURL = "\(LocalizableString.BrizeoInvite.localizedString) \n\n \(url)"
                 

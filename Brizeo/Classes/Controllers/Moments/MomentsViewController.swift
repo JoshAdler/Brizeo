@@ -41,11 +41,11 @@ class MomentsViewController: UIViewController {
     @IBOutlet weak fileprivate var newestButton: UIButton!
     @IBOutlet weak fileprivate var popularButton: UIButton!
     @IBOutlet weak fileprivate var filterButton: DropMenuButton!
-    @IBOutlet weak var uploadMomentHelpView: UIView!
     
     var listType: MomentsListType = .allMoments
     var currentUser: User! = UserProvider.shared.currentUser!
     var shouldHideFilterView: Bool = false
+    var uploadMomentHelpView: FirstEntranceMomentView?
     
     weak var parentDelegate: MomentsTabsViewControllerDelegate?
     
@@ -190,6 +190,29 @@ class MomentsViewController: UIViewController {
         resetMoments()
     }
     
+    func hideHelpView(isHidden: Bool) {
+        if uploadMomentHelpView == nil {
+            uploadMomentHelpView = FirstEntranceMomentView.loadFromNib()
+            uploadMomentHelpView?.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+            uploadMomentHelpView?.isHidden = true
+            uploadMomentHelpView?.delegate = self
+            
+            // count distances 
+            let globalPoint = addMomentButton.superview!.convert(addMomentButton.frame.origin, to: AppDelegate.shared().window)
+            uploadMomentHelpView!.rightDistance = UIScreen.main.bounds.width - globalPoint.x - addMomentButton.frame.width
+            uploadMomentHelpView!.topDistance = globalPoint.y + 44.0 + Helper.carbonViewHeight() /* navigation bar */
+            
+            AppDelegate.shared().window?.addSubview(uploadMomentHelpView!)
+        }
+        
+        uploadMomentHelpView?.isHidden = isHidden
+    }
+    
+    func goToPersonalProfile(animated: Bool) {
+        let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
+        Helper.initialNavigationController().pushViewController(profileController, animated: animated)
+    }
+    
     // MARK: - Private methods
     
     fileprivate func presentSharedContentIfNeeds() {
@@ -200,8 +223,7 @@ class MomentsViewController: UIViewController {
         }
         
         if let momentId = BranchProvider.momentIdToPresent() {
-//            showMoment(with: momentId)
-            //TODO: to do when the backend will be done for it
+            loadAndShowMoment(with: momentId)
         }
     }
     
@@ -209,8 +231,7 @@ class MomentsViewController: UIViewController {
         let userIdentifier = userId ?? moment?.ownerId ?? "-1"
         
         if userIdentifier == currentUser.objectId { // show my profile
-            let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
-            Helper.initialNavigationController().pushViewController(profileController, animated: true)
+            goToPersonalProfile(animated: true)
         } else {
             let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
             otherPersonProfileController.user = moment?.user
@@ -366,6 +387,43 @@ class MomentsViewController: UIViewController {
             self.momentsTableView.finishInfiniteScroll()
         }
     }
+    
+    fileprivate func loadAndShowMoment(with momentId: String) {
+        showBlackLoader()
+        
+        MomentsProvider.getMoment(with: momentId) { (result) in
+            switch (result) {
+            case .success(let moment):
+                self.show(moment: moment)
+                break
+            case .failure(_):
+                self.presentErrorAlert(momentId: momentId, message: LocalizableString.LoadMomentError.localizedString)
+                break
+            default:
+                break
+            }
+        }
+    }
+    
+    fileprivate func show(moment: Moment) {
+        let mediaController: MediaViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.mediaControllerId)!
+        mediaController.isSharingEnabled = true
+        mediaController.moment = moment
+        
+        Helper.initialNavigationController().pushViewController(mediaController, animated: true)
+    }
+    
+    fileprivate func presentErrorAlert(momentId: String, message: String?) {
+        let alert = UIAlertController(title: LocalizableString.Error.localizedString, message: message, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: LocalizableString.TryAgain.localizedString, style: .default, handler: { (action) in
+            self.loadAndShowMoment(with: momentId)
+        }))
+        
+        alert.addAction(UIAlertAction(title: LocalizableString.Dismiss.localizedString, style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+    }
 }
 
 //MARK: - UITableViewDataSource
@@ -414,11 +472,7 @@ extension MomentsViewController: UITableViewDelegate {
             return
         }
         
-        let mediaController: MediaViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.mediaControllerId)!
-        mediaController.isSharingEnabled = true
-        mediaController.moment = moment
-        
-        Helper.initialNavigationController().pushViewController(mediaController, animated: true)
+        show(moment: moment)
     }
 }
 
@@ -475,14 +529,6 @@ extension MomentsViewController: MomentTableViewCellDelegate {
         }
         
         showUserProfile(with: moment.ownerId, orMoment: moment)
-//        switch listType {
-//        case .myMoments(let userId):
-//            if userId != moment.ownerId {
-//                showMomentUserProfile(moment)
-//            }
-//        default:
-//            showMomentUserProfile(moment)
-//        }
     }
     
     func momentCellDidSelectMoreOptions(_ cell: MomentTableViewCell) {
@@ -548,5 +594,13 @@ extension MomentsViewController: MomentTableViewCellDelegate {
         alertVC.addAction(UIAlertAction(title: LocalizableString.Cancel.localizedString, style: .cancel, handler: nil))
         
         present(alertVC, animated: true, completion: nil)
+    }
+}
+
+// MARK: - FirstEntranceMomentViewDelegate
+extension MomentsViewController: FirstEntranceMomentViewDelegate {
+    
+    func momentView(view: FirstEntranceMomentView, didClickedOnCreate button: UIButton) {
+        onCreateButtonClicked(addMomentButton)
     }
 }

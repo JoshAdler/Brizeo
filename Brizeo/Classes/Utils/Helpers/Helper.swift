@@ -107,6 +107,10 @@ class Helper: NSObject {
         return controllerFromStoryboard(controllerId: StoryboardIds.mainTabBarControllerId)!
     }
     
+    class func carbonViewHeight() -> CGFloat {
+        return ThemeConstants.carbonMenuHeight
+    }
+    
     // MARK: - Navigation
     
     class func placeLogo(on navigationItem: UINavigationItem?) {

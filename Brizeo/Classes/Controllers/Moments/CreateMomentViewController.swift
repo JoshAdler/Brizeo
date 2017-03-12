@@ -173,7 +173,7 @@ class CreateMomentViewController: UIViewController {
         
         moment.capture = captionText()!
         moment.passionId = selectedPassion?.objectId
-        moment.viewableByApp = switcher.isOn
+        moment.viewableByAll = switcher.isOn
         moment.ownerId = UserProvider.shared.currentUser!.objectId
         moment.locationLongitude = selectedLocation?.longitude
         moment.locationLatitude = selectedLocation?.latitude
@@ -247,7 +247,7 @@ class CreateMomentViewController: UIViewController {
         if gpaViewController == nil {
             gpaViewController = GooglePlacesAutocomplete(
                 apiKey: Configurations.GooglePlaces.key,
-                placeType: .cities
+                placeType: .establishment
             )
             
             gpaViewController!.placeDelegate = self

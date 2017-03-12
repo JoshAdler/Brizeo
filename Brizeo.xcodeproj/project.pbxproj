@@ -140,6 +140,11 @@
 		BBA2DB351E7157760066B84B /* NSDate+Kogi.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA2DB341E7157760066B84B /* NSDate+Kogi.m */; };
 		BBA2DB3A1E715AB00066B84B /* notification_sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = BBA2DB391E715AB00066B84B /* notification_sound.wav */; };
 		BBAA14181E744056002585C5 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAA14171E744056002585C5 /* LocationViewController.swift */; };
+		BBBA1DD31E74B07A000C55B8 /* FirstEntranceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBA1DD21E74B07A000C55B8 /* FirstEntranceProvider.swift */; };
+		BBBA1DD51E74BCF8000C55B8 /* FirstEntranceMomentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBA1DD41E74BCF8000C55B8 /* FirstEntranceMomentView.swift */; };
+		BBBA1DD71E74BD92000C55B8 /* FirstEntranceMomentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBBA1DD61E74BD92000C55B8 /* FirstEntranceMomentView.xib */; };
+		BBBA1DD91E74CE92000C55B8 /* FirstEntranceUserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBBA1DD81E74CE92000C55B8 /* FirstEntranceUserView.xib */; };
+		BBBA1DDB1E74CEB6000C55B8 /* FirstEntranceUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBA1DDA1E74CEB6000C55B8 /* FirstEntranceUserView.swift */; };
 		BBCDA9311E6DDDF800DCBB5D /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCDA9301E6DDDF800DCBB5D /* APIError.swift */; };
 		BBCDA9331E6DF16500DCBB5D /* MapTransforms.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBCDA9321E6DF16500DCBB5D /* MapTransforms.swift */; };
 		BBD125771E3FF4D900E17750 /* MomentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD125761E3FF4D900E17750 /* MomentTableViewCell.swift */; };
@@ -326,6 +331,11 @@
 		BBA2DB341E7157760066B84B /* NSDate+Kogi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+Kogi.m"; path = "KogiDate/NSDate+Kogi.m"; sourceTree = "<group>"; };
 		BBA2DB391E715AB00066B84B /* notification_sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = notification_sound.wav; sourceTree = "<group>"; };
 		BBAA14171E744056002585C5 /* LocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
+		BBBA1DD21E74B07A000C55B8 /* FirstEntranceProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstEntranceProvider.swift; sourceTree = "<group>"; };
+		BBBA1DD41E74BCF8000C55B8 /* FirstEntranceMomentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstEntranceMomentView.swift; sourceTree = "<group>"; };
+		BBBA1DD61E74BD92000C55B8 /* FirstEntranceMomentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstEntranceMomentView.xib; sourceTree = "<group>"; };
+		BBBA1DD81E74CE92000C55B8 /* FirstEntranceUserView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstEntranceUserView.xib; sourceTree = "<group>"; };
+		BBBA1DDA1E74CEB6000C55B8 /* FirstEntranceUserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstEntranceUserView.swift; sourceTree = "<group>"; };
 		BBCDA9301E6DDDF800DCBB5D /* APIError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		BBCDA9321E6DF16500DCBB5D /* MapTransforms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapTransforms.swift; sourceTree = "<group>"; };
 		BBD125761E3FF4D900E17750 /* MomentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MomentTableViewCell.swift; sourceTree = "<group>"; };
@@ -569,6 +579,7 @@
 				BB3EF5891E6D55E4006FB2ED /* NotificationProvider.swift */,
 				BB3EF58B1E6D672F006FB2ED /* InfoProvider.swift */,
 				BBCDA9321E6DF16500DCBB5D /* MapTransforms.swift */,
+				BBBA1DD21E74B07A000C55B8 /* FirstEntranceProvider.swift */,
 			);
 			path = APIs;
 			sourceTree = "<group>";
@@ -768,6 +779,8 @@
 				BB1FF6EC1E51E4D2002343CE /* InviteFriendsView.swift */,
 				BB1FF6F41E51ECDC002343CE /* ConfirmationView.swift */,
 				BB1FF6FD1E5204F8002343CE /* ChooseView.swift */,
+				BBBA1DD41E74BCF8000C55B8 /* FirstEntranceMomentView.swift */,
+				BBBA1DDA1E74CEB6000C55B8 /* FirstEntranceUserView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -953,6 +966,8 @@
 				BB1FF6E61E51BEF4002343CE /* RateUsView.xib */,
 				BB1FF6F61E51FD8F002343CE /* ChooseView.xib */,
 				BB1FF6F81E520209002343CE /* ChooseTableViewCell.xib */,
+				BBBA1DD61E74BD92000C55B8 /* FirstEntranceMomentView.xib */,
+				BBBA1DD81E74CE92000C55B8 /* FirstEntranceUserView.xib */,
 			);
 			path = XIBs;
 			sourceTree = "<group>";
@@ -1197,6 +1212,7 @@
 				BB4ED5DE1E3B4F81005B3487 /* SourceSansPro-ExtraLight.otf in Resources */,
 				BB4ED5DD1E3B4F81005B3487 /* SourceSansPro-BoldIt.otf in Resources */,
 				BB4ED5E01E3B4F81005B3487 /* SourceSansPro-It.otf in Resources */,
+				BBBA1DD91E74CE92000C55B8 /* FirstEntranceUserView.xib in Resources */,
 				BB22CF951E50721E0096A3D3 /* ParticipantView.xib in Resources */,
 				BB1EF4621E3A932900231ACC /* Assets.xcassets in Resources */,
 				BB1EF4681E3A935F00231ACC /* PeopleNotificationList.plist in Resources */,
@@ -1205,6 +1221,7 @@
 				BB4ED5E41E3B4F81005B3487 /* SourceSansPro-Semibold.otf in Resources */,
 				8873F7291CBFFE570053EAB8 /* Localizable.strings in Resources */,
 				BB4ED6041E3C0CF1005B3487 /* SettingsNormalHeaderView.xib in Resources */,
+				BBBA1DD71E74BD92000C55B8 /* FirstEntranceMomentView.xib in Resources */,
 				BB1FF6E71E51BEF4002343CE /* RateUsView.xib in Resources */,
 				BB1FF6F91E520209002343CE /* ChooseTableViewCell.xib in Resources */,
 				BB1FF6E51E51B180002343CE /* NoDescriptionView.xib in Resources */,
@@ -1328,6 +1345,7 @@
 				8873F72B1CBFFE9C0053EAB8 /* LocalizableString.swift in Sources */,
 				BBCDA9331E6DF16500DCBB5D /* MapTransforms.swift in Sources */,
 				BBA2DB351E7157760066B84B /* NSDate+Kogi.m in Sources */,
+				BBBA1DD51E74BCF8000C55B8 /* FirstEntranceMomentView.swift in Sources */,
 				BB22CF9D1E5081790096A3D3 /* BranchProvider.swift in Sources */,
 				BB22CF991E5072290096A3D3 /* DatePickerDialog.swift in Sources */,
 				BB4ED5FB1E3C0B38005B3487 /* SettingsNormalHeaderView.swift in Sources */,
@@ -1344,6 +1362,7 @@
 				BB49F94E1E409E16009EE6A0 /* ChatListViewController.swift in Sources */,
 				BB22CF931E4DED660096A3D3 /* MomentLocationViewController.swift in Sources */,
 				BB1EF4881E3AA5AE00231ACC /* MainTabBarController.swift in Sources */,
+				BBBA1DDB1E74CEB6000C55B8 /* FirstEntranceUserView.swift in Sources */,
 				88B568E01CC6740F003A21EE /* Preferences.swift in Sources */,
 				69D2DB981CEA0AD800150256 /* GoogleAnalyticsManager.swift in Sources */,
 				BB4ED5CC1E3B3FEC005B3487 /* PeopleNotificationTableViewCell.swift in Sources */,
@@ -1408,6 +1427,7 @@
 				88C1886B1CDB9D440011F3A6 /* Moment.swift in Sources */,
 				8873F7341CC1891B0053EAB8 /* UIViewController+defaultButtons.swift in Sources */,
 				BB64089B1E42948600C4D5F4 /* SpacingTextField.swift in Sources */,
+				BBBA1DD31E74B07A000C55B8 /* FirstEntranceProvider.swift in Sources */,
 				BB09A6AC1E660D4C0020F8C5 /* OtherPersonAboutInvitedByTableViewCell.swift in Sources */,
 				88B569021CD904E3003A21EE /* PreferencesProvider.swift in Sources */,
 				BB104CE81E3F87370082411E /* TripsTableViewCell.swift in Sources */,

@@ -48,6 +48,7 @@ class ProfileViewController: UIViewController {
     var index: Int = 0
     var user: User!
     var indexOfMediaToChange = -1
+    var uploadUserHelpView: FirstEntranceUserView?
     
     var bottomSpaceHeight: CGFloat {
         return bottomView.frame.height
@@ -96,6 +97,23 @@ class ProfileViewController: UIViewController {
     }
     
     // MARK: - Public methods
+    
+    func hideHelpView(isHidden: Bool) {
+        if uploadUserHelpView == nil {
+            uploadUserHelpView = FirstEntranceMomentView.loadFromNib()
+            uploadUserHelpView?.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+            uploadUserHelpView?.isHidden = true
+            uploadUserHelpView?.delegate = self
+            
+            // count distances
+            //let globalPoint = bottomButton.superview!.convert(addMomentButton.frame.origin, to: AppDelegate.shared().window)
+            ///uploadUserHelpView!.bottomDistance = UIScreen.main.bounds.height - globalPoint.y
+            
+            AppDelegate.shared().window?.addSubview(uploadUserHelpView!)
+        }
+        
+        uploadUserHelpView?.isHidden = isHidden
+    }
     
     func reloadUserImages() {
 //        if let media = user?.uploadedMedia {
@@ -350,6 +368,14 @@ extension ProfileViewController: ProfileImageCollectionViewCellDelegate {
         
         indexOfMediaToChange = indexPath.row
         showNewMediaAlert(with: .photoVideoDelete)
+    }
+}
+
+// MARK: - FirstEntranceUserViewDelegate
+extension ProfileViewController: FirstEntranceUserViewDelegate {
+    
+    func userView(view: FirstEntranceUserView, didClickedOnArrowUp button: UIButton) {
+        
     }
 }
 

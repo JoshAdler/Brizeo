@@ -10,6 +10,7 @@ import Foundation
 
 enum LocalizableString: String {
     
+    case LoadMomentError = "Error occured during the loading. Try again?"
     case NewMomentCreated = "Congrats, new moment was created!"
     case ErrorWithBranchURL = "Sorry, but we can't provide you with the url for invitation. Please try later."
     case InvitedByText = "Invited by "

@@ -27,7 +27,7 @@ class Moment: Mappable, Equatable {
         case readStatus = "readStatus"
         case user = "user"
         case userId = "userId"
-        case viewableByApp = "viewableByApp"
+        case viewableByAll = "viewableByAll"
         case passionId = "passionId"
         case latitude = "currentLocation.latitude"
         case longitude = "currentLocation.longitude"
@@ -42,7 +42,7 @@ class Moment: Mappable, Equatable {
     var capture: String = ""
     var likesCount: Int = 0
     var readStatus: Bool = false
-    var viewableByApp: Bool = true
+    var viewableByAll: Bool = true
     var passionId: String?
     var locationLongitude: Double?
     var locationLatitude: Double?
@@ -101,7 +101,7 @@ class Moment: Mappable, Equatable {
         
         // availability information
         readStatus <- map[JSONKeys.readStatus.rawValue]
-        viewableByApp <- map[JSONKeys.viewableByApp.rawValue]
+        viewableByAll <- map[JSONKeys.viewableByAll.rawValue]
         
         // basic information
         capture <- map[JSONKeys.momentDescription.rawValue]

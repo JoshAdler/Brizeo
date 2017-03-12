@@ -32,7 +32,7 @@ class Configurations: NSObject {
     struct Instagram {
         static let clientId = "fff167abb2a54946804c2c57cff5d8b9"//"a692d33f462449908be6b6b08cefab10"
         static let clientSecret = "3082d7a585ae4a3b88492ea1c72bb47e"//"bc3a3780b3e1418b9a322df4fdd7ef87"
-        static let redirectURL = "iga692d33f462449908be6b6b08cefab10://authorize"
+        static let redirectURL = "https://localhost/service/generate-instagram-access-token/"//"iga692d33f462449908be6b6b08cefab10://authorize"
     }
     
     // MARK: - General
@@ -68,15 +68,4 @@ class Configurations: NSObject {
     struct RewardInfo {
         static let minInvitedUsers = 25
     }
-    
-    // MARK: - First entry
-    
-//    class func isFirstEntry() -> Bool {
-//        return !UserDefaults.standard.bool(forKey: "HasLaunchedOnce")
-//    }
-//    
-//    class func setUserDidEntry() {
-//        UserDefaults.standard.set(true, forKey: "HasLaunchedOnce")
-//        UserDefaults.standard.synchronize()
-//    }
 }

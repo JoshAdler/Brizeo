@@ -85,7 +85,7 @@ class LocationManager: NSObject {
         
         if let distance = countDistance(from: fromUser, to: toUser) {
             let convertedDistance = Int(distance * Configurations.Dimentions.milesPerMeter)
-            let distanceValue = min(1, convertedDistance)
+            let distanceValue = max(1, convertedDistance)
             
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal

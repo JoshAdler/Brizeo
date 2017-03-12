@@ -42,6 +42,18 @@ class PersonalTabsViewController: BasicViewController {
         carbonTabSwipeNavigation.insert(intoRootViewController: self)
         carbonTabSwipeNavigation.pagesScrollView?.isScrollEnabled = false
     }
+    
+    // MARK: - Actions
+    
+    @IBAction override func onBackButtonClicked(sender: UIBarButtonItem) {
+        
+        if FirstEntranceProvider.shared.isFirstEntrancePassed == false && FirstEntranceProvider.shared.currentStep == .profile {
+            // show force screen
+        } else {
+            super.onBackButtonClicked(sender: sender)
+        }
+    }
+    
 }
 
 // MARK: - ProfileViewControllerDelegate
