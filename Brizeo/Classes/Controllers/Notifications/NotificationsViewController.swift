@@ -29,7 +29,9 @@ class NotificationsViewController: UIViewController {
         static let likesCellId = "Likes"
         static let peopleCellId = "People"
         static let mediaControllerId = "MediaViewController"
-        static let profileControllerId = "OtherProfileViewController"
+        static let otherProfileControllerId = "OtherProfileViewController"
+        static let profileControllerId = "PersonalTabsViewController"
+        
     }
     
     struct Constants {
@@ -60,6 +62,19 @@ class NotificationsViewController: UIViewController {
     
     fileprivate func loadNotifications() {
         
+    }
+    
+    fileprivate func showUserProfile(with user: User) {
+        
+        if user.objectId == UserProvider.shared.currentUser!.objectId { // show my profile
+            let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
+            Helper.initialNavigationController().pushViewController(profileController, animated: true)
+        } else {
+            let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
+            otherPersonProfileController.user = user
+            otherPersonProfileController.userId = user.objectId
+            navigationController?.pushViewController(otherPersonProfileController, animated: true)
+        }
     }
 }
 
@@ -117,12 +132,11 @@ extension NotificationsViewController: NotificationsTableViewCellDelegate {
             return
         }
         
-//        let notification = notifications[indexPath.row]
-//        let mediaController: MediaViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.mediaControllerId)!
-//        
-//        mediaController.media = UserProvider.shared.currentUser?.uploadFiles//notification.media
-//        
-//        Helper.initialNavigationController().pushViewController(mediaController, animated: true)
+        let mediaController: MediaViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.mediaControllerId)!
+        mediaController.isSharingEnabled = true
+//        mediaController.moment = moment
+        
+        Helper.initialNavigationController().pushViewController(mediaController, animated: true)
     }
     
     func notificationCellDidClickedOnProfile(cell: UITableViewCell) {
@@ -130,20 +144,78 @@ extension NotificationsViewController: NotificationsTableViewCellDelegate {
             return
         }
         
-//        let notification = notifications[indexPath.row]
-//        let profileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
-//        
-//        profileController.user = UserProvider.shared.currentUser!//notification.user
-//        
-//        Helper.initialNavigationController().pushViewController(profileController, animated: true)
+        let notification = notifications![indexPath.row]
+//        showUserProfile(with: )
     }
     
     func notificationCell(cell: UITableViewCell, didClickedApprove likerView: LikerView) {
-        likerView.isMatched = true
+        showBlackLoader()
+        
+        guard let indexPath = tableView.indexPath(for: cell) else {
+            print("No index path for notification")
+            return
+        }
+        
+        let notification = notifications![indexPath.row]
+        
+        showBlackLoader()
+        
+//        MatchesProvider.approveMatch(for: user) { (result) in
+//            
+//            switch result {
+//            case .success(_):
+//                
+//                self.hideLoader()
+//                likerView.operateStatus(status: user.status)
+//                
+//                // TODO: check whether the status is matched. If yes - show matching page
+//                if user.status == .isMatched {
+//                    let matchingController: MatchViewController = Helper.controllerFromStoryboard(controllerId: "MatchViewController")!
+//                    matchingController.user = user
+//                    
+//                    Helper.initialNavigationController().pushViewController(matchingController, animated: true)
+//                }
+//                
+//                break
+//            case .failure(let error):
+//                
+//                SVProgressHUD.showError(withStatus: error.localizedDescription)
+//                break
+//            default:
+//                break
+//            }
+//        }
     }
     
     func notificationCell(cell: UITableViewCell, didClickedDecline likerView: LikerView) {
-        likerView.isMatched = true
+        
+        showBlackLoader()
+        
+        guard let indexPath = tableView.indexPath(for: cell) else {
+            print("No index path for notification")
+            return
+        }
+        
+        let notification = notifications![indexPath.row]
+        
+        showBlackLoader()
+        
+//        MatchesProvider.declineMatch(for: user) { (result) in
+//            
+//            switch result {
+//            case .success(_):
+//                
+//                self.hideLoader()
+//                likerView.operateStatus(status: user.status)
+//                break
+//            case .failure(let error):
+//                
+//                SVProgressHUD.showError(withStatus: error.localizedDescription)
+//                break
+//            default:
+//                break
+//            }
+//        }
     }
 }
 

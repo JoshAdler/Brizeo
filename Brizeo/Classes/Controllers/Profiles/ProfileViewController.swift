@@ -135,7 +135,7 @@ class ProfileViewController: UIViewController {
             (alert: UIAlertAction!) -> Void in
             imagePicker.allowsEditing = true
             imagePicker.videoQuality = UIImagePickerControllerQualityType.typeHigh
-            imagePicker.videoMaximumDuration = 10
+            imagePicker.videoMaximumDuration = 14
             imagePicker.sourceType = .photoLibrary
             imagePicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: imagePicker.sourceType)!
             
@@ -272,7 +272,6 @@ extension ProfileViewController: UICollectionViewDelegate {
         if indexPath.row < (user.uploadFiles?.count ?? 0) { // show media
             let mediaController: MediaViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.mediaController)!
             mediaController.initialIndex = indexPath.row + 1
-            //TODO: dublicate the same logic for other person profile controller
             mediaController.media = user.allMedia
             
             navigationController?.pushViewController(mediaController, animated: true)
@@ -302,7 +301,20 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
 //            self.shouldGotoMomentView = true
 //        }
 //        
+        
         picker.dismiss(animated: true, completion: nil)
+        
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        //      createNewMoment(with: pickedImage, videoURL: nil)
+            return
+        }
+        
+        if let videoURL = info[UIImagePickerControllerMediaURL] as? URL {
+        //    createNewMoment(with: nil, videoURL: videoURL)
+            return
+        }
+        
+        
 //        if let chosenImage: UIImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
 //            if let imageData = UIImageJPEGRepresentation(chosenImage, 0.8) {
 ////                let imageFile = ImageDataToProfileMediaType(imageData)
