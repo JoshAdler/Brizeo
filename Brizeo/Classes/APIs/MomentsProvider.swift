@@ -87,6 +87,29 @@ class MomentsProvider {
         }
     }
     
+    class func updateMoment(moment: Moment, completion: MomentCompletion?) {
+        
+        let provider = MoyaProvider<APIService>()
+        provider.request(.updateMoment(moment: moment)) { (result) in
+            switch result {
+            case .success(let response):
+                
+                guard response.statusCode == 200 else {
+                    completion?(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
+                completion?(.success(moment))
+                print("successfully updated moment")
+                
+                break
+            case .failure(let error):
+                completion?(.failure(APIError(error: error)))
+                break
+            }
+        }
+    }
+    
     class func getAllMoments(sortingFlag: MomentsSortingFlag, filterFlag: String?, completion: @escaping MomentsCompletion) {
         
         let provider = MoyaProvider<APIService>()

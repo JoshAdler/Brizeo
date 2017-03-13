@@ -30,6 +30,7 @@ class MomentsViewController: UIViewController {
         static let otherProfileControllerId = "OtherProfileViewController"
         static let profileControllerId = "PersonalTabsViewController"
         static let mediaControllerId = "MediaViewController"
+        static let createMomentControllerId = "CreateMomentViewController"
     }
     
     // MARK: - Properties
@@ -616,6 +617,14 @@ extension MomentsViewController: MomentTableViewCellDelegate {
                         break
                     }
                 })
+            }))
+            
+            alertVC.addAction(UIAlertAction(title: LocalizableString.EditMoment.localizedString, style: .default, handler: { alert in
+                
+                let createMomentController: CreateMomentViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.createMomentControllerId)!
+                createMomentController.moment = moment
+                
+                Helper.initialNavigationController().pushViewController(createMomentController, animated: true)
             }))
         }
         

@@ -10,6 +10,7 @@ import Foundation
 
 enum LocalizableString: String {
     
+    case Update = "Update"
     case ChatAdminWelcomeMessage = "Hi %@, \n\n Thanks for installing Brizeo.  We are thrilled you have joined our community and welcome any questions or feedback.  We want Brizeo to grow organically, so please help us to expand the community by inviting your friends and family by clicking the icon at the top right. \n\nLooking forward,\n\nJosh and David"
     case LoadMomentError = "Error occured during the loading. Try again?"
     case NewMomentCreated = "Congrats, new moment was created!"
@@ -93,6 +94,7 @@ enum LocalizableString: String {
     case MyMoments = "My Moments"
     case LikesTitle = "Likes"
     case DeleteMoment = "Delete this moment"
+    case EditMoment = "Edit this moment"
     case UnableToSaveMoment = "Unable to save Moment"
     case WriteADescription = "Write a description"
     case WriteACapture = "Write a caption..."

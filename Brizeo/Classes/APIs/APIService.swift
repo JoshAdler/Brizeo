@@ -33,6 +33,7 @@ enum APIService {
     case unlikeMoment(moment: Moment, userId: String)
     case deleteMoment(moment: Moment, userId: String)
     case getMoment(momentId: String)
+    case updateMoment(moment: Moment)
     
     // matching
     case approveMatch(approverId: String, userId: String)
@@ -85,6 +86,8 @@ extension APIService: TargetType {
             return "/moments"
         case .getMoment(let momentId):
             return "/moments/\(momentId)"
+        case .updateMoment(let moment):
+            return "/moments/\(moment.objectId)"
         case .getLikersForMoment(let moment, let userId):
             return "/likemoments/users/\(moment.objectId)/\(userId)"
         case .reportMoment(let moment, let reporterId):
@@ -110,7 +113,7 @@ extension APIService: TargetType {
         switch self {
         case .createNewUser(_), .reportMoment(_, _), .reportUser(_, _), .notifyAdminAboutDownloads(_, _), .approveMatch(_, _):
             return .post
-        case .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .createNewMoment(_), .likeMoment(_, _):
+        case .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .createNewMoment(_), .likeMoment(_, _), .updateMoment(_):
             return .put
         case .deleteCountryForUser(_, _), .unlikeMoment(_, _), .deleteMoment(_, _), .declineMatch(_, _):
             return .delete
@@ -136,7 +139,7 @@ extension APIService: TargetType {
         case .deleteCountryForUser(let country, _):
             let dict = ["country": country.code]
             return dict
-        case .createNewMoment(let moment):
+        case .createNewMoment(let moment), .updateMoment(let moment):
             let dict = ["newmoment": moment.toJSON()]
             return dict
         default:
@@ -146,7 +149,7 @@ extension APIService: TargetType {
     
     var parameterEncoding: ParameterEncoding {
         switch self {
-        case .createNewUser(_), .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .deleteCountryForUser(_, _), .createNewMoment(_):
+        case .createNewUser(_), .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .deleteCountryForUser(_, _), .createNewMoment(_), .updateMoment(_):
             return JSONEncoding.default
         default:
             return URLEncoding.default
@@ -176,19 +179,6 @@ extension APIService: TargetType {
             }
 
             return formDataArray
-//        case .createNewUser(let newUser):
-//            
-//            var formData = [MultipartFormData]()
-//            
-//            if let profileImageURL = newUser.profileUploadImageURL {
-//                formData.append(MultipartFormData(provider: .file(profileImageURL), name: "mainProfileImage", fileName: "mainProfileImage.jpg", mimeType: "image/jpeg"))
-//            }
-//
-//            if let uploadImageURLs = newUser.uploadImages {
-//                formData.append(contentsOf: (uploadImageURLs.map({ MultipartFormData(provider: .file($0), name: "otherProfileImages", fileName: "otherProfileImages.jpg", mimeType: "image/jpeg") })))
-//            }
-//            
-//            return formData
         default:
             return nil
         }
@@ -201,8 +191,6 @@ extension APIService: TargetType {
         switch self {
         case .createNewMoment:
             return .upload(UploadType.multipart(multipartBody!))
-//        case .createNewUser:
-//            return .upload(UploadType.multipart(multipartBody!))
             default:
             return .request
         }

@@ -27,6 +27,7 @@ class CreateMomentViewController: UIViewController {
     
     // MARK: - Properties
     
+    @IBOutlet weak var rightNavigationButton: UIBarButtonItem!
     @IBOutlet weak var momentImageView: UIImageView!
     @IBOutlet weak var captionTextView: UITextView!
     @IBOutlet weak var infoLabel: UILabel!
@@ -66,6 +67,7 @@ class CreateMomentViewController: UIViewController {
     var videoURL: URL?
     var image: UIImage?
     var selectedPassion: Passion?
+    var moment: Moment?
     var passions: [Passion]?
     var autocompleteLocationsResults: [MKMapItem]?
     var selectedLocation: CLLocationCoordinate2D?
@@ -77,15 +79,18 @@ class CreateMomentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // apply image/location
-        momentImageView.image = image ?? thumbnailImage
-        selectedLocation = LocationManager.shared.currentLocationCoordinates?.coordinate
-        
-        // set placeholder to text view
-        showPlaceholder()
-        
-        // setup autocomplete text field
-        setupLocationTextField()
+        if moment == nil {
+            
+            // apply image/location
+            momentImageView.image = image ?? thumbnailImage
+            selectedLocation = LocationManager.shared.currentLocationCoordinates?.coordinate
+            
+            // set placeholder to text view
+            showPlaceholder()
+            
+            // setup autocomplete text field
+            setupLocationTextField()
+        }
         
         fetchPassions()
         
@@ -101,6 +106,34 @@ class CreateMomentViewController: UIViewController {
     
     // MARK: - Private methods
     
+    fileprivate func applyMoment() {
+        // rename post => update
+        rightNavigationButton.title = LocalizableString.Update.localizedString
+        
+        // set image
+        momentImageView.sd_setImage(with: moment!.imageUrl)
+        
+        // set capture
+        captionTextView.text = moment!.capture
+        
+        // viewable to All
+        switcher.setOn(moment!.viewableByAll, animated: false)
+        
+        // passion
+        selectedPassion = passions!.filter({ $0.objectId == moment!.passionId }).first
+        interestButton.setTitle(selectedPassion?.displayName, for: .normal)
+        
+        // location
+        if let location = moment!.location {
+            selectedLocation = location.coordinate
+            LocationManager.shared.getLocationStringForLocation(location) { [weak self] (title) in
+                if let welf = self {
+                    welf.addLocationTextField.text = title
+                }
+            }
+        }
+    }
+    
     fileprivate func fetchPassions() {
         showBlackLoader()
         
@@ -113,6 +146,10 @@ class CreateMomentViewController: UIViewController {
                     case .success(let passions):
                         welf.passions = passions
                         welf.initFilterButton()
+                        
+                        if welf.moment != nil {
+                            welf.applyMoment()
+                        }
                     case .failure(let error):
                         welf.presentErrorAlert(message: error.localizedDescription)
                     default:
