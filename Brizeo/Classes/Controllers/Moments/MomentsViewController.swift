@@ -455,7 +455,7 @@ extension MomentsViewController: UITableViewDataSource {
         
         cell.delegate = self
         cell.ownerNameLabel.text = moment.user.displayName
-        cell.momentDescriptionLabel.text = moment.capture
+        cell.momentDescriptionLabel.text = moment.shortCapture
         cell.numberOfLikesButton.setTitle("\(moment.likesCount)", for: .normal)
         cell.likeButton.isHidden = moment.ownerId == currentUser.objectId
         cell.setButtonHighligted(isHighligted: moment.isLikedByCurrentUser)

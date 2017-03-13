@@ -34,6 +34,11 @@ class Moment: Mappable, Equatable {
         case longitude = "currentLocation.longitude"
     }
     
+    struct Constants {
+        static let shortLength = 30
+        static let maxLength = 100
+    }
+    
     // MARK: - Properties
     
     var objectId: String = "-1"
@@ -99,6 +104,18 @@ class Moment: Mappable, Equatable {
         } else {
             return FileObject(info: file)
         }
+    }
+    
+    var shortCapture: String {
+        
+        guard capture.numberOfCharactersWithoutSpaces() > Constants.shortLength else {
+            return capture
+        }
+        
+        let start = capture.startIndex
+        let end = capture.index(capture.startIndex, offsetBy: Constants.shortLength)
+        let shortCapture = capture[start..<end]
+        return shortCapture
     }
     
     // MARK: - Init methods
