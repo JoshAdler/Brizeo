@@ -294,7 +294,8 @@ extension CreateMomentViewController: UITextViewDelegate {
         
         if let updatedText = updatedText {
             if updatedText.numberOfCharactersWithoutSpaces() >= Moment.Constants.maxLength {
-            return false
+                return false
+            }
         }
         
         return true
