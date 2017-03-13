@@ -56,7 +56,7 @@ class MediaViewController: UIViewController {
         
         shareButton.isHidden = !isSharingEnabled
         locationButton.isHidden = !(moment != nil && moment!.hasLocation)
-        descriptionTextView.isEditable = moment != nil && UserProvider.shared.currentUser!.objectId == moment!.ownerId
+        descriptionTextView.isEditable = false//moment != nil && UserProvider.shared.currentUser!.objectId == moment!.ownerId
         
         if moment != nil {
             media = [moment!.asFileObject]
