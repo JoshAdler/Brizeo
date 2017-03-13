@@ -44,7 +44,6 @@ class User: Mappable {
         case gender = "gender"
         case lastActiveTime = "lastActiveTime"
         case countries = "countries"
-        case location = "currentLocation"
         case latitude = "currentLocation.latitude"
         case longitude = "currentLocation.longitude"
         case objectId = "objectId"
@@ -63,8 +62,7 @@ class User: Mappable {
         case invitedByUserId = "invitedByUserId"
         case invitedByUserName = "invitedByUserName"
         case status = "status"
-        
-        //TODO: check about unused fields like "numberOfMatches", etc
+        case otherProfileImages = "otherProfileImages"
     }
     
     // MARK: - Properties
@@ -106,8 +104,7 @@ class User: Mappable {
     var uploadFiles: [FileObject]?
 
     var profileUploadImage: UIImage?
-    var profileUploadImageURL: URL?
-    var uploadImages: [URL]?
+    var uploadImages: [String]?
     
     // match status
     var status: MatchingStatus = .noActionsBetweenUsers
@@ -237,7 +234,7 @@ class User: Mappable {
     
     required init?(map: Map) { }
     
-    init(objectId: String, facebookId: String, displayName: String?, email: String, gender: Gender, profileImageURL: String?, workInfo: String?, studyInfo: String?, uploadedURLs: [URL], lastActiveDate: Date?) {
+    init(objectId: String, facebookId: String, displayName: String?, email: String, gender: Gender, profileImageURL: String?, workInfo: String?, studyInfo: String?, uploadedURLs: [String], lastActiveDate: Date?) {
         self.objectId = objectId
         self.facebookId = facebookId
         self.gender = gender
@@ -247,7 +244,9 @@ class User: Mappable {
         self.lastActiveTime = lastActiveDate
         self.displayName = displayName ?? "Mr./Mrs"
         
-        profileUploadImageURL = URL(string: profileImageURL!)
+        if let profileImageURL = profileImageURL {
+            profileImage = FileObjectInfo(url: profileImageURL)
+        }
         uploadImages = uploadedURLs
         
         // files
@@ -293,6 +292,7 @@ class User: Mappable {
         
         // files
         profileImage <- (map[JSONKeys.profileImage.rawValue], FileObjectInfoTransform())
+        uploadImages <- map[JSONKeys.otherProfileImages.rawValue]
         //        if let profileDict = JSON[JSONKeys.profileImage.rawValue] as? [String: String] {
         //            profileImage = FileObjectInfo(with: profileDict)
         //        }

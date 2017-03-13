@@ -39,7 +39,7 @@ class MomentsProvider {
     typealias MomentLikersCompletion = (Result<[User]>) -> Void
     
     struct Constants {
-        static let momentsLimitAmount = 20
+        static let momentsLimitAmount = 30
     }
     
     fileprivate struct MomentsKey {
@@ -50,9 +50,15 @@ class MomentsProvider {
     
     // MARK: - Class methods
     
-    class func preloadMomentPictures(moments: [Moment]) {
-        let urls = moments.filter({ $0.imageUrl != nil }).map({ $0.imageUrl })
-        SDWebImagePrefetcher.shared().prefetchURLs(urls)
+    class func preloadMomentPictures(isFirstTime: Bool, moments: [Moment]) {
+        let moments = isFirstTime ? Array(moments.prefix(Constants.momentsLimitAmount)) : moments
+        print("We need to cache moment count : \(moments.count)")
+        
+        let momentsUrls = moments.filter({ $0.imageUrl != nil }).map({ $0.imageUrl })
+        let usersUrls = moments.map({ $0.user.profileUrl }).filter({ $0 != nil })
+        
+        SDWebImagePrefetcher.shared().prefetchURLs(momentsUrls)
+        SDWebImagePrefetcher.shared().prefetchURLs(usersUrls)
     }
     
     class func getMoments(for userId: String, sortingFlag: MomentsSortingFlag, filterFlag: String?, completion: @escaping MomentsCompletion) {

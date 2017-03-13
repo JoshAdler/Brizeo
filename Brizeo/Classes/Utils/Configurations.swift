@@ -39,7 +39,7 @@ class Configurations: NSObject {
     struct General {
         static let apiURL = "http://ec2-54-244-190-99.us-west-2.compute.amazonaws.com:3000"
         static let termsOfUseURL = "http://brizeo.com/terms/"
-        static let photosCountToLoadAtStart = 4
+        static let photosCountToLoadAtStart = 5
     }
     
     // MARK: - Localytics

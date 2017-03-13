@@ -34,7 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - AppDelegate livecycle
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
+        //TODO: remove it before realise
+        FirstEntranceProvider.shared.isFirstEntrancePassed = true
         // apply main theme for the app
         ThemeManager.applyGlobalTheme()
         

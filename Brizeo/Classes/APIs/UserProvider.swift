@@ -263,21 +263,6 @@ class UserProvider: NSObject {
         }
     }
 
-
-    
-    //TODO: create such chat
-//    private static func createChattingRoom() {
-//        let superUserId = "WlsuoQxwUB"
-//        LayerManager.sharedManager.authenticateLayerWithUserID(superUserId, completion: { (success, error) in
-//            
-//            //TODO: Set it to new users only. below of pUser.isNew
-//            if success {
-//                self.matchWithSuperUser((User.currentUser()?.objectId)!)
-//            }
-//            
-//        })
-//    }
-    
     // MARK: - Private methods
     
     fileprivate class func createUser(user: User, completion: @escaping (Result<User>) -> Void) {
@@ -287,6 +272,7 @@ class UserProvider: NSObject {
             switch result {
             case .success(let response):
                 guard response.statusCode == 200 else {
+                    logout()
                     completion(.failure(APIError(code: response.statusCode, message: nil)))
                     return
                 }
@@ -376,7 +362,7 @@ class UserProvider: NSObject {
                 }
                 
                 // profile pictures
-                var profilePicturesURLs = [URL]()
+                var profilePicturesURLs = [String]()
                 if let albumsDict = result["albums"] as? [String: Any], let albums = albumsDict["data"] as? [[String: Any]] {
                     for album in albums {
                         if album["name"] as? String == "Profile Pictures" {
@@ -384,7 +370,7 @@ class UserProvider: NSObject {
                                 let limit = min(Configurations.General.photosCountToLoadAtStart, photosData.count)
                                 for i in 0 ..< limit {
                                     if let images = photosData[i]["images"] as? [[String: Any]], let firstImage = images.first, let sourceURL = firstImage["source"] as? String {
-                                        profilePicturesURLs.append(URL(string: sourceURL)!)
+                                        profilePicturesURLs.append(sourceURL)
                                     }
                                 }
                             }
@@ -434,25 +420,6 @@ class UserProvider: NSObject {
         }
     }
     
-    // MARK: SuperUser
-    fileprivate func matchWithSuperUser(_ userId: String) {
-        
-        let params = ["userId" : userId]
-        
-//        PFCloud.callFunction(inBackground: ParseFunction.AddMatchSuperUser.name, withParameters: params, block: { (result, error) in
-//            
-//            if(error != nil) {
-//                CLSNSLogv("ERROR: Unable to Follow SuperUser", getVaList([]))
-//                return
-//            }
-//            
-//            if let superUser = result as? String {
-//
-//                _ = LayerManager.conversationBetweenUser(superUser, andUserId: userId, message: LocalizableString.EnjoyBrizeo.localizedString)
-//            }
-//        })
-    }
-
     class func getMutualFriendsOfCurrentUser(_ currUser: User, andSecondUser secondUser: User, completion: @escaping (Result<[(name:String, pictureURL:String)]>) -> Void) {
 
         
@@ -497,23 +464,6 @@ class UserProvider: NSObject {
         
 //        let params : [String: AnyObject] = [UserParameterKey.UserIdKey : user.objectId! as AnyObject, UserParameterKey.TargetUserIdKey: target.objectId! as AnyObject]
 //        PFCloud.callFunction(inBackground: ParseFunction.RemoveMatch.name, withParameters: params) { (result, error) in
-//            
-//            if let error = error {
-//                
-//                completion(.failure(error.localizedDescription))
-//                
-//            } else {
-//                
-//                completion(.success(true))
-//            }
-//        }
-    }
-    
-    //MARK: Rewards
-    class func sendDownloadEvent(_ user: User, timesDownloaded: Int, completion: @escaping (Result<Bool>) -> Void) {
-        
-//        let params : [String: AnyObject] = [UserParameterKey.UserIdKey : user.objectId! as AnyObject, UserParameterKey.totalKey: timesDownloaded as AnyObject]
-//        PFCloud.callFunction(inBackground: ParseFunction.DownloadEvent.name, withParameters: params) { (result, error) in
 //            
 //            if let error = error {
 //                

@@ -179,14 +179,14 @@ extension APIService: TargetType {
 //        case .createNewUser(let newUser):
 //            
 //            var formData = [MultipartFormData]()
-////            
-////            if let profileImageURL = newUser.profileUploadImageURL {
-////                formData.append(MultipartFormData(provider: .file(profileImageURL), name: "mainProfileImage"))
-////            }
-////            
-////            if let uploadImageURLs = newUser.uploadImages {
-////                formData.append(contentsOf: (uploadImageURLs.map({ MultipartFormData(provider: .file($0), name: "otherProfileImages", fileName: "otherProfileImages.jpg", mimeType: "image/jpeg") })))
-////            }
+//            
+//            if let profileImageURL = newUser.profileUploadImageURL {
+//                formData.append(MultipartFormData(provider: .file(profileImageURL), name: "mainProfileImage", fileName: "mainProfileImage.jpg", mimeType: "image/jpeg"))
+//            }
+//
+//            if let uploadImageURLs = newUser.uploadImages {
+//                formData.append(contentsOf: (uploadImageURLs.map({ MultipartFormData(provider: .file($0), name: "otherProfileImages", fileName: "otherProfileImages.jpg", mimeType: "image/jpeg") })))
+//            }
 //            
 //            return formData
         default:

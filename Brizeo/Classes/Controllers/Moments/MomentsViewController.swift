@@ -211,7 +211,8 @@ class MomentsViewController: UIViewController {
     
     func goToPersonalProfile(animated: Bool) {
         let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
-        Helper.initialNavigationController().pushViewController(profileController, animated: animated)
+        //Helper.initialNavigationController().pushViewController(profileController, animated: animated)
+        navigationController?.pushViewController(profileController, animated: animated)
     }
     
     // MARK: - Private methods
@@ -237,9 +238,9 @@ class MomentsViewController: UIViewController {
             let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
             otherPersonProfileController.user = moment?.user
             otherPersonProfileController.userId = userIdentifier
-            Helper.initialNavigationController().pushViewController(otherPersonProfileController, animated: true)
+//            Helper.initialNavigationController().pushViewController(otherPersonProfileController, animated: true)
+            navigationController?.pushViewController(otherPersonProfileController, animated: true)
         }
-        GoogleAnalyticsManager.userGoToProfileFromMoment.sendEvent()
     }
     
     
@@ -338,6 +339,8 @@ class MomentsViewController: UIViewController {
     }
     
     fileprivate func setupTableView() {
+        momentsTableView.prefetchDataSource = self
+        
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(MomentsViewController.refreshTableView), for: .valueChanged)
         
@@ -372,7 +375,7 @@ class MomentsViewController: UIViewController {
                 }
                 
                 // prefetch moments
-                MomentsProvider.preloadMomentPictures(moments: newMoments)
+                MomentsProvider.preloadMomentPictures(isFirstTime: true, moments: newMoments)
                 
                 self.paginator.addNewElements(&self.moments!, newElements: newMoments)
                 self.momentsTableView.reloadData()
@@ -434,6 +437,17 @@ extension MomentsViewController: UITableViewDataSource {
         return moments?.count ?? 0
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let index = indexPath.row + 10
+        
+        guard moments != nil, index < moments!.count else {
+            return
+        }
+        
+        let moment = moments![index]
+        MomentsProvider.preloadMomentPictures(isFirstTime: false, moments: [moment])
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let moment = moments![indexPath.row]
@@ -453,6 +467,19 @@ extension MomentsViewController: UITableViewDataSource {
         cell.notificationView.isHidden = true
         
         return cell
+    }
+}
+
+// MARK: - UITableViewDataSourcePrefetching
+extension MomentsViewController: UITableViewDataSourcePrefetching {
+    
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        guard moments != nil else {
+            return
+        }
+        
+        let prefetchMoments = indexPaths.map({ moments![$0.row] })
+        MomentsProvider.preloadMomentPictures(isFirstTime: false, moments: prefetchMoments)
     }
 }
 
