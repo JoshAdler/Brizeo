@@ -8,6 +8,7 @@
 
 import UIKit
 import ChameleonFramework
+import SDWebImage
 
 class ProfileView: UIView {
 
@@ -43,6 +44,20 @@ class ProfileView: UIView {
         
         interestView.title = title
         interestView.image = image
+    }
+    
+    func setInterest(with color: UIColor?, title: String?, imageURL: String?) {
+        if let color = color {
+            interestView.interestColor = color
+        } else {
+            interestView.interestColor = .clear
+        }
+        
+        interestView.title = title
+        
+        if let imageURL = imageURL {
+            interestView.interestImageView.sd_setImage(with: URL(string: imageURL)!)
+        }
     }
     
     func setMutualFriendsCount(count: Int) {

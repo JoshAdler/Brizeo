@@ -8,8 +8,6 @@
 
 import UIKit
 import CoreLocation
-import Parse
-import Branch
 import FBSDKShareKit
 import ChameleonFramework
 import GooglePlacesAutocomplete

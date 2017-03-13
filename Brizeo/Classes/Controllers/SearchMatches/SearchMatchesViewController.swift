@@ -94,6 +94,12 @@ class SearchMatchesViewController: BasicViewController {
                 profileView.frame = frame
                 profileView.applyUser(user: element as! User)
                 
+                // passion
+                if let passionId = (element as! User).topPassionId {
+                    let passion = PassionsProvider.shared.getPassion(by: passionId)
+                    profileView.setInterest(with: passion?.color, title: passion?.displayName, imageURL: passion?.iconURL)
+                }
+                
                 return profileView
             }
             
@@ -165,6 +171,11 @@ class SearchMatchesViewController: BasicViewController {
                     break
                 case .failure(let error):
                     SVProgressHUD.showError(withStatus: error.localizedDescription)
+                    
+                    if (welf.matches?.count ?? 0) > 0 {
+                        welf.matches?.removeFirst()
+                    }
+                    
                     break
                 default: break
                 }
@@ -198,6 +209,11 @@ class SearchMatchesViewController: BasicViewController {
                     break
                 case .failure(let error):
                     SVProgressHUD.showError(withStatus: error.localizedDescription)
+                    
+                    if (welf.matches?.count ?? 0) > 0 {
+                        welf.matches?.removeFirst()
+                    }
+                    
                     break
                 default: break
                 }
@@ -240,7 +256,7 @@ class SearchMatchesViewController: BasicViewController {
         
         BranchProvider.generateInviteURL(forUserId: user.objectId, imageURL: user.profileUrl?.absoluteString) { (url) in
             if let url = url {
-                let modifiedURL = "\(LocalizableString.BrizeoInvite.localizedString) \n\n \(url)"
+                let modifiedURL = "\(LocalizableString.SharePersonMessage.localizedString) \n\n \(url)"
                 
                 if MFMessageComposeViewController.canSendText() {
                     let messageComposeVC = MFMessageComposeViewController()

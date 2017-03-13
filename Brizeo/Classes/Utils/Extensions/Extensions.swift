@@ -121,7 +121,6 @@ extension Branch {
     }
 }
 
-
 // MARK: - UITableView
 extension UITableView {
     func dequeueCell<T: UITableViewCell>(withIdentifier identifier: String, for indexPath: IndexPath) -> T {

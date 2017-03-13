@@ -7,7 +7,6 @@
 //
 
 import Crashlytics
-import Branch
 import CoreLocation
 import ObjectMapper
 
@@ -20,13 +19,13 @@ struct UserParameterKey {
 
 enum MatchingStatus: Int {
     case noActionsBetweenUsers = 1
-    case didRejectCurrentUser
-    case didApproveCurrentUser
     case isRejectedByCurrentUser
-    case didRejectEachOther
-    case didApproveButCurrentReject
     case isApprovedByCurrentUser
+    case didRejectCurrentUser
+    case didRejectEachOther
     case didRejectButCurrentApprove
+    case didApproveCurrentUser
+    case didApproveButCurrentReject
     case isMatched
 }
 

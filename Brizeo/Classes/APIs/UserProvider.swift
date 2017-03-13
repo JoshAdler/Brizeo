@@ -212,7 +212,7 @@ class UserProvider: NSObject {
         }
         
         let provider = MoyaProvider<APIService>()
-        provider.request(.getUserWithStatus(searchedUserId: searchedUserId, searchingUserId: currentUser.objectId)) { (result) in
+        provider.request(.getUserWithStatus(currentUserId: currentUser.objectId, searchedUserId: searchedUserId)) { (result) in
             switch result {
             case .success(let response):
 

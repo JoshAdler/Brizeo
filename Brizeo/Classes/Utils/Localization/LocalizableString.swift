@@ -10,6 +10,7 @@ import Foundation
 
 enum LocalizableString: String {
     
+    case ChatAdminWelcomeMessage = "Hi %@, \n\n Thanks for installing Brizeo.  We are thrilled you have joined our community and welcome any questions or feedback.  We want Brizeo to grow organically, so please help us to expand the community by inviting your friends and family by clicking the icon at the top right. \n\nLooking forward,\n\nJosh and David"
     case LoadMomentError = "Error occured during the loading. Try again?"
     case NewMomentCreated = "Congrats, new moment was created!"
     case ErrorWithBranchURL = "Sorry, but we can't provide you with the url for invitation. Please try later."
@@ -75,13 +76,16 @@ enum LocalizableString: String {
     case SeeRewardsForInvitingYourFriends = "See rewards for inviting your friends"
     case TryBrizeo = "%@ invites you to join Brizeo!"
     case BrizeoInvite = "I found a nice profile for you. Get on Brizeo and let me know that you think :)"
+    case SharePersonMessage = "I found someone interesting on Brizeo. Let me know what you think!"
+    case ShareMomentMessage = "You have to see this great picture! Check out Brizeo and let me know what you think!"
+    case ShareDefaultText = "%@ invites you to join Brizeo!\n\nWhether you're at home or abroad, Brizeo provides a multilayered platform to meet new people and broaden your inner circle.  Connect through your favorite Moments, primary Passions, and live Events. Check it out at %@"
     case BrizeoShareWithFacebook = "Connect at home and abroad."
-    case BrizeoShareDescription = "Meet people who share your passions. Brizeo is packed with cool features, including a Moments wall where you can share your favorite experiences. Brizeo allows you to connect at home and abroad."
+    case BrizeoShareDescription = "Whether you're at home or abroad, Brizeo provides a multilayered platform to meet new people and broaden your inner circle.  Connect through your favorite Moments, primary Passions, and live Events."
     case BrizeoShareJoinCommunity = "Join a community that lives life to its fullest!"
     case CheckItOutAt = "Check it out at %@"
     case CheckItOutHere = "<div style='width:90% ;margin-left:5%; font-size: 15px;'>Check it out <a href='%@'>%@</a></div>"
     case BrizeoMailDescription = "<div style='width:90% ;margin-left:5%; font-size: 15px;'>%@</div><br>"
-    case BrizeoMailContent = "<div style='width: %lfpx;'><img style='width: %lfpx; margin-left: 5%; margin-top: 20px; height: 100px; border-radius: 3px; border: 1px solid;' src='http://files.parsetfss.com/0693b1ef-dbce-4dc5-b0d9-b2e4d12cf0ab/tfss-5f297102-e834-4964-b2d5-3dd5c59ec4d5-file'><h3 style='width:90% ;margin-left:5%;'>%@ invites you to join Brizeo</h3>%@</div>"
+    case BrizeoMailContent = "<div style='width: %lfpx;'><img style='width: %lfpx; margin-left: 5%; margin-top: 20px; height: 100px; border-radius: 3px; border: 1px solid;' src='https://firebasestorage.googleapis.com/v0/b/brizeo-7571c.appspot.com/o/InviteImages%2Fic_brizeo_invite_image%402x.png?alt=media&token=841e0496-8df9-46ed-9109-b6dd7856e570'><h3 style='width:90% ;margin-left:5%;'>%@ invites you to join Brizeo</h3>%@</div>"
     
     //MARK: - Moments
     case All = "All"

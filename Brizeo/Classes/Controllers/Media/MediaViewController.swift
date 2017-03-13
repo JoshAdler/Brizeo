@@ -173,7 +173,7 @@ class MediaViewController: UIViewController {
     @IBAction func onSharingButtonClicked(_ sender: UIButton) {
         BranchProvider.generateInviteURL(forMomentId: moment!.objectId, imageURL: moment!.imageUrl?.absoluteString) { (url) in
             if let url = url {
-                let modifiedURL = "\(LocalizableString.BrizeoInvite.localizedString) \n\n \(url)"
+                let modifiedURL = "\(LocalizableString.ShareMomentMessage.localizedString) \n\n \(url)"
                 
                 if MFMessageComposeViewController.canSendText() {
                     let messageComposeVC = MFMessageComposeViewController()

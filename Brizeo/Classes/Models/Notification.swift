@@ -7,7 +7,6 @@
 //
 
 import Crashlytics
-import Branch
 import ObjectMapper
 
 class Notification: Mappable {

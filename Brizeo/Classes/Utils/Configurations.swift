@@ -68,4 +68,10 @@ class Configurations: NSObject {
     struct RewardInfo {
         static let minInvitedUsers = 25
     }
+    
+    // MARK: - Invite
+    struct Invite {
+        static let previewURL = "https://firebasestorage.googleapis.com/v0/b/brizeo-7571c.appspot.com/o/InviteImages%2Fic_brizeo_invite_image%402x.png?alt=media&token=841e0496-8df9-46ed-9109-b6dd7856e570"
+    }
+    
 }

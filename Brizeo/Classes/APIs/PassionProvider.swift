@@ -103,4 +103,12 @@ struct PassionsProvider {
             }
         }
     }
+    
+    func getPassion(by id: String) -> Passion? {
+        guard let passions = passions else {
+            return nil
+        }
+        
+        return passions.filter({ $0.objectId == id }).first
+    }
 }

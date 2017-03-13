@@ -17,7 +17,7 @@ class OtherProfileViewController: BasicViewController {
     // MARK: - Types
     
     struct Constants {
-        static let profileFullSizeCoef: CGFloat = 1065/1204
+        static let profileFullSizeCoef: CGFloat = 60
     }
     
     struct StoryboardIds {
@@ -38,7 +38,7 @@ class OtherProfileViewController: BasicViewController {
     @IBOutlet weak var detailsButton: UIButton!
     @IBOutlet weak var actionsButton: UIButton!
     @IBOutlet weak var interestView: OtherPersonInterestView!
-    @IBOutlet weak var profileViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var bottomViewHeightConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var profileView: UIView! {
         didSet {
@@ -78,7 +78,7 @@ class OtherProfileViewController: BasicViewController {
                 
                 // hide/show action buttons
                 if !welf.user!.shouldBeAction {
-                    welf.increaseProfileViewHeight(true)
+                    welf.decreaseProfileViewHeight(true)
                 }
                 
                 welf.fetchMutualFriends()
@@ -187,11 +187,8 @@ class OtherProfileViewController: BasicViewController {
         }
     }
     
-    fileprivate func increaseProfileViewHeight(_ animated: Bool) {
-        let newConstraint = profileViewHeightConstraint.constraintWithMultiplier(multiplier: Constants.profileFullSizeCoef)
-        view!.removeConstraint(profileViewHeightConstraint)
-        view!.addConstraint(newConstraint)
-        profileViewHeightConstraint = newConstraint
+    fileprivate func decreaseProfileViewHeight(_ animated: Bool) {
+        bottomViewHeightConstraint.constant = Constants.profileFullSizeCoef
         
         if animated {            
             UIView.animate(withDuration: 0.5, animations: { 
@@ -252,7 +249,7 @@ class OtherProfileViewController: BasicViewController {
                 case .success(_):
                     
                     welf.hideLoader()
-                    welf.increaseProfileViewHeight(true)
+                    welf.decreaseProfileViewHeight(true)
                     
                     break
                 case .failure(let error):
@@ -275,7 +272,7 @@ class OtherProfileViewController: BasicViewController {
                 case .success(_):
                     
                     welf.hideLoader()
-                    welf.increaseProfileViewHeight(true)
+                    welf.decreaseProfileViewHeight(true)
                     
                     break
                 case .failure(let error):
@@ -333,7 +330,7 @@ class OtherProfileViewController: BasicViewController {
         
         BranchProvider.generateInviteURL(forUserId: user!.objectId, imageURL: user!.profileUrl?.absoluteString) { (url) in
             if let url = url {
-                let modifiedURL = "\(LocalizableString.BrizeoInvite.localizedString) \n\n \(url)"
+                let modifiedURL = "\(LocalizableString.SharePersonMessage.localizedString) \n\n \(url)"
                 
                 if MFMessageComposeViewController.canSendText() {
                     let messageComposeVC = MFMessageComposeViewController()

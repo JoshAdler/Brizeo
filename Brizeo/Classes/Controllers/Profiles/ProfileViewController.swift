@@ -29,7 +29,6 @@ class ProfileViewController: UIViewController {
     }
     
     struct Constants {
-        static let numberOfPhotosInCollectionView = 4
         static let photoWidthCoef: CGFloat = 261.0 / 750.0
     }
     
@@ -239,7 +238,7 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Constants.numberOfPhotosInCollectionView
+        return Configurations.General.photosCountToLoadAtStart
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

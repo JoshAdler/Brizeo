@@ -12,10 +12,7 @@ enum BrizeoImage: String {
     
     //MARK: - Common
     case SearchIcon = "ic_search"
-    case SettingIcon = "ic_settings"
-    // MARK: Invites
-    case BrizeoPromo = "Swimming"
-    case BrizeoLogoImage = "http://files.parsetfss.com/0693b1ef-dbce-4dc5-b0d9-b2e4d12cf0ab/tfss-5f297102-e834-4964-b2d5-3dd5c59ec4d5-file"
+    case SettingIcon = "ic_settings" 
     
     //MARK: - Menu
     case InviteFriendsGrey = "nav-add-friends-grey.png"

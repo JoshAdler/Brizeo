@@ -538,8 +538,6 @@ extension MomentsViewController: MomentTableViewCellDelegate {
             return
         }
 
-        //checkReadStatus(moment)
-        
         let likersController: LikesViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.likesControllerId)!
         likersController.moment = moment
         

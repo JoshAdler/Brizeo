@@ -113,7 +113,7 @@ class ChooseView: UIView {
     
     fileprivate func shareWithSMS(url: String) {
         if MFMessageComposeViewController.canSendText() {
-            let modifiedURLString = LocalizableString.TryBrizeo.localizedStringWithArguments([UserProvider.shared.currentUser!.displayName]) + "\n\n" + LocalizableString.BrizeoShareDescription.localizedString+" "+LocalizableString.CheckItOutAt.localizedStringWithArguments([url])
+            let modifiedURLString = LocalizableString.ShareDefaultText.localizedStringWithArguments([UserProvider.shared.currentUser!.displayName, url])
             let messageComposeVC = MFMessageComposeViewController()
             
             messageComposeVC.body = modifiedURLString
@@ -128,12 +128,11 @@ class ChooseView: UIView {
     }
 
     fileprivate func shareWithTwitter(url: String) {
-        let image = BrizeoImage.BrizeoPromo.image
-        let modifiedURLString = LocalizableString.TryBrizeo.localizedStringWithArguments([UserProvider.shared.currentUser!.displayName]) + "\n\n" + LocalizableString.BrizeoShareDescription.localizedString+" "+LocalizableString.CheckItOutAt.localizedStringWithArguments([url])
+        let modifiedURLString = LocalizableString.ShareDefaultText.localizedStringWithArguments([UserProvider.shared.currentUser!.displayName, url])
         
         if let vc = SLComposeViewController(forServiceType: SLServiceTypeTwitter) {
             vc.setInitialText(modifiedURLString)
-            vc.add(image)
+            vc.add(#imageLiteral(resourceName: "ic_brizeo_invite_image"))
             vc.add(URL(string: url))
             Helper.initialNavigationController().present(vc, animated: true, completion: nil)
         } else {
@@ -144,7 +143,7 @@ class ChooseView: UIView {
     fileprivate func shareWithMessanger(url: String) {
         let content = FBSDKShareLinkContent()
         content.contentURL = URL(string: url)
-        content.imageURL = URL(string:BrizeoImage.BrizeoLogoImage.rawValue)
+        content.imageURL = URL(string: Configurations.Invite.previewURL)
         content.contentTitle = LocalizableString.TryBrizeo.localizedStringWithArguments([UserProvider.shared.currentUser!.displayName])
         content.contentDescription = LocalizableString.BrizeoShareDescription.localizedString
         
@@ -170,7 +169,7 @@ class ChooseView: UIView {
 }
 
     fileprivate func shareWithWhatsapp(url: String) {
-        let modifiedURLString = LocalizableString.TryBrizeo.localizedStringWithArguments([UserProvider.shared.currentUser!.displayName]) + "\n\n" + LocalizableString.BrizeoShareDescription.localizedString+" "+LocalizableString.CheckItOutAt.localizedStringWithArguments([url])
+        let modifiedURLString = LocalizableString.ShareDefaultText.localizedStringWithArguments([UserProvider.shared.currentUser!.displayName, url])
         let originalString = modifiedURLString
         let encodedString = originalString.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
         let url = URL(string: "whatsapp://send?text="+encodedString!)
