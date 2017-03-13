@@ -104,7 +104,6 @@ class User: Mappable {
     var uploadFiles: [FileObject]?
 
     var profileUploadImage: UIImage?
-    var uploadImages: [String]?
     
     // match status
     var status: MatchingStatus = .noActionsBetweenUsers
@@ -247,9 +246,12 @@ class User: Mappable {
         if let profileImageURL = profileImageURL {
             profileImage = FileObjectInfo(url: profileImageURL)
         }
-        uploadImages = uploadedURLs
         
-        // files
+        var files = [FileObject]()
+        for url in uploadedURLs {
+            files.append(FileObject(info: FileObjectInfo(url: url)))
+        }
+        uploadFiles = files
     }
     
     func mapping(map: Map) {
@@ -292,7 +294,7 @@ class User: Mappable {
         
         // files
         profileImage <- (map[JSONKeys.profileImage.rawValue], FileObjectInfoTransform())
-        uploadImages <- map[JSONKeys.otherProfileImages.rawValue]
+        uploadFiles <- (map[JSONKeys.otherProfileImages.rawValue], FileObjectTransform())
         //        if let profileDict = JSON[JSONKeys.profileImage.rawValue] as? [String: String] {
         //            profileImage = FileObjectInfo(with: profileDict)
         //        }

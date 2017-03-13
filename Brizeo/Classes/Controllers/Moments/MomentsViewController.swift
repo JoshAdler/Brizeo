@@ -212,7 +212,7 @@ class MomentsViewController: UIViewController {
     func goToPersonalProfile(animated: Bool) {
         let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
         //Helper.initialNavigationController().pushViewController(profileController, animated: animated)
-        navigationController?.pushViewController(profileController, animated: animated)
+        Helper.initialNavigationController().pushViewController(profileController, animated: animated)
     }
     
     // MARK: - Private methods
@@ -543,7 +543,8 @@ extension MomentsViewController: MomentTableViewCellDelegate {
         let likersController: LikesViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.likesControllerId)!
         likersController.moment = moment
         
-        Helper.initialNavigationController().pushViewController(likersController, animated: true)
+        //Helper.initialNavigationController().pushViewController(likersController, animated: true)
+        navigationController?.pushViewController(likersController, animated: true)
     }
     
     func momentCellDidSelectOwnerProfile(_ cell: MomentTableViewCell) {

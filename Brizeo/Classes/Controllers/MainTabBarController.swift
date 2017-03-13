@@ -83,20 +83,7 @@ class MainTabBarController: UITabBarController {
     
     func onRightButtonClicked(sender: UIBarButtonItem) {
         let inviteFriendView: InviteFriendsView = InviteFriendsView.loadFromNib()
-        inviteFriendView.delegate = self
         inviteFriendView.present(on: navigationController!.view)
-    }
-}
-
-// MARK: - InviteFriendsViewDelegate
-extension MainTabBarController: InviteFriendsViewDelegate {
-    
-    func onShareClicked(inviteView: InviteFriendsView) {
-        
-    }
-    
-    func onInviteClicked(inviteView: InviteFriendsView) {
-
     }
 }
 

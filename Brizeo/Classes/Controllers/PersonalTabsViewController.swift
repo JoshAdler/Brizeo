@@ -49,6 +49,18 @@ class PersonalTabsViewController: BasicViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
     // MARK: - Actions
     
     @IBAction override func onBackButtonClicked(sender: UIBarButtonItem) {

@@ -2,12 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Main check button.png",
+      "filename" : "ic_ok.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Main check button@2x.png",
+      "filename" : "ic_ok@2x.png",
       "scale" : "2x"
     },
     {

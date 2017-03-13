@@ -95,6 +95,34 @@ class FileObjectInfoTransform: TransformType {
     }
 }
 
+class FileObjectTransform: TransformType {
+    public typealias Object = FileObject
+    public typealias JSON = String
+    
+    public init() {}
+    
+    public func transformFromJSON(_ value: Any?) -> FileObject? {
+        
+        if let url = value as? String {
+            let file = FileObject(info: FileObjectInfo(url: url))
+            return file
+        }
+        
+        return nil
+    }
+    
+    open func transformToJSON(_ value: FileObject?) -> String? {
+        
+        if let value = value {
+            if value.isImage {
+                return value.imageUrl?.absoluteString
+            }
+        }
+        
+        return nil
+    }
+}
+
 class LikersTransform: TransformType {
 
     public typealias Object = Bool

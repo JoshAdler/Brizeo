@@ -38,8 +38,6 @@ class EventTabsViewController: BasicViewController {
         if !isControllerReady && UserProvider.isUserLoggedInFacebook() {
             prepareController()
         }
-        
-        navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     // MARK: - Private methods

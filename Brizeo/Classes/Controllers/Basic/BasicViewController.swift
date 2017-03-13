@@ -33,7 +33,7 @@ class BasicViewController: UIViewController {
         if let navigationController = navigationController {
             navigationItem.backBarButtonItem = UIBarButtonItem(title: LocalizableString.Back.localizedString, style: .plain, target: nil, action: nil)
             
-            if navigationController.viewControllers.count < 3 {
+            if navigationController.viewControllers.count < 2 {
                 navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_settings").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(onLeftButtonClicked(sender:)))
                 navigationItem.leftBarButtonItem?.width = #imageLiteral(resourceName: "ic_search").size.width
             }
@@ -79,12 +79,11 @@ class BasicViewController: UIViewController {
     
     func onLeftButtonClicked(sender: UIBarButtonItem) {
         let personalController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.personalTabsController)!
-        navigationController?.pushViewController(personalController, animated: true)
+        /*navigationController?*/Helper.initialNavigationController().pushViewController(personalController, animated: true)
     }
     
     func onRightButtonClicked(sender: UIBarButtonItem) {
         let inviteFriendView: InviteFriendsView = InviteFriendsView.loadFromNib()
-//        inviteFriendView.delegate = self
-        inviteFriendView.present(on: navigationController!.view)
+        inviteFriendView.present(on: Helper.initialNavigationController().view)//navigationController!.view)
     }
 }

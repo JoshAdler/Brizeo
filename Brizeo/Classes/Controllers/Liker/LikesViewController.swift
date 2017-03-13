@@ -123,11 +123,13 @@ extension LikesViewController: UITableViewDelegate {
             let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
             
             Helper.initialNavigationController().pushViewController(profileController, animated: true)
+//            navigationController?.pushViewController(profileController, animated: true)
         } else {
             let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
             otherPersonProfileController.user = user
             
-            Helper.initialNavigationController().pushViewController(otherPersonProfileController, animated: true)
+            //Helper.initialNavigationController().pushViewController(otherPersonProfileController, animated: true)
+            navigationController?.pushViewController(otherPersonProfileController, animated: true)
         }
     }
 
