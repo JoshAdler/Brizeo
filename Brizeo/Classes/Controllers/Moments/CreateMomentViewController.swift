@@ -12,6 +12,7 @@ import MapKit
 import ZTDropDownTextField
 import SVProgressHUD
 import GooglePlacesAutocomplete
+import KMPlaceholderTextView
 
 class CreateMomentViewController: UIViewController {
 
@@ -21,15 +22,19 @@ class CreateMomentViewController: UIViewController {
         static let switcherHeightCoef: CGFloat = 80.0 / 43.0
         static let switcherWidthCoef: CGFloat = 80.0 / 750.0
         static let placeholderText = LocalizableString.TypeHere.localizedString
-        static let placeholderTextColor = HexColor("b2b2b2")
-        static let defaultTextColor = UIColor.black
+        static let placeholderTextColor = HexColor("b2b2b2")!
     }
     
     // MARK: - Properties
     
     @IBOutlet weak var rightNavigationButton: UIBarButtonItem!
     @IBOutlet weak var momentImageView: UIImageView!
-    @IBOutlet weak var captionTextView: UITextView!
+    @IBOutlet weak var captionTextView: KMPlaceholderTextView! {
+        didSet {
+            captionTextView.placeholder = Constants.placeholderText
+            captionTextView.placeholderColor = Constants.placeholderTextColor
+        }
+    }
     @IBOutlet weak var infoLabel: UILabel!
     
     @IBOutlet weak var addLocationTextField: ZTDropDownTextField! {
@@ -84,9 +89,6 @@ class CreateMomentViewController: UIViewController {
             // apply image/location
             momentImageView.image = image ?? thumbnailImage
             selectedLocation = LocationManager.shared.currentLocationCoordinates?.coordinate
-            
-            // set placeholder to text view
-            showPlaceholder()
             
             // setup autocomplete text field
             setupLocationTextField()
@@ -174,12 +176,6 @@ class CreateMomentViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    fileprivate func showPlaceholder() {
-        captionTextView.text = Constants.placeholderText
-        captionTextView.textColor = Constants.placeholderTextColor
-        captionTextView.selectedTextRange = captionTextView.textRange(from: captionTextView.beginningOfDocument, to: captionTextView.beginningOfDocument)
-    }
-    
     fileprivate func initFilterButton() {
         guard passions != nil && passions!.count > 0 else {
             print("No passions")
@@ -202,20 +198,12 @@ class CreateMomentViewController: UIViewController {
         addLocationTextField.text = LocationManager.shared.currentLocationString ?? LocalizableString.Location.localizedString
     }
     
-    fileprivate func captionText() -> String? {
-        if captionTextView.text == Constants.placeholderText && captionTextView.text == Constants.placeholderText {
-            return nil
-        } else {
-            return captionTextView.text
-        }
-    }
-    
     fileprivate func createMoment() {
         showBlackLoader()
         
         let moment = Moment()
         
-        moment.capture = captionText()!
+        moment.capture = captionTextView.text
         moment.passionId = selectedPassion?.objectId
         moment.viewableByAll = switcher.isOn
         moment.ownerId = UserProvider.shared.currentUser!.objectId
@@ -282,7 +270,7 @@ class CreateMomentViewController: UIViewController {
     @IBAction func onPostButtonClicked(_ sender: UIBarButtonItem) {
         view.endEditing(true)
         
-        guard let text = captionText(), text.numberOfCharactersWithoutSpaces() > 0 else {
+        guard let text = captionTextView.text, text.numberOfCharactersWithoutSpaces() > 0 else {
             let noDescriptionView: NoDescriptionView = NoDescriptionView.loadFromNib()
             noDescriptionView.present(on: Helper.initialNavigationController().view)
             return
@@ -308,44 +296,7 @@ class CreateMomentViewController: UIViewController {
 }
 
 // MARK: - UITextViewDelegate
-extension CreateMomentViewController: UITextViewDelegate {
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        
-        let currentText = textView.text as NSString?
-        let updatedText = currentText?.replacingCharacters(in: range, with: text)
-        
-        if let updatedText = updatedText, !updatedText.isEmpty  {
-            if textView.textColor == Constants.placeholderTextColor && !text.isEmpty {
-                textView.text = nil
-                textView.textColor = Constants.defaultTextColor
-            }
-        } else {
-            textView.text = Constants.placeholderText
-            textView.textColor = Constants.placeholderTextColor
-            
-            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
-            
-            return false
-        }
-        
-        if let updatedText = updatedText {
-            if updatedText.numberOfCharactersWithoutSpaces() >= Moment.Constants.maxLength {
-                return false
-            }
-        }
-        
-        return true
-    }
-    
-    func textViewDidChangeSelection(_ textView: UITextView) {
-        if self.view.window != nil {
-            if textView.textColor == Constants.placeholderTextColor {
-                textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
-            }
-        }
-    }
-}
+extension CreateMomentViewController: UITextViewDelegate {}
 
 // MARK: - UITextFieldDelegate
 extension CreateMomentViewController: UITextFieldDelegate {

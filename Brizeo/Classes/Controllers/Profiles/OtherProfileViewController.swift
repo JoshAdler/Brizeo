@@ -65,6 +65,12 @@ class OtherProfileViewController: BasicViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(didReceivedMutualFriendsNotification(notification:)), name: NSNotification.Name(rawValue: mutualFriendsNotification), object: nil)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }

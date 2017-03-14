@@ -234,11 +234,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Brizeo/Classes/Controllers/Profiles/OtherProfileViewController.swift"
-            timestampString = "511111774.347429"
+            timestampString = "511196864.245563"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
+            startingLineNumber = "197"
+            endingLineNumber = "197"
             landmarkName = "decreaseProfileViewHeight(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -282,11 +282,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Brizeo/Classes/Controllers/Profiles/OtherProfileViewController.swift"
-            timestampString = "511177106.233202"
+            timestampString = "511196864.245563"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "75"
-            endingLineNumber = "75"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
             landmarkName = "loadUserIfNeeds()"
             landmarkType = "7">
             <Locations>
@@ -330,11 +330,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Brizeo/Classes/Controllers/Profiles/OtherProfileViewController.swift"
-            timestampString = "511177113.883439"
+            timestampString = "511196864.245563"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "212"
-            endingLineNumber = "212"
+            startingLineNumber = "218"
+            endingLineNumber = "218"
             landmarkName = "loadStatusBetweenUsers(completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -406,31 +406,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Brizeo/Classes/Controllers/Moments/CreateMomentViewController.swift"
-            timestampString = "511195314.745477"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "342"
-            endingLineNumber = "342"
-            landmarkName = "textViewDidChangeSelection(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Brizeo/Classes/Controllers/About/AboutViewController.swift"
-            timestampString = "511196701.283913"
+            timestampString = "511196864.245563"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
+            startingLineNumber = "125"
+            endingLineNumber = "125"
             landmarkName = "configureKeyboardBehaviour()"
             landmarkType = "7">
          </BreakpointContent>

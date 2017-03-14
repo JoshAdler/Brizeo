@@ -808,10 +808,10 @@
                                             <constraint firstAttribute="width" secondItem="qRS-ak-PmW" secondAttribute="height" multiplier="1:1" id="2HU-w9-Kf5"/>
                                         </constraints>
                                     </imageView>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="asdasd" translatesAutoresizingMaskIntoConstraints="NO" id="mxR-af-fYm">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="asdasd" translatesAutoresizingMaskIntoConstraints="NO" id="mxR-af-fYm" customClass="KMPlaceholderTextView" customModule="KMPlaceholderTextView">
                                         <rect key="frame" x="99" y="5" width="266" height="136"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <color key="textColor" red="0.69803921568627447" green="0.69803921568627447" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="SourceSansPro-It" family="Source Sans Pro" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         <connections>
