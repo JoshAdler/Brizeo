@@ -133,33 +133,7 @@ extension UITableView {
 }
 
 // MARK: - UIView
-@IBDesignable
 extension UIView {
-    
-    @IBInspectable
-    var cornerRadius: CGFloat {
-        get { return layer.cornerRadius }
-        set { layer.cornerRadius = newValue }
-    }
-    
-    @IBInspectable
-    var borderWidth: CGFloat {
-        get { return layer.borderWidth }
-        set { layer.borderWidth = newValue }
-    }
-    
-    @IBInspectable
-    var borderColor: UIColor? {
-        get {
-            if let borderColor = layer.borderColor {
-                return UIColor(cgColor: borderColor)
-            }
-            return nil
-        }
-        set {
-            layer.borderColor = newValue?.cgColor
-        }
-    }
     
     class var nibName: String {
         return String(describing: self)

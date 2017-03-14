@@ -16,9 +16,9 @@ class GenderViewController: BasicViewController {
         static let headerViewId = "HeaderView"
         static let cellId = "SettingsCheckmarkCell"
         
-        static let headerViewCoef: CGFloat = 73.0 / 750.0
-        static let footerViewCoef: CGFloat = 32.0 / 750.0
-        static let cellViewCoef: CGFloat = 94.0 / 750.0
+        static let headerViewHeight: CGFloat = 54.0
+        static let footerViewHeight: CGFloat = 15.0
+        static let cellViewHeight: CGFloat = 54.0
         
         static let sectionTitles = [
             LocalizableString.IamA.localizedString.uppercased(),
@@ -38,6 +38,12 @@ class GenderViewController: BasicViewController {
         super.viewDidLoad()
         
         registerViews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        Helper.initialNavigationController().setNavigationBarHidden(false, animated: true)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -104,18 +110,18 @@ extension GenderViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return Constants.cellViewCoef * tableView.bounds.width
+        return Constants.cellViewHeight
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if section == 1 { // last section
-            return Constants.footerViewCoef * tableView.bounds.width
+            return Constants.footerViewHeight
         }
         return 0.0
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return Constants.headerViewCoef * tableView.bounds.width
+        return Constants.headerViewHeight
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

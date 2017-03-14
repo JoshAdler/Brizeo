@@ -35,7 +35,9 @@ class LikesNotificationTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        likeUserImage.layer.cornerRadius = likeUserImage.frame.width / 2.0
+        if likeUserImage != nil {
+            likeUserImage.layer.cornerRadius = likeUserImage.frame.width / 2.0
+        }
     }
     
     // MARK: - Public methods

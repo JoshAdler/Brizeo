@@ -142,8 +142,6 @@ class DropMenuButton: UIButton, UITableViewDelegate, UITableViewDataSource
         
         self.setNeedsDisplay()
         fixLayout()
-        
-        
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int

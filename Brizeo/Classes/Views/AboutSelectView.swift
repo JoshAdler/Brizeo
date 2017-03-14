@@ -60,8 +60,14 @@ class AboutSelectView: UIView {
         super.layoutSubviews()
         
         layer.cornerRadius = frame.width / 2.0
-        internalView.layer.cornerRadius = internalView.frame.width / 2.0
-        button.layer.cornerRadius = button.frame.width / 2.0
+        
+        if internalView != nil {
+            internalView.layer.cornerRadius = internalView.frame.width / 2.0
+        }
+        
+        if button != nil {
+            button.layer.cornerRadius = button.frame.width / 2.0
+        }
     }
     
     // MARK: - Actions

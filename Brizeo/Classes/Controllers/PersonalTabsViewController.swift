@@ -57,8 +57,7 @@ class PersonalTabsViewController: BasicViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        navigationController?.setNavigationBarHidden(true, animated: animated)
+        //navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
     // MARK: - Actions

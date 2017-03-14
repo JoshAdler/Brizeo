@@ -21,6 +21,8 @@ class TripsTableViewCell: SWTableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        countryImageView.layer.cornerRadius = countryImageView.frame.height / 2.0
+        if countryImageView != nil {
+            countryImageView.layer.cornerRadius = countryImageView.frame.height / 2.0
+        }
     }
 }

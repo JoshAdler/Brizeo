@@ -20,6 +20,8 @@ class OtherPersonAboutInviteTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        logoImageView.cornerRadius = logoImageView.frame.height / 2.0
+        if logoImageView != nil {
+            logoImageView.layer.cornerRadius = logoImageView.frame.height / 2.0
+        }
     }
 }

@@ -24,7 +24,7 @@ struct ThemeConstants {
     static let carbonMenuFont = UIFont(name: "SourceSansPro-Semibold", size: 17.0)!
     static let carbonMenuNormalColor = HexColor("b2b2b2")!
     static let carbonMenuSelectedColor = UIColor.black
-    static let carbonMenuHeight: CGFloat = 40.0
+    static let carbonMenuHeight: CGFloat = 42.0
     static let carbonMenuTintColor = UIColor.white
     static let carbonMenuIndicatorHeight: CGFloat = 2.0
     static let carbonMenuIndicatorColor = HexColor("0356a2")

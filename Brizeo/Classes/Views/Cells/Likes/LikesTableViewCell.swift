@@ -27,7 +27,9 @@ class LikesTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        profileLogoImageView.layer.cornerRadius = profileLogoImageView.frame.width / 2.0
+        if profileLogoImageView != nil {
+            profileLogoImageView.layer.cornerRadius = profileLogoImageView.frame.width / 2.0
+        }
     }
     
     // MARK: - Actions

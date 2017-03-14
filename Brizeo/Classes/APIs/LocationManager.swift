@@ -187,6 +187,23 @@ class LocationManager: NSObject {
         })
     }
     
+    func getMomentLocationStringForLocation(_ location: CLLocation, _ momentId: String, completion:@escaping ((String, String) -> Void)) {
+        CLGeocoder().reverseGeocodeLocation(location, completionHandler: {
+            (placemarks, error) -> Void in
+            guard error == nil else {
+                print(error!)
+                return
+            }
+            
+            guard let placemark = placemarks?.first else {
+                print("No placemarks")
+                return
+            }
+            
+            completion(self.locationStringForPlaceMark(placemark), momentId)
+        })
+    }
+    
     func getLocationCoordinateForText(_ text: String, completion:@escaping ((CLLocation?) -> Void)) {
         
         CLGeocoder().geocodeAddressString(text) {

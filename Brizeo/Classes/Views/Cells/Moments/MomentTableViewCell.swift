@@ -21,13 +21,19 @@ class MomentTableViewCell: UITableViewCell {
 
     // MARK: - Properties
     
+    @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var momentImageView: UIImageView!
     @IBOutlet weak var ownerNameLabel: UILabel!
     @IBOutlet weak var momentDescriptionLabel: UILabel!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var actionButton: UIButton!
     @IBOutlet weak var notificationView: UILabel!
-    @IBOutlet weak var ownerLogoButton: UIButton!
+    @IBOutlet weak var ownerLogoButton: UIButton! {
+        didSet {
+            ownerLogoButton.layer.borderWidth = 2.0
+            ownerLogoButton.layer.borderColor = HexColor("e1ee11")?.cgColor
+        }
+    }
     @IBOutlet weak var numberOfLikesButton: UIButton! {
         didSet {
             numberOfLikesButton.transform = CGAffineTransform(scaleX: -1.0, y: 1.0)
@@ -44,8 +50,13 @@ class MomentTableViewCell: UITableViewCell {
         super.layoutSubviews()
         
         // set corner radius
-        notificationView.layer.cornerRadius = notificationView.frame.height / 2.0
-        ownerLogoButton.layer.cornerRadius = ownerLogoButton.frame.height / 2.0
+        if notificationView != nil {
+            notificationView.layer.cornerRadius = notificationView.frame.height / 2.0
+        }
+        
+        if ownerLogoButton != nil {
+            ownerLogoButton.layer.cornerRadius = ownerLogoButton.frame.height / 2.0
+        }
     }
 
     //MARK: - Actions

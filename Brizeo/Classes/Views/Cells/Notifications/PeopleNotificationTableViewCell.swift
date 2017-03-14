@@ -34,7 +34,9 @@ class PeopleNotificationTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        commentUserImage.layer.cornerRadius = commentUserImage.frame.width / 2.0
+        if commentUserImage != nil {
+            commentUserImage.layer.cornerRadius = commentUserImage.frame.width / 2.0
+        }
     }
     
     // MARK: - Public methods

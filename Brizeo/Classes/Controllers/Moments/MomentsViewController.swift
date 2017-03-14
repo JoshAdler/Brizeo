@@ -41,7 +41,13 @@ class MomentsViewController: UIViewController {
     @IBOutlet weak fileprivate var addMomentButton: UIButton!
     @IBOutlet weak fileprivate var newestButton: UIButton!
     @IBOutlet weak fileprivate var popularButton: UIButton!
-    @IBOutlet weak fileprivate var filterButton: DropMenuButton!
+    @IBOutlet weak fileprivate var filterButton: DropMenuButton! {
+        didSet {
+            filterButton.layer.cornerRadius = 5.0
+            filterButton.layer.borderWidth = 1.0
+            filterButton.layer.borderColor = HexColor("818181")!.cgColor
+        }
+    }
     
     var listType: MomentsListType = .allMoments
     var currentUser: User! = UserProvider.shared.currentUser!
@@ -466,6 +472,24 @@ extension MomentsViewController: UITableViewDataSource {
         cell.ownerLogoButton.sd_setImage(with: moment.user.profileUrl, for: .normal)
         
         cell.notificationView.isHidden = true
+        
+        // set locations for the moment
+        cell.locationLabel.text = ""
+        
+        if moment.hasLocation {
+            LocationManager.shared.getMomentLocationStringForLocation(moment.location!, moment.objectId, completion: { [weak cell, weak self] (locationStr, momentId) in
+                if cell != nil && self != nil {
+                    guard let indexPath = tableView.indexPath(for: cell!) else {
+                        return
+                    }
+                    
+                    if let moments = self!.moments, moments[indexPath.row].objectId == momentId {
+                        cell!.locationLabel.text = locationStr
+                    }
+                }
+            })
+        }
+        
         
         return cell
     }

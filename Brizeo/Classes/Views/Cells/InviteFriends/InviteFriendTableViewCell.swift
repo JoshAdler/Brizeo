@@ -30,6 +30,8 @@ class InviteFriendTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        profileImageView.layer.cornerRadius = profileImageView.bounds.width / 2.0
+        if profileImageView != nil {
+            profileImageView.layer.cornerRadius = profileImageView.bounds.width / 2.0
+        }
     }
 }

@@ -36,6 +36,8 @@ class EventTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        eventOwnerImageView.layer.cornerRadius = eventOwnerImageView.frame.width / 2.0
+        if eventOwnerImageView != nil {
+            eventOwnerImageView.layer.cornerRadius = eventOwnerImageView.frame.width / 2.0
+        }
     }
 }

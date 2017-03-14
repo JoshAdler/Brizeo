@@ -21,6 +21,8 @@ class UserMatchTableViewCell: SWTableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        avatarImageView.layer.cornerRadius = avatarImageView.bounds.height / 2.0
+        if avatarImageView != nil {
+            avatarImageView.layer.cornerRadius = avatarImageView.bounds.height / 2.0
+        }
     }
 }

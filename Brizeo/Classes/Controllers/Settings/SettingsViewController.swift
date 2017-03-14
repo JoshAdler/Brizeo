@@ -18,8 +18,8 @@ class SettingsViewController: UIViewController {
     // MARK: - Types
     
     struct Constants {
-        static let bigSectionHeight: CGFloat = 38.0
-        static let normalSectionHeight: CGFloat = 28.0
+        static let bigSectionHeight: CGFloat = 54.0
+        static let normalSectionHeight: CGFloat = 54.0
         static let smallSectionHeight: CGFloat = 15.0
     }
     
@@ -74,6 +74,14 @@ class SettingsViewController: UIViewController {
             }
         }
         
+        var fontColor: UIColor {
+            switch self {
+            case .searchLocation:
+                return HexColor("1f4ba5")!
+            default: return HexColor("5f5f5f")!
+            }
+        }
+        
         var type: TypeOfHeight {
             switch self {
             case .currentLocation,
@@ -99,17 +107,17 @@ class SettingsViewController: UIViewController {
         func cellHeight(for row: Int) -> CGFloat {
             switch self {
             case .currentLocation:
-                return 39.0
+                return 53.0
             case .searchLocation,
                  .logout:
-                return 38.0
+                return 52.0
             case .discovery:
-                if row == 0 { return 63.0 }
-                else if row == 1 { return 64.0 }
-                else { return 37.0 }
+                if row == 0 { return 108.0 }
+                else if row == 1 { return 109.0 }
+                else { return 71.0 }
             case .notifications:
-                if row == 0 { return 39.0 }
-                else { return 35.0 }
+                if row == 0 { return 55.0 }
+                else { return 53.0 }
             }
         }
         
@@ -398,6 +406,7 @@ extension SettingsViewController: UITableViewDelegate {
         
         headerView.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: tableView.frame.width, height: section.type.height))
         headerView.titleLabel.text = section.title
+        headerView.titleLabel.textColor = section.fontColor
         return headerView
     }
     
