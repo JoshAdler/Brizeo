@@ -243,12 +243,12 @@ class User: Mappable {
         self.displayName = displayName ?? "Mr./Mrs"
         
         if let profileImageURL = profileImageURL {
-            profileImage = FileObjectInfo(url: profileImageURL)
+            profileImage = FileObjectInfo(urlStr: profileImageURL)
         }
         
         var files = [FileObject]()
         for url in uploadedURLs {
-            files.append(FileObject(info: FileObjectInfo(url: url)))
+            files.append(FileObject(info: FileObjectInfo(urlStr: url)))
         }
         uploadFiles = files
     }

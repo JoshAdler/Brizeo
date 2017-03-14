@@ -218,8 +218,12 @@ extension APIService: TargetType {
         switch self {
         case .createNewMoment:
             return .upload(UploadType.multipart(multipartBody!))
-        case .updateUserFile(_, _, _, _):
-            return .upload(UploadType.multipart(multipartBody!))
+        case .updateUserFile(let file, _, _, _):
+            if file == nil {
+                return .request
+            } else {
+                return .upload(UploadType.multipart(multipartBody!))
+            }
             default:
             return .request
         }

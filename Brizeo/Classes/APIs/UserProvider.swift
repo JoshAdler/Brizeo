@@ -208,7 +208,7 @@ class UserProvider: NSObject {
         }
     }
     
-    class func updateUserFile(file: FileObject?, type: UpdateFileType, oldURL: String?, completion: EmptyCompletion) {
+    class func updateUserFile(file: FileObject?, type: UpdateFileType, oldURL: String?, completion: @escaping EmptyCompletion) {
         
         guard let currentUser = UserProvider.shared.currentUser else {
             print("Error: Can't like moment without current user")
@@ -216,7 +216,30 @@ class UserProvider: NSObject {
             return
         }
         
-        
+        let provider = MoyaProvider<APIService>()
+        provider.request(.updateUserFile(file: file, userId: currentUser.objectId, type: type.rawValue, oldURL: oldURL)) { (result) in
+            switch result {
+            case .success(let response):
+                
+                guard response.statusCode == 200 else {
+                    completion(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
+                do {
+                    print("wow")
+                    //let user = try response.mapObject(User.self)
+                    completion(.success())
+                }
+                catch (let error) {
+                    completion(.failure(APIError(error: error)))
+                }
+                break
+            case .failure(let error):
+                completion(.failure(APIError(error: error)))
+                break
+            }
+        }
     }
     
     class func getUserWithStatus(for searchedUserId: String, completion: @escaping UserCompletion) {

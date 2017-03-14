@@ -187,18 +187,14 @@ class ProfileViewController: UIViewController {
         // action for media from camera
         let deleteMedia = UIAlertAction(title: LocalizableString.Delete.localizedString, style: UIAlertActionStyle.default, handler: {
             (alert: UIAlertAction!) -> Void in
-            guard self.indexOfMediaToChange > 0 && self.indexOfMediaToChange < (self.user.uploadFiles?.count ?? 0) else {
+            
+            guard self.indexOfMediaToChange >= 0 && self.indexOfMediaToChange < (self.user.uploadFiles?.count ?? 0) else {
                 assertionFailure("Bad index for deleting a media")
                 return
             }
-   
-            //TODO: uncomment when will be ready
-            /*
-            self.user.uploadedImages.remove(at: self.indexOfMediaToChange)
-            self.imagesCollectionView.deleteItems(at: [IndexPath(row: self.indexOfMediaToChange, section: 0)])
-            self.indexOfMediaToChange = -1
- */
             
+            let oldUrl = self.user.uploadFiles?[self.indexOfMediaToChange].mainUrl
+            self.uploadFile(file: nil, self.updateFileType, oldUrl)
         })
         
         let cancelAction = UIAlertAction(title: LocalizableString.Cancel.localizedString, style: UIAlertActionStyle.cancel, handler: nil)
@@ -234,6 +230,45 @@ class ProfileViewController: UIViewController {
         alertView.addAction(cancelAction)
         
         present(alertView, animated: true, completion: nil)
+    }
+    
+    fileprivate func uploadFile(file: FileObject?, _ withType: UpdateFileType, _ url: String?) {
+        
+        showBlackLoader()
+        
+        UserProvider.updateUserFile(file: file, type: withType, oldURL: url) { [weak self] (result) in
+            if let welf = self {
+                
+                welf.hideLoader()
+                
+                switch(result) {
+                case .success(_):
+                    print("wow")
+                    break
+                case .failure(let error):
+                    welf.presentErrorAlert(message: error.localizedDescription) {
+                        welf.uploadFile(file: file, withType, url)
+                    }
+                    break
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
+    fileprivate func presentErrorAlert(message: String?, againHandler: @escaping (Void) -> Void) {
+        let alert = UIAlertController(title: LocalizableString.Error.localizedString, message: message, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: LocalizableString.TryAgain.localizedString, style: .default, handler: { (action) in
+            againHandler()
+        }))
+        
+        alert.addAction(UIAlertAction(title: LocalizableString.Dismiss.localizedString, style: .cancel, handler: { (action) in
+            self.tabBarController?.selectedIndex = 2 /* go to moments */
+        }))
+        
+        present(alert, animated: true, completion: nil)
     }
 }
 
@@ -288,6 +323,7 @@ extension ProfileViewController: UICollectionViewDelegate {
 extension ProfileViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
         let width = collectionView.frame.width * Constants.photoWidthCoef
         let height = collectionView.frame.height
         
@@ -303,7 +339,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         picker.dismiss(animated: true, completion: nil)
         
         // create file
-        var file: FileObject
+        var file: FileObject? = nil
         
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             let fileInfo = FileObjectInfo(image: pickedImage)
@@ -324,54 +360,7 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
             }
         }
         
-        UserProvider.updateUserFile(file: file, userId: UserProvider.shared.currentUser!.objectId, type: updateFileType, oldURL: oldUrl)
-        
-        
-//        if let chosenImage: UIImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-//            if let imageData = UIImageJPEGRepresentation(chosenImage, 0.8) {
-////                let imageFile = ImageDataToProfileMediaType(imageData)
-////                user?.addMediaAtIndex(imageFile, index: userMediaCurrentIndex)
-////                setImageAtIndex(chosenImage, index: userMediaCurrentIndex)
-//            }
-//        } else {
-//            if let url = info[UIImagePickerControllerMediaURL] as? URL, let videoData = try? Data(contentsOf: url) {
-//                
-//                let asset = AVURLAsset(url: url, options: nil)
-//                let generator = AVAssetImageGenerator(asset: asset)
-//                generator.appliesPreferredTrackTransform = true
-//                let time = CMTimeMakeWithSeconds(0, 15)
-//                let size = CGSize(width: 200, height: 200)
-//                generator.maximumSize = size
-//                
-//                do {
-//                    let imgRef = try generator.copyCGImage(at: time, actualTime: nil)
-//                    let thumb = UIImage(cgImage: imgRef)
-//                    let imageData = UIImageJPEGRepresentation(thumb, 0.8)!
-//                    
-//                    let file = VideoDataToProfileMediaType(videoData, thumbImageData: imageData)
-//                    user?.addMediaAtIndex(file, index: userMediaCurrentIndex)
-//                    setImageAtIndex(thumb, index: userMediaCurrentIndex)
-//                } catch {
-//                }
-//            }
-//        }
-//
-//        
-//        User.saveParseUser { (result) in
-//            
-//        }
-//        userMediaCurrentIndex = 0
-//        
-//        let interestCount = User.current()?.interests.count
-//        print(interestCount)
-//        print(User.current()?.uploadImages?.count)
-//        print(shouldGotoMomentView)
-//        if interestCount > 0 && self.shouldGotoMomentView && User.current()?.uploadImages?.count > 1{
-//            self.tabBarController?.selectedIndex = 2
-//            self.shouldGotoMomentView = false
-//        }
-        
-        indexOfMediaToChange = -1
+        uploadFile(file: file, updateFileType, oldUrl)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

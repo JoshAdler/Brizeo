@@ -78,7 +78,7 @@ class FileObjectInfoTransform: TransformType {
     public func transformFromJSON(_ value: Any?) -> FileObjectInfo? {
         
         if let url = value as? String {
-            let file = FileObjectInfo(url: url)
+            let file = FileObjectInfo(urlStr: url)
             return file
         }
         
@@ -104,7 +104,7 @@ class FileObjectTransform: TransformType {
     public func transformFromJSON(_ value: Any?) -> FileObject? {
         
         if let url = value as? String {
-            let file = FileObject(info: FileObjectInfo(url: url))
+            let file = FileObject(info: FileObjectInfo(urlStr: url))
             return file
         }
         
