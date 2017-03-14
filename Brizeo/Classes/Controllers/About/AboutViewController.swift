@@ -19,39 +19,68 @@ class AboutViewController: UIViewController {
         static let placeholderText = LocalizableString.TypeHere.localizedString
         static let placeholderTextColor = HexColor("dbdbdb")
         static let defaultTextColor = UIColor.black
-        static let cellHeight: CGFloat = 40.0
+        static let headerViewHeight: CGFloat = 54.0
+    }
+    
+    enum Sections: Int {
+        case passions = 0
+        case introduceYourself
+        
+        var title: String? {
+            switch self {
+            case .passions:
+                return LocalizableString.SelectInterests.localizedString.uppercased()
+            case .introduceYourself:
+                return LocalizableString.IntroduceYourself.localizedString.uppercased()
+            }
+        }
+        
+        var height: CGFloat {
+            return Constants.headerViewHeight
+        }
+        
+        var headerViewId: String {
+            return "SettingsBigHeaderView"
+        }
+        
+        func cellHeight(for row: Int) -> CGFloat {
+            switch self {
+            case .passions:
+                if row == 0 {
+                    return 53.0
+                } else {
+                    return 71.0
+                }
+            case .introduceYourself:
+                if row == 0 {
+                    return 189.0
+                } else {
+                    return 104.0
+                }
+            }
+        }
+        
+        func cellId(for row: Int) -> String {
+            switch self {
+            case .passions:
+                if row == 0 {
+                    return "AboutTitleTableViewCell"
+                } else {
+                    return AboutTableViewCell.identifier
+                }
+            case .introduceYourself:
+                if row == 0 {
+                    return AboutInputTableViewCell.identifier
+                } else {
+                    return AboutSaveTableViewCell.identifier
+                }
+            }
+        }
     }
     
     // MARK: - Properties
     
-    @IBOutlet weak var aboutMeTextView: UITextView!
     @IBOutlet weak var passionsTableView: UITableView!
-    
-    @IBOutlet weak var saveButton: UIButton! {
-        didSet {
-            saveButton.setTitle(LocalizableString.Save.localizedString, for: .normal)
-        }
-    }
-    @IBOutlet weak var topLabel: UILabel! {
-        didSet {
-            topLabel.text = LocalizableString.SelectInterests.localizedString.uppercased()
-        }
-    }
-    @IBOutlet weak var firstLabel: UILabel! /* label for first passion */ {
-        didSet {
-            firstLabel.text = LocalizableString.First.localizedString
-        }
-    }
-    @IBOutlet weak var secondLabel: UILabel! /* label for second passion */ {
-        didSet {
-            secondLabel.text = LocalizableString.Second.localizedString
-        }
-    }
-    @IBOutlet weak var thirdLabel: UILabel! /* label for third passion */ {
-        didSet {
-            thirdLabel.text = LocalizableString.Third.localizedString
-        }
-    }
     
     var user: User!
     
@@ -64,11 +93,10 @@ class AboutViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        registerHeaderViews()
+        
         fetchPassions()
 //        fetchMutualFriends()
-
-        // apply placeholder
-        applyPlaceholder()
         
         configureKeyboardBehaviour()
         
@@ -82,31 +110,11 @@ class AboutViewController: UIViewController {
         UserProvider.updateUser(user: UserProvider.shared.currentUser!, completion: nil)
     }
     
-    // MARK: - Actions
-    
-    @IBAction func onSaveButtonClicked(_ sender: UIButton!) {
-        view.endEditing(true)
-        
-        showBlackLoader()
-        
-        let currentUser = UserProvider.shared.currentUser!
-        UserProvider.updateUser(user: currentUser) { [weak self] (result) in
-            switch(result) {
-            case .success(_):
-                
-                SVProgressHUD.showSuccess(withStatus: LocalizableString.Success.localizedString)
-                break
-            case .failure(let error):
-                
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
-                break
-            default:
-                break
-            }
-        }
-    }
-    
     // MARK: - Private methods
+    
+    fileprivate func registerHeaderViews() {
+        passionsTableView.register(UINib(nibName: SettingsBigHeaderView.nibName, bundle: nil), forHeaderFooterViewReuseIdentifier: SettingsBigHeaderView.nibName)
+    }
     
     fileprivate func configureKeyboardBehaviour() {
         let keyboard = Typist.shared
@@ -162,16 +170,6 @@ class AboutViewController: UIViewController {
     
         user.assignPassionIds(dict: selectedPassion)
         UserProvider.updateUser(user: user, completion: nil)
-    }
-    
-    fileprivate func applyPlaceholder() {
-        if user.personalText.numberOfCharactersWithoutSpaces() == 0 {
-            aboutMeTextView.text = Constants.placeholderText
-            aboutMeTextView.textColor = Constants.placeholderTextColor
-            aboutMeTextView.selectedTextRange = aboutMeTextView.textRange(from: aboutMeTextView.beginningOfDocument, to: aboutMeTextView.beginningOfDocument)
-        } else {
-            aboutMeTextView.text = user.personalText
-        }
     }
     
     fileprivate func fetchPassions() {
@@ -252,26 +250,73 @@ extension AboutViewController: UITextViewDelegate {
 // MARK: - UITableViewDataSource
 extension AboutViewController: UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return passions?.count ?? 0
+        guard let section = Sections(rawValue: section) else {
+            return 0
+        }
+        
+        switch (section) {
+        case .introduceYourself:
+            return 2
+        case .passions:
+            return passions?.count ?? 0 + 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //let interest = interests![indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: AboutTableViewCell.identifier, for: indexPath) as! AboutTableViewCell
         
-        let passion = passions![indexPath.row]
-        
-        cell.delegate = self
-        cell.titleLabel.text = passion.displayName
-        
-        if let index = selectedPassion[passion.objectId] {
-            cell.selectedIndex = index
-        } else {
-            cell.selectedIndex = -1
+        guard let section = Sections(rawValue: indexPath.section) else {
+            return UITableViewCell()
         }
         
-        return cell
+        let cellId = section.cellId(for: indexPath.row)
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
+        
+        switch section {
+        case .passions:
+            if indexPath.row == 0 {
+                return cell
+            } else {
+                let typeCell = cell as! AboutTableViewCell
+                let passion = passions![indexPath.row]
+                
+                typeCell.delegate = self
+                typeCell.titleLabel.text = passion.displayName
+                
+                if let index = selectedPassion[passion.objectId] {
+                    typeCell.selectedIndex = index
+                } else {
+                    typeCell.selectedIndex = -1
+                }
+                
+                return typeCell
+            }
+        case .introduceYourself:
+            if indexPath.row == 0 {
+                let typeCell = cell as! AboutInputTableViewCell
+                
+                typeCell.textView.delegate = self
+                
+                if user.personalText.numberOfCharactersWithoutSpaces() == 0 {
+                    typeCell.textView.text = Constants.placeholderText
+                    typeCell.textView.textColor = Constants.placeholderTextColor
+                    typeCell.textView.selectedTextRange = typeCell.textView.textRange(from: typeCell.textView.beginningOfDocument, to: typeCell.textView.beginningOfDocument)
+                } else {
+                    typeCell.textView.text = user.personalText
+                }
+                
+                return typeCell
+            } else {
+                let typeCell = cell as! AboutSaveTableViewCell
+               typeCell.delegate = self
+                
+                return typeCell
+            }
+        }
     }
 }
 
@@ -279,7 +324,30 @@ extension AboutViewController: UITableViewDataSource {
 extension AboutViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return Constants.cellHeight
+        guard let section = Sections(rawValue: indexPath.section) else {
+            return 0.0
+        }
+        return section.cellHeight(for: indexPath.row)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        guard let section = Sections(rawValue: section) else {
+            return 0.0
+        }
+        return section.height
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let section = Sections(rawValue: section) else {
+            return nil
+        }
+        
+        let headerView: SettingsHeaderView = tableView.dequeueReusableHeaderFooterView(withIdentifier: section.headerViewId)
+        
+        headerView.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: tableView.frame.width, height: section.height))
+        headerView.titleLabel.text = section.title
+        headerView.titleLabel.textColor = HexColor("1f4ba5")!
+        return headerView
     }
 }
 
@@ -320,5 +388,32 @@ extension AboutViewController: AboutTableViewCellDelegate {
         
         user.assignPassionIds(dict: selectedPassion)
         UserProvider.updateUser(user: user, completion: nil)
+    }
+}
+
+// MARK: - AboutSaveTableViewCellDelegate
+extension AboutViewController: AboutSaveTableViewCellDelegate {
+    
+    func aboutSaveCell(cell: AboutSaveTableViewCell, didClickedOnSave button: UIButton) {
+        
+        view.endEditing(true)
+        
+        showBlackLoader()
+        
+        let currentUser = UserProvider.shared.currentUser!
+        UserProvider.updateUser(user: currentUser) { [weak self] (result) in
+            switch(result) {
+            case .success(_):
+                
+                SVProgressHUD.showSuccess(withStatus: LocalizableString.Success.localizedString)
+                break
+            case .failure(let error):
+                
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                break
+            default:
+                break
+            }
+        }
     }
 }

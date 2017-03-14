@@ -121,7 +121,6 @@ class MomentsTabsViewController: BasicViewController {
         alertView.addAction(UIAlertAction(title: LocalizableString.PhotoLibrary.localizedString, style: UIAlertActionStyle.default, handler: {
             (alert: UIAlertAction!) -> Void in
             
-            imagePicker.allowsEditing = true
             imagePicker.videoQuality = UIImagePickerControllerQualityType.typeHigh
             imagePicker.videoMaximumDuration = 14
             imagePicker.sourceType = .photoLibrary
@@ -134,7 +133,6 @@ class MomentsTabsViewController: BasicViewController {
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) == true {
             alertView.addAction(UIAlertAction(title: LocalizableString.TakeAPhotoVideo.localizedString, style: UIAlertActionStyle.default, handler: {
                 (alert: UIAlertAction!) -> Void in
-                imagePicker.allowsEditing = true
                 imagePicker.sourceType = .camera
                 imagePicker.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String]
                 imagePicker.modalPresentationStyle = .popover

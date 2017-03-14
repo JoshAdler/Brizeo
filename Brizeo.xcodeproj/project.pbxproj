@@ -136,6 +136,9 @@
 		BB7AD2611E48C33500502AE2 /* LikerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7AD2601E48C33500502AE2 /* LikerView.swift */; };
 		BB7AD2641E48C3CC00502AE2 /* LikesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7AD2631E48C3CC00502AE2 /* LikesTableViewCell.swift */; };
 		BB7EAEAF1E607848007986CD /* ALChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7EAEAE1E607848007986CD /* ALChatManager.swift */; };
+		BB834A981E7829D80051EEC4 /* AboutSaveTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB834A971E7829D80051EEC4 /* AboutSaveTableViewCell.swift */; };
+		BB834A9A1E782B5D0051EEC4 /* AboutInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB834A991E782B5D0051EEC4 /* AboutInputTableViewCell.swift */; };
+		BB834A9C1E782D690051EEC4 /* AboutTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB834A9B1E782D690051EEC4 /* AboutTitleTableViewCell.swift */; };
 		BB8B6AD61E51047A00417D54 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB8B6AD41E51047A00417D54 /* Main.storyboard */; };
 		BBA2DB351E7157760066B84B /* NSDate+Kogi.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA2DB341E7157760066B84B /* NSDate+Kogi.m */; };
 		BBA2DB3A1E715AB00066B84B /* notification_sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = BBA2DB391E715AB00066B84B /* notification_sound.wav */; };
@@ -326,6 +329,9 @@
 		BB7AD2631E48C3CC00502AE2 /* LikesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikesTableViewCell.swift; sourceTree = "<group>"; };
 		BB7EAEAB1E6077E9007986CD /* Applozic.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Applozic.framework; sourceTree = "<group>"; };
 		BB7EAEAE1E607848007986CD /* ALChatManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ALChatManager.swift; sourceTree = "<group>"; };
+		BB834A971E7829D80051EEC4 /* AboutSaveTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutSaveTableViewCell.swift; sourceTree = "<group>"; };
+		BB834A991E782B5D0051EEC4 /* AboutInputTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutInputTableViewCell.swift; sourceTree = "<group>"; };
+		BB834A9B1E782D690051EEC4 /* AboutTitleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutTitleTableViewCell.swift; sourceTree = "<group>"; };
 		BB8B6AD51E51047A00417D54 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BBA2DB331E7157760066B84B /* NSDate+Kogi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+Kogi.h"; path = "KogiDate/NSDate+Kogi.h"; sourceTree = "<group>"; };
 		BBA2DB341E7157760066B84B /* NSDate+Kogi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+Kogi.m"; path = "KogiDate/NSDate+Kogi.m"; sourceTree = "<group>"; };
@@ -660,6 +666,9 @@
 			isa = PBXGroup;
 			children = (
 				BB099F0E1E3F6E0500133794 /* AboutTableViewCell.swift */,
+				BB834A971E7829D80051EEC4 /* AboutSaveTableViewCell.swift */,
+				BB834A991E782B5D0051EEC4 /* AboutInputTableViewCell.swift */,
+				BB834A9B1E782D690051EEC4 /* AboutTitleTableViewCell.swift */,
 				BBD428161E41D63600DA6E6C /* OtherPersonAboutTextTableViewCell.swift */,
 				BBD428181E41DDFD00DA6E6C /* OtherPersonAboutInviteTableViewCell.swift */,
 				BBD4281A1E41DE5100DA6E6C /* OtherPersonAboutInfoTableViewCell.swift */,
@@ -1349,6 +1358,8 @@
 				BB22CF9D1E5081790096A3D3 /* BranchProvider.swift in Sources */,
 				BB22CF991E5072290096A3D3 /* DatePickerDialog.swift in Sources */,
 				BB4ED5FB1E3C0B38005B3487 /* SettingsNormalHeaderView.swift in Sources */,
+				BB834A981E7829D80051EEC4 /* AboutSaveTableViewCell.swift in Sources */,
+				BB834A9C1E782D690051EEC4 /* AboutTitleTableViewCell.swift in Sources */,
 				BB1EF48C1E3AAAAC00231ACC /* EventsViewController.swift in Sources */,
 				BB22CF911E4CBFDD0096A3D3 /* VerticallyCenteredTextView.swift in Sources */,
 				BB3EF58C1E6D672F006FB2ED /* InfoProvider.swift in Sources */,
@@ -1429,6 +1440,7 @@
 				BB64089B1E42948600C4D5F4 /* SpacingTextField.swift in Sources */,
 				BBBA1DD31E74B07A000C55B8 /* FirstEntranceProvider.swift in Sources */,
 				BB09A6AC1E660D4C0020F8C5 /* OtherPersonAboutInvitedByTableViewCell.swift in Sources */,
+				BB834A9A1E782B5D0051EEC4 /* AboutInputTableViewCell.swift in Sources */,
 				88B569021CD904E3003A21EE /* PreferencesProvider.swift in Sources */,
 				BB104CE81E3F87370082411E /* TripsTableViewCell.swift in Sources */,
 				88B568FF1CD904D0003A21EE /* UserProvider.swift in Sources */,
