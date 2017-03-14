@@ -121,11 +121,13 @@ class AboutViewController: UIViewController {
         keyboard
             .on(event: .willHide, do: { (options) in
                 UIView.animate(withDuration: options.animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(options.animationCurve.rawValue)), animations: {
+//                    self.passionsTableView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: self.passionsTableView.frame.size)
                     self.passionsTableView.contentSize = CGSize(width: self.passionsTableView.contentSize.width, height: self.passionsTableView.contentSize.height - options.endFrame.height)
                 }, completion: nil)
             })
             .on(event: .willShow, do: { (options) in
                 UIView.animate(withDuration: options.animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(options.animationCurve.rawValue)), animations: {
+                    //self.passionsTableView.frame = CGRect(origin: CGPoint(x: 0, y: -options.endFrame.height), size: self.passionsTableView.frame.size)
                     self.passionsTableView.contentSize = CGSize(width: self.passionsTableView.contentSize.width, height: self.passionsTableView.contentSize.height + options.endFrame.height)
                 }, completion: nil)
             })
