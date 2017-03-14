@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'DF2564819C0923BEC969E01249AAF091'
-               BlueprintName = 'ZTDropDownTextField'
+               BlueprintIdentifier = '4E124C40B5E6AF92F87BDBDF915E2603'
+               BlueprintName = 'KMPlaceholderTextView'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'ZTDropDownTextField.framework'>
+               BuildableName = 'KMPlaceholderTextView.framework'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

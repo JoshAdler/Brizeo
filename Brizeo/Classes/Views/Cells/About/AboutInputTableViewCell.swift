@@ -7,10 +7,15 @@
 //
 
 import UIKit
+import KMPlaceholderTextView
 
 class AboutInputTableViewCell: UITableViewCell {
 
     // MARK: - Properties
     
-    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var textView: KMPlaceholderTextView! {
+        didSet {
+            textView.placeholder = LocalizableString.SaySomethingAboutYourself.localizedString
+        }
+    }
 }

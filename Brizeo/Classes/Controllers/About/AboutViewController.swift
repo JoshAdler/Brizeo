@@ -16,7 +16,6 @@ class AboutViewController: UIViewController {
     // MARK: - Types
     
     struct Constants {
-        static let placeholderText = LocalizableString.TypeHere.localizedString
         static let placeholderTextColor = HexColor("dbdbdb")
         static let defaultTextColor = UIColor.black
         static let headerViewHeight: CGFloat = 54.0
@@ -122,12 +121,12 @@ class AboutViewController: UIViewController {
         keyboard
             .on(event: .willHide, do: { (options) in
                 UIView.animate(withDuration: options.animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(options.animationCurve.rawValue)), animations: {
-                    self.view.frame.origin.y = 0
+                    self.passionsTableView.contentSize = CGSize(width: self.passionsTableView.contentSize.width, height: self.passionsTableView.contentSize.height - options.endFrame.height)
                 }, completion: nil)
             })
             .on(event: .willShow, do: { (options) in
                 UIView.animate(withDuration: options.animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(options.animationCurve.rawValue)), animations: {
-                    self.view.frame.origin.y -= options.endFrame.height
+                    self.passionsTableView.contentSize = CGSize(width: self.passionsTableView.contentSize.width, height: self.passionsTableView.contentSize.height + options.endFrame.height)
                 }, completion: nil)
             })
             .start()
@@ -215,37 +214,7 @@ class AboutViewController: UIViewController {
 }
 
 // MARK: - UITextViewDelegate
-extension AboutViewController: UITextViewDelegate {
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        
-        let currentText = textView.text as NSString?
-        let updatedText = currentText?.replacingCharacters(in: range, with: text)
-        
-        if let updatedText = updatedText, !updatedText.isEmpty  {
-            if textView.textColor == Constants.placeholderTextColor && !text.isEmpty {
-                textView.text = nil
-                textView.textColor = Constants.defaultTextColor
-            }
-        } else {
-            textView.text = Constants.placeholderText
-            textView.textColor = Constants.placeholderTextColor
-            
-            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
-            
-            return false
-        }
-        return true
-    }
-    
-    func textViewDidChangeSelection(_ textView: UITextView) {
-        if self.view.window != nil {
-            if textView.textColor == UIColor.lightGray {
-                textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
-            }
-        }
-    }
-}
+extension AboutViewController: UITextViewDelegate {}
 
 // MARK: - UITableViewDataSource
 extension AboutViewController: UITableViewDataSource {
@@ -300,14 +269,7 @@ extension AboutViewController: UITableViewDataSource {
                 let typeCell = cell as! AboutInputTableViewCell
                 
                 typeCell.textView.delegate = self
-                
-                if user.personalText.numberOfCharactersWithoutSpaces() == 0 {
-                    typeCell.textView.text = Constants.placeholderText
-                    typeCell.textView.textColor = Constants.placeholderTextColor
-                    typeCell.textView.selectedTextRange = typeCell.textView.textRange(from: typeCell.textView.beginningOfDocument, to: typeCell.textView.beginningOfDocument)
-                } else {
-                    typeCell.textView.text = user.personalText
-                }
+                typeCell.textView.text = user.personalText
                 
                 return typeCell
             } else {
@@ -346,7 +308,7 @@ extension AboutViewController: UITableViewDelegate {
         
         headerView.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: tableView.frame.width, height: section.height))
         headerView.titleLabel.text = section.title
-        headerView.titleLabel.textColor = HexColor("1f4ba5")!
+        headerView.titleLabel.textColor = HexColor("5f5f5f")!
         return headerView
     }
 }

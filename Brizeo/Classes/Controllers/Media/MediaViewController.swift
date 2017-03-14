@@ -73,6 +73,8 @@ class MediaViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+        
         descriptionTextView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
     }
     

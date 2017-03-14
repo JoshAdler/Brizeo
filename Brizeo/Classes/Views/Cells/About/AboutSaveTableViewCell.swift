@@ -20,6 +20,7 @@ class AboutSaveTableViewCell: UITableViewCell {
     @IBOutlet weak var saveButton: UIButton! {
         didSet {
             saveButton.setTitle(LocalizableString.Save.localizedString, for: .normal)
+            saveButton.layer.cornerRadius = 7.0
         }
     }
     weak var delegate: AboutSaveTableViewCellDelegate?
