@@ -15,6 +15,11 @@ import Moya
 import Moya_ObjectMapper
 import FBSDKShareKit
 
+enum UpdateFileType: String {
+    case main
+    case other
+}
+
 class UserProvider: NSObject {
     
     // MARK: - Types
@@ -201,6 +206,17 @@ class UserProvider: NSObject {
                 }
             })
         }
+    }
+    
+    class func updateUserFile(file: FileObject?, type: UpdateFileType, oldURL: String?, completion: EmptyCompletion) {
+        
+        guard let currentUser = UserProvider.shared.currentUser else {
+            print("Error: Can't like moment without current user")
+            completion(.failure(APIError(code: 0, message: "Can't update current user")))
+            return
+        }
+        
+        
     }
     
     class func getUserWithStatus(for searchedUserId: String, completion: @escaping UserCompletion) {

@@ -19,6 +19,7 @@ class FileObjectInfo: NSObject {
     
     // MARK: - Properties
     
+    var image: UIImage?
     var name: String?
     var url: String?
     
@@ -31,5 +32,13 @@ class FileObjectInfo: NSObject {
     
     init(url: String) {
         self.url = url
+    }
+    
+    init(url: URL) {
+        self.url = url.absoluteString
+    }
+    
+    init(image: UIImage) {
+        self.image = image
     }
 }

@@ -49,6 +49,19 @@ class FileObject: NSObject {
         return  nil
     }
     
+    var mainUrl: String? {
+        
+        if let url = videoFile?.url { // video url
+            return url
+        }
+        
+        if let url = imageFile?.url { // image url
+            return url
+        }
+        
+        return  nil
+    }
+    
     // MARK: - Init methods
     
     init(with JSON: [String: Any]) {

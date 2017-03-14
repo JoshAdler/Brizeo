@@ -17,6 +17,7 @@ enum APIService {
     case updateUser(user: User)
     case getUserWithStatus(currentUserId: String, searchedUserId: String)
     case reportUser(reporterId: String, reportedId: String)
+    case updateUserFile(file: FileObject?, userId: String, type: String, oldURL: String?)
     
     // preferences
     case getPreferences(userId: String)
@@ -66,6 +67,8 @@ extension APIService: TargetType {
             return "/users"
         case .updateUser(let user):
             return "/users/\(user.objectId)"
+        case .updateUserFile(_, let userId, let type, _):
+            return "upload/\(userId)/\(type)"
         case .getUserWithStatus(let currentUserId, let searchedUserId):
             return "/match/\(currentUserId)/\(searchedUserId)"
         case .reportUser(let reporterId, let reportedId):
@@ -111,7 +114,7 @@ extension APIService: TargetType {
 
     var method: Moya.Method {
         switch self {
-        case .createNewUser(_), .reportMoment(_, _), .reportUser(_, _), .notifyAdminAboutDownloads(_, _), .approveMatch(_, _):
+        case .createNewUser(_), .reportMoment(_, _), .reportUser(_, _), .notifyAdminAboutDownloads(_, _), .approveMatch(_, _), .updateUserFile(_, _, _, _):
             return .post
         case .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .createNewMoment(_), .likeMoment(_, _), .updateMoment(_):
             return .put
@@ -142,6 +145,11 @@ extension APIService: TargetType {
         case .createNewMoment(let moment), .updateMoment(let moment):
             let dict = ["newmoment": moment.toJSON()]
             return dict
+        case .updateUserFile(_, _, _, let oldURL):
+            if let oldURL = oldURL {
+                return ["oldurl ": oldURL]
+            }
+            return nil
         default:
             return nil
         }
@@ -179,6 +187,25 @@ extension APIService: TargetType {
             }
 
             return formDataArray
+        case .updateUserFile(let file, _, _, _):
+            var formDataArray = [MultipartFormData]()
+            
+            if let image = file?.imageFile?.image, let imageData = UIImagePNGRepresentation(image) {
+                let formData = MultipartFormData(provider: .data(imageData), name: "uploadFile", fileName: "uploadFile.jpg", mimeType: "image/jpeg")
+                formDataArray.append(formData)
+            }
+            
+            if let videoURL = file?.videoFile?.url {
+                let formData = MultipartFormData(provider: .file(URL(string: videoURL)!), name: "uploadFile", fileName: "uploadFile.mov", mimeType: "video/quicktime")
+                formDataArray.append(formData)
+            }
+            
+            if let thumbnail = file?.thumbFile?.image, let thumbnailData = UIImagePNGRepresentation(thumbnail) {
+                let formData = MultipartFormData(provider: .data(thumbnailData), name: "thumbnailImage", fileName: "thumbnailImage.jpg", mimeType: "image/jpeg")
+                formDataArray.append(formData)
+            }
+            
+            return formDataArray
         default:
             return nil
         }
@@ -190,6 +217,8 @@ extension APIService: TargetType {
     var task: Task {
         switch self {
         case .createNewMoment:
+            return .upload(UploadType.multipart(multipartBody!))
+        case .updateUserFile(_, _, _, _):
             return .upload(UploadType.multipart(multipartBody!))
             default:
             return .request

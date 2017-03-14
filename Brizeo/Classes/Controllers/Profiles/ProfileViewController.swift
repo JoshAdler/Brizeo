@@ -49,6 +49,7 @@ class ProfileViewController: UIViewController {
     var user: User!
     var indexOfMediaToChange = -1
     var uploadUserHelpView: FirstEntranceUserView?
+    var updateFileType: UpdateFileType = .main
     
     var bottomSpaceHeight: CGFloat {
         return bottomView.frame.height
@@ -79,11 +80,13 @@ class ProfileViewController: UIViewController {
     }
     
     @IBAction func onPhotoButtonClicked(_ sender: UIButton) {
+        updateFileType = .main
         indexOfMediaToChange = 0 // profile media
         showNewMediaAlert(with: .photo)
     }
     
     @IBAction func onVideoButtonClicked(_ sender: UIButton) {
+        updateFileType = .main
         indexOfMediaToChange = 0 // profile media
         showNewMediaAlert(with: .video)
     }
@@ -296,23 +299,32 @@ extension ProfileViewController: UICollectionViewDelegateFlowLayout {
 extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        
-//        if User.current()?.uploadImages?.count == 1 {
-//            self.shouldGotoMomentView = true
-//        }
-//        
-        
+
         picker.dismiss(animated: true, completion: nil)
         
+        // create file
+        var file: FileObject
+        
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-        //      createNewMoment(with: pickedImage, videoURL: nil)
-            return
+            let fileInfo = FileObjectInfo(image: pickedImage)
+            file = FileObject(info: fileInfo)
         }
         
         if let videoURL = info[UIImagePickerControllerMediaURL] as? URL {
-        //    createNewMoment(with: nil, videoURL: videoURL)
-            return
+            let thumbnailFileInfo = FileObjectInfo(image: Helper.generateThumbnail(from: videoURL)!)
+            let fileInfo = FileObjectInfo(url: videoURL)
+            file = FileObject(thumbnailImage: thumbnailFileInfo, videoInfo: fileInfo)
         }
+        
+        // get old url/new file
+        var oldUrl: String? = nil
+        if indexOfMediaToChange != -1 {
+            if indexOfMediaToChange < (user.uploadFiles?.count ?? 0) {
+                oldUrl = user.uploadFiles?[indexOfMediaToChange].mainUrl
+            }
+        }
+        
+        UserProvider.updateUserFile(file: file, userId: UserProvider.shared.currentUser!.objectId, type: updateFileType, oldURL: oldUrl)
         
         
 //        if let chosenImage: UIImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
@@ -378,6 +390,7 @@ extension ProfileViewController: ProfileImageCollectionViewCellDelegate {
             return
         }
         
+        updateFileType = .other
         indexOfMediaToChange = indexPath.row
         showNewMediaAlert(with: .photoVideoDelete)
     }
