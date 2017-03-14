@@ -2,25 +2,39 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>TRACKING_ID</key>
-	<string>UA-77381081-1</string>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>663020025161-o990edgspjumh9f3ecfjnbfuf351rsk2.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.663020025161-o990edgspjumh9f3ecfjnbfuf351rsk2</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCL5q8MyIuwox8xpQpfAJ4ZCfUxNL4L3KM</string>
+	<key>GCM_SENDER_ID</key>
+	<string>663020025161</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.brizeo</string>
 	<key>PROJECT_ID</key>
-	<string>brizeo-1302</string>
+	<string>brizeo-7571c</string>
+	<key>STORAGE_BUCKET</key>
+	<string>brizeo-7571c.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false/>
-	<key>IS_ANALYTICS_ENABLED</key>
 	<true/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
 	<key>IS_APPINVITE_ENABLED</key>
 	<false/>
 	<key>IS_GCM_ENABLED</key>
-	<false/>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<false/>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:63488105381:ios:f10f682e8008ad67</string>
+	<string>1:663020025161:ios:f10f682e8008ad67</string>
+	<key>DATABASE_URL</key>
+	<string>https://brizeo-7571c.firebaseio.com</string>
 </dict>
 </plist>
