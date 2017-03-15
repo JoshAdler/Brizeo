@@ -57,7 +57,7 @@ class LoginViewController: UIViewController {
     //MARK: - Private methods
     
     fileprivate func goNextToTabBar() {
-        let mainTabBarController = Helper.mainTabBarController()
+        let mainTabBarController = Helper.createMainTabBarController()
         mainTabBarController.selectedIndex = 2 /* select "Moments" tab" */
         
         Helper.initialNavigationController().pushViewController(mainTabBarController, animated: true)

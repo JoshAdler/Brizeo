@@ -105,8 +105,18 @@ class Helper: NSObject {
         }
     }
     
-    class func mainTabBarController() -> MainTabBarController {
+    class func createMainTabBarController() -> MainTabBarController {
         return controllerFromStoryboard(controllerId: StoryboardIds.mainTabBarControllerId)!
+    }
+    
+    class func mainTabBarController() -> MainTabBarController? {
+        if let navigationController = AppDelegate.shared().window?.rootViewController as? MainNavigationViewController {
+            if navigationController.viewControllers.count > 1 {
+                return navigationController.viewControllers[1] as? MainTabBarController
+            }
+        }
+        
+        return nil
     }
     
     class func carbonViewHeight() -> CGFloat {
@@ -135,6 +145,15 @@ class Helper: NSObject {
     
     class func goToInitialController(_ animated: Bool) {
         initialNavigationController().popToRootViewController(animated: animated)
+    }
+    
+    class func currentTabNavigationController() -> MainNavigationViewController? {
+        if let tabBarController = Helper.mainTabBarController() {
+            
+            let index = tabBarController.selectedIndex
+            return tabBarController.viewControllers?[index] as? MainNavigationViewController
+        }
+        return nil
     }
     
     // MARK: - Date methods

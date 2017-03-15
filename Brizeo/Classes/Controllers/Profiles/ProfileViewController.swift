@@ -69,13 +69,13 @@ class ProfileViewController: UIViewController {
         }
     }
     
-    // MARK: - Actions
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        Helper.mainTabBarController()?.tabBar.isHidden = true
+    }
     
-    //    @IBAction func addImageButtonTapped(_ sender: UIButton) {
-    //
-    //        userMediaCurrentIndex = 0
-    //        takePhotoOrVideo()
-    //    }
+    // MARK: - Actions
     
     @IBAction func onBottomButtonClicked(_ sender: UIButton) {
         delegate?.shouldShowDetails()
@@ -244,8 +244,10 @@ class ProfileViewController: UIViewController {
             alertView.addAction(cameraMedia)
         }
         
-        alertView.addAction(facebookAction)
-        alertView.addAction(instagramAction)
+        if source == .photo {
+            alertView.addAction(facebookAction)
+            alertView.addAction(instagramAction)
+        }
         
         if source == .photoVideoDelete {
             alertView.addAction(deleteMedia)
@@ -425,20 +427,23 @@ extension ProfileViewController: GBHFacebookImagePickerDelegate {
     func facebookImagePicker(imagePicker: UIViewController, imageModel: GBHFacebookImage) {
         print("Image URL : \(imageModel.fullSizeUrl), Image Id: \(imageModel.imageId)")
         
-        if let pickedImage = imageModel.image {
+        DispatchQueue.main.async {
             
-            // create file
-            let file: FileObject = FileObject(info: FileObjectInfo(image: pickedImage))
-            
-            // get old url/new file
-            var oldUrl: String? = nil
-            if self.indexOfMediaToChange != -1 {
-                if self.indexOfMediaToChange < (self.user.uploadFiles?.count ?? 0) {
-                    oldUrl = self.user.uploadFiles?[self.indexOfMediaToChange].mainUrl
+            if let pickedImage = imageModel.image {
+                
+                // create file
+                let file: FileObject = FileObject(info: FileObjectInfo(image: pickedImage))
+                
+                // get old url/new file
+                var oldUrl: String? = nil
+                if self.indexOfMediaToChange != -1 {
+                    if self.indexOfMediaToChange < (self.user.uploadFiles?.count ?? 0) {
+                        oldUrl = self.user.uploadFiles?[self.indexOfMediaToChange].mainUrl
+                    }
                 }
+                
+                self.uploadFile(file: file, self.updateFileType, oldUrl)
             }
-            
-            self.uploadFile(file: file, self.updateFileType, oldUrl)
         }
     }
     

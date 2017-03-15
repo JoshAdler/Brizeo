@@ -40,12 +40,6 @@ class GenderViewController: BasicViewController {
         registerViews()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        Helper.initialNavigationController().setNavigationBarHidden(false, animated: true)
-    }
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         

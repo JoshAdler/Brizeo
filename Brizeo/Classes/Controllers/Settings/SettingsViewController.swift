@@ -456,7 +456,7 @@ extension SettingsViewController: UITableViewDelegate {
                 genderController.user = user
                 genderController.preferences = preferences
                 
-                Helper.initialNavigationController().pushViewController(genderController, animated: true)
+                navigationController?.pushViewController(genderController, animated: true)
             }
             break
         default:

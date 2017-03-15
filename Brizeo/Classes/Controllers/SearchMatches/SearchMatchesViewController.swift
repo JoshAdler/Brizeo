@@ -42,7 +42,8 @@ class SearchMatchesViewController: BasicViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        Helper.initialNavigationController().setNavigationBarHidden(true, animated: animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+        Helper.mainTabBarController()?.tabBar.isHidden = false
         
         loadMatchesIfNeeds()
     }

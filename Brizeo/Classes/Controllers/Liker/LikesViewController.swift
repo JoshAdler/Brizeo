@@ -54,7 +54,7 @@ class LikesViewController: BasicViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        Helper.initialNavigationController().setNavigationBarHidden(true, animated: false)
+        Helper.mainTabBarController()?.tabBar.isHidden = false
         
         loadLikers()
     }
@@ -124,13 +124,11 @@ extension LikesViewController: UITableViewDelegate {
         if user.objectId == currentUser.objectId { // show my profile
             let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
             
-            Helper.initialNavigationController().pushViewController(profileController, animated: true)
-//            navigationController?.pushViewController(profileController, animated: true)
+            navigationController?.pushViewController(profileController, animated: true)
         } else {
             let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
             otherPersonProfileController.user = user
             
-            //Helper.initialNavigationController().pushViewController(otherPersonProfileController, animated: true)
             navigationController?.pushViewController(otherPersonProfileController, animated: true)
         }
     }
@@ -187,7 +185,7 @@ extension LikesViewController: LikesTableViewCellDelegate {
                     let matchingController: MatchViewController = Helper.controllerFromStoryboard(controllerId: "MatchViewController")!
                     matchingController.user = user
                     
-                    Helper.initialNavigationController().pushViewController(matchingController, animated: true)
+                    self.navigationController?.pushViewController(matchingController, animated: true)
                 }
                 
                 break

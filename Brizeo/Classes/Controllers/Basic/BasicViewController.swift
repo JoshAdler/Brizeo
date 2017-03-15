@@ -79,11 +79,11 @@ class BasicViewController: UIViewController {
     
     func onLeftButtonClicked(sender: UIBarButtonItem) {
         let personalController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.personalTabsController)!
-        /*navigationController?*/Helper.initialNavigationController().pushViewController(personalController, animated: true)
+        navigationController?.pushViewController(personalController, animated: true)
     }
     
     func onRightButtonClicked(sender: UIBarButtonItem) {
         let inviteFriendView: InviteFriendsView = InviteFriendsView.loadFromNib()
-        inviteFriendView.present(on: Helper.initialNavigationController().view)//navigationController!.view)
+        inviteFriendView.present(on: Helper.initialNavigationController().view)
     }
 }

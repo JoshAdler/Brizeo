@@ -117,7 +117,7 @@ class InviteFriendsView: UIView {
             
             let content = FBSDKAppInviteContent()
             content.appLinkURL = URL(string: url!)!
-            content.promotionText = LocalizableString.SharePersonMessage.localizedString
+            content.promotionText = LocalizableString.FacebookInviteMessage.localizedString
             content.appInvitePreviewImageURL = URL(string: Configurations.Invite.previewURL)
             
             FBSDKAppInviteDialog.show(from: Helper.initialNavigationController(), with: content, delegate: self)

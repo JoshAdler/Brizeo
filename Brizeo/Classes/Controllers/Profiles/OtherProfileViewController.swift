@@ -69,6 +69,7 @@ class OtherProfileViewController: BasicViewController {
         super.viewWillAppear(animated)
         
         navigationController?.setNavigationBarHidden(false, animated: animated)
+        tabBarController?.tabBar.isHidden = false
     }
     
     deinit {

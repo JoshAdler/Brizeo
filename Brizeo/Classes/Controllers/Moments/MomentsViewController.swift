@@ -92,6 +92,9 @@ class MomentsViewController: UIViewController {
             momentsTableView.isHidden = true
             loadMoments(with: true, removeOldMoments: false)
         }
+        
+        tabBarController?.tabBar.isHidden = false
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -421,7 +424,8 @@ class MomentsViewController: UIViewController {
         mediaController.isSharingEnabled = true
         mediaController.moment = moment
         
-        Helper.initialNavigationController().pushViewController(mediaController, animated: true)
+        let navigation = navigationController ?? Helper.currentTabNavigationController()
+        navigation?.pushViewController(mediaController, animated: true)
     }
     
     fileprivate func presentErrorAlert(momentId: String, message: String?) {
