@@ -213,14 +213,11 @@ extension UserMatchesViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         let user = matches[indexPath.row]
         
-        if user.isCurrent { // show my profile
-            let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
-            navigationController?.pushViewController(profileController, animated: true)
-        } else {
-            let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
-            otherPersonProfileController.user = user
-            navigationController?.pushViewController(otherPersonProfileController, animated: true)
-        }
+        let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
+        otherPersonProfileController.user = user
+        
+        let navigation = navigationController ?? Helper.currentTabNavigationController()
+        navigation?.pushViewController(otherPersonProfileController, animated: true)
     }
 }
 
