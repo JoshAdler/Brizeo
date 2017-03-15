@@ -25,8 +25,9 @@ class TripsViewController: UIViewController {
     
     var user: User!
 
+    fileprivate var searchBar: TripSearchBar?
     fileprivate var filteredCountries: [Country]?
-    fileprivate let searchController = UISearchController(searchResultsController: nil)
+//    fileprivate let searchController = UISearchController(searchResultsController: nil)
     
     // MARK: - Controller lifecycle
     
@@ -34,22 +35,16 @@ class TripsViewController: UIViewController {
         super.viewDidLoad()
 
         if user.isCurrent {
-            searchController.searchResultsUpdater = self
-            searchController.dimsBackgroundDuringPresentation = false
-            searchController.delegate = self
-            definesPresentationContext = true
-            tableView.tableHeaderView = searchController.searchBar
-            searchController.searchBar.placeholder = LocalizableString.SearchCountries.localizedString
-            searchController.searchBar.barTintColor = HexColor("e1e1e1")!
-            searchController.searchBar.setImage(#imageLiteral(resourceName: "ic_trip_search"), for: .search, state: .normal)
-            searchController.searchBar.tintColor = HexColor("5c6a76")!
+//            searchController.searchResultsUpdater = self
+//            searchController.dimsBackgroundDuringPresentation = false
+//            searchController.delegate = self
+//            definesPresentationContext = true
+//            
+            searchBar = TripSearchBar(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: view.frame.width, height: Constants.searchBarHeight)))
+            searchBar?.delegate = self
+            searchBar?.placeholder = LocalizableString.SearchCountries.localizedString
             
-            let textField = UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self])
-            textField.defaultTextAttributes = [
-                NSFontAttributeName: UIFont(name: "SourceSansPro-SemiboldIt"/*"SourceSansPro-Semibold"*/, size: 14)!
-            ]
-            
-            searchController.searchBar.frame = CGRect(origin: searchController.searchBar.frame.origin, size: CGSize(width: searchController.searchBar.frame.width, height: Constants.searchBarHeight))
+            tableView.tableHeaderView = searchBar
         }
         
         tableView.reloadData()
@@ -58,6 +53,12 @@ class TripsViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         activityIndicator.stopAnimating()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        view.endEditing(true)
     }
     
     // MARK: - Private methods
@@ -134,13 +135,17 @@ class TripsViewController: UIViewController {
             }
         })
     }
-}
-
-// MARK: - UISearchResultsUpdating
-extension TripsViewController: UISearchResultsUpdating {
     
-    func updateSearchResults(for searchController: UISearchController) {
-        filterContentForSearchText(searchText: searchController.searchBar.text!)
+    fileprivate func isSearchBarActive() -> Bool {
+        return searchBar?.isFirstResponder ?? false
+    }
+    
+    fileprivate func hideSearchBar() {
+        searchBar?.endEditing(true)
+        searchBar?.showsCancelButton = false
+        searchBar?.setNeedsDisplay()
+        searchBar?.text = nil
+        filterContentForSearchText(searchText: searchBar!.text!)
     }
 }
 
@@ -150,6 +155,27 @@ extension TripsViewController: UISearchControllerDelegate {
     func didDismissSearchController(_ searchController: UISearchController) {
         filteredCountries = nil
         tableView.reloadData()
+    }
+}
+
+// MARK: - UISearchBarDelegate
+extension TripsViewController: UISearchBarDelegate {
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        filterContentForSearchText(searchText: searchBar.text!)
+        searchBar.showsCancelButton = true
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        hideSearchBar()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filterContentForSearchText(searchText: searchBar.text!)
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        hideSearchBar()
     }
 }
 
@@ -219,7 +245,8 @@ extension TripsViewController: UITableViewDelegate {
             if !user.countries.contains(country) {
                 addCountry(country: country)
                 
-                searchController.isActive = false
+                hideSearchBar()
+                
                 self.filteredCountries = nil
                 tableView.reloadData()
             }

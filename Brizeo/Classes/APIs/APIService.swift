@@ -147,7 +147,7 @@ extension APIService: TargetType {
             return dict
         case .updateUserFile(_, _, _, let oldURL):
             if let oldURL = oldURL {
-                return ["oldurl ": oldURL]
+                return ["oldurl": oldURL]
             }
             return nil
         default:

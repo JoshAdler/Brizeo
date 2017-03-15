@@ -140,6 +140,7 @@
 		BB834A9A1E782B5D0051EEC4 /* AboutInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB834A991E782B5D0051EEC4 /* AboutInputTableViewCell.swift */; };
 		BB834A9C1E782D690051EEC4 /* AboutTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB834A9B1E782D690051EEC4 /* AboutTitleTableViewCell.swift */; };
 		BB8B6AD61E51047A00417D54 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB8B6AD41E51047A00417D54 /* Main.storyboard */; };
+		BBA0DC741E79408800F2BA6E /* TripSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA0DC731E79408800F2BA6E /* TripSearchBar.swift */; };
 		BBA2DB351E7157760066B84B /* NSDate+Kogi.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA2DB341E7157760066B84B /* NSDate+Kogi.m */; };
 		BBA2DB3A1E715AB00066B84B /* notification_sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = BBA2DB391E715AB00066B84B /* notification_sound.wav */; };
 		BBAA14181E744056002585C5 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAA14171E744056002585C5 /* LocationViewController.swift */; };
@@ -333,6 +334,7 @@
 		BB834A991E782B5D0051EEC4 /* AboutInputTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutInputTableViewCell.swift; sourceTree = "<group>"; };
 		BB834A9B1E782D690051EEC4 /* AboutTitleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutTitleTableViewCell.swift; sourceTree = "<group>"; };
 		BB8B6AD51E51047A00417D54 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		BBA0DC731E79408800F2BA6E /* TripSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripSearchBar.swift; sourceTree = "<group>"; };
 		BBA2DB331E7157760066B84B /* NSDate+Kogi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+Kogi.h"; path = "KogiDate/NSDate+Kogi.h"; sourceTree = "<group>"; };
 		BBA2DB341E7157760066B84B /* NSDate+Kogi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+Kogi.m"; path = "KogiDate/NSDate+Kogi.m"; sourceTree = "<group>"; };
 		BBA2DB391E715AB00066B84B /* notification_sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = notification_sound.wav; sourceTree = "<group>"; };
@@ -790,6 +792,7 @@
 				BB1FF6FD1E5204F8002343CE /* ChooseView.swift */,
 				BBBA1DD41E74BCF8000C55B8 /* FirstEntranceMomentView.swift */,
 				BBBA1DDA1E74CEB6000C55B8 /* FirstEntranceUserView.swift */,
+				BBA0DC731E79408800F2BA6E /* TripSearchBar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1461,6 +1464,7 @@
 				BB09A6AE1E66C08E0020F8C5 /* ChatProvider.swift in Sources */,
 				BB22CF9A1E5072290096A3D3 /* DropMenuButton.swift in Sources */,
 				BB7AD2641E48C3CC00502AE2 /* LikesTableViewCell.swift in Sources */,
+				BBA0DC741E79408800F2BA6E /* TripSearchBar.swift in Sources */,
 				BB4ED60A1E3C1328005B3487 /* SettingsRangeCell.swift in Sources */,
 				BB3EF58A1E6D55E5006FB2ED /* NotificationProvider.swift in Sources */,
 				BB1FF6ED1E51E4D2002343CE /* InviteFriendsView.swift in Sources */,

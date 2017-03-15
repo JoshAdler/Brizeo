@@ -314,6 +314,7 @@ extension ProfileViewController: UICollectionViewDelegate {
             
             navigationController?.pushViewController(mediaController, animated: true)
         } else { // plus button
+            updateFileType = .other
             showNewMediaAlert(with: .photoVideo)
         }
     }

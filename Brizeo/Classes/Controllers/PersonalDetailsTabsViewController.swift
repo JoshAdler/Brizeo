@@ -109,6 +109,8 @@ class PersonalDetailsTabsViewController: BasicViewController {
     // MARK: - Actions
     
     @IBAction func onCloseButtonClicked(_ sender: UIButton) {
+        view.endEditing(true)
+        
         UIView.animate(withDuration: 0.5, animations: { 
             self.view.frame = CGRect(origin: CGPoint(x: 0, y: self.view.frame.height - self.topView.frame.height), size: CGSize(width: self.view.frame.width, height: self.view.frame.height))
         }) { (isFinished) in
