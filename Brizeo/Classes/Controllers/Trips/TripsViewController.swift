@@ -12,6 +12,12 @@ import ChameleonFramework
 
 class TripsViewController: UIViewController {
 
+    // MARK: - Types
+    
+    struct Constants {
+        static let searchBarHeight: CGFloat = 73.0
+    }
+    
     // MARK: - Properties
 
     @IBOutlet fileprivate weak var tableView: UITableView!
@@ -34,6 +40,16 @@ class TripsViewController: UIViewController {
             definesPresentationContext = true
             tableView.tableHeaderView = searchController.searchBar
             searchController.searchBar.placeholder = LocalizableString.SearchCountries.localizedString
+            searchController.searchBar.barTintColor = HexColor("e1e1e1")!
+            searchController.searchBar.setImage(#imageLiteral(resourceName: "ic_trip_search"), for: .search, state: .normal)
+            searchController.searchBar.tintColor = HexColor("5c6a76")!
+            
+            let textField = UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self])
+            textField.defaultTextAttributes = [
+                NSFontAttributeName: UIFont(name: "SourceSansPro-SemiboldIt"/*"SourceSansPro-Semibold"*/, size: 14)!
+            ]
+            
+            searchController.searchBar.frame = CGRect(origin: searchController.searchBar.frame.origin, size: CGSize(width: searchController.searchBar.frame.width, height: Constants.searchBarHeight))
         }
         
         tableView.reloadData()

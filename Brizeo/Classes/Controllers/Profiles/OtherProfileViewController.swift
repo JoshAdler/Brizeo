@@ -383,12 +383,13 @@ class OtherProfileViewController: BasicViewController {
     }
     
     @IBAction func onDetailsButtonClicked(_ sender: UIButton) {
+        
         if detailsController == nil {
             detailsController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.detailsControllerId)!
             detailsController.user = user
             detailsController.mutualFriends = mutualFriends
             
-            detailsController.view.frame = CGRect(origin: CGPoint(x: 0, y: view.frame.height), size: CGSize(width: view.frame.width, height: view.frame.height))
+            detailsController.view.frame = CGRect(origin: CGPoint(x: 0, y: view.frame.height), size: CGSize(width: view.frame.width, height: view.frame.height - ThemeManager.tabbarHeight()))
             detailsController.view.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
         }
         
@@ -396,7 +397,7 @@ class OtherProfileViewController: BasicViewController {
         
         UIView.animate(withDuration: 0.5, animations: {
             self.detailsController.view.transform = CGAffineTransform.identity
-            self.detailsController.view.frame = CGRect(origin: CGPoint.zero, size: self.view.frame.size)
+            self.detailsController.view.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: self.view.frame.size.width, height: self.view.frame.size.height - ThemeManager.tabbarHeight()))
         }) { (isFinished) in
             self.detailsController.didControllerChangedPosition(completionHandler: nil)
         }

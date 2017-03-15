@@ -14,7 +14,7 @@ class OtherPersonAboutInfoTableViewCell: UITableViewCell {
     
     struct Constants {
         static let defaultColor = UIColor.black
-        static let defaultFontSize: CGFloat = 11.0
+        static let defaultFontSize: CGFloat = 14.0
     }
     
     // MARK: - Properties

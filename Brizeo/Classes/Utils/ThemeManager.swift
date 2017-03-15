@@ -56,4 +56,8 @@ class ThemeManager: NSObject {
         
         navigationItem.titleView = titleView
     }
+    
+    class func tabbarHeight() -> CGFloat {
+        return 49.0 /* standart height for tab bar */
+    }
 }

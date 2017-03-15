@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ChameleonFramework
 
 let mutualFriendsNotification = "mutualFriendsNotification"
 
@@ -15,10 +16,10 @@ class OtherPersonAboutViewController: UIViewController {
     // MARK: - Types
     
     struct Constants {
-        static let inviteCellHeight: CGFloat = 55.0
-        static let infoCellHeight: CGFloat = 117.0
-        static let invitedByCellHeight: CGFloat = 38.0
-        static let headerViewHeight: CGFloat = 38.0
+        static let inviteCellHeight: CGFloat = 70.0
+        static let infoCellHeight: CGFloat = 231.5
+        static let invitedByCellHeight: CGFloat = 60.0
+        static let headerViewHeight: CGFloat = 53.5
     }
     
     struct StoryboardIds {
@@ -42,7 +43,7 @@ class OtherPersonAboutViewController: UIViewController {
         registerHeaderViews()
         
         passionsTableView.rowHeight = UITableViewAutomaticDimension
-        passionsTableView.estimatedRowHeight = 55.0
+        passionsTableView.estimatedRowHeight = 100.0
         
         if mutualFriends == nil {
             fetchMutualFriends()
@@ -53,12 +54,6 @@ class OtherPersonAboutViewController: UIViewController {
             self.locationString = location
             self.passionsTableView.reloadSections(IndexSet(integer: 1), with: .automatic)
         }
-    }
-    
-    // MARK: - Actions
-    
-    @IBAction func onSaveButtonClicked(_ sender: UIButton!) {
-        
     }
     
     // MARK: - Private methods
@@ -94,6 +89,7 @@ extension OtherPersonAboutViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         if section == 1 { // details
             return user.hasInvitedByPerson ? 2 : 1 /* details with/out invited by */
         }
@@ -141,11 +137,13 @@ extension OtherPersonAboutViewController: UITableViewDataSource {
 extension OtherPersonAboutViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
         if indexPath.section == 0 { // text cell
             return UITableViewAutomaticDimension
         } else if indexPath.section == 1 { // info cell
             if indexPath.row == 0 { // details
-                return Constants.infoCellHeight
+                return UITableViewAutomaticDimension
+                //return Constants.infoCellHeight
             } else { // invited by
                 return Constants.invitedByCellHeight
             }
@@ -168,6 +166,7 @@ extension OtherPersonAboutViewController: UITableViewDelegate {
         }
         
         let headerView: SettingsBigHeaderView = tableView.dequeueReusableHeaderFooterView(withIdentifier: SettingsBigHeaderView.nibName)
+        headerView.titleLabel.textColor = HexColor("5f5f5f")!
         headerView.titleLabel.text = [LocalizableString.Details, LocalizableString.MutualFriends][section - 1].localizedString.uppercased()
         return headerView
     }
