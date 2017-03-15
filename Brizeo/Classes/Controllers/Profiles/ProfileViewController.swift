@@ -12,6 +12,8 @@ import AlamofireImage
 import MobileCoreServices
 import AVFoundation
 import SDWebImage
+import GBHFacebookImagePicker
+import InstagramImagePicker
 
 protocol ProfileViewControllerDelegate: class {
     func shouldShowDetails()
@@ -197,6 +199,25 @@ class ProfileViewController: UIViewController {
             self.uploadFile(file: nil, self.updateFileType, oldUrl)
         })
         
+        // action for facebook source
+        let facebookAction = UIAlertAction(title: LocalizableString.TakeAPhotoFromFacebook.localizedString, style: UIAlertActionStyle.default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            let picker = GBHFacebookImagePicker()
+            picker.presentFacebookAlbumImagePicker(from: self, delegate: self)
+        })
+        
+        // action for instagram source
+        let instagramAction = UIAlertAction(title: LocalizableString.TakeAPhotoFromInstagram.localizedString, style: UIAlertActionStyle.default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            guard let imagePicker = OLInstagramImagePickerController(clientId: Configurations.Instagram.clientId, secret: Configurations.Instagram.clientSecret, redirectURI: Configurations.Instagram.redirectURL) else {
+                print("Can't create instagram controller")
+                return
+            }
+            
+            imagePicker.delegate = self
+            self.present(imagePicker, animated: true, completion: nil)
+        })
+        
         let cancelAction = UIAlertAction(title: LocalizableString.Cancel.localizedString, style: UIAlertActionStyle.cancel, handler: nil)
         
         var alertTitle: String?
@@ -222,6 +243,9 @@ class ProfileViewController: UIViewController {
         if UIImagePickerController.isSourceTypeAvailable(.camera) == true {
             alertView.addAction(cameraMedia)
         }
+        
+        alertView.addAction(facebookAction)
+        alertView.addAction(instagramAction)
         
         if source == .photoVideoDelete {
             alertView.addAction(deleteMedia)
@@ -395,3 +419,98 @@ extension ProfileViewController: FirstEntranceUserViewDelegate {
     }
 }
 
+// MARK: - GBHFacebookImagePickerDelegate
+extension ProfileViewController: GBHFacebookImagePickerDelegate {
+    
+    func facebookImagePicker(imagePicker: UIViewController, imageModel: GBHFacebookImage) {
+        print("Image URL : \(imageModel.fullSizeUrl), Image Id: \(imageModel.imageId)")
+        
+        if let pickedImage = imageModel.image {
+            
+            // create file
+            let file: FileObject = FileObject(info: FileObjectInfo(image: pickedImage))
+            
+            // get old url/new file
+            var oldUrl: String? = nil
+            if self.indexOfMediaToChange != -1 {
+                if self.indexOfMediaToChange < (self.user.uploadFiles?.count ?? 0) {
+                    oldUrl = self.user.uploadFiles?[self.indexOfMediaToChange].mainUrl
+                }
+            }
+            
+            self.uploadFile(file: file, self.updateFileType, oldUrl)
+        }
+    }
+    
+    func facebookImagePicker(imagePicker: UIViewController, didFailWithError error: Error?) {
+        print("Cancelled Facebook Album picker with error")
+        print(error.debugDescription)
+    }
+    
+    func facebookImagePicker(didCancelled imagePicker: UIViewController) {
+        print("Cancelled Facebook Album picker")
+    }
+    
+    func facebookImagePickerDismissed() {
+        print("Picker dismissed")
+    }
+}
+
+// MARK: - OLInstagramImagePickerControllerDelegate
+extension ProfileViewController: OLInstagramImagePickerControllerDelegate {
+    
+    func instagramImagePickerDidCancelPickingImages(_ imagePicker: OLInstagramImagePickerController!) {
+        imagePicker.dismiss(animated: true, completion: nil)
+    }
+    
+    func instagramImagePicker(_ imagePicker: OLInstagramImagePickerController!, didFailWithError error: Error!) {
+        imagePicker.dismiss(animated: true, completion: nil)
+    }
+    
+    func instagramImagePicker(_ imagePicker: OLInstagramImagePickerController!, didSelect image: OLInstagramImage!) {
+    }
+    
+    func instagramImagePicker(_ imagePicker: OLInstagramImagePickerController!, didFinishPickingImages images: [Any]!) {
+        
+        imagePicker.dismiss(animated: true, completion: nil)
+        
+        guard images.count > 0 else {
+            print("No image selected")
+            return
+        }
+        
+        guard let instagramImage = images.first as? OLInstagramImage else {
+            return
+        }
+        
+        showBlackLoader()
+        
+        // load image
+        SDWebImageManager.shared().downloadImage(with: instagramImage.fullURL, options: SDWebImageOptions.highPriority, progress: { (currentBytes, totalBytes) in
+        }) { (image, error, cacheType, finished, url) in
+            DispatchQueue.main.async {
+                self.hideLoader()
+                
+                if image != nil {
+                    
+                    // create file
+                    let file: FileObject = FileObject(info: FileObjectInfo(image: image!))
+                    
+                    // get old url/new file
+                    var oldUrl: String? = nil
+                    if self.indexOfMediaToChange != -1 {
+                        if self.indexOfMediaToChange < (self.user.uploadFiles?.count ?? 0) {
+                            oldUrl = self.user.uploadFiles?[self.indexOfMediaToChange].mainUrl
+                        }
+                    }
+                    
+                    self.uploadFile(file: file, self.updateFileType, oldUrl)
+                }
+            }
+        }
+    }
+    
+    func instagramImagePicker(_ imagePicker: OLInstagramImagePickerController!, shouldSelect image: OLInstagramImage!) -> Bool {
+        return (imagePicker.selected.count < 1)
+    }
+}

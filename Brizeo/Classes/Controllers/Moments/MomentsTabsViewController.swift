@@ -147,7 +147,7 @@ class MomentsTabsViewController: BasicViewController {
             let picker = GBHFacebookImagePicker()
             picker.presentFacebookAlbumImagePicker(from: self, delegate: self)
         }))
-        //TODO: use correct instagram credentials
+        
         // instagram source
         alertView.addAction(UIAlertAction(title: LocalizableString.TakeAPhotoFromInstagram.localizedString, style: UIAlertActionStyle.default, handler: {
             (alert: UIAlertAction!) -> Void in
