@@ -25,9 +25,8 @@ class TripsViewController: UIViewController {
     
     var user: User!
 
-    fileprivate var searchBar: TripSearchBar?
+    fileprivate var searchBar: CustomSearchBar?
     fileprivate var filteredCountries: [Country]?
-//    fileprivate let searchController = UISearchController(searchResultsController: nil)
     
     // MARK: - Controller lifecycle
     
@@ -35,12 +34,7 @@ class TripsViewController: UIViewController {
         super.viewDidLoad()
 
         if user.isCurrent {
-//            searchController.searchResultsUpdater = self
-//            searchController.dimsBackgroundDuringPresentation = false
-//            searchController.delegate = self
-//            definesPresentationContext = true
-//            
-            searchBar = TripSearchBar(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: view.frame.width, height: Constants.searchBarHeight)))
+            searchBar = CustomSearchBar(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: view.frame.width, height: Constants.searchBarHeight)))
             searchBar?.delegate = self
             searchBar?.placeholder = LocalizableString.SearchCountries.localizedString
             
@@ -66,7 +60,7 @@ class TripsViewController: UIViewController {
     fileprivate func rightUtilityButtons() -> [AnyObject] {
         if user.isCurrent {
             let rightUtilityButtons = NSMutableArray()
-            rightUtilityButtons.sw_addUtilitySpecialDeleteButton(with: HexColor("2f9bd6")!, title: LocalizableString.Delete.localizedString)
+            rightUtilityButtons.sw_addUtilityButton(with: .clear, icon: #imageLiteral(resourceName: "ic_deleteButton"))
             return rightUtilityButtons as [AnyObject]
         }
         return []

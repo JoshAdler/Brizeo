@@ -20,6 +20,7 @@ class UserMatchesViewController: UIViewController {
     
     struct Constants {
         static let blueColor = HexColor("408FDC")
+        static let searchBarHeight: CGFloat = 45.0
     }
     
     struct StoryboardIds {
@@ -31,6 +32,11 @@ class UserMatchesViewController: UIViewController {
     // MARK: - Properties
     
     @IBOutlet fileprivate weak var tableView: UITableView!
+    @IBOutlet fileprivate weak var customSearchBar: CustomSearchBar! {
+        didSet {
+            customSearchBar.placeholder = LocalizableString.Search.localizedString
+        }
+    }
     @IBOutlet weak var titleLabel: UILabel! {
         didSet {
             titleLabel.text = LocalizableString.SwipeLeftToChat.localizedString
@@ -42,6 +48,7 @@ class UserMatchesViewController: UIViewController {
     fileprivate var topRefresher: UIRefreshControl!
     fileprivate var matches = [User]()
     fileprivate var paginator = PaginationHelper(pagesSize: 100)
+    fileprivate var filteredUsers: [User]?
     
     // MARK: - Controller lifecycle
     
@@ -77,7 +84,7 @@ class UserMatchesViewController: UIViewController {
                 case .success(let users):
                     welf.matches = users
                     //                self.paginator.addNewElements(&self.matches, newElements: value)
-                    welf.tableView.reloadData()
+                    welf.filterContentForSearchText(searchText: "")
                     break
                 case .failure(let error):
                     SVProgressHUD.showError(withStatus: error.localizedDescription)
@@ -92,10 +99,59 @@ class UserMatchesViewController: UIViewController {
     
     // MARK: - Private methods
     
+    fileprivate func filterContentForSearchText(searchText: String) {
+        if searchText.numberOfCharactersWithoutSpaces() == 0 {
+            filteredUsers = matches
+        } else {
+            filteredUsers = matches.filter {
+                $0.displayName.lowercased().contains(searchText.lowercased())
+            }
+        }
+        
+        tableView.reloadData()
+    }
+    
     fileprivate func rightUtilsButtons() -> [AnyObject] {
         let rightUtilityButtons = NSMutableArray()
-        rightUtilityButtons.sw_addUtilityButton(with: UIColor.blue, title: LocalizableString.Chat.localizedString)
+        rightUtilityButtons.sw_addUtilityButton(with: .clear, icon: #imageLiteral(resourceName: "ic_delete_button_matches"))
+        rightUtilityButtons.sw_addUtilityButton(with: .clear, icon: #imageLiteral(resourceName: "ic_chat_button_matches"))
         return rightUtilityButtons as [AnyObject]
+    }
+    
+    fileprivate func hideSearchBar() {
+        customSearchBar?.endEditing(true)
+        customSearchBar?.showsCancelButton = false
+        customSearchBar?.setNeedsDisplay()
+        customSearchBar?.text = nil
+        filterContentForSearchText(searchText: "")
+    }
+    
+    fileprivate func declineUser(user: User) {
+        showBlackLoader()
+        
+        MatchesProvider.declineMatch(for: user) { [weak self] (result) in
+            
+            if let welf = self {
+                
+                switch(result) {
+                case .success(_):
+                    
+                    welf.hideLoader()
+                    
+                    if let index = welf.matches.index(where: { $0.objectId == user.objectId }) {
+                        welf.matches.remove(at: index)
+                    }
+                    
+                    welf.filterContentForSearchText(searchText: welf.customSearchBar.text ?? "")
+                    
+                    break
+                case .failure(let error):
+                    SVProgressHUD.showError(withStatus: error.localizedDescription)
+                    break
+                default: break
+                }
+            }
+        }
     }
     
     @objc fileprivate func resetMatches() {
@@ -108,12 +164,12 @@ class UserMatchesViewController: UIViewController {
 extension UserMatchesViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return matches.count
+        return filteredUsers?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UserMatchTableViewCell.identifier, for: indexPath) as! UserMatchTableViewCell
-        let user = matches[indexPath.row]
+        let user = filteredUsers![indexPath.row]
     
         cell.delegate = self
         cell.rightUtilityButtons = rightUtilsButtons()
@@ -133,7 +189,7 @@ extension UserMatchesViewController: UITableViewDataSource {
 extension UserMatchesViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90.0
+        return 57.0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -160,14 +216,51 @@ extension UserMatchesViewController: SWTableViewCellDelegate {
     
     func swipeableTableViewCell(_ cell: SWTableViewCell!, didTriggerRightUtilityButtonWith index: Int) {
         
-        if index == 0 {
+        if index == 0 { // chat
+            
             guard let indexPath = tableView.indexPath(for: cell) else {
                 return
             }
             
-            let user = self.matches[indexPath.row]
+            let user = self.filteredUsers![indexPath.row]
+            
             ChatProvider.startChat(with: user.objectId, from: self)
             tableView.endEditing(true)
+        } else if index == 1 {
+            
+            guard let indexPath = tableView.indexPath(for: cell) else {
+                return
+            }
+            
+            let user = self.filteredUsers![indexPath.row]
+            
+            // show confirmation
+            let confirmationView: ConfirmationView = ConfirmationView.loadFromNib()
+            confirmationView.present(on: Helper.initialNavigationController().view, confirmAction: {
+                self.declineUser(user: user)
+            }, declineAction: nil)
+            tableView.endEditing(true)
         }
+    }
+}
+
+// MARK: - UISearchBarDelegate
+extension UserMatchesViewController: UISearchBarDelegate {
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        filterContentForSearchText(searchText: searchBar.text!)
+        searchBar.showsCancelButton = true
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        hideSearchBar()
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filterContentForSearchText(searchText: searchBar.text!)
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        hideSearchBar()
     }
 }

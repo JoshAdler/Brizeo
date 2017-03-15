@@ -36,6 +36,9 @@ class ConfirmationView: UIView {
         }
     }
     
+    fileprivate var confirmAction: ((Void) -> Void)?
+    fileprivate var declineAction: ((Void) -> Void)?
+    
     // MARK: - Override methods
     
     override func awakeFromNib() {
@@ -47,7 +50,10 @@ class ConfirmationView: UIView {
     
     // MARK: - Public methods
     
-    func present(on view: UIView) {
+    func present(on view: UIView, confirmAction: ((Void) -> Void)?, declineAction: ((Void) -> Void)?) {
+        self.confirmAction = confirmAction
+        self.declineAction = declineAction
+        
         frame = CGRect(origin: CGPoint.zero, size: view.frame.size)
         view.addSubview(self)
         
@@ -61,9 +67,13 @@ class ConfirmationView: UIView {
     
     @IBAction func onOkButtonClicked(sender: UIButton) {
         self.removeFromSuperview()
+        
+        confirmAction?()
     }
     
     @IBAction func onCancelButtonClicked(sender: UIButton) {
         self.removeFromSuperview()
+        
+        declineAction?()
     }
 }

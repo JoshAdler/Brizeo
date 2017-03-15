@@ -9,7 +9,7 @@
 import UIKit
 import ChameleonFramework
 
-class TripSearchBar: UISearchBar {
+class CustomSearchBar: UISearchBar {
     
     // MARK: - Types
     
@@ -25,6 +25,18 @@ class TripSearchBar: UISearchBar {
         
         self.frame = frame
         
+        customizeBar()
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)!
+        
+        customizeBar()
+    }
+    
+    // MARK: - Private methods
+    
+    fileprivate func customizeBar() {
         isTranslucent = false
         
         barTintColor = HexColor("e1e1e1")!
@@ -36,12 +48,6 @@ class TripSearchBar: UISearchBar {
             NSFontAttributeName: UIFont(name: "SourceSansPro-SemiboldIt"/*"SourceSansPro-Semibold"*/, size: 14)!
         ]
     }
-    
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)!
-    }
-    
-    // MARK: - Private methods
     
     fileprivate func indexOfSearchFieldInSubviews() -> Int! {
         var index: Int!
