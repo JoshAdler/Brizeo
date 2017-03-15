@@ -33,7 +33,6 @@ class MediaViewController: UIViewController {
     @IBOutlet weak var captureLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var shareButton: UIButton!
-    @IBOutlet weak var locationImageView: UIImageView!
     
     fileprivate var willDisplayIndexPath: IndexPath?
     fileprivate var initialScrollDone = false
@@ -72,11 +71,7 @@ class MediaViewController: UIViewController {
                         welf.locationLabel.sizeToFit()
                     }
                 })
-            } else {
-                locationImageView.isHidden = true
             }
-        } else {
-            locationImageView.isHidden = true
         }
     }
 

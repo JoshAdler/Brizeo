@@ -53,12 +53,6 @@ class PersonalDetailsTabsViewController: BasicViewController {
         let carbonTabSwipeNavigation = Helper.createCarbonController(with: Constants.titles, self)
         carbonTabSwipeNavigation.insert(intoRootViewController: self, andTargetView: targetView)
         carbonTabSwipeNavigation.pagesScrollView?.isScrollEnabled = false
-        
-        // notification for keyboard
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow(notification:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide(notification:)), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
     }
 
     // MARK: - Public methods
@@ -78,33 +72,6 @@ class PersonalDetailsTabsViewController: BasicViewController {
         }) { (isFinished) in
             completionHandler?()
         }
-    }
-    
-    // MARK: - Keyboard methods
-    
-    func keyboardWillShow(notification: NSNotification) {
-//        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-//            scrollViewBottomConstraint.constant = Constants.bottomMargin + keyboardSize.height
-            
-//            UIView.animate(withDuration: 0.25, animations: {
-//                self.view.layoutIfNeeded()
-//            })
-//        }
-    }
-    
-    func keyboardDidShow(notification: NSNotification) {
-    }
-    
-    func keyboardWillHide(notification: NSNotification) {
-//        scrollViewBottomConstraint.constant = Constants.bottomMargin
-        
-        UIView.animate(withDuration: 0.25, animations: {
-            self.view.layoutIfNeeded()
-        })
-    }
-    
-    func keyboardDidHide(notification: NSNotification) {
-
     }
     
     // MARK: - Actions

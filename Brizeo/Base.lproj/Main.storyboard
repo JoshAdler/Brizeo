@@ -3951,7 +3951,6 @@
                                         </constraints>
                                         <state key="normal" image="ic_down_arrow"/>
                                         <connections>
-                                            <action selector="onBottomButtonClicked:" destination="hbi-Ux-zPw" eventType="touchUpInside" id="DgY-Hz-ZaA"/>
                                             <action selector="onCloseButtonClicked:" destination="Thh-3E-KsR" eventType="touchUpInside" id="6TR-bl-XNp"/>
                                         </connections>
                                     </button>

@@ -50,38 +50,6 @@ class OtherPersonDetailsTabsViewController: BasicViewController {
         
         let carbonTabSwipeNavigation = Helper.createCarbonController(with: Constants.titles, self)
         carbonTabSwipeNavigation.insert(intoRootViewController: self, andTargetView: containerView)
-        
-        // notification for keyboard
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidShow(notification:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidHide(notification:)), name: NSNotification.Name.UIKeyboardDidHide, object: nil)
-    }
-    
-    // MARK: - Keyboard methods
-    
-    func keyboardWillShow(notification: NSNotification) {
-        //        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-        //            scrollViewBottomConstraint.constant = Constants.bottomMargin + keyboardSize.height
-        
-        //            UIView.animate(withDuration: 0.25, animations: {
-        //                self.view.layoutIfNeeded()
-        //            })
-        //        }
-    }
-    
-    func keyboardDidShow(notification: NSNotification) {
-    }
-    
-    func keyboardWillHide(notification: NSNotification) {
-        //        scrollViewBottomConstraint.constant = Constants.bottomMargin
-        
-        UIView.animate(withDuration: 0.25, animations: {
-            self.view.layoutIfNeeded()
-        })
-    }
-    
-    func keyboardDidHide(notification: NSNotification) {
     }
     
     // MARK: - Public methods
@@ -98,8 +66,7 @@ class OtherPersonDetailsTabsViewController: BasicViewController {
     
     @IBAction func onCloseButtonClicked(_ sender: UIButton) {
         UIView.animate(withDuration: 0.5, animations: {
-            self.view.frame = CGRect(origin: CGPoint(x: 0, y: self.view.frame.height), size: CGSize(width: self.view.frame.width, height: self.view.frame.height))
-            self.view.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
+            self.view.transform = CGAffineTransform(translationX: 0, y: self.view.frame.height).scaledBy(x: 0.0001, y: 0.0001)
         }) { (isFinished) in
             self.closeButton.transform = CGAffineTransform.identity
             self.view.removeFromSuperview()
