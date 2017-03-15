@@ -52,6 +52,7 @@ class PersonalDetailsTabsViewController: BasicViewController {
         
         let carbonTabSwipeNavigation = Helper.createCarbonController(with: Constants.titles, self)
         carbonTabSwipeNavigation.insert(intoRootViewController: self, andTargetView: targetView)
+        carbonTabSwipeNavigation.pagesScrollView?.isScrollEnabled = false
         
         // notification for keyboard
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)

@@ -27,17 +27,13 @@ class MediaViewController: UIViewController {
     
     // MARK: - Properties
     
-    @IBOutlet fileprivate weak var bottomViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet fileprivate weak var collectionView: UICollectionView!
     @IBOutlet fileprivate weak var pageControl: UIPageControl!
     @IBOutlet fileprivate weak var locationButton: UIButton!
-    @IBOutlet weak var descriptionTextView: UITextView!
-    @IBOutlet weak var shareButton: UIButton! {
-        didSet {
-            let tintImage = shareButton.image(for: .normal)!.withRenderingMode(.alwaysTemplate)
-            shareButton.setImage(tintImage, for: .normal)
-        }
-    }
+    @IBOutlet weak var captureLabel: UILabel!
+    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var shareButton: UIButton!
+    @IBOutlet weak var locationImageView: UIImageView!
     
     fileprivate var willDisplayIndexPath: IndexPath?
     fileprivate var initialScrollDone = false
@@ -56,32 +52,32 @@ class MediaViewController: UIViewController {
         
         shareButton.isHidden = !isSharingEnabled
         locationButton.isHidden = !(moment != nil && moment!.hasLocation)
-        descriptionTextView.isEditable = false//moment != nil && UserProvider.shared.currentUser!.objectId == moment!.ownerId
         
         if moment != nil {
             media = [moment!.asFileObject]
+            
+            if moment!.hasLocation {
+                LocationManager.shared.getLocationStringForLocation(moment!.location!, completion: { [weak self] (locationStr) in
+                    if let welf = self {
+                        
+                        let attachment = NSTextAttachment()
+                        attachment.image = #imageLiteral(resourceName: "ic_moment_location")
+                        
+                        let attachmentString = NSAttributedString(attachment: attachment)
+                        let locationString = NSMutableAttributedString(attributedString: attachmentString)
+                        
+                        locationString.append(NSAttributedString(string: "   " + locationStr))
+                        welf.locationLabel.attributedText = locationString
+                        welf.view.setNeedsLayout()
+                        welf.locationLabel.sizeToFit()
+                    }
+                })
+            } else {
+                locationImageView.isHidden = true
+            }
+        } else {
+            locationImageView.isHidden = true
         }
-        
-//        hideKeyboardWhenTappedAround()
-        
-        //TODO: place below in some place
-        // track keyboard
-        NotificationCenter.default.addObserver(self, selector: #selector(didKeyboardWillShow(_:)), name: Foundation.Notification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(didKeyboardWillHide(_:)), name: Foundation.Notification.Name.UIKeyboardWillHide, object: nil)
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        navigationController?.setNavigationBarHidden(true, animated: animated)
-        
-        descriptionTextView.addObserver(self, forKeyPath: "contentSize", options: .new, context: nil)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-
-        descriptionTextView.removeObserver(self, forKeyPath: "contentSize")
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -102,37 +98,6 @@ class MediaViewController: UIViewController {
             
             collectionView.scrollToItem(at: IndexPath(row: initialIndex, section: 0), at: .centeredHorizontally, animated: false)
         }
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    // MARK: - Observer methods
-    
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        let textView = object as! UITextView
-        var topCorrect = (textView.bounds.size.height - textView.contentSize.height * textView.zoomScale) / 2
-        topCorrect = topCorrect < 0.0 ? 0.0 : topCorrect
-        textView.contentInset.top = topCorrect
-    }
-    
-    func didKeyboardWillShow(_ notification: Foundation.Notification){
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            bottomViewBottomConstraint.constant = keyboardSize.height - 50.0
-            
-            UIView.animate(withDuration: 0.5, animations: { 
-                self.view.layoutIfNeeded()
-            })
-        }
-    }
-    
-    func didKeyboardWillHide(_ notification: Foundation.Notification){
-        bottomViewBottomConstraint.constant = 0
-        
-        UIView.animate(withDuration: 0.5, animations: {
-            self.view.layoutIfNeeded()
-        })
     }
 
     // MARK: - Private methods
@@ -215,7 +180,7 @@ extension MediaViewController: UICollectionViewDataSource {
             break
         }
 
-        descriptionTextView.text = moment != nil ? moment?.capture : nil
+        captureLabel.text = moment != nil ? moment?.capture : nil
         
         return cell
     }

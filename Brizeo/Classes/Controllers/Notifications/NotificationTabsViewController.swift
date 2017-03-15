@@ -36,6 +36,7 @@ class NotificationTabsViewController: BasicViewController {
         
         let carbonTabSwipeNavigation = Helper.createCarbonController(with: Constants.titles, self)
         carbonTabSwipeNavigation.insert(intoRootViewController: self)
+        carbonTabSwipeNavigation.pagesScrollView?.isScrollEnabled = false
     }
 }
 
