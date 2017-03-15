@@ -108,7 +108,7 @@ extension APIService: TargetType {
         case .getUsersForMatch(let userId):
             return /*"/likemoments/users/\("Qy5CiinuRA")/\(userId)"*/"/approveuserformatch/\(userId)"
         case .getMatchesForUser(let userId):
-            return "/approvematchforuser/\(userId)"
+            return "/likemoments/users/\("Qy5CiinuRA")/\(userId)"//"/approvematchforuser/\(userId)"
         }
     }
 

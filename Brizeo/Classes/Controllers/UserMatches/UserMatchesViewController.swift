@@ -215,11 +215,11 @@ extension UserMatchesViewController: UITableViewDelegate {
         
         if user.isCurrent { // show my profile
             let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
-            Helper.initialNavigationController().pushViewController(profileController, animated: true)
+            navigationController?.pushViewController(profileController, animated: true)
         } else {
             let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
             otherPersonProfileController.user = user
-            Helper.initialNavigationController().pushViewController(otherPersonProfileController, animated: true)
+            navigationController?.pushViewController(otherPersonProfileController, animated: true)
         }
     }
 }
@@ -233,17 +233,7 @@ extension UserMatchesViewController: SWTableViewCellDelegate {
     
     func swipeableTableViewCell(_ cell: SWTableViewCell!, didTriggerRightUtilityButtonWith index: Int) {
         
-        if index == 0 { // chat
-            
-            guard let indexPath = tableView.indexPath(for: cell) else {
-                return
-            }
-            
-            let user = self.filteredUsers![indexPath.row]
-            
-            ChatProvider.startChat(with: user.objectId, from: self)
-            tableView.endEditing(true)
-        } else if index == 1 {
+        if index == 0 {
             
             guard let indexPath = tableView.indexPath(for: cell) else {
                 return
@@ -257,6 +247,17 @@ extension UserMatchesViewController: SWTableViewCellDelegate {
                 self.declineUser(user: user)
             }, declineAction: nil)
             tableView.endEditing(true)
+        }else if index == 1 { // chat
+            
+            guard let indexPath = tableView.indexPath(for: cell) else {
+                return
+            }
+            
+            let user = self.filteredUsers![indexPath.row]
+            
+            ChatProvider.startChat(with: user.objectId, from: self)
+            tableView.endEditing(true)
+            tableView.reloadData()
         }
     }
 }
