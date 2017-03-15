@@ -467,6 +467,7 @@ extension MomentsViewController: UITableViewDataSource {
         cell.likeButton.isHidden = moment.ownerId == currentUser.objectId
         cell.setButtonHighligted(isHighligted: moment.isLikedByCurrentUser)
         cell.actionButton.isEnabled = !moment.user.isSuperUser
+        cell.playImageView.isHidden = !moment.hasVideo
         
         cell.momentImageView.sd_setImage(with: moment.imageUrl)
         cell.ownerLogoButton.sd_setImage(with: moment.user.profileUrl, for: .normal)
@@ -618,29 +619,34 @@ extension MomentsViewController: MomentTableViewCellDelegate {
         } else {
             alertVC.addAction(UIAlertAction(title: LocalizableString.DeleteMoment.localizedString, style: .default, handler: { alert in
                 
-                self.showBlackLoader()
-                
-                MomentsProvider.delete(moment: moment, completion: { (result) in
-                    self.hideLoader()
+                let confirmationView: ConfirmationView = ConfirmationView.loadFromNib()
+                confirmationView.title = LocalizableString.ConfirmationDeleteMomentText.localizedString
+                confirmationView.present(on: Helper.initialNavigationController().view, confirmAction: {
+                    self.showBlackLoader()
                     
-                    switch result {
-                    case .success(_):
-                        guard let index = self.moments!.index(of: moment) else {
-                            print("Can't find index for the moment")
-                            return
+                    MomentsProvider.delete(moment: moment, completion: { (result) in
+                        self.hideLoader()
+                        
+                        switch result {
+                        case .success(_):
+                            guard let index = self.moments!.index(of: moment) else {
+                                print("Can't find index for the moment")
+                                return
+                            }
+                            
+                            self.moments?.remove(at: index)
+                            self.momentsTableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .fade)
+                            
+                            Helper.sendNotification(with: updateMomentNotification, object: nil, dict: ["moment": moment])
+                            break
+                        case .failure(let error):
+                            self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
+                        default:
+                            break
                         }
-                        
-                        self.moments?.remove(at: index)
-                        self.momentsTableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .fade)
-                        
-                        Helper.sendNotification(with: updateMomentNotification, object: nil, dict: ["moment": moment])
-                        break
-                    case .failure(let error):
-                        self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)
-                    default:
-                        break
-                    }
-                })
+                    })
+                }, declineAction: nil)
+                
             }))
             
             alertVC.addAction(UIAlertAction(title: LocalizableString.EditMoment.localizedString, style: .default, handler: { alert in

@@ -434,15 +434,28 @@
                                                         <constraint firstItem="R9t-Xo-XM4" firstAttribute="centerY" secondItem="vnv-Ck-zVg" secondAttribute="centerY" id="xln-FF-ChM"/>
                                                     </constraints>
                                                 </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ghY-3c-u4R">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="252"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                </view>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="playIcon" translatesAutoresizingMaskIntoConstraints="NO" id="7oa-C9-efF">
+                                                    <rect key="frame" x="162" y="101" width="50" height="50"/>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="vnv-Ck-zVg" secondAttribute="bottom" id="37V-bc-itE"/>
+                                                <constraint firstItem="7oa-C9-efF" firstAttribute="centerY" secondItem="ghY-3c-u4R" secondAttribute="centerY" id="5xG-Mh-vaL"/>
                                                 <constraint firstItem="2PX-Gd-bkN" firstAttribute="leading" secondItem="HWX-Fd-bBC" secondAttribute="leading" id="6Ad-1m-gfK"/>
+                                                <constraint firstAttribute="trailing" secondItem="ghY-3c-u4R" secondAttribute="trailing" id="Bi4-ap-QhT"/>
                                                 <constraint firstItem="vnv-Ck-zVg" firstAttribute="width" secondItem="HWX-Fd-bBC" secondAttribute="width" id="DxH-ko-vLN"/>
+                                                <constraint firstItem="ghY-3c-u4R" firstAttribute="leading" secondItem="HWX-Fd-bBC" secondAttribute="leading" id="Hr1-y1-rOD"/>
                                                 <constraint firstAttribute="trailing" secondItem="2PX-Gd-bkN" secondAttribute="trailing" id="M4U-nu-50S"/>
                                                 <constraint firstItem="vnv-Ck-zVg" firstAttribute="height" secondItem="HWX-Fd-bBC" secondAttribute="height" multiplier="118:563" id="WdD-3s-00U"/>
                                                 <constraint firstItem="vnv-Ck-zVg" firstAttribute="centerX" secondItem="HWX-Fd-bBC" secondAttribute="centerX" id="YL3-jl-fty"/>
                                                 <constraint firstItem="2PX-Gd-bkN" firstAttribute="top" secondItem="HWX-Fd-bBC" secondAttribute="top" id="azq-v4-da2"/>
+                                                <constraint firstItem="vnv-Ck-zVg" firstAttribute="top" secondItem="ghY-3c-u4R" secondAttribute="bottom" id="mTX-eF-T59"/>
+                                                <constraint firstItem="7oa-C9-efF" firstAttribute="centerX" secondItem="HWX-Fd-bBC" secondAttribute="centerX" id="o0f-GD-z0d"/>
+                                                <constraint firstItem="ghY-3c-u4R" firstAttribute="top" secondItem="HWX-Fd-bBC" secondAttribute="top" id="qB7-P3-sao"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -455,6 +468,7 @@
                                             <outlet property="numberOfLikesButton" destination="cZE-6o-PZS" id="wZn-07-nOP"/>
                                             <outlet property="ownerLogoButton" destination="zfZ-aR-z7W" id="Oos-As-xh3"/>
                                             <outlet property="ownerNameLabel" destination="kji-9s-VG8" id="Bpp-IS-hJD"/>
+                                            <outlet property="playImageView" destination="7oa-C9-efF" id="b8K-JP-Anq"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -487,17 +501,6 @@
                                         <state key="normal" title="All">
                                             <color key="titleColor" red="0.55294117647058827" green="0.55294117647058827" blue="0.55294117647058827" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                <real key="value" value="1"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                <real key="value" value="3"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                <color key="value" red="0.85882352941176465" green="0.85882352941176465" blue="0.85882352941176465" alpha="1" colorSpace="calibratedRGB"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <action selector="onFilterButtonClicked:" destination="CNo-6y-3JQ" eventType="touchUpInside" id="paf-7T-lKX"/>
                                         </connections>
@@ -859,7 +862,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gUl-Q5-NAt">
-                                        <rect key="frame" x="243" y="0.0" width="94" height="56"/>
+                                        <rect key="frame" x="188.5" y="0.0" width="148.5" height="56"/>
                                         <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="16"/>
                                         <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="4" maxX="0.0" maxY="0.0"/>
@@ -888,11 +891,11 @@
                                     <constraint firstItem="gUl-Q5-NAt" firstAttribute="height" secondItem="jdW-WV-fr9" secondAttribute="height" id="Qyy-7F-znL"/>
                                     <constraint firstItem="XKR-FG-vk7" firstAttribute="width" secondItem="jdW-WV-fr9" secondAttribute="width" multiplier="93/750" id="cEJ-Dl-1gK"/>
                                     <constraint firstItem="XKR-FG-vk7" firstAttribute="centerY" secondItem="jdW-WV-fr9" secondAttribute="centerY" id="lLX-cb-AQ1"/>
+                                    <constraint firstItem="gUl-Q5-NAt" firstAttribute="leading" secondItem="gBd-DR-v8p" secondAttribute="trailing" constant="20" id="n95-QU-37L"/>
                                     <constraint firstItem="gUl-Q5-NAt" firstAttribute="centerY" secondItem="jdW-WV-fr9" secondAttribute="centerY" id="q0D-FH-be9"/>
                                     <constraint firstItem="kBn-0m-jAe" firstAttribute="centerY" secondItem="jdW-WV-fr9" secondAttribute="centerY" id="st6-k3-xWq"/>
                                     <constraint firstItem="gBd-DR-v8p" firstAttribute="leading" secondItem="kBn-0m-jAe" secondAttribute="trailing" constant="9" id="vw1-ZZ-MUx"/>
                                     <constraint firstItem="stb-rN-F7F" firstAttribute="centerY" secondItem="jdW-WV-fr9" secondAttribute="centerY" id="yDI-7q-Asa"/>
-                                    <constraint firstItem="gUl-Q5-NAt" firstAttribute="width" secondItem="jdW-WV-fr9" secondAttribute="width" multiplier="0.25" id="yh9-3o-QDU"/>
                                     <constraint firstAttribute="width" secondItem="jdW-WV-fr9" secondAttribute="height" multiplier="750/112" id="zBu-Ft-b5b"/>
                                 </constraints>
                             </view>

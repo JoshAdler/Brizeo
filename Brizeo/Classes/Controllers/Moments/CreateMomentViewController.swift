@@ -198,6 +198,43 @@ class CreateMomentViewController: UIViewController {
         addLocationTextField.text = LocationManager.shared.currentLocationString ?? LocalizableString.Location.localizedString
     }
     
+    fileprivate func updateMoment() {
+        showBlackLoader()
+        
+        moment!.capture = captionTextView.text
+        moment!.passionId = selectedPassion?.objectId
+        moment!.viewableByAll = switcher.isOn
+        moment!.ownerId = UserProvider.shared.currentUser!.objectId
+        moment!.locationLongitude = selectedLocation?.longitude
+        moment!.locationLatitude = selectedLocation?.latitude
+        moment!.image = image
+        moment!.videoURL = videoURL
+        moment!.thumbnailImage = thumbnailImage
+        
+        MomentsProvider.updateMoment(moment: moment!) { (result) in
+            switch(result) {
+            case .success(_):
+                SVProgressHUD.showSuccess(withStatus: LocalizableString.MomentUpdated.localizedString)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    
+                    // set defaults
+                    Helper.sendNotification(with: updateMomentsListNotification, object: nil, dict: nil)
+                    
+                    // go back
+                    _ = self.navigationController?.popViewController(animated: true)
+                }
+                
+                break
+            case .failure(let error):
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                break
+            default:
+                break
+            }
+        }
+    }
+    
     fileprivate func createMoment() {
         showBlackLoader()
         
@@ -276,7 +313,11 @@ class CreateMomentViewController: UIViewController {
             return
         }
         
-        createMoment()
+        if moment != nil {
+            updateMoment()
+        } else {
+            createMoment()
+        }
     }
     
     @IBAction func onLocationClicked(sender: UIButton) {
@@ -296,7 +337,16 @@ class CreateMomentViewController: UIViewController {
 }
 
 // MARK: - UITextViewDelegate
-extension CreateMomentViewController: UITextViewDelegate {}
+extension CreateMomentViewController: UITextViewDelegate {
+
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        
+        let text = (textView.text as NSString).replacingCharacters(in: range, with: text)
+        let length = text.characters.count
+       
+        return length < Moment.Constants.maxLength
+    }
+}
 
 // MARK: - UITextFieldDelegate
 extension CreateMomentViewController: UITextFieldDelegate {

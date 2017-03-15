@@ -21,6 +21,7 @@ class MomentTableViewCell: UITableViewCell {
 
     // MARK: - Properties
     
+    @IBOutlet weak var playImageView: UIImageView!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var momentImageView: UIImageView!
     @IBOutlet weak var ownerNameLabel: UILabel!

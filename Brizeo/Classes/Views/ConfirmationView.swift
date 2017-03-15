@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ChameleonFramework
 
 class ConfirmationView: UIView {
     
@@ -21,11 +22,15 @@ class ConfirmationView: UIView {
     @IBOutlet weak var okButton: UIButton! {
         didSet {
             okButton.setTitle(LocalizableString.Ok.localizedString.uppercased(), for: .normal)
+            okButton.layer.cornerRadius = 7.0
+            okButton.layer.borderWidth = 1.0
+            okButton.layer.borderColor = HexColor("1f4ba5")!.cgColor
         }
     }
     @IBOutlet weak var cancelButton: UIButton! {
         didSet {
             cancelButton.setTitle(LocalizableString.Cancel.localizedString, for: .normal)
+            cancelButton.layer.cornerRadius = 7.0
         }
     }
     @IBOutlet weak var centerView: UIView!
@@ -38,6 +43,15 @@ class ConfirmationView: UIView {
     
     fileprivate var confirmAction: ((Void) -> Void)?
     fileprivate var declineAction: ((Void) -> Void)?
+    
+    var title: String? {
+        get {
+            return textLabel.text
+        }
+        set {
+            textLabel.text = newValue
+        }
+    }
     
     // MARK: - Override methods
     
