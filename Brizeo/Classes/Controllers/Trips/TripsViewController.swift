@@ -9,6 +9,7 @@
 import UIKit
 import SWTableViewCell
 import ChameleonFramework
+import Typist
 
 class TripsViewController: UIViewController {
 
@@ -21,6 +22,7 @@ class TripsViewController: UIViewController {
     // MARK: - Properties
 
     @IBOutlet fileprivate weak var tableView: UITableView!
+    @IBOutlet fileprivate weak var tableViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet fileprivate weak var activityIndicator: UIActivityIndicatorView!
     
     var user: User!
@@ -41,6 +43,7 @@ class TripsViewController: UIViewController {
             tableView.tableHeaderView = searchBar
         }
         
+        configureKeyboardBehaviour()
         tableView.reloadData()
     }
     
@@ -74,6 +77,19 @@ class TripsViewController: UIViewController {
         }
         
         return countries
+    }
+    
+    fileprivate func configureKeyboardBehaviour() {
+        let keyboard = Typist.shared
+        
+        keyboard
+            .on(event: .willHide, do: { (options) in
+                self.tableViewBottomConstraint.constant = 0
+            })
+            .on(event: .willShow, do: { (options) in
+                self.tableViewBottomConstraint.constant = options.endFrame.height
+            })
+            .start()
     }
     
     fileprivate func filterContentForSearchText(searchText: String) {

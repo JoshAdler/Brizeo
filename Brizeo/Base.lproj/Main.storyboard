@@ -2487,6 +2487,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="k1Z-Rv-8Xg" id="YXz-zi-7uv"/>
                         <outlet property="tableView" destination="FAb-2z-WgS" id="ZBX-nh-PZL"/>
+                        <outlet property="tableViewBottomConstraint" destination="6mq-ux-WmC" id="KoG-O6-AbG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rf8-e8-muW" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2608,6 +2609,7 @@
                     <connections>
                         <outlet property="customSearchBar" destination="oD2-fS-Hmh" id="BnW-v3-Bqn"/>
                         <outlet property="tableView" destination="wXC-1l-6pC" id="5Tw-Jh-x2n"/>
+                        <outlet property="tableViewBottomConstraint" destination="5dF-Fk-sow" id="wlG-ah-u7S"/>
                         <outlet property="titleLabel" destination="eff-pZ-kBJ" id="eVG-Ae-YRw"/>
                     </connections>
                 </viewController>

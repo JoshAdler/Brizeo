@@ -13,6 +13,7 @@ import ChameleonFramework
 import SWTableViewCell
 import SDWebImage
 import SVProgressHUD
+import Typist
 
 class UserMatchesViewController: UIViewController {
 
@@ -32,6 +33,7 @@ class UserMatchesViewController: UIViewController {
     // MARK: - Properties
     
     @IBOutlet fileprivate weak var tableView: UITableView!
+    @IBOutlet fileprivate weak var tableViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet fileprivate weak var customSearchBar: CustomSearchBar! {
         didSet {
             customSearchBar.placeholder = LocalizableString.Search.localizedString
@@ -59,6 +61,8 @@ class UserMatchesViewController: UIViewController {
         topRefresher = UIRefreshControl()
         topRefresher.addTarget(self, action: #selector(UserMatchesViewController.resetMatches), for: .valueChanged)
         tableView.addSubview(topRefresher)
+        
+        configureKeyboardBehaviour()
         
 //        tableView.addInfiniteScroll { [unowned self] (tableView) in
 //            self.paginator.increaseCurrentPage()
@@ -98,6 +102,19 @@ class UserMatchesViewController: UIViewController {
     }
     
     // MARK: - Private methods
+    
+    fileprivate func configureKeyboardBehaviour() {
+        let keyboard = Typist.shared
+        
+        keyboard
+            .on(event: .willHide, do: { (options) in
+                self.tableViewBottomConstraint.constant = 0
+            })
+            .on(event: .willShow, do: { (options) in
+                self.tableViewBottomConstraint.constant = options.endFrame.height
+            })
+            .start()
+    }
     
     fileprivate func filterContentForSearchText(searchText: String) {
         if searchText.numberOfCharactersWithoutSpaces() == 0 {
