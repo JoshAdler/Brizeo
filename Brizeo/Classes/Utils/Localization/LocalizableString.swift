@@ -90,7 +90,7 @@ enum LocalizableString: String {
     case CheckItOutAt = "Check it out at %@"
     case CheckItOutHere = "<div style='width:90% ;margin-left:5%; font-size: 15px;'>Check it out <a href='%@'>%@</a></div>"
     case BrizeoMailDescription = "<div style='width:90% ;margin-left:5%; font-size: 15px;'>%@</div><br>"
-    case BrizeoMailContent = "<div style='width: %lfpx;'><img style='width: %lfpx; margin-left: 5%; margin-top: 20px; height: 100px; border-radius: 3px; border: 1px solid;' src='https://firebasestorage.googleapis.com/v0/b/brizeo-7571c.appspot.com/o/InviteImages%2Fic_brizeo_invite_image%402x.png?alt=media&token=841e0496-8df9-46ed-9109-b6dd7856e570'><h3 style='width:90% ;margin-left:5%;'>%@ invites you to join Brizeo</h3>%@</div>"
+    case BrizeoMailContent = "<div style='width: %@px;'><img style='width: 350px; margin-left: 5%; margin-top: 20px; height: 100px; border-radius: 3px; border: 1px solid;' src='https://firebasestorage.googleapis.com/v0/b/brizeo-7571c.appspot.com/o/InviteImages%2Fic_brizeo_invite_image%402x.png?alt=media&token=841e0496-8df9-46ed-9109-b6dd7856e570'><h3 style='width:90% ;margin-left:5%;'>%@ invites you to join Brizeo</h3>%@</div>"
     
     //MARK: - Moments
     case All = "All"

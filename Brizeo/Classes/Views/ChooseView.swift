@@ -152,14 +152,11 @@ class ChooseView: UIView {
     
     fileprivate func shareWithEmail(url: String) {
         let mailComposerVC = MFMailComposeViewController()
-        let modifiedURLString = NSString(format: LocalizableString.BrizeoMailDescription.rawValue as NSString, "")
-        let modifiedString = NSString(format: LocalizableString.CheckItOutHere.rawValue as NSString, url, url)
-        let modifiedSubString = NSString(format: "%@%@", modifiedURLString, modifiedString)
-        let width =  UIScreen.main.bounds.width
-        let mailContent = NSString(format: LocalizableString.BrizeoMailContent.rawValue as NSString, width, width * 0.9, UserProvider.shared.currentUser!.displayName, modifiedSubString)
+        let modifiedURLString = LocalizableString.ShareDefaultText.localizedStringWithArguments([UserProvider.shared.currentUser!.displayName, url])
+        
         mailComposerVC.mailComposeDelegate = Helper.initialNavigationController()
         mailComposerVC.setSubject(LocalizableString.TryBrizeo.localizedStringWithArguments([UserProvider.shared.currentUser!.displayName]))
-        mailComposerVC.setMessageBody(mailContent as String, isHTML: true)
+        mailComposerVC.setMessageBody(modifiedURLString, isHTML: false)
         
         if MFMailComposeViewController.canSendMail() {
             Helper.initialNavigationController().present(mailComposerVC, animated: true, completion: nil)
