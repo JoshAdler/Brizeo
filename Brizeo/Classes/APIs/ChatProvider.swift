@@ -63,7 +63,7 @@ class ChatProvider: NSObject {
         let message = ALMessage()
         
         message.contactIds = UserProvider.shared.currentUser!.objectId
-        message.to = "CBAB6i9aKq"  //super admin id
+        message.to = Configurations.Applozic.superUserId  //super admin id
         message.createdAtTime = NSNumber(value: Date().timeIntervalSince1970 * 1000.0)
         message.deviceKey = ALUserDefaultsHandler.getDeviceKeyString()
         message.sendToDevice = false

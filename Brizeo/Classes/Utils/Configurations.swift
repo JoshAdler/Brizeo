@@ -50,6 +50,7 @@ class Configurations: NSObject {
     // MARK: - Applozic
     struct Applozic {
         static let appKey = "324a31b8f131bb0d6f69f9164f3a7cfd6"
+        static let superUserId = "WlsuoQxwUB"
     }
     
     // MARK: - URLs that are used in the app
