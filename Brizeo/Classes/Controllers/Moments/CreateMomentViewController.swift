@@ -325,8 +325,13 @@ class CreateMomentViewController: UIViewController {
         if gpaViewController == nil {
             gpaViewController = GooglePlacesAutocomplete(
                 apiKey: Configurations.GooglePlaces.key,
-                placeType: .establishment
+                placeType: .all,
+                defaultLocation: addLocationTextField.text
             )
+            
+            if let currentLocation = LocationManager.shared.currentLocationCoordinates {
+                gpaViewController!.locationBias = LocationBias(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude, radius: 20000)
+            }
             
             gpaViewController!.placeDelegate = self
         }
