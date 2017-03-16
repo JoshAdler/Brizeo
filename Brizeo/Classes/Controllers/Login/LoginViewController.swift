@@ -20,7 +20,11 @@ class LoginViewController: UIViewController {
     
     // MARK: - Properties
     
-    @IBOutlet weak var termsSwitch: UISwitch!
+    @IBOutlet weak var termsSwitch: UISwitch! {
+        didSet {
+            termsSwitch.transform = CGAffineTransform(scaleX: 0.816, y: 0.69)
+        }
+    }
     
     //MARK: - Controller lifecycle
     

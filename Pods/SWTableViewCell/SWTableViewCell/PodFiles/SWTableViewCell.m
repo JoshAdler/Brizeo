@@ -161,7 +161,7 @@ static NSString * const kTableViewCellContentView = @"UITableViewCellContentView
                                // Pin the clipping view to the appropriate outer edges of the cell.
                                [NSLayoutConstraint constraintWithItem:clipView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:0.0],
                                [NSLayoutConstraint constraintWithItem:clipView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0.0],
-                               [NSLayoutConstraint constraintWithItem:clipView attribute:alignmentAttribute relatedBy:NSLayoutRelationEqual toItem:self attribute:alignmentAttribute multiplier:1.0 constant:0.0],
+                               [NSLayoutConstraint constraintWithItem:clipView attribute:alignmentAttribute relatedBy:NSLayoutRelationEqual toItem:self attribute:alignmentAttribute multiplier:1.0 constant:-20.0],
                                clipConstraint,
                                ]];
         
@@ -204,7 +204,7 @@ static NSString * const kTableViewPanState = @"state";
         if ([_containingTableView.dataSource respondsToSelector:@selector(sectionIndexTitlesForTableView:)])
         {
             NSArray *indices = [_containingTableView.dataSource sectionIndexTitlesForTableView:_containingTableView];
-            self.additionalRightPadding = indices == nil ? 0 : kSectionIndexWidth;
+            self.additionalRightPadding = /*indices == nil ? 0 : */kSectionIndexWidth;
         }
         
         _containingTableView.directionalLockEnabled = YES;

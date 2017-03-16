@@ -73,6 +73,8 @@ class UserMatchesViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        topRefresher.endRefreshing()
+        
         if matches.count == 0 {
             loadMatches()
         }

@@ -115,7 +115,7 @@ class Moment: Mappable, Equatable {
         let start = capture.startIndex
         let end = capture.index(capture.startIndex, offsetBy: Constants.shortLength)
         let shortCapture = capture[start..<end]
-        return shortCapture
+        return shortCapture + "..."
     }
     
     // MARK: - Init methods
@@ -133,8 +133,18 @@ class Moment: Mappable, Equatable {
         user <- map[JSONKeys.user.rawValue]
         
         // likes information
-        isLikedByCurrentUser <- (map[JSONKeys.likedByCurrentUser.rawValue], LikersTransform())
         likesCount <- map[JSONKeys.numberOfLikes.rawValue]
+        isLikedByCurrentUser <- (map[JSONKeys.likedByCurrentUser.rawValue], LikersTransform())
+//        
+//        if let likersIds: [String] = try! map.value(JSONKeys.likedByCurrentUser.rawValue) {
+//            let count = likersIds.count
+//            
+//            if count != likesCount {
+//                print("INCORRECT LIKERS NUMBER FOR MOMENT")
+//            }
+//            
+//            likesCount = count
+//        }
         
         // availability information
         readStatus <- map[JSONKeys.readStatus.rawValue]
