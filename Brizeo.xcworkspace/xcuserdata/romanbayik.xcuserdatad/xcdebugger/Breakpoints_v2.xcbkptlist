@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Pods/GooglePlacesAutocomplete/GooglePlacesAutocomplete/GooglePlacesAutocomplete.swift"
-            timestampString = "511371763.496022"
+            filePath = "Brizeo/Classes/Controllers/Moments/CreateMomentViewController.swift"
+            timestampString = "511389288.806785"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "173"
-            endingLineNumber = "173"
-            landmarkName = "init(apiKey:placeType:defaultLocation:)"
+            startingLineNumber = "436"
+            endingLineNumber = "436"
+            landmarkName = "placeSelected(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 public let ErrorDomain: String! = "GooglePlacesAutocompleteErrorDomain"
 
@@ -50,6 +51,7 @@ open class Place: NSObject {
     open let id: String
     open let desc: String
     open var apiKey: String?
+    open var location: CLLocationCoordinate2D?
     
     override open var description: String {
         get { return desc }
@@ -67,6 +69,22 @@ open class Place: NSObject {
         )
         
         self.apiKey = apiKey
+    }
+    
+    class func initialize(result: [String: AnyObject], apiKey: String?) -> Place {
+        var place = Place(
+            id: result["place_id"] as! String,
+            description: result["name"] as! String
+        )
+        
+        place.apiKey = apiKey
+        
+        // location
+        if let location = result["geometry"]?["location"] as? [String: Double], let latitude = location["lat"], let longitude = location["lng"] {
+            place.location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        }
+        
+        return place
     }
     
     /**
@@ -129,11 +147,10 @@ open class GooglePlacesAutocomplete: UINavigationController {
         set { gpaViewController.locationBias = newValue }
     }
     
-    public convenience init(apiKey: String, placeType: PlaceType = .all, defaultLocation: String?) {
+    public convenience init(apiKey: String, placeType: PlaceType = .all) {
         let gpaViewController = GooglePlacesAutocompleteContainer(
             apiKey: apiKey,
-            placeType: placeType,
-            defaultLocation: defaultLocation
+            placeType: placeType
         )
         
         self.init(rootViewController: gpaViewController)
@@ -153,6 +170,7 @@ open class GooglePlacesAutocomplete: UINavigationController {
     open func reset() {
         gpaViewController.searchBar.text = ""
         gpaViewController.searchBar(gpaViewController.searchBar, textDidChange: "")
+        
     }
 }
 
@@ -167,15 +185,13 @@ open class GooglePlacesAutocompleteContainer: UIViewController {
     var places = [Place]()
     var placeType: PlaceType = .all
     var locationBias: LocationBias?
-    var defaultLocation: String?
     
-    convenience init(apiKey: String, placeType: PlaceType = .all, defaultLocation: String?) {
+    convenience init(apiKey: String, placeType: PlaceType = .all) {
         let bundle = Bundle(for: GooglePlacesAutocompleteContainer.self)
         
         self.init(nibName: "GooglePlacesAutocomplete", bundle: bundle)
         self.apiKey = apiKey
         self.placeType = placeType
-        self.defaultLocation = defaultLocation
     }
     
     deinit {
@@ -218,11 +234,12 @@ open class GooglePlacesAutocompleteContainer: UIViewController {
     
     func runSearch(searchText: String) {
         if (searchText == "") {
-            if defaultLocation != nil {
-                getPlaces(defaultLocation!)
-            } else {
-                self.places = []
-                tableView.isHidden = true
+            
+            self.places = []
+            tableView.isHidden = true
+            
+            if locationBias != nil {
+                getNearbyPlaces()
             }
         } else {
             getPlaces(searchText)
@@ -252,7 +269,6 @@ extension GooglePlacesAutocompleteContainer: UITableViewDataSource, UITableViewD
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let place = self.places[(indexPath as NSIndexPath).row]
         
-        defaultLocation = place.description
         delegate?.placeSelected?(place)
     }
 }
@@ -293,6 +309,37 @@ extension GooglePlacesAutocompleteContainer: UISearchBarDelegate {
                 if let predictions = json["predictions"] as? Array<[String: AnyObject]> {
                     self.places = predictions.map { (prediction: [String: AnyObject]) -> Place in
                         return Place(prediction: prediction, apiKey: self.apiKey)
+                    }
+                    self.tableView.reloadData()
+                    self.tableView.isHidden = false
+                    self.delegate?.placesFound?(self.places)
+                }
+            }
+        }
+    }
+    
+    fileprivate func getNearbyPlaces() {
+        
+        var params = [
+            "key": apiKey ?? "",
+            "rankby": "prominence",
+            "sensor": "true"
+        ]
+        
+        if let bias = locationBias {
+            params["location"] = bias.location
+            params["radius"] = bias.radius.description
+        }
+        
+        GooglePlacesRequestHelpers.doRequest(
+            "https://maps.googleapis.com/maps/api/place/nearbysearch/json",
+            params: params
+        ) { json, error in
+            if let json = json {
+                if let results = json["results"] as? [[String: AnyObject]] {
+                    
+                    self.places = results.map { (result: [String: AnyObject]) -> Place in
+                        return Place.initialize(result: result, apiKey: self.apiKey)
                     }
                     self.tableView.reloadData()
                     self.tableView.isHidden = false

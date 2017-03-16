@@ -436,8 +436,7 @@ extension SettingsViewController: UITableViewDelegate {
                 if gpaViewController == nil {
                     gpaViewController = GooglePlacesAutocomplete(
                         apiKey: Configurations.GooglePlaces.key,
-                        placeType: .cities,//.address
-                        defaultLocation: nil
+                        placeType: .cities//.address
                     )
                     
                     gpaViewController!.placeDelegate = self

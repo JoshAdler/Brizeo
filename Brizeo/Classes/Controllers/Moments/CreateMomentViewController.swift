@@ -325,8 +325,7 @@ class CreateMomentViewController: UIViewController {
         if gpaViewController == nil {
             gpaViewController = GooglePlacesAutocomplete(
                 apiKey: Configurations.GooglePlaces.key,
-                placeType: .all,
-                defaultLocation: addLocationTextField.text
+                placeType: .all
             )
             
             if let currentLocation = LocationManager.shared.currentLocationCoordinates {
@@ -434,13 +433,21 @@ extension CreateMomentViewController: GooglePlacesAutocompleteDelegate {
         
         addLocationTextField.text = place.description
         
-        place.getDetails { [weak self] (result) in
-            if let welf = self {
-                // set new values
-                welf.selectedLocation = CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude)
-                
-                welf.dismiss(animated: true) {
-                    welf.gpaViewController?.reset()
+        if place.location != nil {
+            selectedLocation = place.location
+            
+            dismiss(animated: true) {
+                self.gpaViewController?.reset()
+            }
+        } else {
+            place.getDetails { [weak self] (result) in
+                if let welf = self {
+                    // set new values
+                    welf.selectedLocation = CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude)
+                    
+                    welf.dismiss(animated: true) {
+                        welf.gpaViewController?.reset()
+                    }
                 }
             }
         }
