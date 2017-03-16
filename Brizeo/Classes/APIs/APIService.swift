@@ -108,7 +108,7 @@ extension APIService: TargetType {
         case .getUsersForMatch(let userId):
             return /*"/likemoments/users/\("Qy5CiinuRA")/\(userId)"*/"/approveuserformatch/\(userId)"
         case .getMatchesForUser(let userId):
-            return "/likemoments/users/\("Qy5CiinuRA")/\(userId)"//"/approvematchforuser/\(userId)"
+            return /*"/likemoments/users/\("Qy5CiinuRA")/\(userId)"*/"/approvematchforuser/\(userId)"
         }
     }
 
@@ -182,7 +182,7 @@ extension APIService: TargetType {
             }
             
             if let thumbnail = moment.thumbnailImage, let thumbnailData = UIImagePNGRepresentation(thumbnail) {
-                let formData = MultipartFormData(provider: .data(thumbnailData), name: "thumbnailImage", fileName: "thumbnailImage.jpg", mimeType: "image/jpeg")
+                let formData = MultipartFormData(provider: .data(thumbnailData), name: "thumbnailImage", fileName: "thumbnailImage.jpg", mimeType: "image/png")
                 formDataArray.append(formData)
             }
 
@@ -201,7 +201,7 @@ extension APIService: TargetType {
             }
             
             if let thumbnail = file?.thumbFile?.image, let thumbnailData = UIImagePNGRepresentation(thumbnail) {
-                let formData = MultipartFormData(provider: .data(thumbnailData), name: "thumbnailImage", fileName: "thumbnailImage.jpg", mimeType: "image/jpeg")
+                let formData = MultipartFormData(provider: .data(thumbnailData), name: "thumbnailImage", fileName: "thumbnailImage.jpg", mimeType: "image/png")
                 formDataArray.append(formData)
             }
             

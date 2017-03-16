@@ -177,7 +177,7 @@ class BranchProvider: NSObject {
         let branchUniversalObject = BranchUniversalObject()
         branchUniversalObject.title = LocalizableString.Brizeo.localizedString
         branchUniversalObject.contentDescription = LocalizableString.BrizeoInvite.localizedString
-        branchUniversalObject.imageUrl = imageURL ?? "http://www.healthline.com/hlcmsresource/images/topic_centers/Food-Nutrition/642x361_IMAGE_1_The_7_Best_Things_About_Kiwis.jpg"
+        branchUniversalObject.imageUrl = imageURL ?? Configurations.Invite.previewURL
         
         for (key, value) in params {
             branchUniversalObject.addMetadataKey(key.rawValue, value: value)

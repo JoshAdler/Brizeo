@@ -141,7 +141,11 @@ class MediaViewController: UIViewController {
     
     //TODO: place corrent moment url
     @IBAction func onSharingButtonClicked(_ sender: UIButton) {
+        showBlackLoader()
+        
         BranchProvider.generateInviteURL(forMomentId: moment!.objectId, imageURL: moment!.imageUrl?.absoluteString) { (url) in
+            self.hideLoader()
+            
             if let url = url {
                 let modifiedURL = "\(LocalizableString.ShareMomentMessage.localizedString) \n\n \(url)"
                 

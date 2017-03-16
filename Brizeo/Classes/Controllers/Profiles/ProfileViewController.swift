@@ -166,6 +166,7 @@ class ProfileViewController: UIViewController {
         let cameraMedia = UIAlertAction(title: LocalizableString.Camera.localizedString, style: UIAlertActionStyle.default, handler: {
             (alert: UIAlertAction!) -> Void in
             imagePicker.allowsEditing = true
+            imagePicker.videoMaximumDuration = 14
             imagePicker.sourceType = .camera
             imagePicker.videoQuality = UIImagePickerControllerQualityType.typeMedium
             imagePicker.showsCameraControls = true

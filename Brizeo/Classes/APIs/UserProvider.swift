@@ -352,7 +352,7 @@ class UserProvider: NSObject {
                 }
                 
                 // email/gender
-                let email = result["email"] as? String ?? "no_email"
+                let email = result["email"] as? String ?? ""
                 var gender = Gender.Man
                 
                 if let genderStr = result["gender"] as? String, let fbGender = Gender(rawValue: genderStr) {
