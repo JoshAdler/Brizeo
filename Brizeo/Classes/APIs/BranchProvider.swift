@@ -50,6 +50,21 @@ class BranchProvider: NSObject {
     
     // MARK: - Class methods
     
+    class func inviteByParams(otherParams: [MetadataKeys: String]?) -> [MetadataKeys: String] {
+        var params = [
+            MetadataKeys.invitedByUserId: UserProvider.shared.currentUser!.objectId,
+            MetadataKeys.invitedByUserName: UserProvider.shared.currentUser!.displayName
+        ]
+        
+        if let otherParams = otherParams {
+            for (key, value) in otherParams {
+                params[key] = value
+            }
+        }
+        
+        return params
+    }
+    
     class func userIdToPresent() -> String? {
         return Defaults[.userIdToPresent]
     }
@@ -57,24 +72,34 @@ class BranchProvider: NSObject {
     class func momentIdToPresent() -> String? {
         return Defaults[.momentIdToPresent]
     }
-    
+    //TODO: use this method
     class func clearPresentData() {
         Defaults[.userIdToPresent] = nil
         Defaults[.momentIdToPresent] = nil
     }
     
     class func generateInviteURL(forMomentId momentId: String, imageURL: String? = nil, andCallback completionHandler: @escaping (String?) -> Void) {
-        generateInviteURL(forParams: [.momentId: momentId], imageURL: imageURL, andCallback: completionHandler)
+        
+        let params = self.inviteByParams(otherParams: [.momentId: momentId])
+        
+        generateInviteURL(forParams: params, imageURL: imageURL, andCallback: completionHandler)
     }
     
     class func generateInviteURL(forUserId userId: String, imageURL: String? = nil, andCallback completionHandler: @escaping (String?) -> Void) {
-        generateInviteURL(forParams: [.userId: userId], imageURL: imageURL, andCallback: completionHandler)
+        
+        let params = self.inviteByParams(otherParams: [.userId: userId])
+        
+        generateInviteURL(forParams: params, imageURL: imageURL, andCallback: completionHandler)
     }
     
     class func generateShareURL(callback completionHandler: @escaping (String?) -> Void) {
         let branchUniversalObject: BranchUniversalObject = BranchUniversalObject()
         branchUniversalObject.title = LocalizableString.Brizeo.localizedString
         branchUniversalObject.contentDescription = LocalizableString.InviteFriends.localizedString
+
+        for (key, value) in self.inviteByParams(otherParams: nil) {
+            branchUniversalObject.addMetadataKey(key.rawValue, value: value)
+        }
         
         let linkProperties: BranchLinkProperties = BranchLinkProperties()
         linkProperties.feature = Feature.invite.rawValue
