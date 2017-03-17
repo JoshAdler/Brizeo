@@ -9,6 +9,12 @@
 import Crashlytics
 import ObjectMapper
 
+enum NotificationType: Int {
+    case newMatches
+    case momentsLikes
+    case matching
+}
+
 class Notification: Mappable {
 
     // MARK: - Types

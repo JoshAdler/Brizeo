@@ -223,23 +223,17 @@ extension AppDelegate {
         
         // firebase
         FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: .sandbox)
+        let token = FIRInstanceID.instanceID().token()!
+        print("Firebase token: \(token)")
         
         // applozic
-        print("DEVICE_TOKEN_DATA :: \(deviceToken.description)") // (SWIFT = 3):TOKEN PARSING
-        
         var deviceTokenString: String = ""
         
         for i in 0..<deviceToken.count {
             deviceTokenString += String(format: "%02.2hhx", deviceToken[i] as CVarArg)
         }
         
-        //        let characterSet: CharacterSet = CharacterSet(charactersIn: "<>") // (SWIFT < 3):TOKEN PARSING
-        //
-        //        let deviceTokenString: String = (deviceToken.description as NSString)
-        //            .trimmingCharacters( in: characterSet )
-        //            .replacingOccurrences(of: " ", with: "") as String
-        //
-        print("DEVICE_TOKEN_STRING :: \(deviceTokenString)")
+        print("DEVICE_TOKEN_STRING_APPLOZIC :: \(deviceTokenString)")
         
         if (ALUserDefaultsHandler.getApnDeviceToken() != deviceTokenString) {
             

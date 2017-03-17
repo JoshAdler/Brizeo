@@ -196,7 +196,9 @@ extension MomentsTabsViewController: UIImagePickerControllerDelegate, UINavigati
         picker.dismiss(animated: true, completion: nil)
         
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            createNewMoment(with: pickedImage, videoURL: nil)
+            
+            let fixedImage = pickedImage.fixedOrientation()
+            createNewMoment(with: fixedImage, videoURL: nil)
             return
         }
         

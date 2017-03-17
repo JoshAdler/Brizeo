@@ -370,7 +370,9 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         var file: FileObject? = nil
         
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            let fileInfo = FileObjectInfo(image: pickedImage)
+            let fixedImage = pickedImage.fixedOrientation()
+            let fileInfo = FileObjectInfo(image: fixedImage)
+            
             file = FileObject(info: fileInfo)
         }
         
