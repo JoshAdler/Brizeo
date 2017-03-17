@@ -11,12 +11,13 @@ import Branch
 import Mixpanel
 import Fabric
 import Crashlytics
-import Google
-import UserNotifications
 import FBSDKLoginKit
 import Localytics
+import UserNotifications
+import Firebase
 
 import Applozic
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -30,16 +31,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Properties
     
     var window: UIWindow?
+    let gcmMessageIDKey = "gcm.message_id"
 
     // MARK: - AppDelegate livecycle
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
         //TODO: remove it before realise
         FirstEntranceProvider.shared.isFirstEntrancePassed = true
+        
         // apply main theme for the app
         ThemeManager.applyGlobalTheme()
         
         // setup 3rd parties
+        setupFirebase()
         setupFabric()
         setupMixpanel()
         //setupLocalytics(with: launchOptions)
@@ -48,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // setup Facebook SDK
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
-        registerForPushNotifications()
+        registerForPushNotifications(application: application)
 
         // TODO: replace GoogleAnalytics
 //        GoogleAnalyticsManager.setupGoogleAnalytics()
@@ -63,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
-
+    
     func applicationDidEnterBackground(_ application: UIApplication) {
         // mixpanel
         let mixPanel = Mixpanel.sharedInstance()
@@ -73,6 +78,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let registerUserClientService = ALRegisterUserClientService()
         registerUserClientService.disconnect()
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "APP_ENTER_IN_BACKGROUND"), object: nil)
+        
+        // firebase
+        FIRMessaging.messaging().disconnect()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -99,6 +107,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         FBSDKAppEvents.activateApp()
+        
+        // firebase
+        connectToFcm()
     }
     
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
@@ -132,31 +143,83 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //MARK: - Utils
 extension AppDelegate: UNUserNotificationCenterDelegate {
     
-    fileprivate func registerForPushNotifications() {
-        let settings = UIUserNotificationSettings(types: [.alert, .badge, .sound], categories: nil)
+    fileprivate func registerForPushNotifications(application: UIApplication) {
         
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
-            (granted, error) in
-            if granted {
-                print("User successfully granted access for notifications")
-            } else {
-                print("User not allowed to access for notifications")
-                if error != nil {
-                    print("Notification error: \(error)")
-                }
-            }
-        }
+        UNUserNotificationCenter.current().delegate = self
+        
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(
+            options: authOptions,
+            completionHandler: {_, _ in })
+        
+        FIRMessaging.messaging().remoteMessageDelegate = self
 
-        UIApplication.shared.registerUserNotificationSettings(settings)
-        UIApplication.shared.registerForRemoteNotifications()
+        application.registerForRemoteNotifications()
     }
 }
 
 //MARK: - Push Notifications
 extension AppDelegate {
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
 
+        // Print message ID.
+        let userInfo = notification.request.content.userInfo
+        if let messageID = userInfo[gcmMessageIDKey] {
+            print("Message ID: \(messageID)")
+        }
+        
+        // Print full message.
+        print(userInfo)
+        
+        // Change this to your preferred presentation option
+        //completionHandler(UNNotificationPresentationOptionNone)
+    }
+    
+    // Handle notification messages after display notification is tapped by the user.
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+    
+        let userInfo = response.notification.request.content.userInfo
+        if let messageID = userInfo[gcmMessageIDKey] {
+            print("Message ID: \(messageID)")
+        }
+    }
+    
+    @objc func tokenRefreshNotification(_ notification: NSNotification) {
+        
+        if let refreshedToken = FIRInstanceID.instanceID().token() {
+            print("InstanceID token: \(refreshedToken)")
+        }
+        
+        // Connect to FCM since connection may have failed when attempted before having a token.
+        connectToFcm()
+    }
+    
+    func connectToFcm() {
+        
+        // Won't connect since there is no token
+        guard FIRInstanceID.instanceID().token() != nil else {
+            return;
+        }
+        
+        // Disconnect previous FCM connection if it exists.
+        FIRMessaging.messaging().disconnect()
+        
+        FIRMessaging.messaging().connect { (error) in
+            if error != nil {
+                print("Unable to connect to FCM. \(error)")
+            } else {
+                print("Connected to FCM.")
+            }
+        }
+    }
+    //TODO: change it just before release
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         
+        // firebase
+        FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: .sandbox)
+        
+        // applozic
         print("DEVICE_TOKEN_DATA :: \(deviceToken.description)") // (SWIFT = 3):TOKEN PARSING
         
         var deviceTokenString: String = ""
@@ -187,18 +250,44 @@ extension AppDelegate {
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
-//        PFPush.handle(userInfo)
+
         print("Received notification :: \(userInfo.description)")
         let alPushNotificationService: ALPushNotificationService = ALPushNotificationService()
         alPushNotificationService.notificationArrived(to: application, with: userInfo)
+        
+        
+//         If you are receiving a notification message while your app is in the background,
+//         this callback will not be fired till the user taps on the notification launching the application.
+//         TODO: Handle data of notification
+        
+        // Print message ID.
+        if let messageID = userInfo[gcmMessageIDKey] {
+            print("Message ID: \(messageID)")
+        }
+        
+        // Print full message.
+        print(userInfo)
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        
+        // applozic
         print("Received notification With Completion :: \(userInfo.description)")
         let alPushNotificationService: ALPushNotificationService = ALPushNotificationService()
         
         alPushNotificationService.notificationArrived(to: application, with: userInfo)
-        completionHandler(UIBackgroundFetchResult.newData)
+        //completionHandler(UIBackgroundFetchResult.newData)
+    
+        // firebase
+        // Print message ID.
+        if let messageId = userInfo[gcmMessageIDKey] {
+            print("Message ID: \(messageId)")
+        }
+        
+        // Print full message.
+        print("\(userInfo)")
+        
+        completionHandler(.newData)
     }
 }
 
@@ -236,5 +325,20 @@ extension AppDelegate {
     fileprivate func setupMixpanel() {
         let mixpanel = Mixpanel.sharedInstance(withToken: Configurations.MixPanel.token)
         mixpanel.timeEvent("App_Session")
+    }
+    
+    fileprivate func setupFirebase() {
+        FIRApp.configure()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.tokenRefreshNotification(_:)), name: NSNotification.Name.firInstanceIDTokenRefresh, object: nil)
+    }
+}
+
+// MARK: - FIRMessagingDelegate
+extension AppDelegate: FIRMessagingDelegate {
+    
+    func applicationReceivedRemoteMessage(_ remoteMessage: FIRMessagingRemoteMessage) {
+        
+        print("\(remoteMessage.appData)")
     }
 }

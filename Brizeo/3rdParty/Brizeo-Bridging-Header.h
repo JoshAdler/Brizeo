@@ -5,7 +5,6 @@
 #import <SVProgressHUD/SVProgressHUD.h>
 #import <CarbonKit/CarbonKit.h>
 #import <MSRangeSlider/MSRangeSlider.h>
-#import <Google/Analytics.h>
 
 // Date mamagement
 #import "NSDate+Kogi.h"

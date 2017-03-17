@@ -2,7 +2,7 @@ PODS:
   - Alamofire (4.4.0)
   - AlamofireImage (3.1.0):
     - Alamofire (~> 4.0)
-  - Applozic (3.8.3):
+  - Applozic (3.8.4):
     - SDWebImage (~> 3.8)
   - Bolts (1.8.4):
     - Bolts/AppLinks (= 1.8.4)
@@ -24,32 +24,39 @@ PODS:
     - Fabric (~> 1.6.3)
   - DMSwipeCards (1.0.3)
   - Fabric (1.6.11)
-  - FBSDKCoreKit (4.20.0):
+  - FBSDKCoreKit (4.20.2):
     - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.20.0):
+  - FBSDKLoginKit (4.20.2):
     - FBSDKCoreKit
   - FBSDKMessengerShareKit (1.3.2)
-  - FBSDKShareKit (4.20.0):
+  - FBSDKShareKit (4.20.2):
     - FBSDKCoreKit
+  - Firebase/Core (3.15.0):
+    - FirebaseAnalytics (= 3.7.0)
+    - FirebaseCore (= 3.5.2)
+  - Firebase/Messaging (3.15.0):
+    - Firebase/Core
+    - FirebaseMessaging (= 1.2.2)
   - FirebaseAnalytics (3.7.0):
     - FirebaseCore (~> 3.5)
     - FirebaseInstanceID (~> 1.0)
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
-  - FirebaseCore (3.5.1):
+  - FirebaseCore (3.5.2):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
   - FirebaseInstanceID (1.0.9)
+  - FirebaseMessaging (1.2.2):
+    - FirebaseAnalytics (~> 3.7)
+    - FirebaseInstanceID (~> 1.0)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - Protobuf (~> 3.1)
   - FLAnimatedImage (1.0.12)
   - GBHFacebookImagePicker (1.1.4):
     - FBSDKCoreKit (~> 4.20.0)
     - FBSDKLoginKit (~> 4.20.0)
-  - Google/Analytics (3.0.3):
-    - Google/Core
-    - GoogleAnalytics (~> 3.12)
-  - Google/Core (3.0.3):
-    - FirebaseAnalytics (~> 3.2)
-  - GoogleAnalytics (3.17.0)
   - GooglePlacesAutocomplete (0.3.0)
   - GoogleToolboxForMac/Defines (2.1.1)
+  - GoogleToolboxForMac/Logger (2.1.1):
+    - GoogleToolboxForMac/Defines (= 2.1.1)
   - GoogleToolboxForMac/NSData+zlib (2.1.1):
     - GoogleToolboxForMac/Defines (= 2.1.1)
   - IGLDropDownMenu (1.6.2)
@@ -60,14 +67,14 @@ PODS:
   - Mixpanel (2.9.9):
     - Mixpanel/Mixpanel (= 2.9.9)
   - Mixpanel/Mixpanel (2.9.9)
-  - Moya (8.0.2):
-    - Moya/Core (= 8.0.2)
+  - Moya (8.0.3):
+    - Moya/Core (= 8.0.3)
   - Moya-ObjectMapper (2.3.1):
     - Moya-ObjectMapper/Core (= 2.3.1)
   - Moya-ObjectMapper/Core (2.3.1):
     - Moya (~> 8.0)
     - ObjectMapper (~> 2.2)
-  - Moya/Core (8.0.2):
+  - Moya/Core (8.0.3):
     - Alamofire (~> 4.1)
     - Result (~> 3.0)
   - MSRangeSlider (1.1.0)
@@ -86,7 +93,8 @@ PODS:
     - Bolts/Tasks (~> 1.3)
     - Parse (~> 1.9)
   - pop (1.0.9)
-  - Result (3.2.0)
+  - Protobuf (3.2.0)
+  - Result (3.2.1)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
@@ -114,8 +122,9 @@ DEPENDENCIES:
   - FBSDKLoginKit
   - FBSDKMessengerShareKit
   - FBSDKShareKit
+  - Firebase/Core
+  - Firebase/Messaging
   - GBHFacebookImagePicker
-  - Google/Analytics
   - GooglePlacesAutocomplete (from `https://github.com/danielkiedrowski/ios_google_places_autocomplete.git`)
   - IGLDropDownMenu
   - InstagramImagePicker
@@ -154,7 +163,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: dc44b1600b800eb63da6a19039a0083d62a6a62d
   AlamofireImage: bb8c8351c51cb1633bb6be69b6dbbaff37ce65b7
-  Applozic: 9acedca0e6e5f759c10d4e1f42ed9127ba4705d6
+  Applozic: fe4769f44030112d230d45dd8e91b9b4d57181a2
   Bolts: 8a7995239dbe724f9cba2248b766d48b7ebdd322
   Branch: 08e40d84f20b188443fd808fe01dadcc13d1727e
   CarbonKit: af16a9c0d2b6c908a5985fe4633424d38c9bfc0a
@@ -163,17 +172,17 @@ SPEC CHECKSUMS:
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
   DMSwipeCards: 0f2488120c13eb73366f01e87d1423495cde8ed4
   Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
-  FBSDKCoreKit: 2d16979b28fe28c2b95af0d275ad5f9703c6c8de
-  FBSDKLoginKit: a9d9391506c687e2304a590bf9312837fce7f375
+  FBSDKCoreKit: 82eac696eb6157da5f4266c3a241f00e9bd72471
+  FBSDKLoginKit: 2211bede07c83391349eacc1fd86cf6d9289ce38
   FBSDKMessengerShareKit: 41c0b1a667d685c9433f993eb9611b3d5074e1cb
-  FBSDKShareKit: 1b91af62a603d67f392bc7fde63bc4a0705dde31
+  FBSDKShareKit: ca9b22264ea49a896dafb2467c1a4f72aa41996f
+  Firebase: 2b1cdfba1cda8589f32904a697cc753322bff9d8
   FirebaseAnalytics: 0d1b7d81d5021155be37702a94ba1ec16d45365d
-  FirebaseCore: 225d40532489835a034b8f4e2c9c87fbf4f615a2
+  FirebaseCore: a024587e43778508700af8c6b1209f7c4516ba02
   FirebaseInstanceID: 2d0518b1378fe9d685ef40cbdd63d2fdc1125339
+  FirebaseMessaging: df8267f378580a24174ce7861233aa11d5c90109
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   GBHFacebookImagePicker: 52d20a64f5a0120d6e41b3033f0ab23fa8f47248
-  Google: 813c467362eabc11385f5a5cc9ad0cb651a58f4e
-  GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
   GooglePlacesAutocomplete: 7694636fce561c9d8ac807b8e490d299a730a633
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   IGLDropDownMenu: ae118618ae858fa66ce7c2ac80ed9124a710b228
@@ -181,7 +190,7 @@ SPEC CHECKSUMS:
   KMPlaceholderTextView: 2bbcd19a273648a80a61e1e48f9743a24d8930e3
   Localytics: 59cf99592a35c18e62d5994f2365ad3ccecc4982
   Mixpanel: 818d1940c2d9402453b349545022a86968097f57
-  Moya: 47f61da5b634aa71f676431b64ee0f81e976296d
+  Moya: d3721622e3cc0cc2f038d69a258686f0b66e7252
   Moya-ObjectMapper: 952be2b261d38cf8d973b7e429708eb03d256e23
   MSRangeSlider: 14b669140a4615e1d372c8d2abbfd96cd9e3fb08
   NXOAuth2Client: 98c4d4c594edd2b289cfc34a8928653e1dab7adf
@@ -190,7 +199,8 @@ SPEC CHECKSUMS:
   Parse: 4335d65f40cb3d43190d723144bbe1afb9c38230
   ParseUI: af2eba584799da4a9fbdac0e178662d7438b502e
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
-  Result: 5a6705171c0613cc5fbf6ec55ff520cc62a8e81d
+  Protobuf: 745f59e122e5de98d4d7ef291e264a0eef80f58e
+  Result: 2453a22e5c5b11c0c3a478736e82cd02f763b781
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
   SwiftDate: 8ec416bb1b5129d1f35e8efaed720421f41d42df
@@ -200,6 +210,6 @@ SPEC CHECKSUMS:
   UIScrollView-InfiniteScroll: 14e204c50ca4040467e1cbfa141dad7a18919b56
   ZTDropDownTextField: a9cb5db41b66eb28a7c38afaf4c334fb2a81034e
 
-PODFILE CHECKSUM: e55d81ae9dee8a1ba2ecfe438692aadf929e28e0
+PODFILE CHECKSUM: 37ed89ef5c29b5e4f655537c39933c54980c33df
 
 COCOAPODS: 1.2.0

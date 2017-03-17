@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'C20252BFFB73060A1C558630E1D6D348'
+               BlueprintIdentifier = '83F9B335F38EABC1FFA2A7ED73D754C4'
                BlueprintName = 'Applozic'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'Applozic.framework'>

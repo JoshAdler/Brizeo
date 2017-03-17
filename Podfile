@@ -1,7 +1,7 @@
 source 'https://github.com/CocoaPods/Specs.git'
 source 'https://bitbucket.org/kogimobilesas/podspecs.git'
 
-platform :ios, '9.0'
+platform :ios, '10.0'
 use_frameworks!
 
 target 'Brizeo' do
@@ -20,7 +20,7 @@ target 'Brizeo' do
     pod 'Branch', '~> 0.12'
     pod 'Fabric'
     pod 'Crashlytics'
-    pod 'Google/Analytics'
+#    pod 'Google/Analytics'
     
     pod 'Parse'
     pod 'NYTPhotoViewer', '~> 1.1'
@@ -30,7 +30,10 @@ target 'Brizeo' do
     pod 'IGLDropDownMenu'
     pod 'ParseUI'
     
-    #new pods
+    #Firebase
+    pod 'Firebase/Core'
+    pod 'Firebase/Messaging'
+    
     pod 'ZTDropDownTextField'
     pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git'
     pod 'DMSwipeCards'

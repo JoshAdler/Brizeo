@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Google
 
 enum GoogleAnalyticsManager {
 
@@ -102,20 +101,20 @@ enum GoogleAnalyticsManager {
     
     func sendEvent() {
         
-        _ = GAI.sharedInstance().defaultTracker
+//        _ = GAI.sharedInstance().defaultTracker
   //      traker?.send(GAIDictionaryBuilder.createEvent(withCategory: category, action: action, label: label, value: 1).build() as [AnyHashable: Any])
     }
 
     static func setupGoogleAnalytics() {
         
-        // Configure tracker from GoogleService-Info.plist.
-        var configureError:NSError?
-        GGLContext.sharedInstance().configureWithError(&configureError)
-        assert(configureError == nil, "Error configuring Google services: \(configureError)")
-        
-        // Optional: configure GAI options.
-        let gai = GAI.sharedInstance()
-        gai?.trackUncaughtExceptions = true  // report uncaught exceptions
+//        // Configure tracker from GoogleService-Info.plist.
+//        var configureError:NSError?
+//        GGLContext.sharedInstance().configureWithError(&configureError)
+//        assert(configureError == nil, "Error configuring Google services: \(configureError)")
+//        
+//        // Optional: configure GAI options.
+//        let gai = GAI.sharedInstance()
+//        gai?.trackUncaughtExceptions = true  // report uncaught exceptions
     }
 }
 

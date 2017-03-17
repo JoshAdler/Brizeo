@@ -19,6 +19,7 @@
 #import "ALChannelDBService.h"
 #import "ALChannelFeed.h"
 #import "ALChannelInfo.h"
+#import "ALChannelMsgCell.h"
 #import "ALChannelService.h"
 #import "ALChannelSyncResponse.h"
 #import "ALChannelUser.h"
