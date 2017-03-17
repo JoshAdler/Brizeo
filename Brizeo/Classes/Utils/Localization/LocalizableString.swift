@@ -10,6 +10,9 @@ import Foundation
 
 enum LocalizableString: String {
     
+    case NoMatch = "No Match Found"
+    case NoMatchInstructions = "Click OK to go to Settins;\nchange the location or widen search."
+    case NoMatchGoNext = "Click cancel to return to Moments."
     case Search = "Search"
     case Update = "Update"
     case ChatAdminWelcomeMessage = "Hi %@, \n\n Thanks for installing Brizeo.  We are thrilled you have joined our community and welcome any questions or feedback.  We want Brizeo to grow organically, so please help us to expand the community by inviting your friends and family by clicking the icon at the top right. \n\nLooking forward,\n\nJosh and David"
@@ -127,7 +130,6 @@ enum LocalizableString: String {
 	//MARK: Matches
     case TapForMoreInformation = "TAP FOR MORE INFO"
     case SwipeToSeeMoreMatches = "SWIPE TO SEE MORE MATCHES"
-    case MessageDidntFoundMatches = "No match found.\n Go to Settings: Change location or widen search."
     case NotFoundNotification = "No new match notification found"
     case MessageErrorFetchingMatches = "Unable to retrieve matches at this time"
     case ActiveTimeAgo = "Active %@ ago"

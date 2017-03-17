@@ -37,6 +37,8 @@ class MomentsTabsViewController: BasicViewController {
         static let createMomentControllerId = "CreateMomentViewController"
         static let momentsControllerId = "MomentsViewController"
         static let profileControllerId = "PersonalTabsViewController"
+        static let mediaControllerId = "MediaViewController"
+        static let otherProfileControllerId = "OtherProfileViewController"
     }
     
     // MARK: - Properties
@@ -52,6 +54,10 @@ class MomentsTabsViewController: BasicViewController {
         super.viewDidLoad()
         
         initContent()
+        
+        presentSharedContent()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(presentSharedContent), name: NSNotification.Name(rawValue: sharedValuesAreUpdated), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -66,7 +72,27 @@ class MomentsTabsViewController: BasicViewController {
         firstEntranceLogicIfNeeds()
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     // MARK: - Private methods
+    
+    @objc fileprivate func presentSharedContent() {
+        
+        guard FirstEntranceProvider.shared.isFirstEntrancePassed == true else {
+            return
+        }
+        
+        // check whether we need to present user or moment
+        if let userId = BranchProvider.userIdToPresent() {
+            showUserProfile(with: userId, orMoment: nil)
+        }
+        
+        if let momentId = BranchProvider.momentIdToPresent() {
+            loadAndShowMoment(with: momentId)
+        }
+    }
     
     fileprivate func firstEntranceLogicIfNeeds() {
         if !FirstEntranceProvider.shared.isFirstEntrancePassed {
@@ -75,7 +101,7 @@ class MomentsTabsViewController: BasicViewController {
             case .profile:
                 // go to personal screen
                 let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
-                Helper.initialNavigationController().pushViewController(profileController, animated: true)
+                navigationController?.pushViewController(profileController, animated: true)
                 break
             case .moments:
                 if !FirstEntranceProvider.shared.goingToCreateMoment {
@@ -186,7 +212,62 @@ class MomentsTabsViewController: BasicViewController {
             createMomentController.thumbnailImage = thumbnailImage
         }
         
-        Helper.initialNavigationController().pushViewController(createMomentController, animated: true)
+        navigationController?.pushViewController(createMomentController, animated: true)
+    }
+    
+    fileprivate func presentErrorAlert(momentId: String, message: String?) {
+        let alert = UIAlertController(title: LocalizableString.Error.localizedString, message: message, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: LocalizableString.TryAgain.localizedString, style: .default, handler: { (action) in
+            self.loadAndShowMoment(with: momentId)
+        }))
+        
+        alert.addAction(UIAlertAction(title: LocalizableString.Dismiss.localizedString, style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    fileprivate func loadAndShowMoment(with momentId: String) {
+        showBlackLoader()
+        
+        MomentsProvider.getMoment(with: momentId) { (result) in
+            switch (result) {
+            case .success(let moment):
+                self.show(moment: moment)
+                break
+            case .failure(_):
+                self.presentErrorAlert(momentId: momentId, message: LocalizableString.LoadMomentError.localizedString)
+                break
+            default:
+                break
+            }
+        }
+    }
+    
+    fileprivate func show(moment: Moment) {
+        let mediaController: MediaViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.mediaControllerId)!
+        mediaController.isSharingEnabled = true
+        mediaController.moment = moment
+        
+        let navigation = navigationController ?? Helper.currentTabNavigationController()
+        navigation?.pushViewController(mediaController, animated: true)
+        
+        BranchProvider.clearPresentData()
+    }
+    
+    fileprivate func showUserProfile(with userId: String?, orMoment moment: Moment?) {
+        let userIdentifier = userId ?? moment?.ownerId ?? "-1"
+        
+        if userIdentifier == UserProvider.shared.currentUser!.objectId { // show my profile
+        } else {
+            let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
+            otherPersonProfileController.user = moment?.user
+            otherPersonProfileController.userId = userIdentifier
+            
+            navigationController?.pushViewController(otherPersonProfileController, animated: true)
+        }
+        
+        BranchProvider.clearPresentData()
     }
 }
 

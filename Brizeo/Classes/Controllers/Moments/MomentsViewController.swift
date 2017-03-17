@@ -101,8 +101,6 @@ class MomentsViewController: UIViewController {
         super.viewDidAppear(animated)
         
         LocationManager.shared.checkAccessStatus()
-        
-        presentSharedContentIfNeeds()
     }
     
     deinit {
@@ -221,23 +219,10 @@ class MomentsViewController: UIViewController {
     
     func goToPersonalProfile(animated: Bool) {
         let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
-        //Helper.initialNavigationController().pushViewController(profileController, animated: animated)
-        Helper.initialNavigationController().pushViewController(profileController, animated: animated)
+        /*Helper.initialNavigationController()*/navigationController?.pushViewController(profileController, animated: animated)
     }
     
     // MARK: - Private methods
-    
-    fileprivate func presentSharedContentIfNeeds() {
-        // check whether we need to present user or moment
-        
-        if let userId = BranchProvider.userIdToPresent() {
-            showUserProfile(with: userId, orMoment: nil)
-        }
-        
-        if let momentId = BranchProvider.momentIdToPresent() {
-            loadAndShowMoment(with: momentId)
-        }
-    }
     
     fileprivate func showUserProfile(with userId: String?, orMoment moment: Moment?) {
         let userIdentifier = userId ?? moment?.ownerId ?? "-1"
@@ -248,11 +233,10 @@ class MomentsViewController: UIViewController {
             let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
             otherPersonProfileController.user = moment?.user
             otherPersonProfileController.userId = userIdentifier
-//            Helper.initialNavigationController().pushViewController(otherPersonProfileController, animated: true)
+
             navigationController?.pushViewController(otherPersonProfileController, animated: true)
         }
     }
-    
     
     fileprivate func likeMoment(_ moment: Moment) {
         showBlackLoader()
@@ -402,23 +386,6 @@ class MomentsViewController: UIViewController {
         }
     }
     
-    fileprivate func loadAndShowMoment(with momentId: String) {
-        showBlackLoader()
-        
-        MomentsProvider.getMoment(with: momentId) { (result) in
-            switch (result) {
-            case .success(let moment):
-                self.show(moment: moment)
-                break
-            case .failure(_):
-                self.presentErrorAlert(momentId: momentId, message: LocalizableString.LoadMomentError.localizedString)
-                break
-            default:
-                break
-            }
-        }
-    }
-    
     fileprivate func show(moment: Moment) {
         let mediaController: MediaViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.mediaControllerId)!
         mediaController.isSharingEnabled = true
@@ -426,18 +393,6 @@ class MomentsViewController: UIViewController {
         
         let navigation = navigationController ?? Helper.currentTabNavigationController()
         navigation?.pushViewController(mediaController, animated: true)
-    }
-    
-    fileprivate func presentErrorAlert(momentId: String, message: String?) {
-        let alert = UIAlertController(title: LocalizableString.Error.localizedString, message: message, preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: LocalizableString.TryAgain.localizedString, style: .default, handler: { (action) in
-            self.loadAndShowMoment(with: momentId)
-        }))
-        
-        alert.addAction(UIAlertAction(title: LocalizableString.Dismiss.localizedString, style: .cancel, handler: nil))
-        
-        present(alert, animated: true, completion: nil)
     }
 }
 
@@ -657,8 +612,7 @@ extension MomentsViewController: MomentTableViewCellDelegate {
                 
                 let createMomentController: CreateMomentViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.createMomentControllerId)!
                 createMomentController.moment = moment
-                
-                Helper.initialNavigationController().pushViewController(createMomentController, animated: true)
+                Helper.currentTabNavigationController()?.pushViewController(createMomentController, animated: true)
             }))
         }
         

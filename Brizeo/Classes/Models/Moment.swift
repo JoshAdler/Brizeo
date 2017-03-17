@@ -32,6 +32,8 @@ class Moment: Mappable, Equatable {
         case passionId = "passionId"
         case latitude = "currentLocation.latitude"
         case longitude = "currentLocation.longitude"
+        case updatedAt = "updatedAt"
+        case createdAt = "createdAt"
     }
     
     struct Constants {
@@ -54,6 +56,8 @@ class Moment: Mappable, Equatable {
     var file: FileObjectInfo!
     var thumbnailFile: FileObjectInfo?
     var user: User!
+    var updatedAt: Date?
+    var createdAt: Date?
     
     //variables for uploading
     var image: UIImage?
@@ -152,6 +156,8 @@ class Moment: Mappable, Equatable {
         
         // basic information
         capture <- map[JSONKeys.momentDescription.rawValue]
+        updatedAt <- (map[JSONKeys.updatedAt.rawValue], LastActiveDateTransform())
+        createdAt <- (map[JSONKeys.createdAt.rawValue], LastActiveDateTransform())
         
         // location
         locationLongitude <- (map[JSONKeys.longitude.rawValue], LocationTransform())

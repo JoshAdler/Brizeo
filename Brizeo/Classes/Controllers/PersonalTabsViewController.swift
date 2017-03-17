@@ -28,6 +28,7 @@ class PersonalTabsViewController: BasicViewController {
     var detailsController: PersonalDetailsTabsViewController!
     var carbonTabSwipeNavigation: CarbonTabSwipeNavigation!
     var blockButton: UIButton?
+    var selectedIndex: Int?
     
     // MARK: - Controller lifecycle
     
@@ -43,6 +44,10 @@ class PersonalTabsViewController: BasicViewController {
         carbonTabSwipeNavigation = Helper.createCarbonController(with: Constants.titles, self)
         carbonTabSwipeNavigation.insert(intoRootViewController: self)
         carbonTabSwipeNavigation.pagesScrollView?.isScrollEnabled = false
+        
+        if let selectedIndex = selectedIndex {
+            carbonTabSwipeNavigation.setCurrentTabIndex(UInt(selectedIndex), withAnimation: true)
+        }
         
         if FirstEntranceProvider.shared.currentStep == .profile && FirstEntranceProvider.shared.isFirstEntrancePassed == false {
             initBlockButton()

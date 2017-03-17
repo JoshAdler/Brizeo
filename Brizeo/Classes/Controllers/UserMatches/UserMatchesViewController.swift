@@ -246,7 +246,7 @@ extension UserMatchesViewController: SWTableViewCellDelegate {
                 self.declineUser(user: user)
             }, declineAction: nil)
             tableView.endEditing(true)
-        }else if index == 1 { // chat
+        } else if index == 1 { // chat
             
             guard let indexPath = tableView.indexPath(for: cell) else {
                 return

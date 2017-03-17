@@ -179,11 +179,12 @@ extension OtherPersonAboutViewController: InvitedByCellDelegate {
         
         if user.invitedByUserId! == UserProvider.shared.currentUser?.objectId {
             let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
-            Helper.initialNavigationController().pushViewController(profileController, animated: true)
+            
+            Helper.currentTabNavigationController()?.pushViewController(profileController, animated: true)
         } else { // other person profile
             let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
             otherPersonProfileController.userId = user.invitedByUserId!
-            Helper.initialNavigationController().pushViewController(otherPersonProfileController, animated: true)
+            Helper.currentTabNavigationController()?.pushViewController(otherPersonProfileController, animated: true)
         }
     }
 }

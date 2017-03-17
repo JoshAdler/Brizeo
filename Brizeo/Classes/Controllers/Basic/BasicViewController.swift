@@ -77,7 +77,7 @@ class BasicViewController: UIViewController {
         _ = navigationController?.popViewController(animated: true)
     }
     
-    func onLeftButtonClicked(sender: UIBarButtonItem) {
+    func onLeftButtonClicked(sender: UIBarButtonItem?) {
         let personalController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.personalTabsController)!
         navigationController?.pushViewController(personalController, animated: true)
     }

@@ -129,6 +129,8 @@
 		BB4ED6061E3C0E95005B3487 /* SettingsInvitationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4ED6051E3C0E95005B3487 /* SettingsInvitationCell.swift */; };
 		BB4ED60A1E3C1328005B3487 /* SettingsRangeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4ED6091E3C1328005B3487 /* SettingsRangeCell.swift */; };
 		BB4ED60C1E3C149F005B3487 /* SettingsDistanceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4ED60B1E3C149F005B3487 /* SettingsDistanceCell.swift */; };
+		BB516EFF1E7C397A00A7FB46 /* NoMatchesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB516EFE1E7C397A00A7FB46 /* NoMatchesView.xib */; };
+		BB516F011E7C399A00A7FB46 /* NoMatchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB516F001E7C399A00A7FB46 /* NoMatchesView.swift */; };
 		BB5186251E4B5BA8001C749E /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5186241E4B5BA8001C749E /* ProfileView.swift */; };
 		BB5186271E4B5C89001C749E /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB5186261E4B5C89001C749E /* ProfileView.xib */; };
 		BB64089B1E42948600C4D5F4 /* SpacingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB64089A1E42948600C4D5F4 /* SpacingTextField.swift */; };
@@ -322,6 +324,8 @@
 		BB4ED6051E3C0E95005B3487 /* SettingsInvitationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsInvitationCell.swift; sourceTree = "<group>"; };
 		BB4ED6091E3C1328005B3487 /* SettingsRangeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsRangeCell.swift; sourceTree = "<group>"; };
 		BB4ED60B1E3C149F005B3487 /* SettingsDistanceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsDistanceCell.swift; sourceTree = "<group>"; };
+		BB516EFE1E7C397A00A7FB46 /* NoMatchesView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoMatchesView.xib; sourceTree = "<group>"; };
+		BB516F001E7C399A00A7FB46 /* NoMatchesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoMatchesView.swift; sourceTree = "<group>"; };
 		BB5186241E4B5BA8001C749E /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		BB5186261E4B5C89001C749E /* ProfileView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
 		BB64089A1E42948600C4D5F4 /* SpacingTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpacingTextField.swift; sourceTree = "<group>"; };
@@ -785,6 +789,7 @@
 				BB22CF961E5072290096A3D3 /* DatePickerDialog.swift */,
 				BB22CF971E5072290096A3D3 /* DropMenuButton.swift */,
 				BB22CF981E5072290096A3D3 /* ParticipantView.swift */,
+				BB516F001E7C399A00A7FB46 /* NoMatchesView.swift */,
 				BB1FF6E21E51AF2F002343CE /* NoDescriptionView.swift */,
 				BB1FF6E81E51C3B6002343CE /* RateUsView.swift */,
 				BB1FF6EC1E51E4D2002343CE /* InviteFriendsView.swift */,
@@ -975,6 +980,7 @@
 				BB4ED6011E3C0BDA005B3487 /* SettingsBigHeaderView.xib */,
 				BB5186261E4B5C89001C749E /* ProfileView.xib */,
 				BB1FF6E41E51B180002343CE /* NoDescriptionView.xib */,
+				BB516EFE1E7C397A00A7FB46 /* NoMatchesView.xib */,
 				BB1FF6E61E51BEF4002343CE /* RateUsView.xib */,
 				BB1FF6F61E51FD8F002343CE /* ChooseView.xib */,
 				BB1FF6F81E520209002343CE /* ChooseTableViewCell.xib */,
@@ -1220,6 +1226,7 @@
 				88CA7A711CBEF06A00231AB2 /* LaunchScreen.storyboard in Resources */,
 				BB4ED5E11E3B4F81005B3487 /* SourceSansPro-Light.otf in Resources */,
 				69F422901CE65F1D00F8A0A4 /* new_message.wav in Resources */,
+				BB516EFF1E7C397A00A7FB46 /* NoMatchesView.xib in Resources */,
 				BB4ED5DB1E3B4F81005B3487 /* SourceSansPro-BlackIt.otf in Resources */,
 				BB4ED5DE1E3B4F81005B3487 /* SourceSansPro-ExtraLight.otf in Resources */,
 				BB4ED5DD1E3B4F81005B3487 /* SourceSansPro-BoldIt.otf in Resources */,
@@ -1354,6 +1361,7 @@
 				BBD125791E3FFDB000E17750 /* CreateMomentViewController.swift in Sources */,
 				BB1FF6FC1E52048B002343CE /* ChooseTableViewCell.swift in Sources */,
 				BB3EF5861E6C714A006FB2ED /* APIService.swift in Sources */,
+				BB516F011E7C399A00A7FB46 /* NoMatchesView.swift in Sources */,
 				8873F72B1CBFFE9C0053EAB8 /* LocalizableString.swift in Sources */,
 				BBCDA9331E6DF16500DCBB5D /* MapTransforms.swift in Sources */,
 				BBA2DB351E7157760066B84B /* NSDate+Kogi.m in Sources */,

@@ -127,9 +127,18 @@ class SearchMatchesViewController: BasicViewController {
     fileprivate func operateMatches() {
         if let matches = matches {
             if matches.count == 0 { // no matches for review
-                showAlert(LocalizableString.Brizeo.localizedString, message: LocalizableString.MessageDidntFoundMatches.localizedString, dismissTitle: LocalizableString.Done.localizedString, completion: {
+                
+                // show confirmation
+                let confirmationView: NoMatchesView = NoMatchesView.loadFromNib()
+                confirmationView.present(on: Helper.initialNavigationController().view, confirmAction: {
+                    
+                    let personalController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.personalTabsController)!
+                    personalController.selectedIndex = 1
+                    self.navigationController?.pushViewController(personalController, animated: true)
+                }, declineAction: {
                     self.tabBarController?.selectedIndex = 2 /* go to moments */
                 })
+                
                 return
             }
             
@@ -203,7 +212,7 @@ class SearchMatchesViewController: BasicViewController {
                     if user.status == .isMatched {
                         let matchingController: MatchViewController = Helper.controllerFromStoryboard(controllerId: "MatchViewController")!
                         matchingController.user = user
-                        Helper.initialNavigationController().pushViewController(matchingController, animated: true)
+                        welf.navigationController?.pushViewController(matchingController, animated: true)
                     } else {
                         welf.loadMatchesIfNeeds()
                     }
@@ -328,7 +337,7 @@ extension SearchMatchesViewController: DMSwipeCardsViewDelegate {
 //        mediaController.isSharingEnabled = true
         mediaController.media = (object as! User).allMedia
         
-        Helper.initialNavigationController().pushViewController(mediaController, animated: true)
+        navigationController?.pushViewController(mediaController, animated: true)
     }
     
     func reachedEndOfStack() {

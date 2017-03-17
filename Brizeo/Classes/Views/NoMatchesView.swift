@@ -1,5 +1,5 @@
 //
-//  ConfirmationView.swift
+//  NoDescriptionView.swift
 //  Brizeo
 //
 //  Created by Roman Bayik on 2/13/17.
@@ -9,8 +9,8 @@
 import UIKit
 import ChameleonFramework
 
-class ConfirmationView: UIView {
-    
+class NoMatchesView: UIView {
+
     // MARK: - Types
     
     struct Constants {
@@ -37,23 +37,24 @@ class ConfirmationView: UIView {
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var textLabel: UILabel! {
         didSet {
-            textLabel.text = LocalizableString.ConfirmationText.localizedString
+            textLabel.text = LocalizableString.NoMatchInstructions.localizedString
+        }
+    }
+    @IBOutlet weak var topTextLabel: UILabel! {
+        didSet {
+            topTextLabel.text = LocalizableString.NoMatch.localizedString
+        }
+    }
+    
+    @IBOutlet weak var bottomTextLabel: UILabel! {
+        didSet {
+            bottomTextLabel.text = LocalizableString.NoMatchGoNext.localizedString
         }
     }
     
     fileprivate var confirmAction: ((Void) -> Void)?
     fileprivate var declineAction: ((Void) -> Void)?
     
-    var title: String? {
-        get {
-            return textLabel.text
-        }
-        set {
-            textLabel.text = newValue
-        }
-    }
-    
-
     // MARK: - Override methods
     
     override func awakeFromNib() {
@@ -66,13 +67,14 @@ class ConfirmationView: UIView {
     // MARK: - Public methods
     
     func present(on view: UIView, confirmAction: ((Void) -> Void)?, declineAction: ((Void) -> Void)?) {
+        
         self.confirmAction = confirmAction
         self.declineAction = declineAction
         
         frame = CGRect(origin: CGPoint.zero, size: view.frame.size)
         view.addSubview(self)
         
-        UIView.animate(withDuration: Constants.animationDuration) {
+        UIView.animate(withDuration: Constants.animationDuration) { 
             self.centerView.transform = CGAffineTransform.identity
             self.backgroundView.alpha = 1.0
         }
@@ -80,15 +82,15 @@ class ConfirmationView: UIView {
     
     // MARK: - Actions
     
-    @IBAction func onOkButtonClicked(sender: UIButton) {
-        self.removeFromSuperview()
-        
-        confirmAction?()
-    }
-    
     @IBAction func onCancelButtonClicked(sender: UIButton) {
         self.removeFromSuperview()
         
         declineAction?()
+    }
+    
+    @IBAction func onOkButtonClicked(sender: UIButton) {
+        self.removeFromSuperview()
+        
+        confirmAction?()
     }
 }

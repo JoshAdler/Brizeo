@@ -90,6 +90,8 @@ class MomentsProvider {
     
     class func updateMoment(moment: Moment, completion: MomentCompletion?) {
         
+        moment.updatedAt = Date()
+        
         let provider = MoyaProvider<APIService>()
         provider.request(.updateMoment(moment: moment)) { (result) in
             switch result {

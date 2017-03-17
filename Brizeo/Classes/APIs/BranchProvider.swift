@@ -16,6 +16,9 @@ extension DefaultsKeys {
     static let userIdToPresent = DefaultsKey<String?>("userIdToPresent")
     static let momentIdToPresent = DefaultsKey<String?>("momentIdToPresent")
 }
+
+let sharedValuesAreUpdated = "sharedValuesAreUpdated"
+
 //TODO: check invited by link
 class BranchProvider: NSObject {
 
@@ -129,12 +132,18 @@ class BranchProvider: NSObject {
             if let userIdToPresent = params?[MetadataKeys.userId.rawValue] as? String {
                 print("user should present user id = \(userIdToPresent)")
                 Defaults[.userIdToPresent] = userIdToPresent
+            } else {
+                Defaults[.userIdToPresent] = nil
             }
             
             if let momentIdToPresent = params?[MetadataKeys.momentId.rawValue] as? String {
                 print("user should present moment id = \(momentIdToPresent)")
                 Defaults[.momentIdToPresent] = momentIdToPresent
+            } else {
+                Defaults[.momentIdToPresent] = nil
             }
+            
+            Helper.sendNotification(with: sharedValuesAreUpdated, object: nil, dict: nil)
         }
     }
     

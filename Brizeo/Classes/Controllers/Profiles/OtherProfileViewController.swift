@@ -326,7 +326,7 @@ class OtherProfileViewController: BasicViewController {
         let mediaController: MediaViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.mediaControllerId)!
         mediaController.media = user!.allMedia
         
-        Helper.initialNavigationController().pushViewController(mediaController, animated: true)
+        navigationController?.pushViewController(mediaController, animated: true)
     }
     
     @IBAction func onDeclineButtonClicked(_ sender: UIButton) {
