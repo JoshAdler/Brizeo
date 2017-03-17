@@ -181,10 +181,7 @@ extension LikesViewController: LikesTableViewCellDelegate {
                 likerView.operateStatus(status: user.status)
                 
                 if user.status == .isMatched {
-                    let matchingController: MatchViewController = Helper.controllerFromStoryboard(controllerId: "MatchViewController")!
-                    matchingController.user = user
-                    
-                    self.navigationController?.pushViewController(matchingController, animated: true)
+                    Helper.showMatchingCard(with: user, from: self.navigationController!)
                 }
                 
                 break

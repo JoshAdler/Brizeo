@@ -48,6 +48,10 @@ class Helper: NSObject {
         static let mainTabBarControllerId = "MainTabBarController"
     }
     
+    // MARK: - Properties
+    
+    static var player: AVAudioPlayer?
+    
     // MARK: - Storyboard
     
     // storyboard
@@ -225,6 +229,39 @@ class Helper: NSObject {
             print("*** Error generating thumbnail: \(error.localizedDescription)")
             return nil
         }
+    }
+    
+    // MARK: - Sound
+    
+    class func playSound(title: String) {
+        let url = Bundle.main.url(forResource: title, withExtension: "wav")!
+        
+        do {
+            Helper.player = try AVAudioPlayer(contentsOf: url)
+            guard Helper.player != nil else { return }
+            
+            Helper.player!.prepareToPlay()
+            Helper.player!.play()
+        } catch let error {
+            print(error.localizedDescription)
+        }
+    }
+    
+    // MARK: - Matching card
+    
+    class func showMatchingCard(with user: User, from controller: UINavigationController) {
+        
+        // play sound
+        let isSoundEnables = PreferencesProvider.shared.currentUserPreferences?.isNotificationsNewMatchesOn ?? true
+        
+        if isSoundEnables {
+            playSound(title: "sound_matches")
+        }
+        
+        let matchingController: MatchViewController = controllerFromStoryboard(controllerId: "MatchViewController")!
+        
+        matchingController.user = user
+        controller.pushViewController(matchingController, animated: true)
     }
 }
 

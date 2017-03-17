@@ -210,9 +210,7 @@ class SearchMatchesViewController: BasicViewController {
                     }
                     
                     if user.status == .isMatched {
-                        let matchingController: MatchViewController = Helper.controllerFromStoryboard(controllerId: "MatchViewController")!
-                        matchingController.user = user
-                        welf.navigationController?.pushViewController(matchingController, animated: true)
+                        Helper.showMatchingCard(with: user, from: welf.navigationController!)
                     } else {
                         welf.loadMatchesIfNeeds()
                     }

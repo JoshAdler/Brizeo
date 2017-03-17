@@ -140,7 +140,9 @@
 		BB8B6AD61E51047A00417D54 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB8B6AD41E51047A00417D54 /* Main.storyboard */; };
 		BBA0DC741E79408800F2BA6E /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA0DC731E79408800F2BA6E /* CustomSearchBar.swift */; };
 		BBA2DB351E7157760066B84B /* NSDate+Kogi.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA2DB341E7157760066B84B /* NSDate+Kogi.m */; };
-		BBA2DB3A1E715AB00066B84B /* notification_sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = BBA2DB391E715AB00066B84B /* notification_sound.wav */; };
+		BBA73FD11E7CAC2200777E1B /* sound_likes.wav in Resources */ = {isa = PBXBuildFile; fileRef = BBA73FCF1E7CAC2200777E1B /* sound_likes.wav */; };
+		BBA73FD21E7CAC2200777E1B /* sound_matches.wav in Resources */ = {isa = PBXBuildFile; fileRef = BBA73FD01E7CAC2200777E1B /* sound_matches.wav */; };
+		BBA73FD41E7CADCD00777E1B /* sound_messages.wav in Resources */ = {isa = PBXBuildFile; fileRef = BBA73FD31E7CADCD00777E1B /* sound_messages.wav */; };
 		BBAA14181E744056002585C5 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAA14171E744056002585C5 /* LocationViewController.swift */; };
 		BBBA1DD31E74B07A000C55B8 /* FirstEntranceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBA1DD21E74B07A000C55B8 /* FirstEntranceProvider.swift */; };
 		BBBA1DD51E74BCF8000C55B8 /* FirstEntranceMomentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBA1DD41E74BCF8000C55B8 /* FirstEntranceMomentView.swift */; };
@@ -333,7 +335,9 @@
 		BBA0DC731E79408800F2BA6E /* CustomSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
 		BBA2DB331E7157760066B84B /* NSDate+Kogi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+Kogi.h"; path = "KogiDate/NSDate+Kogi.h"; sourceTree = "<group>"; };
 		BBA2DB341E7157760066B84B /* NSDate+Kogi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+Kogi.m"; path = "KogiDate/NSDate+Kogi.m"; sourceTree = "<group>"; };
-		BBA2DB391E715AB00066B84B /* notification_sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = notification_sound.wav; sourceTree = "<group>"; };
+		BBA73FCF1E7CAC2200777E1B /* sound_likes.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sound_likes.wav; sourceTree = "<group>"; };
+		BBA73FD01E7CAC2200777E1B /* sound_matches.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sound_matches.wav; sourceTree = "<group>"; };
+		BBA73FD31E7CADCD00777E1B /* sound_messages.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sound_messages.wav; sourceTree = "<group>"; };
 		BBAA14171E744056002585C5 /* LocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		BBBA1DD21E74B07A000C55B8 /* FirstEntranceProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstEntranceProvider.swift; sourceTree = "<group>"; };
 		BBBA1DD41E74BCF8000C55B8 /* FirstEntranceMomentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstEntranceMomentView.swift; sourceTree = "<group>"; };
@@ -1015,7 +1019,9 @@
 		BBA2DB381E715AB00066B84B /* Audio */ = {
 			isa = PBXGroup;
 			children = (
-				BBA2DB391E715AB00066B84B /* notification_sound.wav */,
+				BBA73FD31E7CADCD00777E1B /* sound_messages.wav */,
+				BBA73FCF1E7CAC2200777E1B /* sound_likes.wav */,
+				BBA73FD01E7CAC2200777E1B /* sound_matches.wav */,
 			);
 			path = Audio;
 			sourceTree = "<group>";
@@ -1216,11 +1222,14 @@
 				BB516EFF1E7C397A00A7FB46 /* NoMatchesView.xib in Resources */,
 				BB4ED5DB1E3B4F81005B3487 /* SourceSansPro-BlackIt.otf in Resources */,
 				BB4ED5DE1E3B4F81005B3487 /* SourceSansPro-ExtraLight.otf in Resources */,
+				BBA73FD41E7CADCD00777E1B /* sound_messages.wav in Resources */,
 				BB4ED5DD1E3B4F81005B3487 /* SourceSansPro-BoldIt.otf in Resources */,
 				BB4ED5E01E3B4F81005B3487 /* SourceSansPro-It.otf in Resources */,
 				BBBA1DD91E74CE92000C55B8 /* FirstEntranceUserView.xib in Resources */,
+				BBA73FD11E7CAC2200777E1B /* sound_likes.wav in Resources */,
 				BB22CF951E50721E0096A3D3 /* ParticipantView.xib in Resources */,
 				BB1EF4621E3A932900231ACC /* Assets.xcassets in Resources */,
+				BBA73FD21E7CAC2200777E1B /* sound_matches.wav in Resources */,
 				BB4ED5DF1E3B4F81005B3487 /* SourceSansPro-ExtraLightIt.otf in Resources */,
 				BB1FF6F21E51EC05002343CE /* ConfirmationView.xib in Resources */,
 				BB4ED5E41E3B4F81005B3487 /* SourceSansPro-Semibold.otf in Resources */,
@@ -1240,7 +1249,6 @@
 				BB1FF6F31E51EC05002343CE /* InviteFriendsView.xib in Resources */,
 				69C215201CCE453D00F4C069 /* CustomLocation.gpx in Resources */,
 				BB4ED5DC1E3B4F81005B3487 /* SourceSansPro-Bold.otf in Resources */,
-				BBA2DB3A1E715AB00066B84B /* notification_sound.wav in Resources */,
 				692B1B471CE5351C00C4906C /* CountryPicker.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

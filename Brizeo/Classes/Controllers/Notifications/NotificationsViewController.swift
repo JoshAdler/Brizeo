@@ -145,10 +145,7 @@ class NotificationsViewController: UIViewController {
                     completion()
                     
                     if sender.status == .isMatched {
-                        let matchingController: MatchViewController = Helper.controllerFromStoryboard(controllerId: "MatchViewController")!
-                        matchingController.user = sender
-                        
-                        Helper.currentTabNavigationController()?.pushViewController(matchingController, animated: true)
+                        Helper.showMatchingCard(with: sender, from: Helper.currentTabNavigationController()!)
                     }
                     
                     break

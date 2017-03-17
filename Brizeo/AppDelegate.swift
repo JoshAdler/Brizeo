@@ -176,14 +176,13 @@ extension AppDelegate {
             let pushNotification = PushNotification(dict: dict)
             
             if pushNotification.hasInfo {
-                // do some action
+                NotificationProvider.operatePush(pushNotification)
             }
         }
         
         // Print full message.
         print(userInfo)
         
-        // Change this to your preferred presentation option
         completionHandler(.badge)
     }
     
@@ -200,7 +199,7 @@ extension AppDelegate {
             let pushNotification = PushNotification(dict: dict)
             
             if pushNotification.hasInfo {
-                // do some action
+                NotificationProvider.operatePush(pushNotification)
             }
         }
         
@@ -372,6 +371,10 @@ extension AppDelegate {
             
             if let preferences = PreferencesProvider.shared.currentUserPreferences {
                 PreferencesProvider.updatePreferences(preferences: preferences, completion: nil)
+            } else {
+                if let currentUser = UserProvider.shared.currentUser {
+                    PreferencesProvider.loadPreferences(for: currentUser.objectId, fromCache: false, completion: nil)
+                }
             }
             
             // keep in mind this is called on a background thread

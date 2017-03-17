@@ -55,4 +55,36 @@ class NotificationProvider: NSObject {
             UserProvider.updateUser(user: currentUser, completion: nil)
         }
     }
+    
+    class func operatePush(_ notification: PushNotification) {
+        
+        if notification.type == .newMatches { // matched
+            
+            guard let userId = notification.userId else {
+                return
+            }
+            
+            // load user data
+            UserProvider.getUserWithStatus(for: userId, completion: { (result) in
+                
+                switch(result) {
+                case .success(let user):
+                    
+                    if let currentNotification = Helper.currentTabNavigationController() {
+                        Helper.showMatchingCard(with: user, from: currentNotification)
+                    }
+                    
+                    break
+                case .failure(let error):
+                    print("Error during getting user by \(userId) for push matching: \(error.errorDescription)")
+                    break
+                default:
+                    break
+                }
+            })
+
+        } else { // likes
+            
+        }
+    }
 }
