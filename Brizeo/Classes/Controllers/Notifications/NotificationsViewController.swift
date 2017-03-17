@@ -290,6 +290,14 @@ extension NotificationsViewController: NotificationsTableViewCellDelegate {
         }
         
         approveNotification(with: sender) {
+            
+            //check every user
+            for notification in self.notifications! {
+                if notification.senderUser != nil, notification.senderUser!.objectId == sender.objectId {
+                    notification.senderUser!.status = sender.status
+                }
+            }
+            
             self.tableView.reloadData()
         }
     }
@@ -310,6 +318,14 @@ extension NotificationsViewController: NotificationsTableViewCellDelegate {
         }
         
         declineNotification(with: sender) {
+            
+            //check every user
+            for notification in self.notifications! {
+                if notification.senderUser != nil, notification.senderUser!.objectId == sender.objectId {
+                    notification.senderUser!.status = sender.status
+                }
+            }
+            
             self.tableView.reloadData()
         }
     }

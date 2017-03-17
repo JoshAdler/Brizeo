@@ -46,6 +46,7 @@ class NotificationTabsViewController: BasicViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        navigationController?.setNavigationBarHidden(false, animated: animated)
         Helper.mainTabBarController()?.tabBar.isHidden = false
     }
 }

@@ -365,6 +365,15 @@ extension AppDelegate {
             // save token
             NotificationProvider.updateCurrentUserToken()
             
+            // save user/preferences
+            if let currentUser = UserProvider.shared.currentUser {
+                UserProvider.updateUser(user: currentUser, completion: nil)
+            }
+            
+            if let preferences = PreferencesProvider.shared.currentUserPreferences {
+                PreferencesProvider.updatePreferences(preferences: preferences, completion: nil)
+            }
+            
             // keep in mind this is called on a background thread
             // and if you are updating the UI it needs to happen
             // on the main thread, like this:
