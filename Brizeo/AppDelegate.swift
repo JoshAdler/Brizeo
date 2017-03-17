@@ -192,6 +192,9 @@ extension AppDelegate {
     
     @objc func tokenRefreshNotification(_ notification: NSNotification) {
         
+        // save token for push notifications
+        NotificationProvider.updateCurrentUserToken()
+        
         if let refreshedToken = FIRInstanceID.instanceID().token() {
             print("InstanceID token: \(refreshedToken)")
         }
@@ -223,8 +226,9 @@ extension AppDelegate {
         
         // firebase
         FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: .sandbox)
-        let token = FIRInstanceID.instanceID().token()!
-        print("Firebase token: \(token)")
+        
+        // save token
+        NotificationProvider.updateCurrentUserToken()
         
         // applozic
         var deviceTokenString: String = ""

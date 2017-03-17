@@ -62,6 +62,7 @@ class User: Mappable {
         case invitedByUserName = "invitedByUserName"
         case status = "status"
         case otherProfileImages = "otherProfileImages"
+        case deviceToken = "deviceToken"
     }
     
     // MARK: - Properties
@@ -81,6 +82,9 @@ class User: Mappable {
     var isSuperUser: Bool = false
     var workInfo: String?
     var studyInfo: String?
+    
+    // motification info
+    var deviceToken: String?
     
     // passions
     var primaryPassionId: String?
@@ -312,6 +316,8 @@ class User: Mappable {
 //        }
         
         status <- (map[JSONKeys.status.rawValue], EnumTransform<MatchingStatus>())
+        deviceToken <- map[JSONKeys.deviceToken.rawValue]
+        
     }
     
     // MARK: - Public methods

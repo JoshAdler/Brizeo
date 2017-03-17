@@ -47,4 +47,11 @@ class NotificationProvider: NSObject {
             }
         }
     }
+    
+    class func updateCurrentUserToken() {
+        if let token = FIRInstanceID.instanceID().token(), let currentUser = UserProvider.shared.currentUser {
+            currentUser.deviceToken = token
+            UserProvider.updateUser(user: currentUser, completion: nil)
+        }
+    }
 }

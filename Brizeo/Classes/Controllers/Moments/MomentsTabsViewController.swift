@@ -124,6 +124,7 @@ class MomentsTabsViewController: BasicViewController {
             
             imagePicker.videoQuality = UIImagePickerControllerQualityType.typeHigh
             imagePicker.videoMaximumDuration = 14
+            imagePicker.allowsEditing = true
             imagePicker.sourceType = .photoLibrary
             imagePicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: imagePicker.sourceType)!
             imagePicker.modalPresentationStyle = .popover

@@ -9,6 +9,7 @@
 import UIKit
 import SVProgressHUD
 import Branch
+import Firebase
 
 class LoginViewController: UIViewController {
     
@@ -101,7 +102,9 @@ class LoginViewController: UIViewController {
         BranchProvider.checkUserReward()
         ChatProvider.registerUserInChat()
         ChatProvider.createChatWithSuperuser()
-        //TODO: check with a new user after the api method will be done
+        
+        // save token for push notifications
+        NotificationProvider.updateCurrentUserToken()
     }
     
     fileprivate func signUpWithFacebook() {
