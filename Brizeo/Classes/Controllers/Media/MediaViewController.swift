@@ -147,7 +147,8 @@ class MediaViewController: UIViewController {
             self.hideLoader()
             
             if let url = url {
-                let modifiedURL = "\(LocalizableString.ShareMomentMessage.localizedString) \n\n \(url)"
+                let type = self.moment!.hasVideo ? "video" : "picture"
+                let modifiedURL = "\(LocalizableString.ShareMomentMessage.localizedStringWithArguments([type])) \n\n \(url)"
                 
                 if MFMessageComposeViewController.canSendText() {
                     let messageComposeVC = MFMessageComposeViewController()

@@ -8,6 +8,7 @@
 
 import UIKit
 import Moya
+import Firebase
 
 class NotificationProvider: NSObject {
 
