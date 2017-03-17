@@ -160,9 +160,11 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 
 //MARK: - Push Notifications
 extension AppDelegate {
-    
+    //method to operate notifications when the app is active
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
 
+        print("userNotificationCenter, willPresent")
+        
         // Print message ID.
         let userInfo = notification.request.content.userInfo
         if let messageID = userInfo[gcmMessageIDKey] {
@@ -173,16 +175,19 @@ extension AppDelegate {
         print(userInfo)
         
         // Change this to your preferred presentation option
-        //completionHandler(UNNotificationPresentationOptionNone)
+        completionHandler(.alert)
     }
     
     // Handle notification messages after display notification is tapped by the user.
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
     
+        print("userNotificationCenter, didReceive")
         let userInfo = response.notification.request.content.userInfo
         if let messageID = userInfo[gcmMessageIDKey] {
             print("Message ID: \(messageID)")
         }
+        
+        completionHandler()
     }
     
     @objc func tokenRefreshNotification(_ notification: NSNotification) {
@@ -256,9 +261,7 @@ extension AppDelegate {
         alPushNotificationService.notificationArrived(to: application, with: userInfo)
         
         
-//         If you are receiving a notification message while your app is in the background,
-//         this callback will not be fired till the user taps on the notification launching the application.
-//         TODO: Handle data of notification
+        print("method - didReceiveRemoteNotification, userinfo")
         
         // Print message ID.
         if let messageID = userInfo[gcmMessageIDKey] {
@@ -271,15 +274,15 @@ extension AppDelegate {
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
+        print("method - didReceiveRemoteNotification, fetchCompletionHandler")
+        
         // applozic
         print("Received notification With Completion :: \(userInfo.description)")
         let alPushNotificationService: ALPushNotificationService = ALPushNotificationService()
         
         alPushNotificationService.notificationArrived(to: application, with: userInfo)
-        //completionHandler(UIBackgroundFetchResult.newData)
-    
+        
         // firebase
-        // Print message ID.
         if let messageId = userInfo[gcmMessageIDKey] {
             print("Message ID: \(messageId)")
         }
@@ -339,6 +342,7 @@ extension AppDelegate: FIRMessagingDelegate {
     
     func applicationReceivedRemoteMessage(_ remoteMessage: FIRMessagingRemoteMessage) {
         
+        print("method - applicationReceivedRemoteMessage")
         print("\(remoteMessage.appData)")
     }
 }

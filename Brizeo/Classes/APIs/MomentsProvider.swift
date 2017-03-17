@@ -51,6 +51,7 @@ class MomentsProvider {
     // MARK: - Class methods
     
     class func preloadMomentPictures(isFirstTime: Bool, moments: [Moment]) {
+        return
         let moments = isFirstTime ? Array(moments.prefix(Constants.momentsLimitAmount)) : moments
         print("We need to cache moment count : \(moments.count)")
         

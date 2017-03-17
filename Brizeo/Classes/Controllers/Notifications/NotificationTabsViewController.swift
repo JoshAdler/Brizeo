@@ -38,6 +38,12 @@ class NotificationTabsViewController: BasicViewController {
         carbonTabSwipeNavigation.insert(intoRootViewController: self)
         carbonTabSwipeNavigation.pagesScrollView?.isScrollEnabled = false
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        Helper.mainTabBarController()?.tabBar.isHidden = false
+    }
 }
 
 // MARK: - CarbonTabSwipeNavigationDelegate
