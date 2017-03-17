@@ -35,9 +35,7 @@ class EventTabsViewController: BasicViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if !isControllerReady && UserProvider.isUserLoggedInFacebook() {
-            prepareController()
-        }
+        Helper.mainTabBarController()?.tabBar.isHidden = false
     }
     
     // MARK: - Private methods

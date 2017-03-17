@@ -180,7 +180,6 @@ extension LikesViewController: LikesTableViewCellDelegate {
                 self.hideLoader()
                 likerView.operateStatus(status: user.status)
                 
-                // TODO: check whether the status is matched. If yes - show matching page
                 if user.status == .isMatched {
                     let matchingController: MatchViewController = Helper.controllerFromStoryboard(controllerId: "MatchViewController")!
                     matchingController.user = user
