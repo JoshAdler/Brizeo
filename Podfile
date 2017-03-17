@@ -66,4 +66,6 @@ target 'Brizeo' do
     
     # text view placeholder
     pod 'KMPlaceholderTextView', '~> 1.3.0'
+    
+    pod 'Reachability'
 end

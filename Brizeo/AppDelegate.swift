@@ -15,7 +15,7 @@ import FBSDKLoginKit
 import Localytics
 import UserNotifications
 import Firebase
-
+import Reachability
 import Applozic
 
 
@@ -30,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - Properties
     
+    var reach: Reachability?
     var window: UIWindow?
     let gcmMessageIDKey = "gcm.message_id"
 
@@ -44,6 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ThemeManager.applyGlobalTheme()
         
         // setup 3rd parties
+        setupReachability()
         setupFirebase()
         setupFabric()
         setupMixpanel()
@@ -332,6 +334,36 @@ extension AppDelegate {
         FIRApp.configure()
         
         NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.tokenRefreshNotification(_:)), name: NSNotification.Name.firInstanceIDTokenRefresh, object: nil)
+    }
+    
+    fileprivate func setupReachability() {
+        
+        // Allocate a reachability object
+        self.reach = Reachability.forInternetConnection()
+        
+        // Set the blocks
+        self.reach!.reachableBlock = {
+            (reach: Reachability?) -> Void in
+            
+            PassionsProvider.shared.getAllPassions(completion: nil)
+            
+            // save token
+            NotificationProvider.updateCurrentUserToken()
+            
+            // keep in mind this is called on a background thread
+            // and if you are updating the UI it needs to happen
+            // on the main thread, like this:
+            DispatchQueue.main.async {
+                print("REACHABLE!")
+            }
+        }
+        
+        self.reach!.unreachableBlock = {
+            (reach: Reachability?) -> Void in
+            print("UNREACHABLE!")
+        }
+        
+        self.reach!.startNotifier()
     }
 }
 

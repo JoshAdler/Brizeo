@@ -56,7 +56,7 @@ class Moment: Mappable, Equatable {
     var file: FileObjectInfo!
     var thumbnailFile: FileObjectInfo?
     var user: User!
-    var updatedAt: Date?
+    var updatedAt: Date? = Date()
     var createdAt: Date?
     
     //variables for uploading

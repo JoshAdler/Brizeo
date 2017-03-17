@@ -94,6 +94,7 @@ PODS:
     - Parse (~> 1.9)
   - pop (1.0.9)
   - Protobuf (3.2.0)
+  - Reachability (3.2)
   - Result (3.2.1)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
@@ -137,6 +138,7 @@ DEPENDENCIES:
   - NYTPhotoViewer (~> 1.1)
   - Parse
   - ParseUI
+  - Reachability
   - SDWebImage (~> 3.8)
   - SVProgressHUD (~> 1.0)
   - SwiftDate (~> 4.0)
@@ -200,6 +202,7 @@ SPEC CHECKSUMS:
   ParseUI: af2eba584799da4a9fbdac0e178662d7438b502e
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
   Protobuf: 745f59e122e5de98d4d7ef291e264a0eef80f58e
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   Result: 2453a22e5c5b11c0c3a478736e82cd02f763b781
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
@@ -210,6 +213,6 @@ SPEC CHECKSUMS:
   UIScrollView-InfiniteScroll: 14e204c50ca4040467e1cbfa141dad7a18919b56
   ZTDropDownTextField: a9cb5db41b66eb28a7c38afaf4c334fb2a81034e
 
-PODFILE CHECKSUM: 37ed89ef5c29b5e4f655537c39933c54980c33df
+PODFILE CHECKSUM: 550d9e2f758fa7183e2d772a579287de8c8854cc
 
 COCOAPODS: 1.2.0
