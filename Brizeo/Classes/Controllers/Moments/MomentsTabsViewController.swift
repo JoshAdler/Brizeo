@@ -231,6 +231,8 @@ class MomentsTabsViewController: BasicViewController {
         showBlackLoader()
         
         MomentsProvider.getMoment(with: momentId) { (result) in
+            self.hideLoader()
+            
             switch (result) {
             case .success(let moment):
                 self.show(moment: moment)
