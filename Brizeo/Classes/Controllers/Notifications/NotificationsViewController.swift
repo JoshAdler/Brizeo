@@ -18,6 +18,7 @@ enum NotificationContentType {
 }
 
 protocol NotificationsTableViewCellDelegate: class {
+    
     func notificationCellDidClickedOnProfile(cell: UITableViewCell)
     func notificationCellDidClickedOnImage(cell: UITableViewCell)
     func notificationCell(cell: UITableViewCell, didClickedApprove likerView: LikerView)
@@ -70,7 +71,9 @@ class NotificationsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        loadNotifications()
+        if notifications == nil || notifications?.count == 0 {
+            loadNotifications()
+        }
     }
     
     // MARK: - Private methods
@@ -287,7 +290,7 @@ extension NotificationsViewController: NotificationsTableViewCellDelegate {
         }
         
         approveNotification(with: sender) {
-            likerView.operateStatus(status: sender.status)
+            self.tableView.reloadData()
         }
     }
     
@@ -307,7 +310,7 @@ extension NotificationsViewController: NotificationsTableViewCellDelegate {
         }
         
         declineNotification(with: sender) {
-             likerView.operateStatus(status: sender.status)
+            self.tableView.reloadData()
         }
     }
 }

@@ -28,7 +28,6 @@
 		8874556F1CC5366200F0D45F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8874556E1CC5366200F0D45F /* User.swift */; };
 		88A6279F1CC5725D006A191A /* ProfileMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A6279E1CC5725D006A191A /* ProfileMedia.swift */; };
 		88A627A31CC5789F006A191A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A627A11CC5789F006A191A /* LoginViewController.swift */; };
-		88A627AB1CC599CF006A191A /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A627AA1CC599CF006A191A /* ParseFacebookUtilsV4.framework */; };
 		88B568E01CC6740F003A21EE /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B568DF1CC6740F003A21EE /* Preferences.swift */; };
 		88B568F61CC93E53003A21EE /* DeviceAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B568F51CC93E53003A21EE /* DeviceAction.swift */; };
 		88B568F81CC9700C003A21EE /* CaptionedPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B568F71CC9700C003A21EE /* CaptionedPhoto.swift */; };
@@ -211,7 +210,6 @@
 		8874556E1CC5366200F0D45F /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		88A6279E1CC5725D006A191A /* ProfileMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileMedia.swift; sourceTree = "<group>"; };
 		88A627A11CC5789F006A191A /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
-		88A627AA1CC599CF006A191A /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseFacebookUtilsV4.framework; path = Brizeo/ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		88B568DF1CC6740F003A21EE /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		88B568F51CC93E53003A21EE /* DeviceAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceAction.swift; sourceTree = "<group>"; };
 		88B568F71CC9700C003A21EE /* CaptionedPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptionedPhoto.swift; sourceTree = "<group>"; };
@@ -371,7 +369,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88A627AB1CC599CF006A191A /* ParseFacebookUtilsV4.framework in Frameworks */,
 				D1641CEBC257ED884DC91E75 /* Pods_Brizeo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1082,7 +1079,6 @@
 			isa = PBXGroup;
 			children = (
 				BB7EAEAB1E6077E9007986CD /* Applozic.framework */,
-				88A627AA1CC599CF006A191A /* ParseFacebookUtilsV4.framework */,
 				EF77DB0EB2C6249A6F0A358D /* Pods_Brizeo.framework */,
 			);
 			name = Frameworks;

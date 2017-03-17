@@ -25,6 +25,7 @@ class Notification: Mappable {
         case sendUser = "sendUser"
         case moment = "moment"
         case createdAt = "createdAt"
+        case user = "user"
     }
     
     // MARK: - Properties
@@ -44,7 +45,7 @@ class Notification: Mappable {
         
         objectId <- map[JSONKeys.objectId.rawValue]
         receiverUser <- map[JSONKeys.receiveUser.rawValue]
-        senderUser <- map[JSONKeys.sendUser.rawValue]
+        senderUser <- map[JSONKeys.user.rawValue]
         moment <- map[JSONKeys.moment.rawValue]
         pushType <- (map[JSONKeys.pushType.rawValue], EnumTransform<NotificationType>())
         createdAt <- (map[JSONKeys.createdAt.rawValue], LastActiveDateTransform())
