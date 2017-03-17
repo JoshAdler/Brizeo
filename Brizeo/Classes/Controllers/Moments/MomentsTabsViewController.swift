@@ -9,7 +9,6 @@
 import UIKit
 import MobileCoreServices
 import CarbonKit
-import Parse
 import GBHFacebookImagePicker
 import InstagramImagePicker
 import SDWebImage
@@ -92,6 +91,8 @@ class MomentsTabsViewController: BasicViewController {
         if let momentId = BranchProvider.momentIdToPresent() {
             loadAndShowMoment(with: momentId)
         }
+        
+        BranchProvider.clearPresentData()
     }
     
     fileprivate func firstEntranceLogicIfNeeds() {
@@ -253,14 +254,12 @@ class MomentsTabsViewController: BasicViewController {
         
         let navigation = navigationController ?? Helper.currentTabNavigationController()
         navigation?.pushViewController(mediaController, animated: true)
-        
-        BranchProvider.clearPresentData()
     }
     
     fileprivate func showUserProfile(with userId: String?, orMoment moment: Moment?) {
         let userIdentifier = userId ?? moment?.ownerId ?? "-1"
         
-        if userIdentifier == UserProvider.shared.currentUser!.objectId { // show my profile
+        if userIdentifier == UserProvider.shared.currentUser!.objectId { // don't show my current profile because there is no sense in it
         } else {
             let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
             otherPersonProfileController.user = moment?.user
@@ -268,8 +267,6 @@ class MomentsTabsViewController: BasicViewController {
             
             navigationController?.pushViewController(otherPersonProfileController, animated: true)
         }
-        
-        BranchProvider.clearPresentData()
     }
 }
 

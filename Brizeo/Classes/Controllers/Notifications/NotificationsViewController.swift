@@ -8,6 +8,14 @@
 
 import UIKit
 import SDWebImage
+import SwiftDate
+import FormatterKit
+import SVProgressHUD
+
+enum NotificationContentType {
+    case likes
+    case people
+}
 
 protocol NotificationsTableViewCellDelegate: class {
     func notificationCellDidClickedOnProfile(cell: UITableViewCell)
@@ -16,14 +24,14 @@ protocol NotificationsTableViewCellDelegate: class {
     func notificationCell(cell: UITableViewCell, didClickedDecline likerView: LikerView)
 }
 
+protocol NotificationsViewControllerDelegate: class {
+    
+    func loadNotifications(for type: NotificationType, completionHandler: @escaping ([Notification]?) -> Void)
+}
+
 class NotificationsViewController: UIViewController {
 
     // MARK: - Types
-    
-    enum NotificationContentType {
-        case likes
-        case people
-    }
     
     struct StoryboardIds {
         static let likesCellId = "Likes"
@@ -35,21 +43,28 @@ class NotificationsViewController: UIViewController {
     }
     
     struct Constants {
-        static let likesCellHeightCoef: CGFloat = 185.0 / 1027.0
-        static let peopleCellHeightCoef: CGFloat = 124.0 / 1027.0
+        static let likesCellHeight: CGFloat = 93.0
+        static let peopleCellHeight: CGFloat = 62.0
     }
     
     // MARK: - Properties
     
     @IBOutlet weak var tableView: UITableView!
     var notifications: [Notification]?
-    var contentType: NotificationContentType = .likes
+    var contentType: NotificationType = .momentsLikes
     var index: Int = 0
+    var topRefresher: UIRefreshControl!
+    weak var delegate: NotificationsViewControllerDelegate?
     
     // MARK: - Controller lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // set top refresher
+        topRefresher = UIRefreshControl()
+        topRefresher.addTarget(self, action: #selector(NotificationsViewController.refreshTableView), for: .valueChanged)
+        tableView.addSubview(topRefresher)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,20 +75,86 @@ class NotificationsViewController: UIViewController {
     
     // MARK: - Private methods
     
+    @objc fileprivate func refreshTableView() {
+        loadNotifications()
+    }
+    
     fileprivate func loadNotifications() {
         
+        delegate?.loadNotifications(for: contentType, completionHandler: { (loadedNotifications) in
+            
+            if let loadedNotifications = loadedNotifications {
+                self.notifications = loadedNotifications
+                self.tableView.reloadData()
+            }
+            
+            self.topRefresher.endRefreshing()
+        })
     }
     
     fileprivate func showUserProfile(with user: User) {
         
         if user.objectId == UserProvider.shared.currentUser!.objectId { // show my profile
             let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
-            Helper.initialNavigationController().pushViewController(profileController, animated: true)
+            Helper.currentTabNavigationController()?.pushViewController(profileController, animated: true)
         } else {
             let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
             otherPersonProfileController.user = user
             otherPersonProfileController.userId = user.objectId
-            navigationController?.pushViewController(otherPersonProfileController, animated: true)
+            Helper.currentTabNavigationController()?.pushViewController(otherPersonProfileController, animated: true)
+        }
+    }
+    
+    fileprivate func declineNotification(with sender: User, completion: @escaping (Void) -> Void) {
+        showBlackLoader()
+        
+        MatchesProvider.declineMatch(for: sender) { [weak self] (result) in
+            
+            if let welf = self {
+                
+                switch(result) {
+                case .success(_):
+                    
+                    welf.hideLoader()
+                    completion()
+                    
+                    break
+                case .failure(let error):
+                    SVProgressHUD.showError(withStatus: error.localizedDescription)
+                    break
+                default: break
+                }
+            }
+        }
+    }
+    
+    fileprivate func approveNotification(with sender: User, completion: @escaping (Void) -> Void) {
+        showBlackLoader()
+        
+        MatchesProvider.approveMatch(for: sender) { [weak self] (result) in
+            
+            if let welf = self {
+                
+                switch(result) {
+                case .success(_):
+                    
+                    welf.hideLoader()
+                    completion()
+                    
+                    if sender.status == .isMatched {
+                        let matchingController: MatchViewController = Helper.controllerFromStoryboard(controllerId: "MatchViewController")!
+                        matchingController.user = sender
+                        
+                        Helper.currentTabNavigationController()?.pushViewController(matchingController, animated: true)
+                    }
+                    
+                    break
+                case .failure(let error):
+                    SVProgressHUD.showError(withStatus: error.localizedDescription)
+                    break
+                default: break
+                }
+            }
         }
     }
 }
@@ -86,26 +167,49 @@ extension NotificationsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // TODO: move content type somewhere inside notification object
         
-        if contentType == .likes {
+        if contentType == .momentsLikes {
             let cell = tableView.dequeueReusableCell(withIdentifier: StoryboardIds.likesCellId, for: indexPath) as! LikesNotificationTableViewCell
             let notification = notifications![indexPath.row]
             
             cell.delegate = self
-//            cell.likeUserImage.sd_setImage(with: URL(string: notification.object(forKey: "userImage") as! String)!)
-//            cell.likedMomentImage.sd_setImage(with: URL(string: notification.object(forKey: "momentImage") as! String)!)
-//            cell.generateText(with: notification.object(forKey: "userName") as! String, time: notification.object(forKey: "timeframe") as! String)
+            
+            // profile image
+            if let profileUrl = notification.senderUser?.profileUrl {
+                cell.likeUserImage.sd_setImage(with: profileUrl)
+            } else {
+                cell.likeUserImage.image = nil
+            }
+            
+            // moment image url
+            if let momentImageUrl = notification.moment?.imageUrl {
+                cell.likedMomentImage.sd_setImage(with: momentImageUrl)
+            } else {
+                cell.likedMomentImage.image = nil
+            }
+            
+            // name/time
+            let displayName = notification.senderUser?.displayName ?? "Somebody"
+            let time = notification.createdAt?.intervalString(toDate: Date()) ?? ""
+            
+            cell.generateText(with: displayName, time: time)
 
             return cell
         } else { // people
             let cell = tableView.dequeueReusableCell(withIdentifier: StoryboardIds.peopleCellId, for: indexPath) as! PeopleNotificationTableViewCell
-//            let notification = notifications.object(at: indexPath.row) as! NSDictionary
-//            
-//            cell.delegate = self
-//            cell.commentUserImage.sd_setImage(with: URL(string: notification.object(forKey: "userImage") as! String)!)
-//            cell.commentTimeLabel.text = "2d"//notification.object(forKey: "timeframe") as? String
-//            cell.generateText(with: "Jonathan Harrison", "John.H")
+            let notification = notifications![indexPath.row]
+            
+            cell.delegate = self
+            
+            if let profileUrl = notification.senderUser?.profileUrl {
+                cell.commentUserImage.sd_setImage(with: profileUrl)
+            } else {
+                cell.commentUserImage.image = nil
+            }
+            
+            let time = notification.createdAt?.intervalString(toDate: Date()) ?? ""
+            cell.commentTimeLabel.text = time
+            cell.generateText(with: notification.senderUser?.displayName ?? "", "")
             
             return cell
         }
@@ -116,10 +220,10 @@ extension NotificationsViewController: UITableViewDataSource {
 extension NotificationsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if contentType == .likes {
-            return tableView.frame.height * Constants.likesCellHeightCoef
+        if contentType == .momentsLikes {
+            return Constants.likesCellHeight
         } else {
-            return tableView.frame.height * Constants.peopleCellHeightCoef
+            return Constants.peopleCellHeight
         }
     }
 }
@@ -128,15 +232,18 @@ extension NotificationsViewController: UITableViewDelegate {
 extension NotificationsViewController: NotificationsTableViewCellDelegate {
     
     func notificationCellDidClickedOnImage(cell: UITableViewCell) {
+        
         guard let indexPath = tableView.indexPath(for: cell) else {
             return
         }
         
+        let notification = notifications![indexPath.row]
         let mediaController: MediaViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.mediaControllerId)!
-        mediaController.isSharingEnabled = true
-//        mediaController.moment = moment
         
-        Helper.initialNavigationController().pushViewController(mediaController, animated: true)
+        mediaController.isSharingEnabled = true
+        mediaController.moment = notification.moment
+        
+        Helper.currentTabNavigationController()?.pushViewController(mediaController, animated: true)
     }
     
     func notificationCellDidClickedOnProfile(cell: UITableViewCell) {
@@ -145,7 +252,24 @@ extension NotificationsViewController: NotificationsTableViewCellDelegate {
         }
         
         let notification = notifications![indexPath.row]
-//        showUserProfile(with: )
+
+        guard let senderUser = notification.senderUser else {
+            return
+        }
+        
+        if senderUser.objectId == UserProvider.shared.currentUser!.objectId { // show my profile
+            
+            let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
+            
+            Helper.currentTabNavigationController()?.pushViewController(profileController, animated: true)
+        } else {
+            
+            let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
+            otherPersonProfileController.user = senderUser
+            otherPersonProfileController.userId = senderUser.objectId
+            
+            Helper.currentTabNavigationController()?.pushViewController(otherPersonProfileController, animated: true)
+        }
     }
     
     func notificationCell(cell: UITableViewCell, didClickedApprove likerView: LikerView) {
@@ -158,33 +282,13 @@ extension NotificationsViewController: NotificationsTableViewCellDelegate {
         
         let notification = notifications![indexPath.row]
         
-        showBlackLoader()
+        guard let sender = notification.senderUser else {
+            return
+        }
         
-//        MatchesProvider.approveMatch(for: user) { (result) in
-//            
-//            switch result {
-//            case .success(_):
-//                
-//                self.hideLoader()
-//                likerView.operateStatus(status: user.status)
-//                
-//                // TODO: check whether the status is matched. If yes - show matching page
-//                if user.status == .isMatched {
-//                    let matchingController: MatchViewController = Helper.controllerFromStoryboard(controllerId: "MatchViewController")!
-//                    matchingController.user = user
-//                    
-//                    Helper.initialNavigationController().pushViewController(matchingController, animated: true)
-//                }
-//                
-//                break
-//            case .failure(let error):
-//                
-//                SVProgressHUD.showError(withStatus: error.localizedDescription)
-//                break
-//            default:
-//                break
-//            }
-//        }
+        approveNotification(with: sender) {
+            likerView.operateStatus(status: sender.status)
+        }
     }
     
     func notificationCell(cell: UITableViewCell, didClickedDecline likerView: LikerView) {
@@ -198,24 +302,13 @@ extension NotificationsViewController: NotificationsTableViewCellDelegate {
         
         let notification = notifications![indexPath.row]
         
-        showBlackLoader()
+        guard let sender = notification.senderUser else {
+            return
+        }
         
-//        MatchesProvider.declineMatch(for: user) { (result) in
-//            
-//            switch result {
-//            case .success(_):
-//                
-//                self.hideLoader()
-//                likerView.operateStatus(status: user.status)
-//                break
-//            case .failure(let error):
-//                
-//                SVProgressHUD.showError(withStatus: error.localizedDescription)
-//                break
-//            default:
-//                break
-//            }
-//        }
+        declineNotification(with: sender) {
+             likerView.operateStatus(status: sender.status)
+        }
     }
 }
 

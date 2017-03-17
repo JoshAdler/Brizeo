@@ -9,10 +9,9 @@
 import Crashlytics
 import ObjectMapper
 
-enum NotificationType: Int {
-    case newMatches
-    case momentsLikes
-    case matching
+enum NotificationType: String {
+    case newMatches = "newmatch"
+    case momentsLikes = "momentslike"
 }
 
 class Notification: Mappable {
@@ -21,23 +20,21 @@ class Notification: Mappable {
     
     enum JSONKeys: String {
         case objectId = "objectId"
-        case readStatus = "readStatus"
-        case receiveUserId = "receiveUserId"
-        case sendUserId = "sendUserId"
-        case momentsId = "momentsId"
-        case newMatchId = "newMatchId"
         case pushType = "pushType"
+        case receiveUser = "receiveUser"
+        case sendUser = "sendUser"
+        case moment = "moment"
+        case createdAt = "createdAt"
     }
     
     // MARK: - Properties
     
     var objectId: String = "0"
-    var readStatus: Bool = false
-    var receiveUserId: String?
-    var sendUserId: String?
-    var momentsId: String?
-    var newMatchId: String?
-    var pushType: String!
+    var receiverUser: User?
+    var senderUser: User?
+    var moment: Moment?
+    var pushType: NotificationType!
+    var createdAt: Date?
 
     // MARK: - Init
     
@@ -45,27 +42,11 @@ class Notification: Mappable {
     
     func mapping(map: Map) {
         
-        // ids
         objectId <- map[JSONKeys.objectId.rawValue]
-        receiveUserId <- map[JSONKeys.receiveUserId.rawValue]
-        sendUserId <- map[JSONKeys.sendUserId.rawValue]
-        momentsId <- map[JSONKeys.momentsId.rawValue]
-        newMatchId <- map[JSONKeys.newMatchId.rawValue]
-        
-        readStatus <- map[JSONKeys.readStatus.rawValue]
-        pushType <- map[JSONKeys.pushType.rawValue]
-    }
-    
-    init(with JSON: [String: Any]) {
-        
-        // ids
-        objectId = JSON[JSONKeys.objectId.rawValue] as! String
-        receiveUserId = JSON[JSONKeys.receiveUserId.rawValue] as? String
-        sendUserId = JSON[JSONKeys.sendUserId.rawValue] as? String
-        momentsId = JSON[JSONKeys.momentsId.rawValue] as? String
-        newMatchId = JSON[JSONKeys.newMatchId.rawValue] as? String
-        
-        readStatus = JSON[JSONKeys.readStatus.rawValue] as! Bool
-        pushType = JSON[JSONKeys.pushType.rawValue] as! String
+        receiverUser <- map[JSONKeys.receiveUser.rawValue]
+        senderUser <- map[JSONKeys.sendUser.rawValue]
+        moment <- map[JSONKeys.moment.rawValue]
+        pushType <- (map[JSONKeys.pushType.rawValue], EnumTransform<NotificationType>())
+        createdAt <- (map[JSONKeys.createdAt.rawValue], LastActiveDateTransform())
     }
 }

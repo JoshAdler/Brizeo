@@ -167,17 +167,24 @@ extension AppDelegate {
 
         print("userNotificationCenter, willPresent")
         
-        // Print message ID.
         let userInfo = notification.request.content.userInfo
         if let messageID = userInfo[gcmMessageIDKey] {
             print("Message ID: \(messageID)")
+        }
+        
+        if let dict = userInfo as? [String: Any] {
+            let pushNotification = PushNotification(dict: dict)
+            
+            if pushNotification.hasInfo {
+                // do some action
+            }
         }
         
         // Print full message.
         print(userInfo)
         
         // Change this to your preferred presentation option
-        completionHandler(.alert)
+        completionHandler(.badge)
     }
     
     // Handle notification messages after display notification is tapped by the user.
@@ -187,6 +194,14 @@ extension AppDelegate {
         let userInfo = response.notification.request.content.userInfo
         if let messageID = userInfo[gcmMessageIDKey] {
             print("Message ID: \(messageID)")
+        }
+        
+        if let dict = userInfo as? [String: Any] {
+            let pushNotification = PushNotification(dict: dict)
+            
+            if pushNotification.hasInfo {
+                // do some action
+            }
         }
         
         completionHandler()

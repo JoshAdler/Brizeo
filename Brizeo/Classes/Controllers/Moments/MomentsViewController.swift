@@ -9,7 +9,6 @@
 import UIKit
 import SVProgressHUD
 import UIScrollView_InfiniteScroll
-import Parse
 import ChameleonFramework
 import SDWebImage
 
@@ -219,7 +218,7 @@ class MomentsViewController: UIViewController {
     
     func goToPersonalProfile(animated: Bool) {
         let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
-        /*Helper.initialNavigationController()*/navigationController?.pushViewController(profileController, animated: animated)
+        Helper.currentTabNavigationController()?.pushViewController(profileController, animated: animated)
     }
     
     // MARK: - Private methods

@@ -50,6 +50,36 @@ PODS:
     - GoogleToolboxForMac/Logger (~> 2.1)
     - Protobuf (~> 3.1)
   - FLAnimatedImage (1.0.12)
+  - FormatterKit (1.8.2):
+    - FormatterKit/AddressFormatter (= 1.8.2)
+    - FormatterKit/ArrayFormatter (= 1.8.2)
+    - FormatterKit/ColorFormatter (= 1.8.2)
+    - FormatterKit/LocationFormatter (= 1.8.2)
+    - FormatterKit/NameFormatter (= 1.8.2)
+    - FormatterKit/OrdinalNumberFormatter (= 1.8.2)
+    - FormatterKit/Resources (= 1.8.2)
+    - FormatterKit/TimeIntervalFormatter (= 1.8.2)
+    - FormatterKit/UnitOfInformationFormatter (= 1.8.2)
+    - FormatterKit/URLRequestFormatter (= 1.8.2)
+  - FormatterKit/AddressFormatter (1.8.2):
+    - FormatterKit/Resources
+  - FormatterKit/ArrayFormatter (1.8.2):
+    - FormatterKit/Resources
+  - FormatterKit/ColorFormatter (1.8.2):
+    - FormatterKit/Resources
+  - FormatterKit/LocationFormatter (1.8.2):
+    - FormatterKit/Resources
+  - FormatterKit/NameFormatter (1.8.2):
+    - FormatterKit/Resources
+  - FormatterKit/OrdinalNumberFormatter (1.8.2):
+    - FormatterKit/Resources
+  - FormatterKit/Resources (1.8.2)
+  - FormatterKit/TimeIntervalFormatter (1.8.2):
+    - FormatterKit/Resources
+  - FormatterKit/UnitOfInformationFormatter (1.8.2):
+    - FormatterKit/Resources
+  - FormatterKit/URLRequestFormatter (1.8.2):
+    - FormatterKit/Resources
   - GBHFacebookImagePicker (1.1.4):
     - FBSDKCoreKit (~> 4.20.0)
     - FBSDKLoginKit (~> 4.20.0)
@@ -87,11 +117,6 @@ PODS:
     - NYTPhotoViewer/Core
   - NYTPhotoViewer/Core (1.2.0)
   - ObjectMapper (2.2.5)
-  - Parse (1.14.2):
-    - Bolts/Tasks (~> 1.8)
-  - ParseUI (1.2.0):
-    - Bolts/Tasks (~> 1.3)
-    - Parse (~> 1.9)
   - pop (1.0.9)
   - Protobuf (3.2.0)
   - Reachability (3.2)
@@ -125,6 +150,7 @@ DEPENDENCIES:
   - FBSDKShareKit
   - Firebase/Core
   - Firebase/Messaging
+  - FormatterKit
   - GBHFacebookImagePicker
   - GooglePlacesAutocomplete (from `https://github.com/danielkiedrowski/ios_google_places_autocomplete.git`)
   - IGLDropDownMenu
@@ -136,8 +162,6 @@ DEPENDENCIES:
   - Moya-ObjectMapper
   - MSRangeSlider
   - NYTPhotoViewer (~> 1.1)
-  - Parse
-  - ParseUI
   - Reachability
   - SDWebImage (~> 3.8)
   - SVProgressHUD (~> 1.0)
@@ -184,6 +208,7 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: 2d0518b1378fe9d685ef40cbdd63d2fdc1125339
   FirebaseMessaging: df8267f378580a24174ce7861233aa11d5c90109
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
+  FormatterKit: 4b8f29acc9b872d5d12a63efb560661e8f2e1b98
   GBHFacebookImagePicker: 52d20a64f5a0120d6e41b3033f0ab23fa8f47248
   GooglePlacesAutocomplete: 7694636fce561c9d8ac807b8e490d299a730a633
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
@@ -198,8 +223,6 @@ SPEC CHECKSUMS:
   NXOAuth2Client: 98c4d4c594edd2b289cfc34a8928653e1dab7adf
   NYTPhotoViewer: 323217e4590a1586eb3c9674b3fefb0fb8b57896
   ObjectMapper: fb30f71e08470d1e5a20b199fafe1246281db898
-  Parse: 4335d65f40cb3d43190d723144bbe1afb9c38230
-  ParseUI: af2eba584799da4a9fbdac0e178662d7438b502e
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
   Protobuf: 745f59e122e5de98d4d7ef291e264a0eef80f58e
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
@@ -213,6 +236,6 @@ SPEC CHECKSUMS:
   UIScrollView-InfiniteScroll: 14e204c50ca4040467e1cbfa141dad7a18919b56
   ZTDropDownTextField: a9cb5db41b66eb28a7c38afaf4c334fb2a81034e
 
-PODFILE CHECKSUM: 550d9e2f758fa7183e2d772a579287de8c8854cc
+PODFILE CHECKSUM: 543634ff6b4095a6edba3e7c7f97a84ed223efef
 
 COCOAPODS: 1.2.0

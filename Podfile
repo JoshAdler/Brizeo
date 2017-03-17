@@ -21,14 +21,12 @@ target 'Brizeo' do
     pod 'Fabric'
     pod 'Crashlytics'
 #    pod 'Google/Analytics'
-    
-    pod 'Parse'
+
     pod 'NYTPhotoViewer', '~> 1.1'
     
     pod 'MSRangeSlider'
     pod 'UIScrollView-InfiniteScroll', '~> 0.7'
     pod 'IGLDropDownMenu'
-    pod 'ParseUI'
     
     #Firebase
     pod 'Firebase/Core'
@@ -60,6 +58,7 @@ target 'Brizeo' do
     
     # very useful to work with date
     pod 'SwiftDate', '~> 4.0'
+    pod 'FormatterKit'
     
     # google places for location
     pod 'GooglePlacesAutocomplete', :git => 'https://github.com/danielkiedrowski/ios_google_places_autocomplete.git'

@@ -74,6 +74,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>FormatterKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>GBHFacebookImagePicker-GBHFacebookImagePicker.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -145,16 +150,6 @@
 			<false/>
 		</dict>
 		<key>ObjectMapper.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Parse.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>ParseUI.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -232,6 +227,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>105E7A55FE3FFBC6A267A199FDC64960</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>1561F4F7FF55B8C9E8CEB2D139E009B1</key>
 		<dict>
 			<key>primary</key>
@@ -252,17 +252,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>257992A88C38551CAA8DC27A72BD0B4D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>257BC1357A83953F4D75DF26D2135E58</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>2788479B9EFC58333B49AFAACD42B30F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>28DDEC0C68CF4E6EFE1387BFE537899E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -272,42 +267,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>3068F4013DB792FAE55AD1618295D3A8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>347082A978D082A3E368A2F5E978C44B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>351D9265E086037020F76FBCCAA3FC27</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>351E742A50BA191EA5A95A6A7AB19AB3</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>49AC754485EC3FF835E7BA9F062421B8</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>4E124C40B5E6AF92F87BDBDF915E2603</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>4E326CEF2FD4447CFA42479B8DA689FB</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>4F71457C8C276333D36717CA2EE79D06</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>5906A9EBCD7766D44981AB1F1828FF09</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -332,6 +302,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>6FB9BB07E37DEEFDA8BB8AEAFDE13F1C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>76186CDD5348A9EF06B0397F141DA517</key>
 		<dict>
 			<key>primary</key>
@@ -342,27 +317,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7DDA1525EB01CFE1A3AC96F0043B3C48</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>83F9B335F38EABC1FFA2A7ED73D754C4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8DB20063911F6D38B0C01145B51D1930</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>9314DEC9F29AF60841D9083B1E41B16E</key>
+		<key>8DAE3A5952FA88834AA61D84DF7EFF7A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>95C0EA45128FB3A8F1335F25EEA0EBDA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9C35DDBFE97C7F10A338A55DD8E7CE00</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -412,12 +382,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C6EA8920552A1B8F0EA2779B930D1C3E</key>
+		<key>C8AC980FFC596D35BC0236FEBD11F8B2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CE743692EBBD791DAD3413DD294EEA23</key>
+		<key>CB30CFC474D5180C2F6AAA9793BE9D6D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -443,6 +413,26 @@
 			<true/>
 		</dict>
 		<key>E6BB6E11266915E61345052096DE2E39</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EC2FB097BFB8BA5B5DEB89CBEFF1BDA7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EC9B80D66260B82BEC6D5CC29620B869</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EE90273FECB9EF135609B3CCDB62DA57</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FCB0774052B64286E48AAC3BFD90C281</key>
 		<dict>
 			<key>primary</key>
 			<true/>

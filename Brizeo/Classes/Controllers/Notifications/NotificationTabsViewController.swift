@@ -8,6 +8,7 @@
 
 import UIKit
 import CarbonKit
+import SVProgressHUD
 
 class NotificationTabsViewController: BasicViewController {
     
@@ -30,9 +31,12 @@ class NotificationTabsViewController: BasicViewController {
 
         // load controller
         likesController = Helper.controllerFromStoryboard(controllerId: Constants.notificationsControllerId)!
-        likesController.contentType = .likes
+        likesController.contentType = .momentsLikes
+        likesController.delegate = self
+        
         peopleController = Helper.controllerFromStoryboard(controllerId: Constants.notificationsControllerId)!
-        peopleController.contentType = .people
+        peopleController.contentType = .newMatches
+        peopleController.delegate = self
         
         let carbonTabSwipeNavigation = Helper.createCarbonController(with: Constants.titles, self)
         carbonTabSwipeNavigation.insert(intoRootViewController: self)
@@ -54,6 +58,29 @@ extension NotificationTabsViewController: CarbonTabSwipeNavigationDelegate {
             return likesController
         } else {
             return peopleController
+        }
+    }
+}
+
+// MARK: - NotificationsViewControllerDelegate
+extension NotificationTabsViewController: NotificationsViewControllerDelegate {
+    
+    func loadNotifications(for type: NotificationType, completionHandler: @escaping ([Notification]?) -> Void) {
+        showBlackLoader()
+        
+        NotificationProvider.getNotification(for: UserProvider.shared.currentUser!.objectId) { (result) in
+            self.hideLoader()
+            
+            switch result {
+            case .success(let notifications):
+                let filteredNotifications = notifications.filter({ $0.pushType == type })
+                completionHandler(filteredNotifications)
+            case .failure(let error):
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                completionHandler(nil)
+            default:
+                break
+            }
         }
     }
 }
