@@ -12,6 +12,15 @@ import ObjectMapper
 enum NotificationType: String {
     case newMatches = "newmatch"
     case momentsLikes = "momentslike"
+    
+    var soundTitle: String? {
+        switch self {
+        case .newMatches:
+            return "sound_matches"
+        case .momentsLikes:
+            return "sound_likes"
+        }
+    }
 }
 
 class Notification: Mappable {

@@ -10,6 +10,8 @@ import UIKit
 import Moya
 import Firebase
 
+let shouldReloadNotifications = "shouldReloadNotifications"
+
 class NotificationProvider: NSObject {
 
     // MARK: - Types
@@ -85,6 +87,10 @@ class NotificationProvider: NSObject {
 
         } else { // likes
             
+            
         }
+        
+        // reload notification controller content
+        Helper.sendNotification(with: shouldReloadNotifications, object: nil, dict: ["type": notification.type ?? .momentsLikes])
     }
 }

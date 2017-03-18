@@ -87,4 +87,35 @@ class ChatProvider: NSObject {
             print("applozic error")
         }
     }
+    
+    class func createMatchingChat(with user: User) {
+        
+        let DBHandler = ALDBHandler.sharedInstance()
+        let messageDBService = ALMessageDBService()
+        let message = ALMessage()
+        
+        message.contactIds = UserProvider.shared.currentUser!.objectId
+        message.to = user.objectId
+        message.createdAtTime = NSNumber(value: Date().timeIntervalSince1970 * 1000.0)
+        message.deviceKey = ALUserDefaultsHandler.getDeviceKeyString()
+        message.sendToDevice = false
+        message.shared = false
+        message.fileMeta = nil
+        message.status = 1 // read status  [NSNumber numberWithInt:READ];
+        message.key = "brizeo_matching_message_\(user.objectId)_\(UserProvider.shared.currentUser!.objectId)"
+        message.delivered = false
+        message.fileMetaKey = "";//4
+        message.contentType = 0
+        message.status = 5 //[NSNumber numberWithInt:DELIVERED_AND_READ];
+        message.type = "4"
+        message.message = LocalizableString.ItsAMatch.localizedString
+        message.groupId = nil
+        messageDBService.createMessageEntityForDBInsertion(with: message)
+        
+        do {
+            try DBHandler?.managedObjectContext.save()
+        } catch (let error) {
+            print("applozic error")
+        }
+    }
 }

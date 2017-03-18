@@ -27,7 +27,7 @@ protocol NotificationsTableViewCellDelegate: class {
 
 protocol NotificationsViewControllerDelegate: class {
     
-    func loadNotifications(for type: NotificationType, completionHandler: @escaping ([Notification]?) -> Void)
+    func loadNotifications(for type: NotificationType, _ withLoading: Bool, completionHandler: @escaping ([Notification]?) -> Void)
 }
 
 class NotificationsViewController: UIViewController {
@@ -76,6 +76,21 @@ class NotificationsViewController: UIViewController {
         }
     }
     
+    // MARK: - Public method
+    
+    func reloadContent() {
+        
+        delegate?.loadNotifications(for: contentType, withLoading: false, completionHandler: { (loadedNotifications) in
+            
+            if let loadedNotifications = loadedNotifications {
+                self.notifications = loadedNotifications
+                self.tableView.reloadData()
+            }
+            
+            self.topRefresher.endRefreshing()
+        })
+    }
+    
     // MARK: - Private methods
     
     @objc fileprivate func refreshTableView() {
@@ -84,7 +99,7 @@ class NotificationsViewController: UIViewController {
     
     fileprivate func loadNotifications() {
         
-        delegate?.loadNotifications(for: contentType, completionHandler: { (loadedNotifications) in
+        delegate?.loadNotifications(for: contentType, withLoading: true, completionHandler: { (loadedNotifications) in
             
             if let loadedNotifications = loadedNotifications {
                 self.notifications = loadedNotifications

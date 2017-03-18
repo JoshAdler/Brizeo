@@ -233,7 +233,11 @@ class Helper: NSObject {
     
     // MARK: - Sound
     
-    class func playSound(title: String) {
+    class func playSound(title: String?) {
+        guard let title = title else {
+            return
+        }
+        
         let url = Bundle.main.url(forResource: title, withExtension: "wav")!
         
         do {
@@ -255,8 +259,12 @@ class Helper: NSObject {
         let isSoundEnables = PreferencesProvider.shared.currentUserPreferences?.isNotificationsNewMatchesOn ?? true
         
         if isSoundEnables {
-            playSound(title: "sound_matches")
+            playSound(title: NotificationType.newMatches.soundTitle)
         }
+        
+        // send a chat message to other user
+        ChatProvider.createMatchingChat(with: user)
+        
         
         let matchingController: MatchViewController = controllerFromStoryboard(controllerId: "MatchViewController")!
         
