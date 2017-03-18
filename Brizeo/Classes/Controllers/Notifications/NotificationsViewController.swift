@@ -72,7 +72,7 @@ class NotificationsViewController: UIViewController {
         super.viewWillAppear(animated)
         
         if notifications == nil || notifications?.count == 0 {
-            loadNotifications()
+            loadNotifications(true)
         }
     }
     
@@ -80,7 +80,7 @@ class NotificationsViewController: UIViewController {
     
     func reloadContent() {
         
-        delegate?.loadNotifications(for: contentType, withLoading: false, completionHandler: { (loadedNotifications) in
+        delegate?.loadNotifications(for: contentType, false, completionHandler: { (loadedNotifications) in
             
             if let loadedNotifications = loadedNotifications {
                 self.notifications = loadedNotifications
@@ -94,12 +94,12 @@ class NotificationsViewController: UIViewController {
     // MARK: - Private methods
     
     @objc fileprivate func refreshTableView() {
-        loadNotifications()
+        loadNotifications(false)
     }
     
-    fileprivate func loadNotifications() {
+    fileprivate func loadNotifications(_ withLoading: Bool) {
         
-        delegate?.loadNotifications(for: contentType, withLoading: true, completionHandler: { (loadedNotifications) in
+        delegate?.loadNotifications(for: contentType, withLoading, completionHandler: { (loadedNotifications) in
             
             if let loadedNotifications = loadedNotifications {
                 self.notifications = loadedNotifications

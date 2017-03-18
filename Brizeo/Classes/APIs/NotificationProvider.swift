@@ -87,7 +87,12 @@ class NotificationProvider: NSObject {
 
         } else { // likes
             
+            // play sound
+            let isSoundEnables = PreferencesProvider.shared.currentUserPreferences?.isNotificationsMomentsLikeOn ?? true
             
+            if isSoundEnables {
+                Helper.playSound(title: NotificationType.momentsLikes.soundTitle)
+            }
         }
         
         // reload notification controller content
