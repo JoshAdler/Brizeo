@@ -27,7 +27,17 @@ class PeopleNotificationTableViewCell: UITableViewCell {
     @IBOutlet weak var commentTimeLabel: UILabel!
     @IBOutlet weak var commentUserImage: UIImageView!
     @IBOutlet weak var likesView: LikerView!
+    @IBOutlet weak var viewedView: UIView!
     weak var delegate: NotificationsTableViewCellDelegate?
+    
+    var isAlreadyReviewed: Bool {
+        get {
+            return viewedView.isHidden
+        }
+        set {
+            viewedView.isHidden = newValue
+        }
+    }
     
     // MARK: - Override methods
     
@@ -36,6 +46,10 @@ class PeopleNotificationTableViewCell: UITableViewCell {
         
         if commentUserImage != nil {
             commentUserImage.layer.cornerRadius = commentUserImage.frame.width / 2.0
+        }
+        
+        if viewedView != nil {
+            viewedView.layer.cornerRadius = viewedView.frame.width / 2.0
         }
     }
     

@@ -71,9 +71,7 @@ class NotificationsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if notifications == nil || notifications?.count == 0 {
-            loadNotifications(true)
-        }
+        loadNotifications(true)
     }
     
     // MARK: - Public method
@@ -205,9 +203,12 @@ extension NotificationsViewController: UITableViewDataSource {
             
             // name/time
             let displayName = notification.senderUser?.displayName ?? "Somebody"
-            let time = notification.createdAt?.intervalString(toDate: Date()) ?? ""
+            let time = notification.updatedAt?.naturalView ?? ""
             
             cell.generateText(with: displayName, time: time)
+            
+            // already viewed
+            cell.isAlreadyReviewed = notification.isAlreadyViewed
 
             return cell
         } else { // people
@@ -222,9 +223,12 @@ extension NotificationsViewController: UITableViewDataSource {
                 cell.commentUserImage.image = nil
             }
             
-            let time = notification.createdAt?.intervalString(toDate: Date()) ?? ""
+            let time = notification.createdAt?.naturalView ?? ""
             cell.commentTimeLabel.text = time
             cell.generateText(with: notification.senderUser?.displayName ?? "", "")
+            
+            // already viewed
+            cell.isAlreadyReviewed = notification.isAlreadyViewed
             
             return cell
         }
@@ -253,6 +257,10 @@ extension NotificationsViewController: NotificationsTableViewCellDelegate {
         }
         
         let notification = notifications![indexPath.row]
+        if notification.isAlreadyViewed == false {
+            NotificationProvider.markNotificationAsAlreadyViewed(notification, completion: nil)
+        }
+        
         let mediaController: MediaViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.mediaControllerId)!
         
         mediaController.isSharingEnabled = true
@@ -267,7 +275,10 @@ extension NotificationsViewController: NotificationsTableViewCellDelegate {
         }
         
         let notification = notifications![indexPath.row]
-
+        if notification.isAlreadyViewed == false {
+            NotificationProvider.markNotificationAsAlreadyViewed(notification, completion: nil)
+        }
+        
         guard let senderUser = notification.senderUser else {
             return
         }

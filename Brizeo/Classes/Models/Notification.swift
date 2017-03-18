@@ -34,7 +34,9 @@ class Notification: Mappable {
         case sendUser = "sendUser"
         case moment = "moment"
         case createdAt = "createdAt"
+        case updatedAt = "updatedAt"
         case user = "user"
+        case isAlreadyViewed = "isAlreadyViewed"
     }
     
     // MARK: - Properties
@@ -45,7 +47,14 @@ class Notification: Mappable {
     var moment: Moment?
     var pushType: NotificationType!
     var createdAt: Date?
-
+    var updatedAt: Date?
+    var isAlreadyViewed: Bool = false
+    
+    var time: Date? {
+        
+        return updatedAt ?? createdAt
+    }
+    
     // MARK: - Init
     
     required init?(map: Map) { }
@@ -58,5 +67,7 @@ class Notification: Mappable {
         moment <- map[JSONKeys.moment.rawValue]
         pushType <- (map[JSONKeys.pushType.rawValue], EnumTransform<NotificationType>())
         createdAt <- (map[JSONKeys.createdAt.rawValue], LastActiveDateTransform())
+        updatedAt <- (map[JSONKeys.updatedAt.rawValue], LastActiveDateTransform())
+        isAlreadyViewed <- map[JSONKeys.isAlreadyViewed.rawValue]
     }
 }

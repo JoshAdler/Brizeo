@@ -9,6 +9,7 @@
 import Foundation
 import ObjectMapper
 import CoreLocation
+import Applozic
 
 class Preferences: Mappable {
     
@@ -37,8 +38,12 @@ class Preferences: Mappable {
     var longitude: Double?
     var latitude: Double?
     var isNotificationsNewMatchesOn: Bool = true
-    var isNotificationsMessagesOn: Bool = true
     var isNotificationsMomentsLikeOn: Bool = true
+    var isNotificationsMessagesOn: Bool = true {
+        didSet {
+            updateApplozicNotificationMode()
+        }
+    }
 
     var hasLocation: Bool {
         if longitude != nil && latitude != nil {
@@ -80,6 +85,16 @@ class Preferences: Mappable {
     }
     
     // MARK: - Public methods
+    
+    func updateApplozicNotificationMode() {
+        
+        let mode: Int16 = isNotificationsMessagesOn ? 0 : 1
+        ALRegisterUserClientService.updateNotificationMode(mode) { (response, error) in
+            if error == nil {
+                ALUserDefaultsHandler.setNotificationMode(mode)
+            }
+        }
+    }
     
     func getNotificationInfo(for index: Int) -> (String, Bool) {
         print("index \(index)")

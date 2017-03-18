@@ -58,6 +58,36 @@ class NotificationProvider: NSObject {
         }
     }
     
+    class func updateNotification(notification: Notification, completion: ((Result<Notification>) -> Void)?) {
+        
+        let provider = MoyaProvider<APIService>()
+        provider.request(.updateNotification(notification: notification)) { (result) in
+            switch result {
+            case .success(let response):
+                
+                guard response.statusCode == 200 else {
+                    completion?(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
+                completion?(.success(notification))
+                print("successfully updated notification")
+                
+                break
+            case .failure(let error):
+                completion?(.failure(APIError(error: error)))
+                break
+            }
+        }
+    }
+    
+    class func markNotificationAsAlreadyViewed(_ notification: Notification, completion: ((Result<Notification>) -> Void)?) {
+        
+        notification.isAlreadyViewed = true
+        
+        updateNotification(notification: notification, completion: completion)
+    }
+    
     class func operatePush(_ notification: PushNotification) {
         
         if notification.type == .newMatches { // matched

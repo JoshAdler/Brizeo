@@ -371,6 +371,7 @@ extension AppDelegate {
             
             if let preferences = PreferencesProvider.shared.currentUserPreferences {
                 PreferencesProvider.updatePreferences(preferences: preferences, completion: nil)
+                preferences.updateApplozicNotificationMode()
             } else {
                 if let currentUser = UserProvider.shared.currentUser {
                     PreferencesProvider.loadPreferences(for: currentUser.objectId, fromCache: false, completion: nil)

@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import Branch
+import FormatterKit
 
 // MARK: - NSLayoutConstraint
 extension NSLayoutConstraint {
@@ -74,6 +75,15 @@ extension Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
         return dateFormatter.string(from: self)
+    }
+    var naturalView: String? {
+     
+        let timeIntervalFormatter = TTTTimeIntervalFormatter()
+        
+        timeIntervalFormatter.usesIdiomaticDeicticExpressions = true
+        timeIntervalFormatter.presentTimeIntervalMargin = 10
+        
+        return timeIntervalFormatter.stringForTimeInterval(from: self, to: Date())
     }
 }
 

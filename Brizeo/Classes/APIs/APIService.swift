@@ -51,6 +51,7 @@ enum APIService {
     
     // notifications
     case getNotifications(userId: String)
+    case updateNotification(notification: Notification)
     
     // info
     case notifyAdminAboutDownloads(userId: String, count: Int)
@@ -106,9 +107,11 @@ extension APIService: TargetType {
         case .approveMatch(let approverId, let userId), .declineMatch(let approverId, let userId):
             return "/match/\(approverId)/\(userId)"
         case .getUsersForMatch(let userId):
-            return /*"/likemoments/users/\("Qy5CiinuRA")/\(userId)"*/"/approveuserformatch/\(userId)"
+            return "/approveuserformatch/\(userId)"
         case .getMatchesForUser(let userId):
-            return /*"/likemoments/users/\("Qy5CiinuRA")/\(userId)"*/"/approvematchforuser/\(userId)"
+            return "/approvematchforuser/\(userId)"
+        case .updateNotification(let notification):
+            return "/notifications/\(notification.objectId)"
         }
     }
 
@@ -116,7 +119,7 @@ extension APIService: TargetType {
         switch self {
         case .createNewUser(_), .reportMoment(_, _), .reportUser(_, _), .notifyAdminAboutDownloads(_, _), .approveMatch(_, _), .updateUserFile(_, _, _, _):
             return .post
-        case .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .createNewMoment(_), .likeMoment(_, _), .updateMoment(_):
+        case .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .createNewMoment(_), .likeMoment(_, _), .updateMoment(_), .updateNotification(_):
             return .put
         case .deleteCountryForUser(_, _), .unlikeMoment(_, _), .deleteMoment(_, _), .declineMatch(_, _):
             return .delete
@@ -150,6 +153,9 @@ extension APIService: TargetType {
                 return ["oldurl": oldURL]
             }
             return nil
+        case .updateNotification(let notification):
+            let dict = ["newnotification": notification.toJSON()]
+            return dict
         default:
             return nil
         }
@@ -157,7 +163,7 @@ extension APIService: TargetType {
     
     var parameterEncoding: ParameterEncoding {
         switch self {
-        case .createNewUser(_), .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .deleteCountryForUser(_, _), .createNewMoment(_), .updateMoment(_):
+        case .createNewUser(_), .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .deleteCountryForUser(_, _), .createNewMoment(_), .updateMoment(_), .updateNotification(_):
             return JSONEncoding.default
         default:
             return URLEncoding.default

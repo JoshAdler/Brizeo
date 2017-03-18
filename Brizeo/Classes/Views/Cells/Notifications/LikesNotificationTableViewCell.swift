@@ -28,7 +28,17 @@ class LikesNotificationTableViewCell: UITableViewCell {
     @IBOutlet weak var likedMomentImage: UIImageView!
     @IBOutlet weak var likeTextLabel: UILabel!
     @IBOutlet weak var likesView: LikerView!
+    @IBOutlet weak var viewedView: UIView!
     weak var delegate: NotificationsTableViewCellDelegate?
+    
+    var isAlreadyReviewed: Bool {
+        get {
+            return viewedView.isHidden
+        }
+        set {
+            viewedView.isHidden = newValue
+        }
+    }
     
     // MARK: - Override methods
     
@@ -37,6 +47,10 @@ class LikesNotificationTableViewCell: UITableViewCell {
         
         if likeUserImage != nil {
             likeUserImage.layer.cornerRadius = likeUserImage.frame.width / 2.0
+        }
+        
+        if viewedView != nil {
+            viewedView.layer.cornerRadius = viewedView.frame.width / 2.0
         }
     }
     

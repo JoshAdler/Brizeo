@@ -57,9 +57,9 @@ class NotificationTabsViewController: BasicViewController {
     func reloadNotifications(notification: NSNotification) {
         
         if let dict = notification.userInfo as? [String: Any], let type = dict["type"] as? NotificationType {
-            if type == .momentsLikes {
+            if type == .momentsLikes && likesController.isViewLoaded {
                 likesController.reloadContent()
-            } else {
+            } else if type == .newMatches && peopleController.isViewLoaded {
                 peopleController.reloadContent()
             }
         }
