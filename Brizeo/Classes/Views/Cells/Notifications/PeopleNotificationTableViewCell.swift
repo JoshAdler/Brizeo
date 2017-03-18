@@ -58,7 +58,7 @@ class PeopleNotificationTableViewCell: UITableViewCell {
     func generateText(with friendName: String, _ nickname: String) {
         let defaultAttributes = [NSForegroundColorAttributeName: Constants.mainColor, NSFontAttributeName: UIFont(name: "SourceSansPro-Regular", size: Constants.defaultFontSize)]
         let nameAttributes = [NSForegroundColorAttributeName: Constants.mainColor, NSFontAttributeName: UIFont(name: "SourceSansPro-Bold", size: Constants.defaultFontSize)]
-        
+
         let partOneString = LocalizableString.PeopleNotificationStart.localizedString + friendName + LocalizableString.PeopleNotificationEnd.localizedString
         let partOne = NSMutableAttributedString(string: partOneString, attributes: defaultAttributes)
         let partTwo = NSMutableAttributedString(string: " \(nickname)", attributes: nameAttributes)
@@ -67,6 +67,25 @@ class PeopleNotificationTableViewCell: UITableViewCell {
         
         combination.append(partOne)
         combination.append(partTwo)
+        
+        commentLabel.attributedText = combination
+    }
+    
+    func generateMatchingText(with authorName: String, time: String) {
+        
+        let ownerNameAttributes = [NSForegroundColorAttributeName: Constants.mainColor, NSFontAttributeName: UIFont(name: "SourceSansPro-Bold", size: Constants.defaultFontSize)]
+        let defaultAttributes = [NSForegroundColorAttributeName: Constants.mainColor, NSFontAttributeName: UIFont(name: "SourceSansPro-Regular", size: Constants.defaultFontSize)]
+        let timeAttributes = [NSForegroundColorAttributeName: Constants.timeColor, NSFontAttributeName: UIFont(name: "SourceSansPro-Regular", size: Constants.timeFontSize)]
+        
+        let partOne = NSMutableAttributedString(string: authorName, attributes: ownerNameAttributes)
+        let partTwo = NSMutableAttributedString(string: " \(LocalizableString.NotificationMatching.localizedString)", attributes: defaultAttributes)
+        let partThree = NSMutableAttributedString(string: " \(time)", attributes: timeAttributes)
+        
+        let combination = NSMutableAttributedString()
+        
+        combination.append(partOne)
+        combination.append(partTwo)
+        combination.append(partThree)
         
         commentLabel.attributedText = combination
     }

@@ -204,8 +204,10 @@ extension NotificationsViewController: UITableViewDataSource {
             // name/time
             let displayName = notification.senderUser?.displayName ?? "Somebody"
             let time = notification.updatedAt?.naturalView ?? ""
-            
             cell.generateText(with: displayName, time: time)
+            
+            // status 
+            cell.likesView.operateStatus(status: notification.senderUser!.status)
             
             // already viewed
             cell.isAlreadyReviewed = notification.isAlreadyViewed
@@ -223,12 +225,19 @@ extension NotificationsViewController: UITableViewDataSource {
                 cell.commentUserImage.image = nil
             }
             
-            let time = notification.createdAt?.naturalView ?? ""
-            cell.commentTimeLabel.text = time
-            cell.generateText(with: notification.senderUser?.displayName ?? "", "")
+            // name/time
+            let displayName = notification.senderUser?.displayName ?? "Somebody"
+            let time = notification.updatedAt?.naturalView ?? ""
+            cell.generateMatchingText(with: displayName, time: time)
+            
+            cell.commentTimeLabel.text = nil
+//            cell.generateText(with: notification.senderUser?.displayName ?? "", "")
             
             // already viewed
             cell.isAlreadyReviewed = notification.isAlreadyViewed
+            
+            // status
+            cell.likesView.operateStatus(status: notification.senderUser!.status)
             
             return cell
         }

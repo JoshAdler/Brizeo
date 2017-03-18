@@ -122,13 +122,45 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Brizeo/Classes/Controllers/Notifications/NotificationsViewController.swift"
-            timestampString = "511568560.367231"
+            timestampString = "511572358.478023"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "304"
-            endingLineNumber = "304"
+            startingLineNumber = "313"
+            endingLineNumber = "313"
             landmarkName = "notificationCell(cell:didClickedApprove:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Brizeo.NotificationsViewController.notificationCell (cell : __ObjC.UITableViewCell, didClickedApprove : Brizeo.LikerView) -&gt; ()"
+                  moduleName = "Brizeo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Brizeo/Classes/Controllers/Notifications/NotificationsViewController.swift"
+                  timestampString = "511572358.799015"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "315"
+                  endingLineNumber = "315"
+                  offsetFromSymbolStart = "650">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Brizeo.NotificationsViewController.(notificationCell (cell : __ObjC.UITableViewCell, didClickedApprove : Brizeo.LikerView) -&gt; ()).(closure #1)"
+                  moduleName = "Brizeo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Brizeo/Classes/Controllers/Notifications/NotificationsViewController.swift"
+                  timestampString = "511572358.800283"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "318"
+                  endingLineNumber = "318"
+                  offsetFromSymbolStart = "26">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
