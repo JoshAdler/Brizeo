@@ -164,6 +164,7 @@ class Helper: NSObject {
     
     class func convertStringToDate(string: String) -> Date? {
         let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
         return dateFormatter.date(from: string)
     }

@@ -3628,7 +3628,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="25" height="99"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </view>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Lqd-gH-U93">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Lqd-gH-U93">
                                                     <rect key="frame" x="25" y="30" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="Lqd-gH-U93" secondAttribute="height" multiplier="1:1" id="tzV-FG-eLW"/>
@@ -3649,7 +3649,7 @@
                                                 </button>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y8Q-sm-8qj">
                                                     <rect key="frame" x="65" y="-1" width="15" height="100"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="7" translatesAutoresizingMaskIntoConstraints="NO" id="bmb-gb-zqM">
                                                     <rect key="frame" x="80" y="36" width="183" height="0.0"/>
@@ -3657,7 +3657,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VTw-dk-wXg">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VTw-dk-wXg">
                                                     <rect key="frame" x="80" y="41" width="37" height="37"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="VTw-dk-wXg" secondAttribute="height" multiplier="1:1" id="pdZ-4m-m72"/>
@@ -3777,7 +3777,7 @@
                                                     <rect key="frame" x="0.0" y="-1" width="25" height="80"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </view>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="k1O-70-CmJ">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="k1O-70-CmJ">
                                                     <rect key="frame" x="25" y="19" width="40" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="k1O-70-CmJ" secondAttribute="height" multiplier="1:1" id="m1K-MS-upT"/>
@@ -3795,7 +3795,7 @@
                                                 </button>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ko8-Td-geQ">
                                                     <rect key="frame" x="65" y="-1" width="15" height="80"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="-10" translatesAutoresizingMaskIntoConstraints="NO" id="bb3-ZF-ZPc">
                                                     <rect key="frame" x="80" y="0.0" width="183" height="79"/>
