@@ -238,6 +238,7 @@ extension AppDelegate {
         }
     }
     //TODO: change it just before release
+    
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         
         // firebase
@@ -288,13 +289,21 @@ extension AppDelegate {
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
-        print("method - didReceiveRemoteNotification, fetchCompletionHandler")
-        
-        // applozic
-        print("Received notification With Completion :: \(userInfo.description)")
         let alPushNotificationService: ALPushNotificationService = ALPushNotificationService()
+        let applozicProcessed = alPushNotificationService.processPushNotification(userInfo, updateUI: NSNumber(value: application.applicationState == UIApplicationState.active))
         
-        alPushNotificationService.notificationArrived(to: application, with: userInfo)
+        if (applozicProcessed) {
+            
+            //Note: notification for app
+            return
+        }
+
+        
+//        // applozic
+//        print("Received notification With Completion :: \(userInfo.description)")
+//        let alPushNotificationService: ALPushNotificationService = ALPushNotificationService()
+//        
+//        alPushNotificationService.notificationArrived(to: application, with: userInfo)
         
         // firebase
         if let messageId = userInfo[gcmMessageIDKey] {

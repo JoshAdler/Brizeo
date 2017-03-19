@@ -138,7 +138,6 @@
     if((self.channelKey || self.userIdToLaunch)){
         [self createAndLaunchChatView ];
     }
-    
 }
 
 -(void)loadMessages:(NSNotification *)notification

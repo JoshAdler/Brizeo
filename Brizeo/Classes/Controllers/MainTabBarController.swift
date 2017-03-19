@@ -90,11 +90,13 @@ class MainTabBarController: UITabBarController {
 extension MainTabBarController: UITabBarControllerDelegate {
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+/*
         if viewController.isKind(of: ChatListViewController.self) {
             ChatProvider.startChat(with: nil, from: self)
             
             return false
         }
+ */
         return true
     }
 }

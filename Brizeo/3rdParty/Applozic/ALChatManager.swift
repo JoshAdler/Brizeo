@@ -8,6 +8,7 @@
 
 import UIKit
 import Applozic
+import ChameleonFramework
 
 var TYPE_CLIENT : Int16 = 0
 var TYPE_APPLOZIC : Int16 = 1
@@ -295,37 +296,37 @@ func ALDefaultChatViewSettings ()
      
      /*********************************************  NAVIGATION SETTINGS  ********************************************/
      
-     ALApplozicSettings.setStatusBarBGColor(UIColor(red:66.0/255, green:173.0/255, blue:247.0/255, alpha:1))
+     ALApplozicSettings.setStatusBarBGColor(UIColor.white)//UIColor(red:66.0/255, green:173.0/255, blue:247.0/255, alpha:1))
      ALApplozicSettings.setStatusBarStyle(.lightContent)
      /* BY DEFAULT Black:UIStatusBarStyleDefault IF REQ. White: UIStatusBarStyleLightContent  */
      /* ADD property in info.plist "View controller-based status bar appearance" type: BOOLEAN value: NO */
      
-     ALApplozicSettings.setColorForNavigation(UIColor(red:66.0/255, green:173.0/255, blue:247.0/255, alpha:1))
-     ALApplozicSettings.setColorForNavigationItem(UIColor.white)
+     ALApplozicSettings.setColorForNavigation(UIColor.white)//UIColor(red:66.0/255, green:173.0/255, blue:247.0/255, alpha:1))
+     ALApplozicSettings.setColorForNavigationItem(HexColor("1f4ba5"))//UIColor.white)
      ALApplozicSettings.hideRefreshButton(false)
-     ALUserDefaultsHandler.setNavigationRightButtonHidden(false)
+     ALUserDefaultsHandler.setNavigationRightButtonHidden(true)
      ALUserDefaultsHandler.setBottomTabBarHidden(false)
      ALApplozicSettings.setTitleForConversationScreen("Chats")
      ALApplozicSettings.setCustomNavRightButtonMsgVC(false)               /*  SET VISIBILITY FOR REFRESH BUTTON (COMES FROM TOP IN MSG VC)   */
-     ALApplozicSettings.setTitleForBackButtonMsgVC("Back")                /*  SET BACK BUTTON FOR MSG VC  */
-     ALApplozicSettings.setTitleForBackButtonChatVC("Back")               /*  SET BACK BUTTON FOR CHAT VC */
+     ALApplozicSettings.setTitleForBackButtonMsgVC("")                /*  SET BACK BUTTON FOR MSG VC  */
+     ALApplozicSettings.setTitleForBackButtonChatVC("")               /*  SET BACK BUTTON FOR CHAT VC */
      /****************************************************************************************************************/
      
      
      /***************************************  SEND RECEIVE MESSAGES SETTINGS  ***************************************/
      
      ALApplozicSettings.setSendMsgTextColor(UIColor.white)
-     ALApplozicSettings.setReceiveMsgTextColor(UIColor.gray)
-     ALApplozicSettings.setColorForReceiveMessages(UIColor(red:255/255, green:255/255, blue:255/255, alpha:1))
-     ALApplozicSettings.setColorForSendMessages(UIColor (red:66.0/255, green:173.0/255, blue:247.0/255, alpha:1))
+     ALApplozicSettings.setReceiveMsgTextColor(HexColor("59656b"))//(UIColor.gray)
+     ALApplozicSettings.setColorForReceiveMessages(HexColor("d3ecf5"))//(UIColor(red:255/255, green:255/255, blue:255/255, alpha:1))
+     ALApplozicSettings.setColorForSendMessages(HexColor("1a9dd5"))//(UIColor (red:66.0/255, green:173.0/255, blue:247.0/255, alpha:1))
      
      //****************** DATE COLOUR : AT THE BOTTOM OF MESSAGE BUBBLE ******************/
     
-     ALApplozicSettings.setDateColor(UIColor(red:51.0/255, green:51.0/255, blue:51.0/255, alpha:0.5))
+     ALApplozicSettings.setDateColor(HexColor("b3b3b5"))//(UIColor(red:51.0/255, green:51.0/255, blue:51.0/255, alpha:0.5))
      
      //****************** MESSAGE SEPERATE DATE COLOUR : DATE MESSAGE ******************/
     
-     ALApplozicSettings.setMsgDateColor(UIColor.black)
+    ALApplozicSettings.setMsgDateColor(HexColor("c9c9c9"))//(UIColor.black)
      
      /***************  SEND MESSAGE ABUSE CHECK  ******************/
      
@@ -340,7 +341,7 @@ func ALDefaultChatViewSettings ()
      
      
      /**********************************************  IMAGE SETTINGS  ************************************************/
-     
+    
      ALApplozicSettings.setMaxCompressionFactor(0.1)
      ALApplozicSettings.setMaxImageSizeForUploadInMB(3)
      ALApplozicSettings.setMultipleAttachmentMaxLimit(5)
@@ -383,15 +384,15 @@ func ALDefaultChatViewSettings ()
      ALApplozicSettings.setEmptyConversationText("You have no conversations yet")    /*  SET TEXT FOR EMPTY CONVERSATION    */
      ALApplozicSettings.setVisibilityForOnlineIndicator(true)                        /*  SET VISIBILITY FOR ONLINE INDICATOR */
     
-     let sendButtonColor = UIColor(red:66.0/255, green:173.0/255, blue:247.0/255, alpha:1)   /*  SET COLOR FOR SEND BUTTON   */
+     let sendButtonColor = HexColor("1f4ba5")//UIColor(red:66.0/255, green:173.0/255, blue:247.0/255, alpha:1)   /*  SET COLOR FOR SEND BUTTON   */
      ALApplozicSettings.setColorForSendButton(sendButtonColor)
     
-     ALApplozicSettings.setColorForTypeMsgBackground(UIColor.clear)             /*  SET COLOR FOR TYPE MESSAGE OUTER VIEW */
-     ALApplozicSettings.setMsgTextViewBGColor(UIColor.lightGray)                /*  SET BG COLOR FOR MESSAGE TEXT VIEW */
+     ALApplozicSettings.setColorForTypeMsgBackground(HexColor("999999"))//(UIColor.clear)             /*  SET COLOR FOR TYPE MESSAGE OUTER VIEW */
+     ALApplozicSettings.setMsgTextViewBGColor(UIColor.white)//(HexColor("f6f6f6"))//(UIColor.red)//(UIColor.lightGray)                /*  SET BG COLOR FOR MESSAGE TEXT VIEW */
      ALApplozicSettings.setPlaceHolderColor(UIColor.gray)                       /*  SET COLOR FOR PLACEHOLDER TEXT */
      ALApplozicSettings.setVisibilityNoConversationLabelChatVC(true)            /*  SET NO CONVERSATION LABEL IN CHAT VC    */
      ALApplozicSettings.setBGColorForTypingLabel(UIColor(red:242/255.0, green:242/255.0, blue:242/255.0, alpha:1))   /*  SET COLOR FOR TYPING LABEL  */
-     ALApplozicSettings.setTextColorForTypingLabel(UIColor(red:51.0/255, green:51.0/255, blue:51.0/255, alpha:0.5))  /*  SET COLOR FOR TEXT TYPING LABEL  */
+     ALApplozicSettings.setTextColorForTypingLabel(UIColor.gray)//(UIColor(red:51.0/255, green:51.0/255, blue:51.0/255, alpha:0.5))  /*  SET COLOR FOR TEXT TYPING LABEL  */
      /****************************************************************************************************************/
      
      
@@ -422,7 +423,7 @@ func ALDefaultChatViewSettings ()
      
      /********************************************* DEMAND/MISC SETTINGS  ********************************************/
      
-     ALApplozicSettings.setUnreadCountLabelBGColor(UIColor.purple)
+     ALApplozicSettings.setUnreadCountLabelBGColor(HexColor("1f4ba5"))//(UIColor.purple)
      ALApplozicSettings.setCustomClassName("ALChatManager")                     /*  SET 3rd Party Class Name OR ALChatManager */
      ALUserDefaultsHandler.setFetchConversationPageSize(20)                     /*  SET MESSAGE LIST PAGE SIZE  */ // DEFAULT VALUE 20
      ALUserDefaultsHandler.setUnreadCountType(1)                                /*  SET UNRAED COUNT TYPE   */ // DEFAULT VALUE 0
@@ -430,7 +431,8 @@ func ALDefaultChatViewSettings ()
      ALUserDefaultsHandler.setDebugLogsRequire(true)                            /*   ENABLE / DISABLE LOGS   */
      ALUserDefaultsHandler.setLoginUserConatactVisibility(false)
      ALApplozicSettings.setUserProfileHidden(false)
-     ALApplozicSettings.setFontFace("Helvetica")
+     ALApplozicSettings.setFontFace("SourceSansPro-Regular")//("Helvetica")
+    ALApplozicSettings.setCustomMessageFontSize(14)
      ALApplozicSettings.setChatWallpaperImageName("<WALLPAPER NAME>")
      /****************************************************************************************************************/
      
@@ -440,9 +442,9 @@ func ALDefaultChatViewSettings ()
      ALUserDefaultsHandler.setEnableEncryption(false)                            /* Note: PLEASE DO YES (IF NEEDED)  */
      /****************************************************************************************************************/
     
-     ALUserDefaultsHandler.setGoogleMapAPIKey("AIzaSyBnWMTGs1uTFuf8fqQtsmLk-vsWM7OrIXk")  /*Note: REPLEACE WITH YOUR GOOGLE MAP KEY  */
+     ALUserDefaultsHandler.setGoogleMapAPIKey(Configurations.GooglePlaces.key)  /*Note: REPLEACE WITH YOUR GOOGLE MAP KEY  */
     
-     ALApplozicSettings.setMsgContainerVC("sampleapp_swift.DVChatViewController")  // appname.ClassName i.e. sampleapp_swift.DVChatViewController
+     ALApplozicSettings.setMsgContainerVC("ChatListViewController")//("sampleapp_swift.DVChatViewController")  // appname.ClassName i.e. sampleapp_swift.DVChatViewController
 }
 
 
