@@ -135,58 +135,54 @@ class ProfileViewController: UIViewController {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         
-        // action for media from library
-        let libraryMedia = UIAlertAction(title: LocalizableString.Library.localizedString, style: UIAlertActionStyle.default, handler: {
+        // action for image from library
+        let libraryImageMedia = UIAlertAction(title: LocalizableString.PhotoLibrary.localizedString, style: UIAlertActionStyle.default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            imagePicker.sourceType = .photoLibrary
+            imagePicker.mediaTypes = [kUTTypeImage as String]
+            imagePicker.modalPresentationStyle = .popover
+            
+            self.present(imagePicker, animated: true, completion: nil)
+        })
+        
+        // action for video from library
+        let libraryVideoMedia = UIAlertAction(title: LocalizableString.VideoLibrary.localizedString, style: UIAlertActionStyle.default, handler: {
             (alert: UIAlertAction!) -> Void in
             imagePicker.videoQuality = UIImagePickerControllerQualityType.typeHigh
             imagePicker.videoMaximumDuration = 14
             imagePicker.sourceType = .photoLibrary
-            imagePicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: imagePicker.sourceType)!
-            
-            switch source {
-            case .photo:
-                if imagePicker.mediaTypes.contains(kUTTypeImage as String) {
-                    imagePicker.mediaTypes = [kUTTypeImage as String]
-                    imagePicker.allowsEditing = false
-                }
-                break
-            case .video:
-                if imagePicker.mediaTypes.contains(kUTTypeMovie as String) {
-                    imagePicker.mediaTypes = [kUTTypeMovie as String]
-                    imagePicker.allowsEditing = true
-                }
-            default:
-                break
-            }
-            
+            imagePicker.mediaTypes = [kUTTypeMovie as String]
+            imagePicker.allowsEditing = true
             imagePicker.modalPresentationStyle = .popover
+            
             self.present(imagePicker, animated: true, completion: nil)
         })
         
         // action for media from camera
-        let cameraMedia = UIAlertAction(title: LocalizableString.Camera.localizedString, style: UIAlertActionStyle.default, handler: {
+        let cameraPhotoMedia = UIAlertAction(title: LocalizableString.TakeAPhoto.localizedString, style: UIAlertActionStyle.default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            imagePicker.allowsEditing = true
+            imagePicker.sourceType = .camera
+            imagePicker.mediaTypes = [kUTTypeImage as String]
+            imagePicker.showsCameraControls = true
+            imagePicker.cameraCaptureMode = .photo
+            imagePicker.modalPresentationStyle = .popover
+            
+            self.present(imagePicker, animated: true, completion: nil)
+        })
+        
+        let cameraVideoMedia = UIAlertAction(title: LocalizableString.TakeAVideo.localizedString, style: UIAlertActionStyle.default, handler: {
             (alert: UIAlertAction!) -> Void in
             imagePicker.allowsEditing = true
             imagePicker.videoMaximumDuration = 14
             imagePicker.sourceType = .camera
-            imagePicker.videoQuality = UIImagePickerControllerQualityType.typeMedium
+            imagePicker.cameraCaptureMode = .video
+            imagePicker.mediaTypes = [kUTTypeMovie as String]
+            imagePicker.allowsEditing = true
+            imagePicker.videoQuality = UIImagePickerControllerQualityType.typeHigh
             imagePicker.showsCameraControls = true
-            
-            switch source {
-            case .photo:
-                imagePicker.cameraCaptureMode = .photo
-                imagePicker.mediaTypes = [kUTTypeImage as String]
-                imagePicker.allowsEditing = false
-                break
-            case .video:
-                imagePicker.cameraCaptureMode = .video
-                imagePicker.mediaTypes = [kUTTypeMovie as String]
-                imagePicker.allowsEditing = true
-            default:
-                break
-            }
-            
             imagePicker.modalPresentationStyle = .popover
+            
             self.present(imagePicker, animated: true, completion: nil)
         })
         
@@ -228,37 +224,63 @@ class ProfileViewController: UIViewController {
         
         switch source {
         case .photo:
-            alertTitle = LocalizableString.TakeAPhoto.localizedString
+            alertTitle = LocalizableString.newMomentImageSource.localizedString
             break
         case .video:
-            alertTitle = LocalizableString.TakeAVideo.localizedString
+            alertTitle = LocalizableString.newMomentVideoSource.localizedString
             break
         case .photoVideo:
-            alertTitle = LocalizableString.TakeAMedia.localizedString
+            alertTitle = LocalizableString.newMomentImageVideoSource.localizedString
             break
         case .photoVideoDelete:
-            alertTitle = LocalizableString.EditOrDelete.localizedString
+            alertTitle = LocalizableString.newMomentImageVideoSource.localizedString
         }
         
         let alertView = UIAlertController(title: nil, message: alertTitle, preferredStyle: UIAlertControllerStyle.actionSheet)
         
-        alertView.addAction(libraryMedia)
-        
-        if UIImagePickerController.isSourceTypeAvailable(.camera) == true {
-            alertView.addAction(cameraMedia)
-        }
-        
-        if source == .photo {
+        switch source {
+        case .photo:
+            
+            alertView.addAction(libraryImageMedia)
+            
+            if UIImagePickerController.isSourceTypeAvailable(.camera) == true {
+                alertView.addAction(cameraPhotoMedia)
+            }
+            
             alertView.addAction(facebookAction)
             alertView.addAction(instagramAction)
-        }
+            
+            break
+        case.video:
+            
+            alertView.addAction(libraryVideoMedia)
+            
+            if UIImagePickerController.isSourceTypeAvailable(.camera) == true {
+                alertView.addAction(cameraVideoMedia)
+            }
+            
+            break
+        case .photoVideo, .photoVideoDelete:
+            
+            alertView.addAction(libraryImageMedia)
+            alertView.addAction(libraryVideoMedia)
+            
+            if UIImagePickerController.isSourceTypeAvailable(.camera) == true {
+                alertView.addAction(cameraPhotoMedia)
+                alertView.addAction(cameraVideoMedia)
+            }
+            
+            alertView.addAction(facebookAction)
+            alertView.addAction(instagramAction)
+            
+            if source == .photoVideoDelete {
+                alertView.addAction(deleteMedia)
+            }
         
-        if source == .photoVideoDelete {
-            alertView.addAction(deleteMedia)
+            break
         }
         
         alertView.addAction(cancelAction)
-        
         present(alertView, animated: true, completion: nil)
     }
     

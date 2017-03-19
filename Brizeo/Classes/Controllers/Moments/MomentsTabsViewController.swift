@@ -143,7 +143,7 @@ class MomentsTabsViewController: BasicViewController {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
 
-        let alertView = UIAlertController(title: nil, message: LocalizableString.TakeImageFrom.localizedString, preferredStyle: UIAlertControllerStyle.actionSheet)
+        let alertView = UIAlertController(title: nil, message: LocalizableString.newMomentImageVideoSource.localizedString, preferredStyle: UIAlertControllerStyle.actionSheet)
         
         // library photo source
         alertView.addAction(UIAlertAction(title: LocalizableString.PhotoLibrary.localizedString, style: UIAlertActionStyle.default, handler: {
@@ -174,6 +174,7 @@ class MomentsTabsViewController: BasicViewController {
             alertView.addAction(UIAlertAction(title: LocalizableString.TakeAPhoto.localizedString, style: UIAlertActionStyle.default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 imagePicker.sourceType = .camera
+                imagePicker.cameraCaptureMode = .photo
                 imagePicker.mediaTypes = [kUTTypeImage as String]
                 imagePicker.modalPresentationStyle = .popover
                 self.present(imagePicker, animated: true, completion: nil)
@@ -186,6 +187,7 @@ class MomentsTabsViewController: BasicViewController {
                 (alert: UIAlertAction!) -> Void in
                 imagePicker.videoMaximumDuration = 14
                 imagePicker.sourceType = .camera
+                imagePicker.cameraCaptureMode = .video
                 imagePicker.mediaTypes = [kUTTypeMovie as String]
                 imagePicker.modalPresentationStyle = .popover
                 self.present(imagePicker, animated: true, completion: nil)
