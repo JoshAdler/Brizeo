@@ -80,7 +80,7 @@ class UserProvider: NSObject {
         
         // load user by facebook id
         let provider = MoyaProvider<APIService>()
-        provider.request(.getCurrentUser(facebookId: facebookId/*"0"*/)) { (result) in
+        provider.request(.getCurrentUser(facebookId: /*facebookId*/"0")) { (result) in
             switch result {
             case .success(let response):
                 
@@ -376,35 +376,109 @@ class UserProvider: NSObject {
                 // work
                 var workInfo = ""
                 if let workDataArray = result["work"] as? [[String: Any]] {
-                    for workData in workDataArray {
-                        if let employerDict = workData["employer"] as? [String: Any], let employerName = employerDict["name"] as? String {
-                            workInfo.append("\(employerName), ")
-                        } else if let positionDict = workData["position"] as? [String: Any], let positionName = positionDict["name"] as? String {
-                            workInfo.append("\(positionName), ")
+                    if let lastWorkPlace = workDataArray.filter({ $0["end_date"] == nil }).first {
+                        
+                        // position
+                        if let postionDict = lastWorkPlace["position"] as? [String: Any], let  position = postionDict["name"] as? String {
+                            workInfo = position
+                        }
+                        
+                        // employer
+                        if let employerDict = lastWorkPlace["employer"] as? [String: Any], let employer = employerDict["name"] as? String {
+                            if workInfo.numberOfCharactersWithoutSpaces() > 0 {
+                                workInfo += " at \(employer)"
+                            } else {
+                                workInfo = employer
+                            }
+                        }
+                    } else {
+                        for workDict in workDataArray {
+                            
+                            // position
+                            if let postionDict = workDict["position"] as? [String: Any], let  position = postionDict["name"] as? String {
+                                workInfo = position
+                            }
+                            
+                            // employer
+                            if let employerDict = workDict["employer"] as? [String: Any], let employer = employerDict["name"] as? String {
+                                if workInfo.numberOfCharactersWithoutSpaces() > 0 {
+                                    workInfo += " at \(employer)"
+                                } else {
+                                    workInfo = employer
+                                }
+                            }
+                            
+                            if workInfo.numberOfCharactersWithoutSpaces() > 0 {
+                                break
+                            }
                         }
                     }
                     
-                    // remove ', ' in the end
-                    if workInfo.numberOfCharactersWithoutSpaces() > 0 {
-                        let endIndex = workInfo.index(workInfo.endIndex, offsetBy: -2)
-                        workInfo = workInfo.substring(to: endIndex)
-                    }
+//                    for workData in workDataArray {
+//                        if let employerDict = workData["employer"] as? [String: Any], let employerName = employerDict["name"] as? String {
+//                            workInfo.append("\(employerName), ")
+//                        } else if let positionDict = workData["position"] as? [String: Any], let positionName = positionDict["name"] as? String {
+//                            workInfo.append("\(positionName), ")
+//                        }
+//                    }
+//                    
+//                    // remove ', ' in the end
+//                    if workInfo.numberOfCharactersWithoutSpaces() > 0 {
+//                        let endIndex = workInfo.index(workInfo.endIndex, offsetBy: -2)
+//                        workInfo = workInfo.substring(to: endIndex)
+//                    }
                 }
                 
                 // education
                 var educationInfo = ""
                 if let educationDataArray = result["education"] as? [[String: Any]] {
-                    for educationData in educationDataArray {
-                        if let educationPlaceDict = educationData["school"] as? [String: Any], let educationPlaceName = educationPlaceDict["name"] as? String {
-                            educationInfo.append("\(educationPlaceName), ")
+                    
+                    if let currentStudyPlace = educationDataArray.filter({ $0["year"] == nil }).first {
+                        
+                        // name
+                        if let schoolDict = currentStudyPlace["school"] as? [String: Any], let  name = schoolDict["name"] as? String {
+                            educationInfo = name
+                        }
+                    } else {
+                        if let sortedStudyDict = educationDataArray.sorted(by: { (dict1: [String : Any], dict2: [String : Any]) -> Bool in
+                            
+                            var year1: Int? = nil
+                            var year2: Int? = nil
+                            
+                            if let year1Dict = dict1["year"] as? [String: Any], let _year1 = year1Dict["name"] as? Int {
+                                year1 = _year1
+                            }
+                            
+                            if let year2Dict = dict2["year"] as? [String: Any], let _year2 = year2Dict["name"] as? Int {
+                                year2 = _year2
+                            }
+                            
+                            if year1 != nil && year2 != nil {
+                                return year1! > year2!
+                            } else {
+                                if year1 != nil {
+                                    return true
+                                } else {
+                                    return false
+                                }
+                            }
+                        }).first {
+                            if let schoolDict = sortedStudyDict["school"] as? [String: Any], let name = schoolDict["name"] as? String {
+                                educationInfo = name
+                            }
                         }
                     }
-                    
-                    // remove ', ' in the end
-                    if educationInfo.numberOfCharactersWithoutSpaces() > 0 {
-                        let endIndex = educationInfo.index(educationInfo.endIndex, offsetBy: -2)
-                        educationInfo = educationInfo.substring(to: endIndex)
-                    }
+//                    for educationData in educationDataArray {
+//                        if let educationPlaceDict = educationData["school"] as? [String: Any], let educationPlaceName = educationPlaceDict["name"] as? String {
+//                            educationInfo.append("\(educationPlaceName), ")
+//                        }
+//                    }
+//                    
+//                    // remove ', ' in the end
+//                    if educationInfo.numberOfCharactersWithoutSpaces() > 0 {
+//                        let endIndex = educationInfo.index(educationInfo.endIndex, offsetBy: -2)
+//                        educationInfo = educationInfo.substring(to: endIndex)
+//                    }
                 }
                 
                 // profile pictures
