@@ -203,7 +203,7 @@ extension NotificationsViewController: UITableViewDataSource {
             
             // name/time
             let displayName = notification.senderUser?.displayName ?? "Somebody"
-            let time = notification.updatedAt?.naturalView ?? ""
+            let time = notification.shortTime ?? ""//?.naturalView ?? ""
             cell.generateText(with: displayName, time: time)
             
             // status 
@@ -227,7 +227,7 @@ extension NotificationsViewController: UITableViewDataSource {
             
             // name/time
             let displayName = notification.senderUser?.displayName ?? "Somebody"
-            let time = notification.updatedAt?.naturalView ?? ""
+            let time = notification.time?.naturalView ?? ""
             cell.generateMatchingText(with: displayName, time: time)
             
             cell.commentTimeLabel.text = nil

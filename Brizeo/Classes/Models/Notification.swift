@@ -55,6 +55,17 @@ class Notification: Mappable {
         return updatedAt ?? createdAt
     }
     
+    var shortTime: String? {
+        
+        guard let time = time else {
+            return nil
+        }
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM d, yyyy"
+        return formatter.string(from: time)
+    }
+    
     // MARK: - Init
     
     required init?(map: Map) { }

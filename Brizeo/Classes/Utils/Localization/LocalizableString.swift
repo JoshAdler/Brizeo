@@ -224,7 +224,7 @@ enum LocalizableString: String {
     case SomebodyLikeYourMoment = "%@ liked your Moments picture."
     case SomebodyMatchYou = "New potential match with %@!"
     case People = "People"
-    case LikeNotificationMessage = "liked your moment."
+    case LikeNotificationMessage = "liked your moment"
     
     // MARK: - Tutorial
     case Skip = "Skip"

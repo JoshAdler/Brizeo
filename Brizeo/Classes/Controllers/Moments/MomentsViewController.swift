@@ -20,7 +20,7 @@ class MomentsViewController: UIViewController {
     
     struct Constants {
         static let backButtonColor = HexColor("1f4ba5")!
-        static let cellHeightCoef: CGFloat = 564.0 / 750.0
+        static let cellHeightCoef: CGFloat = 675.0 / 750.0
         static let defaultFilterTitle = "All"
     }
     
@@ -475,7 +475,7 @@ extension MomentsViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 320.0
+        return 500.0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

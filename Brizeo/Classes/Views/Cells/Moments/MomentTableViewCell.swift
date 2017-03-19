@@ -78,6 +78,8 @@ class MomentTableViewCell: UITableViewCell {
         delegate?.momentCellDidSelectMoreOptions(self)
     }
     
+    @IBAction func onEmptyButtonClicked(sender: UIButton) {}
+    
     // MARK: - Public methods
     
     func setButtonHighligted(isHighligted: Bool) {

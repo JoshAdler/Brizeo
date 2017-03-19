@@ -60,6 +60,13 @@ class UserProvider: NSObject {
         let loginManager = FBSDKLoginManager()
         loginManager.logOut()
         
+        // erase token for pushes
+        if shared.currentUser != nil {
+            
+            shared.currentUser?.deviceToken = ""
+            UserProvider.updateUser(user: shared.currentUser!, completion: nil)
+        }
+        
         shared.currentUser = nil
     }
     

@@ -57,13 +57,13 @@ class LikesNotificationTableViewCell: UITableViewCell {
     // MARK: - Public methods
     
     func generateText(with authorName: String, time: String) {
-        let ownerNameAttributes = [NSForegroundColorAttributeName: Constants.mainColor, NSFontAttributeName: UIFont(name: "SourceSansPro-Bold", size: Constants.nameFontSize)]
-        let defaultAttributes = [NSForegroundColorAttributeName: Constants.mainColor, NSFontAttributeName: UIFont(name: "SourceSansPro-Regular", size: Constants.defaultFontSize)]
+        let ownerNameAttributes = [NSForegroundColorAttributeName: Constants.mainColor, NSFontAttributeName:    UIFont(name: "SourceSansPro-Bold", size: Constants.nameFontSize)]
+        let defaultAttributes = [NSForegroundColorAttributeName: Constants.mainColor, NSFontAttributeName: UIFont(name: /*"SourceSansPro-Regular"*/"SourceSansPro-Bold", size: Constants.defaultFontSize)]
         let timeAttributes = [NSForegroundColorAttributeName: Constants.timeColor, NSFontAttributeName: UIFont(name: "SourceSansPro-Regular", size: Constants.timeFontSize)]
         
         let partOne = NSMutableAttributedString(string: authorName, attributes: ownerNameAttributes)
         let partTwo = NSMutableAttributedString(string: " \(LocalizableString.LikeNotificationMessage.localizedString)", attributes: defaultAttributes)
-        let partThree = NSMutableAttributedString(string: " \(time)", attributes: timeAttributes)
+        let partThree = NSMutableAttributedString(string: "\n\(time)", attributes: timeAttributes)
         
         let combination = NSMutableAttributedString()
         
