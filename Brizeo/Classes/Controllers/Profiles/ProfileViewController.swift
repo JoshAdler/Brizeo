@@ -138,7 +138,6 @@ class ProfileViewController: UIViewController {
         // action for media from library
         let libraryMedia = UIAlertAction(title: LocalizableString.Library.localizedString, style: UIAlertActionStyle.default, handler: {
             (alert: UIAlertAction!) -> Void in
-            imagePicker.allowsEditing = true
             imagePicker.videoQuality = UIImagePickerControllerQualityType.typeHigh
             imagePicker.videoMaximumDuration = 14
             imagePicker.sourceType = .photoLibrary
@@ -148,11 +147,13 @@ class ProfileViewController: UIViewController {
             case .photo:
                 if imagePicker.mediaTypes.contains(kUTTypeImage as String) {
                     imagePicker.mediaTypes = [kUTTypeImage as String]
+                    imagePicker.allowsEditing = false
                 }
                 break
             case .video:
                 if imagePicker.mediaTypes.contains(kUTTypeMovie as String) {
                     imagePicker.mediaTypes = [kUTTypeMovie as String]
+                    imagePicker.allowsEditing = true
                 }
             default:
                 break
@@ -175,10 +176,12 @@ class ProfileViewController: UIViewController {
             case .photo:
                 imagePicker.cameraCaptureMode = .photo
                 imagePicker.mediaTypes = [kUTTypeImage as String]
+                imagePicker.allowsEditing = false
                 break
             case .video:
                 imagePicker.cameraCaptureMode = .video
                 imagePicker.mediaTypes = [kUTTypeMovie as String]
+                imagePicker.allowsEditing = true
             default:
                 break
             }

@@ -145,26 +145,48 @@ class MomentsTabsViewController: BasicViewController {
 
         let alertView = UIAlertController(title: nil, message: LocalizableString.TakeImageFrom.localizedString, preferredStyle: UIAlertControllerStyle.actionSheet)
         
-        // library source
+        // library photo source
         alertView.addAction(UIAlertAction(title: LocalizableString.PhotoLibrary.localizedString, style: UIAlertActionStyle.default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            
+            imagePicker.videoQuality = UIImagePickerControllerQualityType.typeHigh
+            imagePicker.sourceType = .photoLibrary
+            imagePicker.mediaTypes = [kUTTypeImage as String]
+            imagePicker.modalPresentationStyle = .popover
+            self.present(imagePicker, animated: true, completion: nil)
+        }))
+        
+        //library video source
+        alertView.addAction(UIAlertAction(title: LocalizableString.VideoLibrary.localizedString, style: UIAlertActionStyle.default, handler: {
             (alert: UIAlertAction!) -> Void in
             
             imagePicker.videoQuality = UIImagePickerControllerQualityType.typeHigh
             imagePicker.videoMaximumDuration = 14
             imagePicker.allowsEditing = true
             imagePicker.sourceType = .photoLibrary
-            imagePicker.mediaTypes = UIImagePickerController.availableMediaTypes(for: imagePicker.sourceType)!
+            imagePicker.mediaTypes = [kUTTypeMovie as String]
             imagePicker.modalPresentationStyle = .popover
             self.present(imagePicker, animated: true, completion: nil)
         }))
         
-        // camera source
+        // camera photo source
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) == true {
-            alertView.addAction(UIAlertAction(title: LocalizableString.TakeAPhotoVideo.localizedString, style: UIAlertActionStyle.default, handler: {
+            alertView.addAction(UIAlertAction(title: LocalizableString.TakeAPhoto.localizedString, style: UIAlertActionStyle.default, handler: {
+                (alert: UIAlertAction!) -> Void in
+                imagePicker.sourceType = .camera
+                imagePicker.mediaTypes = [kUTTypeImage as String]
+                imagePicker.modalPresentationStyle = .popover
+                self.present(imagePicker, animated: true, completion: nil)
+            }))
+        }
+        
+        // camera video source
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera) == true {
+            alertView.addAction(UIAlertAction(title: LocalizableString.TakeAVideo.localizedString, style: UIAlertActionStyle.default, handler: {
                 (alert: UIAlertAction!) -> Void in
                 imagePicker.videoMaximumDuration = 14
                 imagePicker.sourceType = .camera
-                imagePicker.mediaTypes = [kUTTypeImage as String, kUTTypeMovie as String]
+                imagePicker.mediaTypes = [kUTTypeMovie as String]
                 imagePicker.modalPresentationStyle = .popover
                 self.present(imagePicker, animated: true, completion: nil)
             }))
