@@ -29,8 +29,10 @@ class UserProvider: NSObject {
     }
     
     struct FacebookConstants {
-        static let permissions = ["public_profile", "email", "user_photos", "user_birthday", "user_friends", "user_education_history", "user_work_history"/*, "user_events"*/]
+        static let permissions = ["public_profile", "email", "user_photos", "user_birthday", "user_friends", "user_education_history", "user_work_history", "user_events"]
         static let parameters = ["fields" : "id, email, first_name, last_name, name, birthday, gender, work, education, picture.width(1000).height(1000), albums{photos.height(1000){images},name}"]
+        static let eventParameters = ["fields" : "events.limit(300){name,description,cover,attending_count,rsvp_status,start_time,place}"]
+        static let shortParameters = ["fields" : "work, education"]
     }
 
     typealias UserCompletion = (Result<User>) -> Void
@@ -80,7 +82,7 @@ class UserProvider: NSObject {
         
         // load user by facebook id
         let provider = MoyaProvider<APIService>()
-        provider.request(.getCurrentUser(facebookId: /*facebookId*/"0")) { (result) in
+        provider.request(.getCurrentUser(facebookId: facebookId)) { (result) in
             switch result {
             case .success(let response):
                 
@@ -93,6 +95,8 @@ class UserProvider: NSObject {
                     let user = try response.mapObject(User.self)
                     
                     shared.currentUser = user
+                    updateUsersInfo()
+                    
                     completion?(.success(user))
                     
                     // load preferences
@@ -311,6 +315,135 @@ class UserProvider: NSObject {
 
     // MARK: - Private methods
     
+    fileprivate class func parseEducationHistory(from dict: [String: Any]) -> String? {
+        var educationInfo: String? = nil
+        
+        if let educationDataArray = dict["education"] as? [[String: Any]] {
+            
+            if let currentStudyPlace = educationDataArray.filter({ $0["year"] == nil }).first {
+                
+                // name
+                if let schoolDict = currentStudyPlace["school"] as? [String: Any], let  name = schoolDict["name"] as? String {
+                    educationInfo = name
+                }
+            } else {
+                if let sortedStudyDict = educationDataArray.sorted(by: { (dict1: [String : Any], dict2: [String : Any]) -> Bool in
+                    
+                    var year1: Int? = nil
+                    var year2: Int? = nil
+                    
+                    if let year1Dict = dict1["year"] as? [String: Any], let _year1 = year1Dict["name"] as? Int {
+                        year1 = _year1
+                    }
+                    
+                    if let year2Dict = dict2["year"] as? [String: Any], let _year2 = year2Dict["name"] as? Int {
+                        year2 = _year2
+                    }
+                    
+                    if year1 != nil && year2 != nil {
+                        return year1! > year2!
+                    } else {
+                        if year1 != nil {
+                            return true
+                        } else {
+                            return false
+                        }
+                    }
+                }).first {
+                    if let schoolDict = sortedStudyDict["school"] as? [String: Any], let name = schoolDict["name"] as? String {
+                        educationInfo = name
+                    }
+                }
+            }
+        }
+        
+        return educationInfo
+    }
+    
+    fileprivate class func parseWorkHistory(from dict: [String: Any]) -> String? {
+        var workInfo: String? = nil
+        
+        if let workDataArray = dict["work"] as? [[String: Any]] {
+            if let lastWorkPlace = workDataArray.filter({ $0["end_date"] == nil }).first {
+                
+                // position
+                if let postionDict = lastWorkPlace["position"] as? [String: Any], let  position = postionDict["name"] as? String {
+                    workInfo = position
+                }
+                
+                // employer
+                if let employerDict = lastWorkPlace["employer"] as? [String: Any], let employer = employerDict["name"] as? String {
+                    if workInfo != nil && workInfo!.numberOfCharactersWithoutSpaces() > 0 {
+                        workInfo! += " at \(employer)"
+                    } else {
+                        workInfo = employer
+                    }
+                }
+            } else {
+                for workDict in workDataArray {
+                    
+                    // position
+                    if let postionDict = workDict["position"] as? [String: Any], let  position = postionDict["name"] as? String {
+                        workInfo = position
+                    }
+                    
+                    // employer
+                    if let employerDict = workDict["employer"] as? [String: Any], let employer = employerDict["name"] as? String {
+                        if workInfo != nil && workInfo!.numberOfCharactersWithoutSpaces() > 0 {
+                            workInfo! += " at \(employer)"
+                        } else {
+                            workInfo = employer
+                        }
+                    }
+                    
+                    if workInfo != nil && workInfo!.numberOfCharactersWithoutSpaces() > 0 {
+                        break
+                    }
+                }
+            }
+        }
+        
+        return workInfo
+    }
+    
+    fileprivate class func updateUsersInfo() {
+        
+        guard let currentUser = UserProvider.shared.currentUser else {
+            return
+        }
+        
+        guard isUserLoggedInFacebook() else {
+            return
+        }
+        
+        // try to fetch users' work/education info
+        FBSDKGraphRequest(graphPath: "me", parameters: FacebookConstants.shortParameters).start { (connection, result, error) in
+            
+            guard error == nil else {
+                return
+            }
+            
+            // parse data
+            if let result = result as? [String: Any] {
+                var wasChanged = false
+                
+                if let workPlace = parseWorkHistory(from: result) {
+                    currentUser.workInfo = workPlace
+                    wasChanged = true
+                }
+                
+                if let educationPlace = parseEducationHistory(from: result) {
+                    currentUser.studyInfo = educationPlace
+                    wasChanged = true
+                }
+                
+                if wasChanged {
+                    UserProvider.updateUser(user: currentUser, completion: nil)
+                }
+            }
+        }
+    }
+    
     fileprivate class func createUser(user: User, completion: @escaping (Result<User>) -> Void) {
         
         let provider = MoyaProvider<APIService>()
@@ -374,112 +507,10 @@ class UserProvider: NSObject {
                 }
                 
                 // work
-                var workInfo = ""
-                if let workDataArray = result["work"] as? [[String: Any]] {
-                    if let lastWorkPlace = workDataArray.filter({ $0["end_date"] == nil }).first {
-                        
-                        // position
-                        if let postionDict = lastWorkPlace["position"] as? [String: Any], let  position = postionDict["name"] as? String {
-                            workInfo = position
-                        }
-                        
-                        // employer
-                        if let employerDict = lastWorkPlace["employer"] as? [String: Any], let employer = employerDict["name"] as? String {
-                            if workInfo.numberOfCharactersWithoutSpaces() > 0 {
-                                workInfo += " at \(employer)"
-                            } else {
-                                workInfo = employer
-                            }
-                        }
-                    } else {
-                        for workDict in workDataArray {
-                            
-                            // position
-                            if let postionDict = workDict["position"] as? [String: Any], let  position = postionDict["name"] as? String {
-                                workInfo = position
-                            }
-                            
-                            // employer
-                            if let employerDict = workDict["employer"] as? [String: Any], let employer = employerDict["name"] as? String {
-                                if workInfo.numberOfCharactersWithoutSpaces() > 0 {
-                                    workInfo += " at \(employer)"
-                                } else {
-                                    workInfo = employer
-                                }
-                            }
-                            
-                            if workInfo.numberOfCharactersWithoutSpaces() > 0 {
-                                break
-                            }
-                        }
-                    }
-                    
-//                    for workData in workDataArray {
-//                        if let employerDict = workData["employer"] as? [String: Any], let employerName = employerDict["name"] as? String {
-//                            workInfo.append("\(employerName), ")
-//                        } else if let positionDict = workData["position"] as? [String: Any], let positionName = positionDict["name"] as? String {
-//                            workInfo.append("\(positionName), ")
-//                        }
-//                    }
-//                    
-//                    // remove ', ' in the end
-//                    if workInfo.numberOfCharactersWithoutSpaces() > 0 {
-//                        let endIndex = workInfo.index(workInfo.endIndex, offsetBy: -2)
-//                        workInfo = workInfo.substring(to: endIndex)
-//                    }
-                }
+                let workInfo = parseWorkHistory(from: result) ?? ""
                 
                 // education
-                var educationInfo = ""
-                if let educationDataArray = result["education"] as? [[String: Any]] {
-                    
-                    if let currentStudyPlace = educationDataArray.filter({ $0["year"] == nil }).first {
-                        
-                        // name
-                        if let schoolDict = currentStudyPlace["school"] as? [String: Any], let  name = schoolDict["name"] as? String {
-                            educationInfo = name
-                        }
-                    } else {
-                        if let sortedStudyDict = educationDataArray.sorted(by: { (dict1: [String : Any], dict2: [String : Any]) -> Bool in
-                            
-                            var year1: Int? = nil
-                            var year2: Int? = nil
-                            
-                            if let year1Dict = dict1["year"] as? [String: Any], let _year1 = year1Dict["name"] as? Int {
-                                year1 = _year1
-                            }
-                            
-                            if let year2Dict = dict2["year"] as? [String: Any], let _year2 = year2Dict["name"] as? Int {
-                                year2 = _year2
-                            }
-                            
-                            if year1 != nil && year2 != nil {
-                                return year1! > year2!
-                            } else {
-                                if year1 != nil {
-                                    return true
-                                } else {
-                                    return false
-                                }
-                            }
-                        }).first {
-                            if let schoolDict = sortedStudyDict["school"] as? [String: Any], let name = schoolDict["name"] as? String {
-                                educationInfo = name
-                            }
-                        }
-                    }
-//                    for educationData in educationDataArray {
-//                        if let educationPlaceDict = educationData["school"] as? [String: Any], let educationPlaceName = educationPlaceDict["name"] as? String {
-//                            educationInfo.append("\(educationPlaceName), ")
-//                        }
-//                    }
-//                    
-//                    // remove ', ' in the end
-//                    if educationInfo.numberOfCharactersWithoutSpaces() > 0 {
-//                        let endIndex = educationInfo.index(educationInfo.endIndex, offsetBy: -2)
-//                        educationInfo = educationInfo.substring(to: endIndex)
-//                    }
-                }
+                let educationInfo = parseEducationHistory(from: result) ?? ""
                 
                 // profile pictures
                 var profilePicturesURLs = [String]()

@@ -7,10 +7,10 @@
 //
 
 import UIKit
+import ChameleonFramework
 
 protocol LikesTableViewCellDelegate: class {
-    func likesCell(cell: LikesTableViewCell, didClickedApprove likerView: LikerView)
-    func likesCell(cell: LikesTableViewCell, didClickedDecline likerView: LikerView)
+    func likesCell(cell: LikesTableViewCell, didClickedProfile button: UIButton)
 }
 
 class LikesTableViewCell: UITableViewCell {
@@ -19,7 +19,14 @@ class LikesTableViewCell: UITableViewCell {
     
     @IBOutlet weak var profileLogoImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var likesView: LikerView!
+    @IBOutlet weak var profileButton: UIButton! {
+        didSet {
+            profileButton.setTitle(LocalizableString.Profile.localizedString, for: .normal)
+            profileButton.layer.cornerRadius = 5.0
+//            profileButton.layer.borderWidth = 1.0
+//            profileButton.layer.borderColor = HexColor("")
+        }
+    }
     weak var delegate: LikesTableViewCellDelegate?
     
     // MARK: - Override methods
@@ -34,11 +41,7 @@ class LikesTableViewCell: UITableViewCell {
     
     // MARK: - Actions
     
-    @IBAction func onApproveButtonClicked(_ sender: UIButton) {
-        delegate?.likesCell(cell: self, didClickedApprove: likesView)
-    }
-    
-    @IBAction func onDeclineButtonClicked(_ sender: UIButton) {
-        delegate?.likesCell(cell: self, didClickedDecline: likesView)
+    @IBAction func onProfileButtonClicked(_ sender: UIButton) {
+        delegate?.likesCell(cell: self, didClickedProfile: sender)
     }
 }

@@ -213,6 +213,8 @@ class BranchProvider: NSObject {
         branchUniversalObject.contentDescription = LocalizableString.BrizeoInvite.localizedString
         branchUniversalObject.imageUrl = imageURL ?? Configurations.Invite.previewURL
         
+        print("||| IMAGE URL: \(branchUniversalObject.imageUrl)")
+        
         for (key, value) in params {
             branchUniversalObject.addMetadataKey(key.rawValue, value: value)
         }

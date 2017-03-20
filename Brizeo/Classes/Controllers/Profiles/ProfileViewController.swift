@@ -161,7 +161,6 @@ class ProfileViewController: UIViewController {
         // action for media from camera
         let cameraPhotoMedia = UIAlertAction(title: LocalizableString.TakeAPhoto.localizedString, style: UIAlertActionStyle.default, handler: {
             (alert: UIAlertAction!) -> Void in
-            imagePicker.allowsEditing = true
             imagePicker.sourceType = .camera
             imagePicker.mediaTypes = [kUTTypeImage as String]
             imagePicker.showsCameraControls = true
@@ -176,9 +175,8 @@ class ProfileViewController: UIViewController {
             imagePicker.allowsEditing = true
             imagePicker.videoMaximumDuration = 14
             imagePicker.sourceType = .camera
-            imagePicker.cameraCaptureMode = .video
             imagePicker.mediaTypes = [kUTTypeMovie as String]
-            imagePicker.allowsEditing = true
+            imagePicker.cameraCaptureMode = .video
             imagePicker.videoQuality = UIImagePickerControllerQualityType.typeHigh
             imagePicker.showsCameraControls = true
             imagePicker.modalPresentationStyle = .popover

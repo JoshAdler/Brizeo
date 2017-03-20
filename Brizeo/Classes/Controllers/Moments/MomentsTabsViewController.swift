@@ -187,8 +187,8 @@ class MomentsTabsViewController: BasicViewController {
                 (alert: UIAlertAction!) -> Void in
                 imagePicker.videoMaximumDuration = 14
                 imagePicker.sourceType = .camera
-                imagePicker.cameraCaptureMode = .video
                 imagePicker.mediaTypes = [kUTTypeMovie as String]
+                imagePicker.cameraCaptureMode = .video
                 imagePicker.modalPresentationStyle = .popover
                 self.present(imagePicker, animated: true, completion: nil)
             }))

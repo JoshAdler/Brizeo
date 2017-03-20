@@ -30,6 +30,9 @@ class EventTabsViewController: BasicViewController {
         super.viewDidLoad()
                 
         prepareController()
+        
+        // update facebook events for current user
+        EventsProvider.updateUserEventsIfNeeds()
     }
     
     override func viewWillAppear(_ animated: Bool) {

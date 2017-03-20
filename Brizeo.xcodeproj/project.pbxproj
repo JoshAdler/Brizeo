@@ -94,6 +94,7 @@
 		BB3EF5881E6CB4D8006FB2ED /* CountriesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3EF5871E6CB4D8006FB2ED /* CountriesProvider.swift */; };
 		BB3EF58A1E6D55E5006FB2ED /* NotificationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3EF5891E6D55E4006FB2ED /* NotificationProvider.swift */; };
 		BB3EF58C1E6D672F006FB2ED /* InfoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3EF58B1E6D672F006FB2ED /* InfoProvider.swift */; };
+		BB40EC8B1E7FDDE4001DEA35 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB40EC8A1E7FDDE4001DEA35 /* Event.swift */; };
 		BB49F94E1E409E16009EE6A0 /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB49F94D1E409E16009EE6A0 /* ChatListViewController.swift */; };
 		BB49F9511E412C26009EE6A0 /* SettingsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB49F9501E412C26009EE6A0 /* SettingsHeaderView.swift */; };
 		BB4ED5BD1E3AB42B005B3487 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4ED5BC1E3AB42B005B3487 /* EventTableViewCell.swift */; };
@@ -287,6 +288,7 @@
 		BB3EF5871E6CB4D8006FB2ED /* CountriesProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountriesProvider.swift; sourceTree = "<group>"; };
 		BB3EF5891E6D55E4006FB2ED /* NotificationProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationProvider.swift; sourceTree = "<group>"; };
 		BB3EF58B1E6D672F006FB2ED /* InfoProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoProvider.swift; sourceTree = "<group>"; };
+		BB40EC8A1E7FDDE4001DEA35 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		BB49F94D1E409E16009EE6A0 /* ChatListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
 		BB49F9501E412C26009EE6A0 /* SettingsHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsHeaderView.swift; sourceTree = "<group>"; };
 		BB4ED5BC1E3AB42B005B3487 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
@@ -488,6 +490,7 @@
 				BB104CE41E3F81390082411E /* Country.swift */,
 				BB3EF57C1E696CE4006FB2ED /* Gender.swift */,
 				BB516F021E7C796900A7FB46 /* PushNotification.swift */,
+				BB40EC8A1E7FDDE4001DEA35 /* Event.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1426,6 +1429,7 @@
 				75989FDE1DFB76B600D03586 /* ViewPagerOptions.swift in Sources */,
 				BBD428151E41D02E00DA6E6C /* OtherPersonAboutViewController.swift in Sources */,
 				BB099F041E3EA35F00133794 /* ProfileViewController.swift in Sources */,
+				BB40EC8B1E7FDDE4001DEA35 /* Event.swift in Sources */,
 				BB099F071E3F3AE500133794 /* ProfileImageCollectionViewCell.swift in Sources */,
 				BB104CE51E3F81390082411E /* Country.swift in Sources */,
 				BB4ED5C01E3AB657005B3487 /* MainNavigationViewController.swift in Sources */,

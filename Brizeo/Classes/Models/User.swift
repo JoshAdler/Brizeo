@@ -113,6 +113,12 @@ class User: Mappable {
     
     // helper variables
     
+    var shortName: String? {
+        let displayNameArray = displayName.components(separatedBy: " ")
+        
+        return displayNameArray.first
+    }
+    
     var isCurrent: Bool {
         guard let currentUser = UserProvider.shared.currentUser else {
             print("Error: Can't compare users because the current user is nil")

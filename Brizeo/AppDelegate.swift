@@ -378,6 +378,7 @@ extension AppDelegate {
                 UserProvider.updateUser(user: currentUser, completion: nil)
             }
             
+            // update preferences
             if let preferences = PreferencesProvider.shared.currentUserPreferences {
                 PreferencesProvider.updatePreferences(preferences: preferences, completion: nil)
                 preferences.updateApplozicNotificationMode()
@@ -386,6 +387,9 @@ extension AppDelegate {
                     PreferencesProvider.loadPreferences(for: currentUser.objectId, fromCache: false, completion: nil)
                 }
             }
+            
+            // update facebook events for current user
+            EventsProvider.updateUserEventsIfNeeds()
             
             // keep in mind this is called on a background thread
             // and if you are updating the UI it needs to happen

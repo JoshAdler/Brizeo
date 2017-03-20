@@ -104,12 +104,6 @@ extension LikesViewController: UITableViewDataSource {
             cell.profileLogoImageView.image = nil
         }
         
-        if user.isCurrent {
-            cell.likesView.hideEverything()
-        } else {
-            cell.likesView.operateStatus(status: user.status)
-        }
-        
         return cell
     }
 }
@@ -160,68 +154,23 @@ extension LikesViewController: UITableViewDelegate {
 // MARK: - LikesTableViewCellDelegate
 extension LikesViewController: LikesTableViewCellDelegate {
     
-    func likesCell(cell: LikesTableViewCell, didClickedApprove likerView: LikerView) {
-        showBlackLoader()
+    func likesCell(cell: LikesTableViewCell, didClickedProfile button: UIButton) {
         
+        //TODO: just in case something will be changed
         guard let indexPath = likesTableView.indexPath(for: cell) else {
-            print("No index path for liker user")
             return
         }
         
         let user = users[indexPath.row]
-        
-        showBlackLoader()
-        
-        MatchesProvider.approveMatch(for: user) { (result) in
+        if user.objectId == currentUser.objectId { // show my profile
+            let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
             
-            switch result {
-            case .success(_):
-                
-                self.hideLoader()
-                likerView.operateStatus(status: user.status)
-                
-                if user.status == .isMatched {
-                    Helper.showMatchingCard(with: user, from: self.navigationController!)
-                }
-                
-                break
-            case .failure(let error):
-                
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
-                break
-            default:
-                break
-            }
-        }
-    }
-    
-    func likesCell(cell: LikesTableViewCell, didClickedDecline likerView: LikerView) {
-        showBlackLoader()
-        
-        guard let indexPath = likesTableView.indexPath(for: cell) else {
-            print("No index path for liker user")
-            return
-        }
-        
-        let user = users[indexPath.row]
-        
-        showBlackLoader()
-        
-        MatchesProvider.declineMatch(for: user) { (result) in
+            navigationController?.pushViewController(profileController, animated: true)
+        } else {
+            let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
+            otherPersonProfileController.user = user
             
-            switch result {
-            case .success(_):
-                
-                self.hideLoader()
-                likerView.operateStatus(status: user.status)
-                break
-            case .failure(let error):
-                
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
-                break
-            default:
-                break
-            }
+            navigationController?.pushViewController(otherPersonProfileController, animated: true)
         }
     }
 }

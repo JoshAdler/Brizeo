@@ -418,6 +418,12 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:@"USER_DETAILS_UPDATE_CALL" object:nil];
 }
 
+#pragma mark - NEW METHODS FROM OUTSIDE
+
+-(void)showContacts {
+    [self.chatViewDelegate handleContactsClicksFromCharVC:self];
+}
+
 //==============================================================================================================================================
 #pragma mark - REST UNREAD COUNT + CONVERSATION READ HELPER METHODS
 //==============================================================================================================================================

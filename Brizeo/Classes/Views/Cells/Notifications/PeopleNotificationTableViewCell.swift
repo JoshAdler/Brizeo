@@ -24,10 +24,14 @@ class PeopleNotificationTableViewCell: UITableViewCell {
     // MARK: - Properties
     
     @IBOutlet weak var commentLabel: UILabel!
-    @IBOutlet weak var commentTimeLabel: UILabel!
     @IBOutlet weak var commentUserImage: UIImageView!
-    @IBOutlet weak var likesView: LikerView!
     @IBOutlet weak var viewedView: UIView!
+    @IBOutlet weak var profileButton: UIButton! {
+        didSet {
+            profileButton.setTitle(LocalizableString.Profile.localizedString, for: .normal)
+            profileButton.layer.cornerRadius = 5.0
+        }
+    }
     weak var delegate: NotificationsTableViewCellDelegate?
     
     var isAlreadyReviewed: Bool {
@@ -100,12 +104,8 @@ class PeopleNotificationTableViewCell: UITableViewCell {
         delegate?.notificationCellDidClickedOnImage(cell: self)
     }
     
-    @IBAction func onApproveButtonClicked(_ sender: UIButton) {
-        delegate?.notificationCell(cell: self, didClickedApprove: likesView)
-    }
-    
-    @IBAction func onDeclineButtonClicked(_ sender: UIButton) {
-        delegate?.notificationCell(cell: self, didClickedDecline: likesView)
+    @IBAction func onProfileRightButtonClicked(_ sender: UIButton) {
+        delegate?.notificationCellDidClickedOnProfile(cell: self)
     }
 }
 

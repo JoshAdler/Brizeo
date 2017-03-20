@@ -1491,6 +1491,10 @@
     [self.messagesViewDelegate handleCustomActionFromMsgVC:chatViewController andWithMessage:alMessage];
 }
 
+-(void)handleContactsClicksFromCharVC:(UIViewController *)charViewController {
+    [self navigationRightButtonAction:_navigationRightButton];
+}
+
 //==============================================================================================================================================
 #pragma mark - TABLE SCROLL DELEGATE METHOD
 //==============================================================================================================================================

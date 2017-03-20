@@ -21,8 +21,6 @@ protocol NotificationsTableViewCellDelegate: class {
     
     func notificationCellDidClickedOnProfile(cell: UITableViewCell)
     func notificationCellDidClickedOnImage(cell: UITableViewCell)
-    func notificationCell(cell: UITableViewCell, didClickedApprove likerView: LikerView)
-    func notificationCell(cell: UITableViewCell, didClickedDecline likerView: LikerView)
 }
 
 protocol NotificationsViewControllerDelegate: class {
@@ -202,12 +200,9 @@ extension NotificationsViewController: UITableViewDataSource {
             }
             
             // name/time
-            let displayName = notification.senderUser?.displayName ?? "Somebody"
+            let displayName = notification.senderUser?.shortName ?? "Somebody"
             let time = notification.shortTime ?? ""//?.naturalView ?? ""
             cell.generateText(with: displayName, time: time)
-            
-            // status 
-            cell.likesView.operateStatus(status: notification.senderUser!.status)
             
             // already viewed
             cell.isAlreadyReviewed = notification.isAlreadyViewed
@@ -226,18 +221,12 @@ extension NotificationsViewController: UITableViewDataSource {
             }
             
             // name/time
-            let displayName = notification.senderUser?.displayName ?? "Somebody"
+            let displayName = notification.senderUser?.shortName ?? "Somebody"
             let time = notification.time?.naturalView ?? ""
             cell.generateMatchingText(with: displayName, time: time)
             
-            cell.commentTimeLabel.text = nil
-//            cell.generateText(with: notification.senderUser?.displayName ?? "", "")
-            
             // already viewed
             cell.isAlreadyReviewed = notification.isAlreadyViewed
-            
-            // status
-            cell.likesView.operateStatus(status: notification.senderUser!.status)
             
             return cell
         }
@@ -304,61 +293,6 @@ extension NotificationsViewController: NotificationsTableViewCellDelegate {
             otherPersonProfileController.userId = senderUser.objectId
             
             Helper.currentTabNavigationController()?.pushViewController(otherPersonProfileController, animated: true)
-        }
-    }
-    
-    func notificationCell(cell: UITableViewCell, didClickedApprove likerView: LikerView) {
-        showBlackLoader()
-        
-        guard let indexPath = tableView.indexPath(for: cell) else {
-            print("No index path for notification")
-            return
-        }
-        
-        let notification = notifications![indexPath.row]
-        
-        guard let sender = notification.senderUser else {
-            return
-        }
-        
-        approveNotification(with: sender) {
-            
-            //check every user
-            for notification in self.notifications! {
-                if notification.senderUser != nil, notification.senderUser!.objectId == sender.objectId {
-                    notification.senderUser!.status = sender.status
-                }
-            }
-            
-            self.tableView.reloadData()
-        }
-    }
-    
-    func notificationCell(cell: UITableViewCell, didClickedDecline likerView: LikerView) {
-        
-        showBlackLoader()
-        
-        guard let indexPath = tableView.indexPath(for: cell) else {
-            print("No index path for notification")
-            return
-        }
-        
-        let notification = notifications![indexPath.row]
-        
-        guard let sender = notification.senderUser else {
-            return
-        }
-        
-        declineNotification(with: sender) {
-            
-            //check every user
-            for notification in self.notifications! {
-                if notification.senderUser != nil, notification.senderUser!.objectId == sender.objectId {
-                    notification.senderUser!.status = sender.status
-                }
-            }
-            
-            self.tableView.reloadData()
         }
     }
 }

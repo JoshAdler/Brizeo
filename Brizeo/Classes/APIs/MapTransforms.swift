@@ -33,6 +33,29 @@ class LastActiveDateTransform: TransformType {
     }
 }
 
+class FacebookDateTransform: TransformType {
+    public typealias Object = Date
+    public typealias JSON = String
+    
+    public init() {}
+    
+    open func transformFromJSON(_ value: Any?) -> Date? {
+        if let timeStr = value as? String {
+            return Helper.convertFacebookStringToDate(string: timeStr)
+        }
+        
+        return nil
+    }
+    
+    open func transformToJSON(_ value: Date?) -> String? {
+        if let date = value {
+            return date.toLongString
+        }
+        
+        return nil
+    }
+}
+
 class CountriesTransform: TransformType {
     public typealias Object = Array<Country>
     public typealias JSON = Array<String>

@@ -55,6 +55,9 @@ enum APIService {
     
     // info
     case notifyAdminAboutDownloads(userId: String, count: Int)
+    
+    // events
+    case saveEvents(events: [Event])
 }
 
 extension APIService: TargetType {
@@ -112,12 +115,14 @@ extension APIService: TargetType {
             return "/approvematchforuser/\(userId)"
         case .updateNotification(let notification):
             return "/notifications/\(notification.objectId)"
+        case .saveEvents(_):
+            return "/events/"
         }
     }
 
     var method: Moya.Method {
         switch self {
-        case .createNewUser(_), .reportMoment(_, _), .reportUser(_, _), .notifyAdminAboutDownloads(_, _), .approveMatch(_, _), .updateUserFile(_, _, _, _):
+        case .createNewUser(_), .reportMoment(_, _), .reportUser(_, _), .notifyAdminAboutDownloads(_, _), .approveMatch(_, _), .updateUserFile(_, _, _, _), .saveEvents(_):
             return .post
         case .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .createNewMoment(_), .likeMoment(_, _), .updateMoment(_), .updateNotification(_):
             return .put
@@ -156,6 +161,15 @@ extension APIService: TargetType {
         case .updateNotification(let notification):
             let dict = ["newnotification": notification.toJSON()]
             return dict
+        case .saveEvents(let events):
+            var eventsDict = [[String: Any]]()
+            
+            for event in events {
+                eventsDict.append(event.toJSON())
+            }
+            
+            let finalDict = ["newevents": eventsDict]
+            return finalDict
         default:
             return nil
         }
@@ -163,7 +177,7 @@ extension APIService: TargetType {
     
     var parameterEncoding: ParameterEncoding {
         switch self {
-        case .createNewUser(_), .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .deleteCountryForUser(_, _), .createNewMoment(_), .updateMoment(_), .updateNotification(_):
+        case .createNewUser(_), .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .deleteCountryForUser(_, _), .createNewMoment(_), .updateMoment(_), .updateNotification(_), .saveEvents(_):
             return JSONEncoding.default
         default:
             return URLEncoding.default

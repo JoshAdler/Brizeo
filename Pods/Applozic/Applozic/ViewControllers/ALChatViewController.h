@@ -25,6 +25,7 @@
 
 @optional
 -(void)handleCustomActionFromChatVC:(UIViewController *)chatViewController andWithMessage:(ALMessage *)alMessage;
+-(void)handleContactsClicksFromCharVC:(UIViewController *)charViewController;
 
 @end
 
@@ -50,6 +51,11 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewTop2Constraint;
 
 @property (strong, nonatomic) id <ALChatViewControllerDelegate> chatViewDelegate;
+
+// new method
+
+-(void)showContacts;
+// -----
 
 -(void)fetchAndRefresh;
 -(void)fetchAndRefresh:(BOOL)flag;

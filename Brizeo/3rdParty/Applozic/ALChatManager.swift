@@ -304,7 +304,7 @@ func ALDefaultChatViewSettings ()
      ALApplozicSettings.setColorForNavigation(UIColor.white)//UIColor(red:66.0/255, green:173.0/255, blue:247.0/255, alpha:1))
      ALApplozicSettings.setColorForNavigationItem(HexColor("1f4ba5"))//UIColor.white)
      ALApplozicSettings.hideRefreshButton(false)
-     ALUserDefaultsHandler.setNavigationRightButtonHidden(true)
+     ALUserDefaultsHandler.setNavigationRightButtonHidden(false)
      ALUserDefaultsHandler.setBottomTabBarHidden(false)
      ALApplozicSettings.setTitleForConversationScreen("Chats")
      ALApplozicSettings.setCustomNavRightButtonMsgVC(false)               /*  SET VISIBILITY FOR REFRESH BUTTON (COMES FROM TOP IN MSG VC)   */

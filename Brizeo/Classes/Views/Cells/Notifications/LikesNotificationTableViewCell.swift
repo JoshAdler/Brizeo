@@ -17,9 +17,9 @@ class LikesNotificationTableViewCell: UITableViewCell {
         static let mainColor = UIColor.black
         static let timeColor = HexColor("a2a2a2")
         
-        static let nameFontSize: CGFloat = 12.0
-        static let defaultFontSize: CGFloat = 12.0
-        static let timeFontSize: CGFloat = 12.0
+        static let nameFontSize: CGFloat = 14.0
+        static let defaultFontSize: CGFloat = 14.0
+        static let timeFontSize: CGFloat = 14.0
     }
     
     // MARK: - Properties
@@ -27,8 +27,13 @@ class LikesNotificationTableViewCell: UITableViewCell {
     @IBOutlet weak var likeUserImage: UIImageView!
     @IBOutlet weak var likedMomentImage: UIImageView!
     @IBOutlet weak var likeTextLabel: UILabel!
-    @IBOutlet weak var likesView: LikerView!
     @IBOutlet weak var viewedView: UIView!
+    @IBOutlet weak var profileButton: UIButton! {
+        didSet {
+            profileButton.setTitle(LocalizableString.Profile.localizedString, for: .normal)
+            profileButton.layer.cornerRadius = 5.0
+        }
+    }
     weak var delegate: NotificationsTableViewCellDelegate?
     
     var isAlreadyReviewed: Bool {
@@ -84,11 +89,7 @@ class LikesNotificationTableViewCell: UITableViewCell {
         delegate?.notificationCellDidClickedOnImage(cell: self)
     }
     
-    @IBAction func onApproveButtonClicked(_ sender: UIButton) {
-        delegate?.notificationCell(cell: self, didClickedApprove: likesView)
-    }
-    
-    @IBAction func onDeclineButtonClicked(_ sender: UIButton) {
-        delegate?.notificationCell(cell: self, didClickedDecline: likesView)
+    @IBAction func onProfileRightButtonClicked(_ sender: UIButton) {
+        delegate?.notificationCellDidClickedOnProfile(cell: self)
     }
 }

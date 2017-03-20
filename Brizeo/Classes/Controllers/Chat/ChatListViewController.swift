@@ -15,6 +15,7 @@ class ChatListViewController: BasicViewController {
     // MARK: - Properties
     
     @IBOutlet weak var containerView: UIView!
+    var chatController: ALMessagesViewController?
     
     // MARK: - Controller lifecycle
     
@@ -28,10 +29,14 @@ class ChatListViewController: BasicViewController {
         Helper.mainTabBarController()?.tabBar.isHidden = false
         
         let storyboard = UIStoryboard(name: "Applozic", bundle: Bundle(for: ALChatViewController.self))
-        let chatController = storyboard.instantiateViewController(withIdentifier: "ALViewController")
+        chatController = storyboard.instantiateViewController(withIdentifier: "ALViewController") as? ALMessagesViewController
         
-        showViewControllerInContainerView(chatController)
+        showViewControllerInContainerView(chatController!)
     }
+    
+//    override func onRightButtonClicked(sender: UIBarButtonItem) {
+//        chatController?.handleContactsClicks(fromCharVC: nil)
+//    }
     
     // MARK: - Private methods
     

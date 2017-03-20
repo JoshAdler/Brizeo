@@ -169,6 +169,12 @@ class Helper: NSObject {
         return dateFormatter.date(from: string)
     }
     
+    class func convertFacebookStringToDate(string: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZ"
+        return dateFormatter.date(from: string)
+    }
+    
     class func minutes(since date: Date) -> String {
         var minutes = (Date() as NSDate).minute(since: date)
         

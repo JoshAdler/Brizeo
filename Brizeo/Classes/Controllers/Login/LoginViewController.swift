@@ -105,6 +105,9 @@ class LoginViewController: UIViewController {
         
         // save token for push notifications
         NotificationProvider.updateCurrentUserToken()
+        
+        // update facebook events for current user
+        EventsProvider.updateUserEventsIfNeeds()
     }
     
     fileprivate func signUpWithFacebook() {
