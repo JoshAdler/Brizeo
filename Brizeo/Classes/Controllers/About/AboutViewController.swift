@@ -345,6 +345,10 @@ extension AboutViewController: UITableViewDelegate {
             return
         }
         
+        if section != .work || section != .education {
+            return
+        }
+        
         let controller: OptionsViewController = Helper.controllerFromStoryboard(controllerId: "OptionsViewController")!
         
         switch section {
