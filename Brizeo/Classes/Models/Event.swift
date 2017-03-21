@@ -22,8 +22,8 @@ class Event: NSObject, Mappable {
         case previewImageLink = "previewImageLink"
         case attendingsCount = "attendingsCount"
         case startDate = "startDate"
-        case ownerUser = "ownerUser"
-        case ownerId = "ownerId"
+        case ownerUser = "userid"
+        case ownerId = "ownerUser"
     }
     
     // MARK: - Properties

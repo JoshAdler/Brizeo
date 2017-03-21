@@ -63,6 +63,7 @@ class User: Mappable {
         case status = "status"
         case otherProfileImages = "otherProfileImages"
         case deviceToken = "deviceToken"
+        case thumbnailImages = "thumbnailImages"
     }
     
     // MARK: - Properties
@@ -105,7 +106,8 @@ class User: Mappable {
     // files
     var profileImage: FileObjectInfo?
     var uploadFiles: [FileObject]?
-
+    
+    var thumbnailImages: [String]?
     var profileUploadImage: UIImage?
     
     // match status
@@ -292,7 +294,6 @@ class User: Mappable {
         numberOfMatches <- map[JSONKeys.numberOfMatches.rawValue]
         lastActiveTime <- (map[JSONKeys.lastActiveTime.rawValue], LastActiveDateTransform())
 
-        
         // invited info
         invitedByUserId <- map[JSONKeys.invitedByUserId.rawValue]
         invitedByUserName <- map[JSONKeys.invitedByUserName.rawValue]
@@ -304,26 +305,35 @@ class User: Mappable {
         // files
         profileImage <- (map[JSONKeys.profileImage.rawValue], FileObjectInfoTransform())
         uploadFiles <- (map[JSONKeys.otherProfileImages.rawValue], FileObjectTransform())
-        //        if let profileDict = JSON[JSONKeys.profileImage.rawValue] as? [String: String] {
-        //            profileImage = FileObjectInfo(with: profileDict)
-        //        }
-        
-//        if let profileDict = JSON[JSONKeys.profileImage.rawValue] as? String {
-//            profileImage = FileObjectInfo(url: profileDict)
-//        }
-//        
-//        if let uploadedFilesDict = JSON[JSONKeys.uploadImages.rawValue] as? [String: [String: Any]] {
-//            for (key, value) in uploadedFilesDict {
-//                let file = FileObject(with: value)
-//                file.sortingIndex = Int(key) ?? 0
-//                
-//                uploadFiles?.append(file)
-//            }
-//        }
+        thumbnailImages <- map[JSONKeys.thumbnailImages.rawValue]
         
         status <- (map[JSONKeys.status.rawValue], EnumTransform<MatchingStatus>())
         deviceToken <- map[JSONKeys.deviceToken.rawValue]
         
+        // operate already created upload files
+        if let uploadFiles = uploadFiles, let thumbnailImages = thumbnailImages {
+            
+            var files = [FileObject]()
+            
+            for i in 0 ..< uploadFiles.count {
+                
+                let url = thumbnailImages[i]
+                
+                if url.numberOfCharactersWithoutSpaces() == 0 {
+                     files.append(uploadFiles[i])
+                } else {
+                    
+                    let newFile = FileObject(
+                        thumbnailImage: FileObjectInfo(urlStr: thumbnailImages[i]),
+                        videoInfo: FileObjectInfo(urlStr: uploadFiles[i].mainUrl!)
+                    )
+                    files.append(newFile)
+                }
+            }
+            
+            self.uploadFiles = files
+            self.thumbnailImages = nil
+        }
     }
     
     // MARK: - Public methods

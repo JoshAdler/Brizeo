@@ -998,6 +998,7 @@
                 //Updating view, popping to MessageList View
                 NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
                 
+                BOOL isOperated = false;
                 for (UIViewController *aViewController in allViewControllers)
                 {
                     if ([aViewController isKindOfClass:[ALMessagesViewController class]])
@@ -1005,7 +1006,12 @@
                         ALMessagesViewController * messageVC = (ALMessagesViewController *)aViewController;
                         [messageVC insertChannelMessage:alChannel.key];
                         [self.navigationController popToViewController:aViewController animated:YES];
+                        isOperated = true;
                     }
+                }
+                
+                if (isOperated == false) {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"GoToMessages" object:nil userInfo: [NSDictionary dictionaryWithObject:alChannel.key forKey:@"key"]];
                 }
             }
             else
@@ -1027,6 +1033,7 @@
                  //Updating view, popping to MessageList View
                  NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
                  
+                 BOOL isOperated = false;
                  for (UIViewController *aViewController in allViewControllers)
                  {
                      if ([aViewController isKindOfClass:[ALMessagesViewController class]])
@@ -1034,7 +1041,19 @@
                          ALMessagesViewController * messageVC = (ALMessagesViewController *)aViewController;
                          [messageVC insertChannelMessage:alChannel.key];
                          [self.navigationController popToViewController:aViewController animated:YES];
+                         isOperated = true;
                      }
+//                     
+//                     if ([aViewController isKindOfClass:[ChatListViewController class]])
+//                     {
+//                         ALMessagesViewController * messageVC = (ChatListViewController *)aViewController.chatController;
+//                         [messageVC insertChannelMessage:alChannel.key];
+//                         [self.navigationController popToViewController:aViewController animated:YES];
+//                     }
+                 }
+                 
+                 if (isOperated == false) {
+                     [[NSNotificationCenter defaultCenter] postNotificationName:@"GoToMessages" object:nil userInfo: [NSDictionary dictionaryWithObject:alChannel.key forKey:@"key"]];
                  }
              }
              else

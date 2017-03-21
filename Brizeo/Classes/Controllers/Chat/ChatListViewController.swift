@@ -21,6 +21,8 @@ class ChatListViewController: BasicViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(operateApplozicChat(notification:)), name: NSNotification.Name(rawValue: "GoToMessages"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -34,9 +36,19 @@ class ChatListViewController: BasicViewController {
         showViewControllerInContainerView(chatController!)
     }
     
-//    override func onRightButtonClicked(sender: UIBarButtonItem) {
-//        chatController?.handleContactsClicks(fromCharVC: nil)
-//    }
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    // MARK: - Public methods
+    
+    func operateApplozicChat(notification: NSNotification) {
+        if let dict = notification.userInfo, let key = dict["key"] as? NSNumber {
+            
+            chatController!.insertChannelMessage(key)
+            _ = navigationController?.popToRootViewController(animated: true)
+        }
+    }
     
     // MARK: - Private methods
     
