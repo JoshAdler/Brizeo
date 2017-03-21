@@ -292,8 +292,17 @@ class ProfileViewController: UIViewController {
                 welf.hideLoader()
                 
                 switch(result) {
-                case .success(_):
-                    print("wow")
+                case .success(let user):
+                    welf.user = user
+                    
+                    // update uploaded images
+                    welf.imagesCollectionView.reloadData()
+                    
+                    // update user profile image
+                    if welf.user.hasProfileImage {
+                        welf.profileImageView.sd_setImage(with: welf.user.profileUrl)
+                    }
+                    
                     break
                 case .failure(let error):
                     welf.presentErrorAlert(message: error.localizedDescription) {

@@ -66,7 +66,7 @@
                     </constraints>
                 </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G4F-Qa-MoG">
-                    <rect key="frame" x="25" y="556.5" width="277.5" height="30.5"/>
+                    <rect key="frame" x="25" y="554.5" width="277.5" height="30.5"/>
                     <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="24"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -84,13 +84,13 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r5b-2n-hGM">
-                    <rect key="frame" x="340.5" y="561" width="9.5" height="23"/>
+                    <rect key="frame" x="340.5" y="559" width="9.5" height="23"/>
                     <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_social" translatesAutoresizingMaskIntoConstraints="NO" id="7ls-zJ-Tqm">
-                    <rect key="frame" x="312.5" y="566" width="20" height="16"/>
+                    <rect key="frame" x="312.5" y="564" width="20" height="16"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HHU-ZZ-9gF">
                     <rect key="frame" x="350" y="567" width="25" height="100"/>
@@ -112,7 +112,7 @@
                 <constraint firstItem="WLC-rv-DVa" firstAttribute="bottom" secondItem="UUT-1D-ilu" secondAttribute="bottom" id="IrZ-l4-apn"/>
                 <constraint firstItem="UUT-1D-ilu" firstAttribute="width" secondItem="oA7-kb-g7B" secondAttribute="width" id="KBN-e8-MaM"/>
                 <constraint firstItem="G4F-Qa-MoG" firstAttribute="leading" secondItem="7ja-H7-VEO" secondAttribute="trailing" id="LPh-az-9qU"/>
-                <constraint firstItem="G4F-Qa-MoG" firstAttribute="top" secondItem="WLC-rv-DVa" secondAttribute="bottom" constant="11" id="LZi-Yg-yf9"/>
+                <constraint firstItem="G4F-Qa-MoG" firstAttribute="top" secondItem="WLC-rv-DVa" secondAttribute="bottom" constant="9" id="LZi-Yg-yf9"/>
                 <constraint firstItem="r5b-2n-hGM" firstAttribute="centerY" secondItem="G4F-Qa-MoG" secondAttribute="centerY" id="NwO-un-khk"/>
                 <constraint firstAttribute="trailing" secondItem="HHU-ZZ-9gF" secondAttribute="trailing" id="OGm-2H-z1G"/>
                 <constraint firstItem="WLC-rv-DVa" firstAttribute="height" secondItem="UUT-1D-ilu" secondAttribute="height" multiplier="105/842" id="PDn-l5-sdo"/>

@@ -219,7 +219,7 @@ class UserProvider: NSObject {
         }
     }
     
-    class func updateUserFile(file: FileObject?, type: UpdateFileType, oldURL: String?, completion: @escaping EmptyCompletion) {
+    class func updateUserFile(file: FileObject?, type: UpdateFileType, oldURL: String?, completion: @escaping UserCompletion) {
         
         guard let currentUser = UserProvider.shared.currentUser else {
             print("Error: Can't like moment without current user")
@@ -238,9 +238,10 @@ class UserProvider: NSObject {
                 }
                 
                 do {
-                    print("wow")
-                    //let user = try response.mapObject(User.self)
-                    completion(.success())
+                    let user = try response.mapObject(User.self)
+                    UserProvider.shared.currentUser = user
+                    
+                    completion(.success(user))
                 }
                 catch (let error) {
                     completion(.failure(APIError(error: error)))

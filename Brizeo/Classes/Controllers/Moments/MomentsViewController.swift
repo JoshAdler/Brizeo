@@ -449,7 +449,6 @@ extension MomentsViewController: UITableViewDataSource {
             })
         }
         
-        
         return cell
     }
 }
@@ -525,7 +524,6 @@ extension MomentsViewController: MomentTableViewCellDelegate {
         let likersController: LikesViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.likesControllerId)!
         likersController.moment = moment
         
-        //Helper.initialNavigationController().pushViewController(likersController, animated: true)
         navigationController?.pushViewController(likersController, animated: true)
     }
     
