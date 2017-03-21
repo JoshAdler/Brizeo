@@ -345,7 +345,7 @@ extension AboutViewController: UITableViewDelegate {
             return
         }
         
-        if section != .work || section != .education {
+        if section != .work && section != .education {
             return
         }
         
