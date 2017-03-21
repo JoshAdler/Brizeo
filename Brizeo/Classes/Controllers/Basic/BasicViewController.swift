@@ -25,6 +25,9 @@ class BasicViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // code below is moved here from "viewWillAppear"
+        showLogoIfNeeds()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -42,8 +45,6 @@ class BasicViewController: UIViewController {
                 navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_search").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(onRightButtonClicked(sender:)))
             }
         }
-        
-        showLogoIfNeeds()
     }
     
     // MARK: - Public methods
