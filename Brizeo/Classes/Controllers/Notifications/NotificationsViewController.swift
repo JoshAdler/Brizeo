@@ -201,7 +201,7 @@ extension NotificationsViewController: UITableViewDataSource {
             
             // name/time
             let displayName = notification.senderUser?.shortName ?? "Somebody"
-            let time = notification.shortTime ?? ""//?.naturalView ?? ""
+            let time = notification.time?.naturalView ?? ""//notification.shortTime ?? ""
             cell.generateText(with: displayName, time: time)
             
             // already viewed

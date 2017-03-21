@@ -110,7 +110,7 @@ extension APIService: TargetType {
         case .approveMatch(let approverId, let userId), .declineMatch(let approverId, let userId):
             return "/match/\(approverId)/\(userId)"
         case .getUsersForMatch(let userId):
-            return "/approveuserformatch/\(userId)"
+            return "/likemoments/users/-KfhqYKTIhSt0QUQU6-0/-KfSVcBd9cmaPvPAoj-g"//"/approveuserformatch/\(userId)"
         case .getMatchesForUser(let userId):
             return "/approvematchforuser/\(userId)"
         case .updateNotification(let notification):

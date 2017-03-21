@@ -332,12 +332,12 @@ class UserProvider: NSObject {
                     var year1: Int? = nil
                     var year2: Int? = nil
                     
-                    if let year1Dict = dict1["year"] as? [String: Any], let _year1 = year1Dict["name"] as? Int {
-                        year1 = _year1
+                    if let year1Dict = dict1["year"] as? [String: Any], let _year1 = year1Dict["name"] as? String {
+                        year1 = Int(_year1) ?? 0
                     }
                     
-                    if let year2Dict = dict2["year"] as? [String: Any], let _year2 = year2Dict["name"] as? Int {
-                        year2 = _year2
+                    if let year2Dict = dict2["year"] as? [String: Any], let _year2 = year2Dict["name"] as? String {
+                        year2 = Int(_year2) ?? 0
                     }
                     
                     if year1 != nil && year2 != nil {
