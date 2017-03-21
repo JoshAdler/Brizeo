@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Brizeo/Classes/APIs/UserProvider.swift"
-            timestampString = "511800280.370559"
+            timestampString = "511819425.578879"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "240"
-            endingLineNumber = "240"
+            startingLineNumber = "242"
+            endingLineNumber = "242"
             landmarkName = "updateUserFile(file:type:oldURL:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -33,38 +33,6 @@
             endingLineNumber = "314"
             landmarkName = "mapping(map:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Brizeo.User.mapping (map : ObjectMapper.Map) -&gt; ()"
-                  moduleName = "Brizeo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Brizeo/Classes/Models/User.swift"
-                  timestampString = "511802214.483577"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "314"
-                  endingLineNumber = "314"
-                  offsetFromSymbolStart = "4596">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Brizeo.User.mapping (map : ObjectMapper.Map) -&gt; ()"
-                  moduleName = "Brizeo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Brizeo/Classes/Models/User.swift"
-                  timestampString = "511802214.485063"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "314"
-                  endingLineNumber = "314"
-                  offsetFromSymbolStart = "4636">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -23,6 +23,8 @@ class AboutViewController: UIViewController {
     
     enum Sections: Int {
         case passions = 0
+        case work
+        case education
         case introduceYourself
         
         var title: String? {
@@ -31,6 +33,10 @@ class AboutViewController: UIViewController {
                 return LocalizableString.SelectInterests.localizedString.uppercased()
             case .introduceYourself:
                 return LocalizableString.IntroduceYourself.localizedString.uppercased()
+            case .work:
+                return LocalizableString.Work.localizedString.uppercased()
+            case .education:
+                return LocalizableString.Education.localizedString.uppercased()
             }
         }
         
@@ -56,7 +62,10 @@ class AboutViewController: UIViewController {
                 } else {
                     return 104.0
                 }
+            case .work, .education:
+                return 55.0
             }
+            
         }
         
         func cellId(for row: Int) -> String {
@@ -73,6 +82,8 @@ class AboutViewController: UIViewController {
                 } else {
                     return AboutSaveTableViewCell.identifier
                 }
+            case .work, .education:
+                return SettingsInvitationCell.identifier
             }
         }
     }
@@ -99,8 +110,8 @@ class AboutViewController: UIViewController {
         
         configureKeyboardBehaviour()
         
-        // hide keyboard on click anywhere
-        hideKeyboardWhenTappedAround()
+//        // hide keyboard on click anywhere
+//        hideKeyboardWhenTappedAround()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -121,13 +132,13 @@ class AboutViewController: UIViewController {
         keyboard
             .on(event: .willHide, do: { (options) in
                 UIView.animate(withDuration: options.animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(options.animationCurve.rawValue)), animations: {
-//                    self.passionsTableView.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: self.passionsTableView.frame.size)
+
                     self.passionsTableView.contentSize = CGSize(width: self.passionsTableView.contentSize.width, height: self.passionsTableView.contentSize.height - options.endFrame.height)
                 }, completion: nil)
             })
             .on(event: .willShow, do: { (options) in
                 UIView.animate(withDuration: options.animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(options.animationCurve.rawValue)), animations: {
-                    //self.passionsTableView.frame = CGRect(origin: CGPoint(x: 0, y: -options.endFrame.height), size: self.passionsTableView.frame.size)
+                    
                     self.passionsTableView.contentSize = CGSize(width: self.passionsTableView.contentSize.width, height: self.passionsTableView.contentSize.height + options.endFrame.height)
                 }, completion: nil)
             })
@@ -222,7 +233,7 @@ extension AboutViewController: UITextViewDelegate {}
 extension AboutViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 4
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -235,6 +246,7 @@ extension AboutViewController: UITableViewDataSource {
             return 2
         case .passions:
             return passions?.count ?? 0 + 1
+        default: return 1
         }
     }
     
@@ -280,6 +292,18 @@ extension AboutViewController: UITableViewDataSource {
                 
                 return typeCell
             }
+        case .work:
+            let typeCell = cell as! SettingsInvitationCell
+            
+            typeCell.titleLabel.text = user.workInfo ?? "Not set."
+            
+            return typeCell
+        case .education:
+            let typeCell = cell as! SettingsInvitationCell
+            
+            typeCell.titleLabel.text = user.studyInfo ?? "Not set."
+            
+            return typeCell
         }
     }
 }
@@ -312,6 +336,30 @@ extension AboutViewController: UITableViewDelegate {
         headerView.titleLabel.text = section.title
         headerView.titleLabel.textColor = HexColor("5f5f5f")!
         return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        guard let section = Sections(rawValue: indexPath.section) else {
+            return
+        }
+        
+        let controller: OptionsViewController = Helper.controllerFromStoryboard(controllerId: "OptionsViewController")!
+        
+        switch section {
+        case .work:
+            controller.type = .work
+            break
+        case .education:
+            controller.type = .education
+            break
+        default:
+            break
+        }
+        
+        controller.user = user
+        Helper.currentTabNavigationController()?.pushViewController(controller, animated: true)
     }
 }
 

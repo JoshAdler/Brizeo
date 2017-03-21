@@ -131,6 +131,7 @@
 		BB5186251E4B5BA8001C749E /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5186241E4B5BA8001C749E /* ProfileView.swift */; };
 		BB5186271E4B5C89001C749E /* ProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB5186261E4B5C89001C749E /* ProfileView.xib */; };
 		BB64089B1E42948600C4D5F4 /* SpacingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB64089A1E42948600C4D5F4 /* SpacingTextField.swift */; };
+		BB7873BC1E81B50600F2C8C8 /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7873BB1E81B50600F2C8C8 /* OptionsViewController.swift */; };
 		BB7AD25F1E48BC2A00502AE2 /* LikesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7AD25E1E48BC2A00502AE2 /* LikesViewController.swift */; };
 		BB7AD2611E48C33500502AE2 /* LikerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7AD2601E48C33500502AE2 /* LikerView.swift */; };
 		BB7AD2641E48C3CC00502AE2 /* LikesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB7AD2631E48C3CC00502AE2 /* LikesTableViewCell.swift */; };
@@ -325,6 +326,7 @@
 		BB5186241E4B5BA8001C749E /* ProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		BB5186261E4B5C89001C749E /* ProfileView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProfileView.xib; sourceTree = "<group>"; };
 		BB64089A1E42948600C4D5F4 /* SpacingTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpacingTextField.swift; sourceTree = "<group>"; };
+		BB7873BB1E81B50600F2C8C8 /* OptionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
 		BB7AD25E1E48BC2A00502AE2 /* LikesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikesViewController.swift; sourceTree = "<group>"; };
 		BB7AD2601E48C33500502AE2 /* LikerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikerView.swift; sourceTree = "<group>"; };
 		BB7AD2631E48C3CC00502AE2 /* LikesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikesTableViewCell.swift; sourceTree = "<group>"; };
@@ -503,6 +505,7 @@
 				BBD428111E41CF4300DA6E6C /* OtherPerson */,
 				BBD428061E41C83500DA6E6C /* Media */,
 				BB49F94F1E40D414009EE6A0 /* SearchMatches */,
+				BB7873BA1E81B4DF00F2C8C8 /* Options */,
 				BB1FB6C91E3FEC20008F2614 /* Moments */,
 				BB104CEC1E3F889D0082411E /* UserMatches */,
 				BB104CE11E3F7F120082411E /* Trips */,
@@ -985,6 +988,14 @@
 			path = XIBs;
 			sourceTree = "<group>";
 		};
+		BB7873BA1E81B4DF00F2C8C8 /* Options */ = {
+			isa = PBXGroup;
+			children = (
+				BB7873BB1E81B50600F2C8C8 /* OptionsViewController.swift */,
+			);
+			name = Options;
+			sourceTree = "<group>";
+		};
 		BB7AD25D1E48BC2A00502AE2 /* Likes */ = {
 			isa = PBXGroup;
 			children = (
@@ -1432,6 +1443,7 @@
 				BB40EC8B1E7FDDE4001DEA35 /* Event.swift in Sources */,
 				BB099F071E3F3AE500133794 /* ProfileImageCollectionViewCell.swift in Sources */,
 				BB104CE51E3F81390082411E /* Country.swift in Sources */,
+				BB7873BC1E81B50600F2C8C8 /* OptionsViewController.swift in Sources */,
 				BB4ED5C01E3AB657005B3487 /* MainNavigationViewController.swift in Sources */,
 				BBD428191E41DDFD00DA6E6C /* OtherPersonAboutInviteTableViewCell.swift in Sources */,
 				BBD428101E41CCC400DA6E6C /* MediaViewController.swift in Sources */,

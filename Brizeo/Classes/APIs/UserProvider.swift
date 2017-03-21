@@ -33,6 +33,8 @@ class UserProvider: NSObject {
         static let parameters = ["fields" : "id, email, first_name, last_name, name, birthday, gender, work, education, picture.width(1000).height(1000), albums{photos.height(1000){images},name}"]
         static let eventParameters = ["fields" : "events.limit(300){name,description,cover,attending_count,rsvp_status,start_time,place}"]
         static let shortParameters = ["fields" : "work, education"]
+        static let workParameters = ["fields" : "work"]
+        static let educationParameters = ["fields" : "education"]
     }
 
     typealias UserCompletion = (Result<User>) -> Void
@@ -95,7 +97,7 @@ class UserProvider: NSObject {
                     let user = try response.mapObject(User.self)
                     
                     shared.currentUser = user
-                    updateUsersInfo()
+                    //updateUsersInfo()
                     
                     completion?(.success(user))
                     
@@ -254,6 +256,62 @@ class UserProvider: NSObject {
         }
     }
     
+    class func loadEducationPlaces(completion: @escaping (Result<[String]>) -> Void) {
+        
+        guard UserProvider.shared.currentUser != nil else {
+            return
+        }
+        
+        guard isUserLoggedInFacebook() else {
+            return
+        }
+        
+        // try to fetch users' education info
+        FBSDKGraphRequest(graphPath: "me", parameters: FacebookConstants.educationParameters).start { (connection, result, error) in
+            
+            guard error == nil else {
+                completion(.failure(APIError(error: error!)))
+                return
+            }
+            
+            guard let result = result as? [String: Any] else {
+                completion(.failure(APIError(code: 0, message: "No education places.")))
+                return
+            }
+            
+            let educationPlaces = parseAllEducationHistory(from: result)
+            completion(.success(educationPlaces))
+        }
+    }
+    
+    class func loadWorkPlaces(completion: @escaping (Result<[String]>) -> Void) {
+        
+        guard UserProvider.shared.currentUser != nil else {
+            return
+        }
+        
+        guard isUserLoggedInFacebook() else {
+            return
+        }
+        
+        // try to fetch users' work info
+        FBSDKGraphRequest(graphPath: "me", parameters: FacebookConstants.workParameters).start { (connection, result, error) in
+            
+            guard error == nil else {
+                completion(.failure(APIError(error: error!)))
+                return
+            }
+            
+            guard let result = result as? [String: Any] else {
+                completion(.failure(APIError(code: 0, message: "No work places.")))
+                return
+            }
+            
+            let workPlaces = parseAllWorkHistory(from: result)
+            completion(.success(workPlaces))
+        }
+    }
+    
     class func getUserWithStatus(for searchedUserId: String, completion: @escaping UserCompletion) {
         
         guard let currentUser = UserProvider.shared.currentUser else {
@@ -359,6 +417,70 @@ class UserProvider: NSObject {
         }
         
         return educationInfo
+    }
+    
+    fileprivate class func parseAllEducationHistory(from dict: [String: Any]) -> [String] {
+        
+        var educationPlaces = [String]()
+        
+        if let educationDataArray = dict["education"] as? [[String: Any]] {
+            
+            for educationDict in educationDataArray {
+                var educationInfo = ""
+                
+                // position
+                if let postionDict = educationDict["position"] as? [String: Any], let  position = postionDict["name"] as? String {
+                    educationInfo = position
+                }
+                
+                // employer
+                if let employerDict = educationDict["employer"] as? [String: Any], let employer = employerDict["name"] as? String {
+                    if educationInfo.numberOfCharactersWithoutSpaces() > 0 {
+                        educationInfo += " at \(employer)"
+                    } else {
+                        educationInfo = employer
+                    }
+                }
+                
+                if educationInfo.numberOfCharactersWithoutSpaces() > 0 {
+                    educationPlaces.append(educationInfo)
+                }
+            }
+        }
+        
+        return educationPlaces
+    }
+    
+    fileprivate class func parseAllWorkHistory(from dict: [String: Any]) -> [String] {
+        
+        var workPlaces = [String]()
+        
+        if let workDataArray = dict["work"] as? [[String: Any]] {
+            
+            for workDict in workDataArray {
+                var workInfo = ""
+                
+                // position
+                if let postionDict = workDict["position"] as? [String: Any], let  position = postionDict["name"] as? String {
+                    workInfo = position
+                }
+                
+                // employer
+                if let employerDict = workDict["employer"] as? [String: Any], let employer = employerDict["name"] as? String {
+                    if workInfo.numberOfCharactersWithoutSpaces() > 0 {
+                        workInfo += " at \(employer)"
+                    } else {
+                        workInfo = employer
+                    }
+                }
+                
+                if workInfo.numberOfCharactersWithoutSpaces() > 0 {
+                    workPlaces.append(workInfo)
+                }
+            }
+        }
+        
+        return workPlaces
     }
     
     fileprivate class func parseWorkHistory(from dict: [String: Any]) -> String? {

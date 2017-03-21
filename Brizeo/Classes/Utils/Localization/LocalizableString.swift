@@ -195,6 +195,8 @@ enum LocalizableString: String {
     case SearchDistance = "Search distance:"
     case SelectInterests = "Select your primary passions:"
     case IntroduceYourself = "INTRODUCE YOURSELF:"
+    case Education = "SELECT YOUR EDUCATION:"
+    case Work = "SELECT YOUR WORK:"
     case Notification = "Notifications"
     case SaySomethingAboutYourself = "Say something about yourself..."
     case TypeHere = "Please write a caption (required)."
