@@ -428,17 +428,15 @@ class UserProvider: NSObject {
             for educationDict in educationDataArray {
                 var educationInfo = ""
                 
-                // position
-                if let postionDict = educationDict["position"] as? [String: Any], let  position = postionDict["name"] as? String {
-                    educationInfo = position
+                // name
+                if let schoolDict = educationDict["school"] as? [String: Any], let  name = schoolDict["name"] as? String {
+                    educationInfo = name
                 }
                 
-                // employer
-                if let employerDict = educationDict["employer"] as? [String: Any], let employer = employerDict["name"] as? String {
+                // year
+                if let yearDict = educationDict["year"] as? [String: Any], let  year = yearDict["name"] as? String {
                     if educationInfo.numberOfCharactersWithoutSpaces() > 0 {
-                        educationInfo += " at \(employer)"
-                    } else {
-                        educationInfo = employer
+                        educationInfo += ", \(year)"
                     }
                 }
                 

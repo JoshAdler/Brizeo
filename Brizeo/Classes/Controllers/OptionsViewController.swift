@@ -18,6 +18,10 @@ class OptionsViewController: BasicViewController {
         case work
     }
     
+    struct Constants {
+        static let cellViewHeight: CGFloat = 54.0
+    }
+    
     // MARK: - Properties
     
     @IBOutlet weak var tableView: UITableView!
@@ -29,6 +33,8 @@ class OptionsViewController: BasicViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.estimatedRowHeight = 55.0
         
         loadContent()
     }
@@ -53,12 +59,14 @@ class OptionsViewController: BasicViewController {
             return
         }
         
-        guard let aboutController = navigationController.viewControllers[navigationController.viewControllers.count - 2] as? AboutViewController else {
+        guard let tabsController = navigationController.viewControllers[navigationController.viewControllers.count - 2] as? PersonalTabsViewController else {
             return
         }
         
-        aboutController.user = user
-        aboutController.passionsTableView.reloadData()
+        let aboutController = tabsController.detailsController.aboutController
+        
+        aboutController?.user = user
+        aboutController?.passionsTableView.reloadData()
         
         _ = self.navigationController?.popViewController(animated: true)
     }
@@ -92,9 +100,9 @@ class OptionsViewController: BasicViewController {
                 self.hideLoader()
                 
                 switch (result) {
-                case .success(let workPlaces):
+                case .success(let educationPlaces):
                     
-                    self.values = workPlaces
+                    self.values = educationPlaces
                     self.tableView.reloadData()
                     
                     break
@@ -147,5 +155,9 @@ extension OptionsViewController: UITableViewDelegate {
         }
         
         tableView.reloadData()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension//Constants.cellViewHeight
     }
 }

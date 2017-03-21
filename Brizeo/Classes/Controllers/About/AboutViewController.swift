@@ -122,7 +122,7 @@ class AboutViewController: UIViewController {
     
     // MARK: - Private methods
     
-    fileprivate func registerHeaderViews() {
+    fileprivate func registerHeaderViews() { 
         passionsTableView.register(UINib(nibName: SettingsBigHeaderView.nibName, bundle: nil), forHeaderFooterViewReuseIdentifier: SettingsBigHeaderView.nibName)
     }
     
