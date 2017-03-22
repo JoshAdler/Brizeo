@@ -165,7 +165,7 @@ class BranchProvider: NSObject {
         
         loadReward { (invitedCount, error) in
             guard invitedCount != nil else {
-                print("Error: Branch invited person count is nil")
+//                print("Error: Branch invited person count is nil")
                 return
             }
             

@@ -13,60 +13,70 @@ import GooglePlacesAutocomplete
 import CoreLocation
 import SVProgressHUD
 
+struct LocalizedString: ExpressibleByStringLiteral, Equatable {
+    
+    let value: String
+    
+    init(key: String) {
+        self.value = NSLocalizedString(key, comment: "")
+    }
+    init(localized: String) {
+        self.value = localized
+    }
+    init(stringLiteral value:String) {
+        self.init(key: value)
+    }
+    init(extendedGraphemeClusterLiteral value: String) {
+        self.init(key: value)
+    }
+    init(unicodeScalarLiteral value: String) {
+        self.init(key: value)
+    }
+    
+    static func ==(lhs:LocalizedString, rhs:LocalizedString) -> Bool {
+        return lhs.value == rhs.value
+    }
+}
+
+enum SortingFlag: LocalizedString {
+    case popularity = "Popularity"
+    case nearest = "Nearest"
+    
+    var localizedString: String {
+        return self.rawValue.value
+    }
+    
+    var APIPresentation: String {
+        
+        switch self {
+        case .nearest:
+            return "nearest"
+        case .popularity:
+            return "popular"
+        }
+    }
+    
+    init?(localizedString: String) {
+        self.init(rawValue: LocalizedString(localized: localizedString))
+    }
+    
+    static func allOptions() -> [SortingFlag] {
+        
+        return [
+            .popularity,
+            .nearest
+        ]
+    }
+}
+
 class EventsViewController: UIViewController {
     
     // MARK: - Types
-    
-    struct LocalizedString: ExpressibleByStringLiteral, Equatable {
-        
-        let value: String
-        
-        init(key: String) {
-            self.value = NSLocalizedString(key, comment: "")
-        }
-        init(localized: String) {
-            self.value = localized
-        }
-        init(stringLiteral value:String) {
-            self.init(key: value)
-        }
-        init(extendedGraphemeClusterLiteral value: String) {
-            self.init(key: value)
-        }
-        init(unicodeScalarLiteral value: String) {
-            self.init(key: value)
-        }
-        
-        static func ==(lhs:LocalizedString, rhs:LocalizedString) -> Bool {
-            return lhs.value == rhs.value
-        }
-    }
     
     struct Constants {
         static let cornerRadius: CGFloat = 5.0
         static let borderWidth: CGFloat = 1.0
         static let cellHeight: CGFloat = 500.0
-    }
-    
-    enum SortingFlag: LocalizedString {
-        case popularity = "Popularity"
-        case nearest = "Nearest"
-        
-        var localizedString: String {
-            return self.rawValue.value
-        }
-        
-        init?(localizedString: String) {
-            self.init(rawValue: LocalizedString(localized: localizedString))
-        }
-        
-        static func allOptions() -> [SortingFlag] {
-            
-            return [
-                .popularity,
-                .nearest
-            ]
-        }
     }
     
     // MARK: - Properties
@@ -141,7 +151,13 @@ class EventsViewController: UIViewController {
             showBlackLoader()
         }
         
-        EventsProvider.getEvents { (result) in
+        guard let selectedLocation = selectedLocation else {
+            hideLoader()
+            SVProgressHUD.showError(withStatus: "Please choose some location to see events.")
+            return
+        }
+        
+        EventsProvider.getEvents(sortingFlag: selectedflag, location: selectedLocation, completion: { (result) in
             switch (result) {
             case .success(let events):
                 
@@ -156,7 +172,9 @@ class EventsViewController: UIViewController {
                 break
             default: break
             }
-        }
+            
+            self.topRefresher.endRefreshing()
+        })
     }
     
     @objc fileprivate func refreshTableView() {

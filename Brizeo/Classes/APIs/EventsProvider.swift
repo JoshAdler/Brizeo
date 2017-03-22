@@ -11,6 +11,7 @@ import Crashlytics
 import SwiftyUserDefaults
 import FBSDKShareKit
 import Moya
+import CoreLocation
 
 extension DefaultsKeys {
     static let lastEventsUpdate = DefaultsKey<Date?>("lastEventsUpdate")
@@ -68,31 +69,32 @@ class EventsProvider {
         }
     }
     
-    class func getEvents(completion: @escaping EventsCompletion) {
-        completion(.success([Event]()))
+    class func getEvents(sortingFlag: SortingFlag, location: CLLocationCoordinate2D, completion: @escaping EventsCompletion) {
+        
         let provider = MoyaProvider<APIService>()
-//        provider.request(.getLikersForMoment(moment: moment, userId: user.objectId)) { (result) in
-//            switch result {
-//            case .success(let response):
-//                
-//                guard response.statusCode == 200 else {
-//                    completion(.failure(APIError(code: response.statusCode, message: nil)))
-//                    return
-//                }
-//                
-//                do {
-//                    let users = try response.mapArray(User.self)
-//                    completion(.success(users))
-//                }
-//                catch (let error) {
-//                    completion(.failure(APIError(error: error)))
-//                }
-//                break
-//            case .failure(let error):
-//                completion(.failure(APIError(error: error)))
-//                break
-//            }
-//        }
+        provider.request(.getEvents(sortFlag: sortingFlag.APIPresentation, longitude: location.longitude, latitude: location.latitude)) { (result) in
+            
+            switch result {
+            case .success(let response):
+                
+                guard response.statusCode == 200 else {
+                    completion(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
+                do {
+                    let events = try response.mapArray(Event.self)
+                    completion(.success(events))
+                }
+                catch (let error) {
+                    completion(.failure(APIError(error: error)))
+                }
+                break
+            case .failure(let error):
+                completion(.failure(APIError(error: error)))
+                break
+            }
+        }
     }
     
     // MARK: - Private methods

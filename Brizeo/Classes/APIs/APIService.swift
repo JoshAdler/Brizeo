@@ -58,6 +58,7 @@ enum APIService {
     
     // events
     case saveEvents(events: [Event])
+    case getEvents(sortFlag: String, longitude: Double?, latitude: Double?)
 }
 
 extension APIService: TargetType {
@@ -117,14 +118,16 @@ extension APIService: TargetType {
             return "/notifications/\(notification.objectId)"
         case .saveEvents(_):
             return "/events/"
+        case .getEvents(let sortingFlag, _, _):
+            return "/allevents/\(sortingFlag)"
         }
     }
 
     var method: Moya.Method {
         switch self {
-        case .createNewUser(_), .reportMoment(_, _), .reportUser(_, _), .notifyAdminAboutDownloads(_, _), .approveMatch(_, _), .updateUserFile(_, _, _, _), .saveEvents(_), .updateNotification(_):
+        case .createNewUser(_), .reportMoment(_, _), .reportUser(_, _), .notifyAdminAboutDownloads(_, _), .approveMatch(_, _), .updateUserFile(_, _, _, _), .saveEvents(_):
             return .post
-        case .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .createNewMoment(_), .likeMoment(_, _), .updateMoment(_):
+        case .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .createNewMoment(_), .likeMoment(_, _), .updateMoment(_), .updateNotification(_):
             return .put
         case .deleteCountryForUser(_, _), .unlikeMoment(_, _), .deleteMoment(_, _), .declineMatch(_, _):
             return .delete
@@ -170,6 +173,17 @@ extension APIService: TargetType {
             
             let finalDict = ["newevents": eventsDict]
             return finalDict
+        case .getEvents(_, let longitude, let latitude):
+            if let longitude = longitude, let latitude = latitude {
+                
+                let dict = [
+                    "lat": latitude,
+                    "lon": longitude
+                ]
+                
+                return dict
+            }
+            return nil
         default:
             return nil
         }
@@ -177,7 +191,7 @@ extension APIService: TargetType {
     
     var parameterEncoding: ParameterEncoding {
         switch self {
-        case .createNewUser(_), .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .deleteCountryForUser(_, _), .createNewMoment(_), .updateMoment(_), .updateNotification(_), .saveEvents(_):
+        case .createNewUser(_), .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .deleteCountryForUser(_, _), .createNewMoment(_), .updateMoment(_), .updateNotification(_), .saveEvents(_), .getEvents(_, _, _):
             return JSONEncoding.default
         default:
             return URLEncoding.default

@@ -130,7 +130,6 @@ class UserProvider: NSObject {
                 shared.currentUser = user
                 shared.needToSaveChanges = true
                 completion?(.success(user))
-                print("successfully updated user info")
                 
                 break
             case .failure(let error):

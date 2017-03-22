@@ -124,7 +124,6 @@ class LocationManager: NSObject {
     class func updateUserLocation() {
         _ = LocationManager.shared.requestCurrentLocation { (locationString, location) in
             if let location = location {
-                print("Current location: \(locationString) | \(location)")
                 
                 if let user = UserProvider.shared.currentUser {
                     user.location = location
