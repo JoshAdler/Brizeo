@@ -311,7 +311,11 @@ class User: Mappable {
         deviceToken <- map[JSONKeys.deviceToken.rawValue]
         
         // operate already created upload files
-        if let uploadFiles = uploadFiles, let thumbnailImages = thumbnailImages {
+        if let thumbnailImages = thumbnailImages {
+            
+            guard let uploadFiles = uploadFiles else {
+                return
+            }
             
             var files = [FileObject]()
             

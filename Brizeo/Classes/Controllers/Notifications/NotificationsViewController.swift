@@ -42,8 +42,8 @@ class NotificationsViewController: UIViewController {
     }
     
     struct Constants {
-        static let likesCellHeight: CGFloat = 93.0
-        static let peopleCellHeight: CGFloat = 62.0
+        static let likesCellHeight: CGFloat = 85.0
+        static let peopleCellHeight: CGFloat = 85.0
     }
     
     // MARK: - Properties
@@ -273,6 +273,7 @@ extension NotificationsViewController: NotificationsTableViewCellDelegate {
         }
         
         let notification = notifications![indexPath.row]
+        
         if notification.isAlreadyViewed == false {
             NotificationProvider.markNotificationAsAlreadyViewed(notification, completion: nil)
         }

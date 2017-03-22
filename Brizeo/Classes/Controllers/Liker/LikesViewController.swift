@@ -16,9 +16,9 @@ class LikesViewController: BasicViewController {
     // MARK: - Types
     
     struct Constants {
-        static let rowHeight: CGFloat = 80.0
-        static let headerViewHeight: CGFloat = 50.0
-        static let headerViewColor = HexColor("dedede")
+        static let rowHeight: CGFloat = 88.0
+        static let headerViewHeight: CGFloat = 53.0
+        static let headerViewColor = HexColor("ebebeb")
     }
     
     struct StoryboardIds {
@@ -141,10 +141,10 @@ extension LikesViewController: UITableViewDelegate {
         // title label
         let lblTitle = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: Constants.headerViewHeight))
         lblTitle.backgroundColor = UIColor.clear
-        lblTitle.text = "Click Avatar to View Profile"
-        lblTitle.font = UIFont(name: "SourceSansPro-Semibold", size: lblTitle.font.pointSize)
+        lblTitle.text = LocalizableString.LikersHeaderTitle.localizedString
+        lblTitle.font = UIFont(name: "SourceSansPro-Semibold", size: 16.0)
         lblTitle.textAlignment = .center
-        lblTitle.textColor = UIColor.black
+        lblTitle.textColor = HexColor("5f5f5f")
         viewHeader.addSubview(lblTitle)
         
         return viewHeader

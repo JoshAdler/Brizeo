@@ -17,8 +17,8 @@ class PeopleNotificationTableViewCell: UITableViewCell {
         static let mainColor = UIColor.black
         static let timeColor = HexColor("a2a2a2")
         
-        static let defaultFontSize: CGFloat = 12.0
-        static let timeFontSize: CGFloat = 12.0
+        static let defaultFontSize: CGFloat = 16.0
+        static let timeFontSize: CGFloat = 16.0
     }
     
     // MARK: - Properties
@@ -83,7 +83,7 @@ class PeopleNotificationTableViewCell: UITableViewCell {
         
         let partOne = NSMutableAttributedString(string: authorName, attributes: ownerNameAttributes)
         let partTwo = NSMutableAttributedString(string: " \(LocalizableString.NotificationMatching.localizedString)", attributes: defaultAttributes)
-        let partThree = NSMutableAttributedString(string: " \(time)", attributes: timeAttributes)
+        let partThree = NSMutableAttributedString(string: "\n\(time)", attributes: timeAttributes)
         
         let combination = NSMutableAttributedString()
         

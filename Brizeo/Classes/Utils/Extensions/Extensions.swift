@@ -80,10 +80,10 @@ extension Date {
      
         let timeIntervalFormatter = TTTTimeIntervalFormatter()
         
-        timeIntervalFormatter.usesIdiomaticDeicticExpressions = true
+        timeIntervalFormatter.usesIdiomaticDeicticExpressions = false
         timeIntervalFormatter.presentTimeIntervalMargin = 10
         
-        return timeIntervalFormatter.stringForTimeInterval(from: self, to: Date())
+        return timeIntervalFormatter.stringForTimeInterval(from: Date(), to: self)
     }
 }
 

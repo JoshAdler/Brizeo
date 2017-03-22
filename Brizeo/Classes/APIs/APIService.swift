@@ -122,9 +122,9 @@ extension APIService: TargetType {
 
     var method: Moya.Method {
         switch self {
-        case .createNewUser(_), .reportMoment(_, _), .reportUser(_, _), .notifyAdminAboutDownloads(_, _), .approveMatch(_, _), .updateUserFile(_, _, _, _), .saveEvents(_):
+        case .createNewUser(_), .reportMoment(_, _), .reportUser(_, _), .notifyAdminAboutDownloads(_, _), .approveMatch(_, _), .updateUserFile(_, _, _, _), .saveEvents(_), .updateNotification(_):
             return .post
-        case .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .createNewMoment(_), .likeMoment(_, _), .updateMoment(_), .updateNotification(_):
+        case .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .createNewMoment(_), .likeMoment(_, _), .updateMoment(_):
             return .put
         case .deleteCountryForUser(_, _), .unlikeMoment(_, _), .deleteMoment(_, _), .declineMatch(_, _):
             return .delete
