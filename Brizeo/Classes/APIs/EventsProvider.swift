@@ -18,6 +18,10 @@ extension DefaultsKeys {
 
 class EventsProvider {
 
+    // MARK: - Types
+    
+    typealias EventsCompletion = (Result<[Event]>) -> Void
+    
     // MARK: - Class methods
     
     class func updateUserEventsIfNeeds() {
@@ -62,6 +66,33 @@ class EventsProvider {
                 break
             }
         }
+    }
+    
+    class func getEvents(completion: @escaping EventsCompletion) {
+        completion(.success([Event]()))
+        let provider = MoyaProvider<APIService>()
+//        provider.request(.getLikersForMoment(moment: moment, userId: user.objectId)) { (result) in
+//            switch result {
+//            case .success(let response):
+//                
+//                guard response.statusCode == 200 else {
+//                    completion(.failure(APIError(code: response.statusCode, message: nil)))
+//                    return
+//                }
+//                
+//                do {
+//                    let users = try response.mapArray(User.self)
+//                    completion(.success(users))
+//                }
+//                catch (let error) {
+//                    completion(.failure(APIError(error: error)))
+//                }
+//                break
+//            case .failure(let error):
+//                completion(.failure(APIError(error: error)))
+//                break
+//            }
+//        }
     }
     
     // MARK: - Private methods

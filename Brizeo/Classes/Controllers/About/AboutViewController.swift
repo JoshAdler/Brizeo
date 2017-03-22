@@ -417,7 +417,7 @@ extension AboutViewController: AboutSaveTableViewCellDelegate {
         showBlackLoader()
         
         let currentUser = UserProvider.shared.currentUser!
-        UserProvider.updateUser(user: currentUser) { [weak self] (result) in
+        UserProvider.updateUser(user: currentUser) { (result) in
             switch(result) {
             case .success(_):
                 

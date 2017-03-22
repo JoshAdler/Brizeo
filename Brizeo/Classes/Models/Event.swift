@@ -8,6 +8,7 @@
 
 import UIKit
 import ObjectMapper
+import CoreLocation
 
 class Event: NSObject, Mappable {
 
@@ -46,6 +47,38 @@ class Event: NSObject, Mappable {
         }
         
         return URL(string: previewImageLink!)
+    }
+    
+    var startDateString: String? {
+        guard let startDate = startDate else {
+            return nil
+        }
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mm a, d MMM yyyy"
+        
+        return formatter.string(from: startDate)
+    }
+    
+    var hasLocation: Bool {
+        if longitude != nil && latitude != nil {
+            return true
+        }
+        return false
+    }
+    
+    var location: CLLocation? {
+        get {
+            guard hasLocation else {
+                return nil
+            }
+            
+            return CLLocation(latitude: latitude!, longitude: longitude!)
+        }
+        set {
+            latitude = newValue?.coordinate.latitude
+            longitude = newValue?.coordinate.longitude
+        }
     }
     
     // MARK: - Init

@@ -58,7 +58,6 @@
 		BB104CF21E3F8B670082411E /* UserMatchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB104CF01E3F8B670082411E /* UserMatchTableViewCell.swift */; };
 		BB19EED21E4A7FB100B0BD61 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB19EED11E4A7FB100B0BD61 /* Extensions.swift */; };
 		BB1EF4621E3A932900231ACC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BB1EF4611E3A932900231ACC /* Assets.xcassets */; };
-		BB1EF4661E3A935F00231ACC /* EventList.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB1EF4631E3A935F00231ACC /* EventList.plist */; };
 		BB1EF4711E3A97FD00231ACC /* Configurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1EF4701E3A97FD00231ACC /* Configurations.swift */; };
 		BB1EF4881E3AA5AE00231ACC /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1EF4871E3AA5AE00231ACC /* MainTabBarController.swift */; };
 		BB1EF48A1E3AA7D100231ACC /* EventTabsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB1EF4891E3AA7D100231ACC /* EventTabsViewController.swift */; };
@@ -252,7 +251,6 @@
 		BB104CF01E3F8B670082411E /* UserMatchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserMatchTableViewCell.swift; sourceTree = "<group>"; };
 		BB19EED11E4A7FB100B0BD61 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		BB1EF4611E3A932900231ACC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		BB1EF4631E3A935F00231ACC /* EventList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = EventList.plist; sourceTree = "<group>"; };
 		BB1EF46E1E3A965400231ACC /* Brizeo-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Brizeo-Bridging-Header.h"; sourceTree = "<group>"; };
 		BB1EF4701E3A97FD00231ACC /* Configurations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configurations.swift; sourceTree = "<group>"; };
 		BB1EF4871E3AA5AE00231ACC /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
@@ -719,19 +717,10 @@
 			isa = PBXGroup;
 			children = (
 				BBA2DB381E715AB00066B84B /* Audio */,
-				BB1EF45E1E3A931400231ACC /* Data */,
 				BB1EF45F1E3A931400231ACC /* Fonts */,
 				BB1EF4601E3A931400231ACC /* Images */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		BB1EF45E1E3A931400231ACC /* Data */ = {
-			isa = PBXGroup;
-			children = (
-				BB1EF4631E3A935F00231ACC /* EventList.plist */,
-			);
-			path = Data;
 			sourceTree = "<group>";
 		};
 		BB1EF45F1E3A931400231ACC /* Fonts */ = {
@@ -1257,7 +1246,6 @@
 				BB1FF6F71E51FD8F002343CE /* ChooseView.xib in Resources */,
 				69722BA91CDC05D70064E0B5 /* Localizable.stringsdict in Resources */,
 				BB4ED5E51E3B4F81005B3487 /* SourceSansPro-SemiboldIt.otf in Resources */,
-				BB1EF4661E3A935F00231ACC /* EventList.plist in Resources */,
 				BB4ED5DA1E3B4F81005B3487 /* SourceSansPro-Black.otf in Resources */,
 				BB8B6AD61E51047A00417D54 /* Main.storyboard in Resources */,
 				BB1FF6F31E51EC05002343CE /* InviteFriendsView.xib in Resources */,

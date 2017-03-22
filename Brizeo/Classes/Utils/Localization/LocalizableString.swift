@@ -10,6 +10,9 @@ import Foundation
 
 enum LocalizableString: String {
     
+    case Attending = "Attending"
+    case Popularity = "Popularity"
+    case Nearest = "Nearest"
     case LikersHeaderTitle = "People Who Liked Your Moment"
     case NotificationWantMatching = "wants to match"
     case NotificationMatching = "matched with you"
@@ -163,6 +166,7 @@ enum LocalizableString: String {
     case Map = "Trips"
     case SelectInterest = "Select a Passion for this Moment"
     case SelectFitlerPassion = "Filter the Moments by Passions"
+    case SelectEventFilter = "Filter the Events"
     case PhotoLibrary = "Photo Library"
     case VideoLibrary = "Video Library"
     case TakeAMedia = "Take a media"
