@@ -11,7 +11,8 @@ import Foundation
 enum LocalizableString: String {
     
     case LikersHeaderTitle = "People Who Liked Your Moment"
-    case NotificationMatching = "wants to match with you"
+    case NotificationWantMatching = "wants to match"
+    case NotificationMatching = "matched with you"
     case NoMatch = "No Match Found"
     case NoMatchInstructions = "Click OK to go to Settings;\nChange the location or widen search."
     case NoMatchGoNext = "Click cancel to return to Moments."

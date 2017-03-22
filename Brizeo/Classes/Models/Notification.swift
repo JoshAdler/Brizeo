@@ -11,11 +11,12 @@ import ObjectMapper
 
 enum NotificationType: String {
     case newMatches = "newmatch"
+    case wantsToMatch = "wantsToMatch"
     case momentsLikes = "momentslike"
     
     var soundTitle: String? {
         switch self {
-        case .newMatches:
+        case .newMatches, .wantsToMatch:
             return "sound_matches"
         case .momentsLikes:
             return "sound_likes"

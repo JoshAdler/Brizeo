@@ -223,7 +223,7 @@ extension NotificationsViewController: UITableViewDataSource {
             // name/time
             let displayName = notification.senderUser?.shortName ?? "Somebody"
             let time = notification.time?.naturalView ?? ""
-            cell.generateMatchingText(with: displayName, time: time)
+            cell.generateMatchingText(with: displayName, time: time, type: notification.pushType)
             
             // already viewed
             cell.isAlreadyReviewed = notification.isAlreadyViewed

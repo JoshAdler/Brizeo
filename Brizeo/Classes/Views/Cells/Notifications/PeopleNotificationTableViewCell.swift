@@ -75,14 +75,16 @@ class PeopleNotificationTableViewCell: UITableViewCell {
         commentLabel.attributedText = combination
     }
     
-    func generateMatchingText(with authorName: String, time: String) {
+    func generateMatchingText(with authorName: String, time: String, type: NotificationType) {
         
         let ownerNameAttributes = [NSForegroundColorAttributeName: Constants.mainColor, NSFontAttributeName: UIFont(name: "SourceSansPro-Bold", size: Constants.defaultFontSize)]
         let defaultAttributes = [NSForegroundColorAttributeName: Constants.mainColor, NSFontAttributeName: UIFont(name: "SourceSansPro-Regular", size: Constants.defaultFontSize)]
         let timeAttributes = [NSForegroundColorAttributeName: Constants.timeColor, NSFontAttributeName: UIFont(name: "SourceSansPro-Regular", size: Constants.timeFontSize)]
         
+        let text = type == .newMatches ? LocalizableString.NotificationMatching : LocalizableString.NotificationWantMatching
+        
         let partOne = NSMutableAttributedString(string: authorName, attributes: ownerNameAttributes)
-        let partTwo = NSMutableAttributedString(string: " \(LocalizableString.NotificationMatching.localizedString)", attributes: defaultAttributes)
+        let partTwo = NSMutableAttributedString(string: " \(text.localizedString)", attributes: defaultAttributes)
         let partThree = NSMutableAttributedString(string: "\n\(time)", attributes: timeAttributes)
         
         let combination = NSMutableAttributedString()
