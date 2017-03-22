@@ -23,8 +23,9 @@ class Event: NSObject, Mappable {
         case previewImageLink = "previewImageLink"
         case attendingsCount = "attendingsCount"
         case startDate = "startDate"
-        case ownerUser = "userid"
+        case ownerUser = "user"
         case ownerId = "ownerUser"
+        case distance = "distance"
     }
     
     // MARK: - Properties
@@ -40,6 +41,7 @@ class Event: NSObject, Mappable {
     var attendingsCount: Int = 0
     var startDate: Date?
     var ownerUser: User!
+    var distance: Double?
     
     var previewImageUrl: URL? {
         guard previewImageLink != nil else {
@@ -97,6 +99,7 @@ class Event: NSObject, Mappable {
         startDate <- (map[JSONKeys.startDate.rawValue], FacebookDateTransform())
         ownerUser <- map[JSONKeys.ownerUser.rawValue]
         ownerId <- map[JSONKeys.ownerId.rawValue]
+        distance <- map[JSONKeys.distance.rawValue]
     }
     
     init(facebookId: String, name: String?, information: String?, latitude: Double?, longitude: Double?, imageLink: String?, attendingsCount: Int?, startDate: Date?) {

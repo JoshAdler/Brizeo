@@ -69,6 +69,11 @@ enum SortingFlag: LocalizedString {
     }
 }
 
+enum EventsContentType {
+    case all
+    case matches
+}
+
 class EventsViewController: UIViewController {
     
     // MARK: - Types
@@ -76,7 +81,7 @@ class EventsViewController: UIViewController {
     struct Constants {
         static let cornerRadius: CGFloat = 5.0
         static let borderWidth: CGFloat = 1.0
-        static let cellHeight: CGFloat = 500.0
+        static let cellHeight: CGFloat = 337.0
     }
     
     // MARK: - Properties
@@ -116,6 +121,7 @@ class EventsViewController: UIViewController {
     var selectedflag = SortingFlag.popularity
     var selectedLocation: CLLocationCoordinate2D?
     var topRefresher: UIRefreshControl!
+    var type = EventsContentType.all
     
     // MARK: - Controller lifecycle
     
@@ -157,7 +163,7 @@ class EventsViewController: UIViewController {
             return
         }
         
-        EventsProvider.getEvents(sortingFlag: selectedflag, location: selectedLocation, completion: { (result) in
+        EventsProvider.getEvents(contentType: type, sortingFlag: selectedflag, location: selectedLocation, completion: { (result) in
             switch (result) {
             case .success(let events):
                 
@@ -197,6 +203,7 @@ class EventsViewController: UIViewController {
         let location = selectedLocation ?? LocationManager.shared.currentLocationCoordinates?.coordinate
         if let location = location {
             gpaViewController!.locationBias = LocationBias(latitude: location.latitude, longitude: location.longitude, radius: 20000)
+            gpaViewController?.reset()
         }
         
         ThemeManager.placeLogo(on: gpaViewController!.navigationItem)
@@ -254,6 +261,12 @@ extension EventsViewController: UITableViewDataSource {
         cell.eventStartDate.text = event.startDateString
         cell.attendingLabel.text = "\(event.attendingsCount) \(LocalizableString.Attending.localizedString)"
         
+        if let distance = event.distance {
+            cell.distanceLabel.text = "\(Int(distance.rounded(.toNearestOrAwayFromZero))) miles away"
+        } else {
+            cell.distanceLabel.text = "several miles away"
+        }
+        
         // preview image
         if let previewImageUrl = event.previewImageUrl {
             cell.eventImageView.sd_setImage(with: previewImageUrl)
@@ -266,21 +279,6 @@ extension EventsViewController: UITableViewDataSource {
             cell.eventOwnerImageView.sd_setImage(with: profileURL)
         } else {
             cell.eventOwnerImageView.image = nil
-        }
-        
-        if event.hasLocation {
-            LocationManager.shared.getMomentLocationStringForLocation(event.location!, event.objectId, completion: { [weak cell, weak self] (locationStr, eventId) in
-                
-                if cell != nil && self != nil {
-                    guard let indexPath = tableView.indexPath(for: cell!) else {
-                        return
-                    }
-                    
-                    if let events = self!.events, events[indexPath.row].objectId == eventId {
-                        cell!.distanceLabel.text = locationStr
-                    }
-                }
-            })
         }
         
         return cell

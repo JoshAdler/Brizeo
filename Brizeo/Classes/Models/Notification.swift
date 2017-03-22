@@ -51,20 +51,15 @@ class Notification: Mappable {
     var updatedAt: Date?
     var isAlreadyViewed: Bool = false
     
-    var time: Date? {
-        
-        return updatedAt ?? createdAt
-    }
-    
     var shortTime: String? {
         
-        guard let time = time else {
+        guard let createdAt = createdAt else {
             return nil
         }
         
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM d, yyyy"
-        return formatter.string(from: time)
+        return formatter.string(from: createdAt)
     }
     
     // MARK: - Init

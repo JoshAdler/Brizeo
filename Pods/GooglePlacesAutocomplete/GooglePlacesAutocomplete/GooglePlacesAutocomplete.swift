@@ -168,9 +168,11 @@ open class GooglePlacesAutocomplete: UINavigationController {
     }
     
     open func reset() {
-        gpaViewController.searchBar.text = ""
-        gpaViewController.searchBar(gpaViewController.searchBar, textDidChange: "")
         
+        if gpaViewController.isViewLoaded {
+            gpaViewController.searchBar.text = ""
+            gpaViewController.searchBar(gpaViewController.searchBar, textDidChange: "")
+        }
     }
 }
 
@@ -235,7 +237,7 @@ open class GooglePlacesAutocompleteContainer: UIViewController {
     func runSearch(searchText: String) {
         if (searchText == "") {
             
-            self.places = []
+            //self.places = []
             tableView.isHidden = true
             
             if locationBias != nil {

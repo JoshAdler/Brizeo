@@ -59,6 +59,7 @@ enum APIService {
     // events
     case saveEvents(events: [Event])
     case getEvents(sortFlag: String, longitude: Double?, latitude: Double?)
+    case getMatchedEvents(userId: String, sortFlag: String, longitude: Double?, latitude: Double?)
 }
 
 extension APIService: TargetType {
@@ -120,6 +121,8 @@ extension APIService: TargetType {
             return "/events/"
         case .getEvents(let sortingFlag, _, _):
             return "/allevents/\(sortingFlag)"
+        case .getMatchedEvents(let userId, let sortingFlag, _, _):
+            return "/events/\(userId)/\(sortingFlag)"
         }
     }
 
@@ -191,7 +194,7 @@ extension APIService: TargetType {
     
     var parameterEncoding: ParameterEncoding {
         switch self {
-        case .createNewUser(_), .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .deleteCountryForUser(_, _), .createNewMoment(_), .updateMoment(_), .updateNotification(_), .saveEvents(_), .getEvents(_, _, _):
+        case .createNewUser(_), .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .deleteCountryForUser(_, _), .createNewMoment(_), .updateMoment(_), .updateNotification(_), .saveEvents(_), .getEvents(_, _, _), .getMatchedEvents(_, _, _, _):
             return JSONEncoding.default
         default:
             return URLEncoding.default

@@ -46,7 +46,10 @@ class EventTabsViewController: BasicViewController {
     fileprivate func prepareController() {
         // load controller
         allEventsController = Helper.controllerFromStoryboard(controllerId: Constants.eventControllerId)!
+        allEventsController.type = .all
+        
         myMatchesController = Helper.controllerFromStoryboard(controllerId: Constants.eventControllerId)!
+        myMatchesController.type = .matches
         
         let carbonTabSwipeNavigation = Helper.createCarbonController(with: Constants.titles, self)
         carbonTabSwipeNavigation.insert(intoRootViewController: self)

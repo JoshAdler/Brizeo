@@ -24,7 +24,12 @@ class EventTableViewCell: UITableViewCell {
     }
     
     @IBOutlet weak var eventImageView: UIImageView!
-    @IBOutlet weak var eventOwnerImageView: UIImageView!
+    @IBOutlet weak var eventOwnerImageView: UIImageView! {
+        didSet {
+            eventOwnerImageView.layer.borderColor = UIColor.black.cgColor
+            eventOwnerImageView.layer.borderWidth = 2.0
+        }
+    }
     @IBOutlet weak var eventStartDate: UILabel!
     @IBOutlet weak var eventName: UILabel!
     @IBOutlet weak var eventDescription: UILabel!

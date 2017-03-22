@@ -69,10 +69,47 @@ class EventsProvider {
         }
     }
     
-    class func getEvents(sortingFlag: SortingFlag, location: CLLocationCoordinate2D, completion: @escaping EventsCompletion) {
+    class func getEvents(contentType type: EventsContentType, sortingFlag: SortingFlag, location: CLLocationCoordinate2D, completion: @escaping EventsCompletion) {
+        
+        if type == .all {
+            getAllEvents(sortingFlag: sortingFlag, location: location, completion: completion)
+        } else {
+            getMatchedEvents(sortingFlag: sortingFlag, location: location, completion: completion)
+        }
+    }
+    
+    class func getAllEvents(sortingFlag: SortingFlag, location: CLLocationCoordinate2D, completion: @escaping EventsCompletion) {
         
         let provider = MoyaProvider<APIService>()
         provider.request(.getEvents(sortFlag: sortingFlag.APIPresentation, longitude: location.longitude, latitude: location.latitude)) { (result) in
+            
+            switch result {
+            case .success(let response):
+                
+                guard response.statusCode == 200 else {
+                    completion(.failure(APIError(code: response.statusCode, message: nil)))
+                    return
+                }
+                
+                do {
+                    let events = try response.mapArray(Event.self)
+                    completion(.success(events))
+                }
+                catch (let error) {
+                    completion(.failure(APIError(error: error)))
+                }
+                break
+            case .failure(let error):
+                completion(.failure(APIError(error: error)))
+                break
+            }
+        }
+    }
+    
+    class func getMatchedEvents(sortingFlag: SortingFlag, location: CLLocationCoordinate2D, completion: @escaping EventsCompletion) {
+        
+        let provider = MoyaProvider<APIService>()
+        provider.request(.getMatchedEvents(userId: UserProvider.shared.currentUser!.objectId, sortFlag: sortingFlag.APIPresentation, longitude: location.longitude, latitude: location.latitude)) { (result) in
             
             switch result {
             case .success(let response):
