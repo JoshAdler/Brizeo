@@ -328,11 +328,12 @@ class CreateMomentViewController: UIViewController {
                 placeType: .all
             )
             
-            if let currentLocation = LocationManager.shared.currentLocationCoordinates {
-                gpaViewController!.locationBias = LocationBias(latitude: currentLocation.coordinate.latitude, longitude: currentLocation.coordinate.longitude, radius: 20000)
-            }
-            
             gpaViewController!.placeDelegate = self
+        }
+        
+        let location = selectedLocation ?? LocationManager.shared.currentLocationCoordinates?.coordinate
+        if let location = location {
+            gpaViewController!.locationBias = LocationBias(latitude: location.latitude, longitude: location.longitude, radius: 20000)
         }
         
         ThemeManager.placeLogo(on: gpaViewController!.navigationItem)

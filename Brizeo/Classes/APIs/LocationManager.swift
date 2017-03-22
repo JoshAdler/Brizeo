@@ -265,8 +265,6 @@ extension LocationManager : CLLocationManagerDelegate {
             return
         }
         
-        print("LocationManager: location was updated")
-        
         currentLocationCoordinates = location
         
         getLocationStringForLocation(location, completion: { (locationString) in
