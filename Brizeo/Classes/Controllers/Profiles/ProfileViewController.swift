@@ -348,8 +348,8 @@ extension ProfileViewController: UICollectionViewDataSource {
 
         //TODO: check whether it can be video here.
         if indexPath.row < (user.uploadFiles?.count ?? 0) {
-            if let imageURL = user.uploadFiles?[indexPath.row].imageFile?.url {
-                cell.imageView.sd_setImage(with: URL(string: imageURL))
+            if let imageURL = user.uploadFiles?[indexPath.row].imageUrl {
+                cell.imageView.sd_setImage(with: imageURL)
                 cell.isDeleteButtonHidden = false
             } else {
                 cell.imageView.image = nil
@@ -373,6 +373,7 @@ extension ProfileViewController: UICollectionViewDelegate {
             
             navigationController?.pushViewController(mediaController, animated: true)
         } else { // plus button
+            indexOfMediaToChange = -1
             updateFileType = .other
             showNewMediaAlert(with: .photoVideo)
         }

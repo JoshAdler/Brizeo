@@ -122,6 +122,7 @@ class EventsViewController: UIViewController {
     var selectedLocation: CLLocationCoordinate2D?
     var topRefresher: UIRefreshControl!
     var type = EventsContentType.all
+    var shouldReload = false
     
     // MARK: - Controller lifecycle
     
@@ -144,7 +145,7 @@ class EventsViewController: UIViewController {
             locationTextField.text = LocationManager.shared.currentLocationString
         }
         
-        if events == nil || events?.count == 0 {
+        if events == nil || events?.count == 0 || shouldReload {
             loadEvents(true)
         }
     }
@@ -152,6 +153,8 @@ class EventsViewController: UIViewController {
     // MARK: - Private methods
     
     fileprivate func loadEvents(_ animated: Bool) {
+        
+        shouldReload = false
         
         if animated {
             showBlackLoader()
@@ -303,6 +306,8 @@ extension EventsViewController: GooglePlacesAutocompleteDelegate {
         if place.location != nil {
             selectedLocation = place.location
             
+            shouldReload = true
+            
             dismiss(animated: true) {
                 self.gpaViewController?.reset()
             }
@@ -311,6 +316,8 @@ extension EventsViewController: GooglePlacesAutocompleteDelegate {
                 if let welf = self {
                     // set new values
                     welf.selectedLocation = CLLocationCoordinate2D(latitude: result.latitude, longitude: result.longitude)
+                    
+                    welf.shouldReload = true
                     
                     welf.dismiss(animated: true) {
                         welf.gpaViewController?.reset()
