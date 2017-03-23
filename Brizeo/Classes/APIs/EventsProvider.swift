@@ -37,12 +37,12 @@ class EventsProvider {
             print("current user is not logged in Facebook")
             return
         }
-        
+        /*
         // update each 24 hours
         if Defaults[.lastEventsUpdate] != nil && Defaults[.lastEventsUpdate]!.isInSameDayOf(date: Date()) {
             print("Don't need to update")
             return
-        }
+        }*/
         
         fetchUserEventsFromFacebook { (result) in
             switch(result) {
@@ -153,7 +153,7 @@ class EventsProvider {
                 return
             }
             
-            guard let result = result as? [String: Any], let eventsData = result["events"] as? [String: Any], let eventsArray = eventsData["data"] as? [[String: Any]] else {
+            guard let baseResult = result as? [String: Any], let eventsData = baseResult["events"] as? [String: Any], let eventsArray = eventsData["data"] as? [[String: Any]] else {
                 completion(.failure(APIError(code: 0, message: "Error: Can't parse data from Facebook.")))
                 return
             }
@@ -180,15 +180,10 @@ class EventsProvider {
                 }
                 
                 // is cancelled
-                var isCancelled = false
-                if let isCancelledString = eventData["is_canceled"] as? String {
-                    if isCancelledString == "true" {
-                        isCancelled = true
+                if let isCancelledString = eventData["is_canceled"] as? Bool {
+                    if isCancelledString == true {
+                        continue
                     }
-                }
-                
-                if isCancelled {
-                    continue
                 }
                 
                 // location

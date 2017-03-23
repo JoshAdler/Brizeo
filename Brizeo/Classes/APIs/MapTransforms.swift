@@ -26,7 +26,7 @@ class LastActiveDateTransform: TransformType {
     
     open func transformToJSON(_ value: Date?) -> String? {
         if let date = value {
-            return date.toLongString
+            return date.toFacebookString
         }
         
         return nil
@@ -49,7 +49,7 @@ class FacebookDateTransform: TransformType {
     
     open func transformToJSON(_ value: Date?) -> String? {
         if let date = value {
-            return date.toLongString
+            return date.toFacebookString
         }
         
         return nil

@@ -76,6 +76,13 @@ extension Date {
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
         return dateFormatter.string(from: self)
     }
+    
+    var toFacebookString: String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        return dateFormatter.string(from: self)
+    }
+    
     var naturalView: String? {
      
         let timeIntervalFormatter = TTTTimeIntervalFormatter()
