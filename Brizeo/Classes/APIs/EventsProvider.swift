@@ -179,6 +179,18 @@ class EventsProvider {
                     continue
                 }
                 
+                // is cancelled
+                var isCancelled = false
+                if let isCancelledString = eventData["is_canceled"] as? String {
+                    if isCancelledString == "true" {
+                        isCancelled = true
+                    }
+                }
+                
+                if isCancelled {
+                    continue
+                }
+                
                 // location
                 var longitude: Double? = nil
                 var latitude: Double? = nil
