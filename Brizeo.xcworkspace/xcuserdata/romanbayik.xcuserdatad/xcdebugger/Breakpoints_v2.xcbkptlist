@@ -17,6 +17,38 @@
             endingLineNumber = "425"
             landmarkName = "parseAllEducationHistory(from:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static Brizeo.UserProvider.(parseAllEducationHistory in _218A06B2841203C3BBF01B63F485FCBF) (from : Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; Swift.Array&lt;Swift.String&gt;"
+                  moduleName = "Brizeo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Brizeo/Classes/APIs/UserProvider.swift"
+                  timestampString = "511973497.209086"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "425"
+                  endingLineNumber = "425"
+                  offsetFromSymbolStart = "36">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static Brizeo.UserProvider.(parseAllEducationHistory in _218A06B2841203C3BBF01B63F485FCBF) (from : Swift.Dictionary&lt;Swift.String, Any&gt;) -&gt; Swift.Array&lt;Swift.String&gt;"
+                  moduleName = "Brizeo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Brizeo/Classes/APIs/UserProvider.swift"
+                  timestampString = "511973497.210619"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "425"
+                  endingLineNumber = "425"
+                  offsetFromSymbolStart = "268">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -32,22 +64,6 @@
             startingLineNumber = "241"
             endingLineNumber = "241"
             landmarkName = "updateUserFile(file:type:oldURL:completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Brizeo/Classes/APIs/MapTransforms.swift"
-            timestampString = "511908400.04986"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
-            landmarkName = "transformFromJSON(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -186,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Brizeo/Classes/APIs/EventsProvider.swift"
-            timestampString = "511970469.140146"
+            timestampString = "511973303.16203"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "178"
-            endingLineNumber = "178"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
             landmarkName = "fetchUserEventsFromFacebook(completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -201,13 +217,77 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Brizeo/Classes/APIs/EventsProvider.swift"
-            timestampString = "511970469.927782"
+            filePath = "Brizeo/Classes/Controllers/Events/EventsViewController.swift"
+            timestampString = "511972581.918485"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "191"
-            endingLineNumber = "191"
+            startingLineNumber = "331"
+            endingLineNumber = "331"
+            landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Brizeo/Classes/APIs/EventsProvider.swift"
+            timestampString = "511973301.115352"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "192"
+            endingLineNumber = "192"
             landmarkName = "fetchUserEventsFromFacebook(completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Brizeo/Classes/Controllers/Events/EventsViewController.swift"
+            timestampString = "511973363.138239"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "351"
+            endingLineNumber = "351"
+            landmarkName = "tableView(_:didSelectRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Brizeo/Classes/Models/Event.swift"
+            timestampString = "511973433.801139"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
+            landmarkName = "init(facebookId:name:information:latitude:longitude:imageLink:attendingsCount:startDate:attendingIds:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Brizeo/Classes/APIs/EventsProvider.swift"
+            timestampString = "511973446.963117"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
+            landmarkName = "getAllEvents(sortingFlag:location:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
