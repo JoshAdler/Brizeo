@@ -184,22 +184,20 @@ class BranchProvider: NSObject {
         
         // check referring params
         let installParams = Branch.currentInstance.getFirstReferringParams()
+        let clickedOnLink = Bool((installParams?[MetadataKeys.clickedOnLink.rawValue] as? NSNumber) ?? 0)
+        let isFirstSession = Bool((installParams?[MetadataKeys.isFirstSession.rawValue] as? NSNumber) ?? 0)
         
-        if let clickedOnLink = installParams?[MetadataKeys.clickedOnLink.rawValue] as? Bool,
-            let isFirstSession = installParams?[MetadataKeys.isFirstSession.rawValue] as? Bool {
-            
-            if clickedOnLink && isFirstSession {
-                Branch.currentInstance.userCompletedAction(BuiltInKeys.installAfterInvitation.rawValue, withState: [String: String]())
+        if clickedOnLink && isFirstSession {
+            Branch.currentInstance.userCompletedAction(BuiltInKeys.installAfterInvitation.rawValue, withState: [String: String]())
+
+            // operate who has invited the current user
+            if let invitedByUserId = installParams?[MetadataKeys.invitedByUserId.rawValue] as? String, let invitedByUserName = installParams?[MetadataKeys.invitedByUserName.rawValue] as? String {
+                print("User was invited by \(invitedByUserId) - \(invitedByUserName)")
                 
-                // operate who has invited the current user
-                if let invitedByUserId = installParams?[MetadataKeys.invitedByUserId.rawValue] as? String, let invitedByUserName = installParams?[MetadataKeys.invitedByUserName.rawValue] as? String {
-                    print("User was invited by \(invitedByUserId) - \(invitedByUserName)")
-                    
-                    user.invitedByUserId = invitedByUserId
-                    user.invitedByUserName = invitedByUserName
-                    
-                    UserProvider.updateUser(user: user, completion: nil)
-                }
+                user.invitedByUserId = invitedByUserId
+                user.invitedByUserName = invitedByUserName
+                
+                UserProvider.updateUser(user: user, completion: nil)
             }
         }
     }

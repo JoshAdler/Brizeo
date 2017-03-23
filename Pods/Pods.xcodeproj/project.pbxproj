@@ -293,7 +293,6 @@
 		2F78EC80B0673C3B43F3F706C1EF4430 /* Typist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95DA75BCD6D41051C4E274FBCDACB928 /* Typist.swift */; };
 		2FBEAEC39B7A26821E1487A91D05A1AF /* ALLogs.m in Sources */ = {isa = PBXBuildFile; fileRef = 5990F08B20782F0388F448701DDF2996 /* ALLogs.m */; };
 		2FCCA9BD06A5D1E15FFBA2404DF2FAB5 /* SWCellScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E25D31DB8CD0D4401494331FC713D5D8 /* SWCellScrollView.m */; };
-		2FE1B4423BDAFCF286143035E28480B9 /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 0436FFDA20F943EFD4CCD4CCCD4B815C /* en.lproj */; };
 		303A3AB8E2BCA2F014DB11C2D798B69B /* ALDBHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAF58D7629B0D01EF99BD655989457 /* ALDBHandler.m */; };
 		303B8D548ED4DC3EA9A058001DD3E118 /* BNCCallbacks.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CF01C4CA3484B1D13A4B9F22E727C60 /* BNCCallbacks.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		30588EE100447AC5D419C20E20C53719 /* UIControl+HitTestEdgeInsets.m in Sources */ = {isa = PBXBuildFile; fileRef = 0002FE7CAC898436917975B2277AF626 /* UIControl+HitTestEdgeInsets.m */; };
@@ -691,7 +690,6 @@
 		7319A1961F7414E1BD9A8CFBC550FD40 /* POPAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = AFB539E5F16B6DBFB5C1191A355D1297 /* POPAnimation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		733D1FFC1F9EA4C405B3FE0947F62E20 /* TTTLocationFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D01374DED7C8AE81A66640E900970F8 /* TTTLocationFormatter.m */; };
 		735C202A0626313DFE2D47BDDFE97148 /* DB_CHANNEL.h in Headers */ = {isa = PBXBuildFile; fileRef = F1D6F3CDEA97A42F403E0700F2B4167C /* DB_CHANNEL.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		73C91FF922B1ABBB6CEB712424061148 /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 6BBB529DE90B71B259BBFD7350077FFE /* en.lproj */; };
 		73D3ACEFC9C7253F5AB6031CEC7269C8 /* BFAppLinkReturnToRefererView.h in Headers */ = {isa = PBXBuildFile; fileRef = E0E15B3B42A3BA4402F3E74ADBCF07EE /* BFAppLinkReturnToRefererView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		744F429931704E13330DCA93150F85DB /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1DF89EDBE4B811A3AF6607B52D2A43 /* Reachability.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		748B30B9DC81814AF40AA83F062DC35B /* CarbonTabSwipeScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 781EBBFCEC2247CD1769B3E10681FD64 /* CarbonTabSwipeScrollView.m */; };
@@ -1956,7 +1954,6 @@
 		03FC53720AAAC80A2CE18FFA2C5B750C /* UIScrollView+InfiniteScroll.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIScrollView+InfiniteScroll.h"; path = "Classes/UIScrollView+InfiniteScroll.h"; sourceTree = "<group>"; };
 		0404FF0560F785B94418098EF1BB1FB2 /* Protobuf-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Protobuf-prefix.pch"; sourceTree = "<group>"; };
 		0414442E26E0F8DC654834DA2D663F8D /* MPResources.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MPResources.h; path = Mixpanel/MPResources.h; sourceTree = "<group>"; };
-		0436FFDA20F943EFD4CCD4CCCD4B815C /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = en.lproj; path = Applozic/en.lproj; sourceTree = "<group>"; };
 		045B13A6BE8604D514470862228F4D60 /* NXOAuth2PostBodyStream.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = NXOAuth2PostBodyStream.h; path = Sources/OAuth2Client/NXOAuth2PostBodyStream.h; sourceTree = "<group>"; };
 		049A4ECDDCBA21CAC02777A32F08ED4F /* ALReceiverUserProfileVC.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ALReceiverUserProfileVC.h; path = Applozic/ViewControllers/ALReceiverUserProfileVC.h; sourceTree = "<group>"; };
 		04B57A3A805AB1E1CEF65DC12647A4D8 /* ALMultipleAttachmentView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ALMultipleAttachmentView.m; path = Applozic/ViewControllers/ALMultipleAttachmentView.m; sourceTree = "<group>"; };
@@ -2619,7 +2616,6 @@
 		6B24B6799CE9D363A87BF862790493A6 /* CLLocationManager-blocks-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CLLocationManager-blocks-umbrella.h"; sourceTree = "<group>"; };
 		6B55D2D756A478045304B1774E2F9422 /* MPABTestDesignerDisconnectMessage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MPABTestDesignerDisconnectMessage.h; path = Mixpanel/MPABTestDesignerDisconnectMessage.h; sourceTree = "<group>"; };
 		6B8C4ADBB67745BCA17B50DA4EC2CDDD /* MPTweakStore.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MPTweakStore.h; path = Mixpanel/MPTweakStore.h; sourceTree = "<group>"; };
-		6BBB529DE90B71B259BBFD7350077FFE /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = en.lproj; path = Applozic/Resources/Files/en.lproj; sourceTree = "<group>"; };
 		6BC55398C79E25F3762D342E49EA2F62 /* SWTableViewCell.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SWTableViewCell.m; path = SWTableViewCell/PodFiles/SWTableViewCell.m; sourceTree = "<group>"; };
 		6BCCFC412BA82DDC18BA997404CE4524 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6BE7AFDAD9D99A15C77F83FC3C1B882B /* SVProgressHUD.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVProgressHUD.h; path = SVProgressHUD/SVProgressHUD.h; sourceTree = "<group>"; };
@@ -3151,7 +3147,6 @@
 		BAAA7671918EDB9269967A7CF132F01B /* MPDesignerEventBindingRequestMesssage.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MPDesignerEventBindingRequestMesssage.m; path = Mixpanel/MPDesignerEventBindingRequestMesssage.m; sourceTree = "<group>"; };
 		BABE63C77A76CDA8059E0F1A9E96ADAD /* Duration.pbobjc.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Duration.pbobjc.h; path = objectivec/google/protobuf/Duration.pbobjc.h; sourceTree = "<group>"; };
 		BB6351C89EEECFD29A5CEB8BEC6581B8 /* ALMessageArrayWrapper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ALMessageArrayWrapper.h; path = Applozic/ALMessageArrayWrapper.h; sourceTree = "<group>"; };
-		BB7873B61E81681A00F2C8C8 /* ChatListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatListViewController.swift; path = ../Brizeo/Classes/Controllers/Chat/ChatListViewController.swift; sourceTree = "<group>"; };
 		BB7F88FFA146DA92942F63EB2BC86366 /* SVProgressHUD.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SVProgressHUD.xcconfig; sourceTree = "<group>"; };
 		BB7FE8A7EE8F6E5F0D1172DBB257196A /* Endpoint.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Endpoint.swift; path = Sources/Moya/Endpoint.swift; sourceTree = "<group>"; };
 		BBC4CA189360095F6A05C16F62BB5D4E /* Map.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Map.swift; path = Sources/Map.swift; sourceTree = "<group>"; };
@@ -6750,7 +6745,6 @@
 		FDEC0F1D74EE616CBE82DD1D5BC62F09 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BB7873B61E81681A00F2C8C8 /* ChatListViewController.swift */,
 				440CE0987EE2D54CB289432193843E49 /* Alamofire.framework */,
 				FEEEF3974F4FDDC92D9173DF60694ECD /* Bolts.framework */,
 				FA9CEC00324AABCA1974B82838FA3529 /* FBSDKCoreKit.framework */,
@@ -6793,8 +6787,6 @@
 				6139EE20499EACF51B67D787A61447E3 /* AppLozic.xcdatamodeld */,
 				F633942F83D42164164BE98467A6E52E /* Base.lproj */,
 				F2CA529E5ACB9606F3A967FDB0884BEB /* en.lproj */,
-				0436FFDA20F943EFD4CCD4CCCD4B815C /* en.lproj */,
-				6BBB529DE90B71B259BBFD7350077FFE /* en.lproj */,
 				B3AC0C31CDC7330AA233D16838F097BC /* Images.xcassets */,
 				688216D691EEE4BB87D7F7445CC02CBF /* MQTTClient.xcdatamodeld */,
 				841B3163664E987B44D315C24C3FC456 /* TSMessagesDefaultDesign.json */,
@@ -8713,9 +8705,7 @@
 				5ADF8DEF80673A43A106DD80C8863644 /* Applozic.storyboard in Resources */,
 				91D7206C8CCA180CD1EAE9B67917CCDE /* AppLozic.xcdatamodeld in Resources */,
 				67A5402E642BFC27DA5FC1B86D9C2D5C /* Base.lproj in Resources */,
-				2FE1B4423BDAFCF286143035E28480B9 /* en.lproj in Resources */,
 				475DEAEDCB1BD2C24753B57CDFFD9833 /* en.lproj in Resources */,
-				73C91FF922B1ABBB6CEB712424061148 /* en.lproj in Resources */,
 				E352849D7AD153BF50D9E5AB892F6451 /* Images.xcassets in Resources */,
 				3304258081F7224DF647C2F21A958C2C /* MQTTClient.xcdatamodeld in Resources */,
 				C3BEECE69BC241D2EC6E277DD59CB666 /* TSMessagesDefaultDesign.json in Resources */,
