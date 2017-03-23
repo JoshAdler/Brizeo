@@ -84,6 +84,11 @@ class EventsViewController: UIViewController {
         static let cellHeight: CGFloat = 337.0
     }
     
+    struct StoryboardIds {
+        static let otherProfileControllerId = "OtherProfileViewController"
+        static let profileControllerId = "PersonalTabsViewController"
+    }
+    
     // MARK: - Properties
     
     @IBOutlet weak var tableView: UITableView!
@@ -190,6 +195,50 @@ class EventsViewController: UIViewController {
         loadEvents(false)
     }
     
+    fileprivate func showUserProfile(for user: User) {
+        
+        if user.objectId == UserProvider.shared.currentUser!.objectId { // show my profile
+            
+            let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
+
+            Helper.currentTabNavigationController()?.pushViewController(profileController, animated: true)
+        } else {
+        
+            let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
+            
+            otherPersonProfileController.user = user
+            otherPersonProfileController.userId = user.objectId
+            
+            Helper.currentTabNavigationController()?.pushViewController(otherPersonProfileController, animated: true)
+        }
+    }
+    
+    fileprivate func openEvent(_ event: Event) {
+        
+        let url = URL(string: "fb://event?id=\(event.facebookId)") //fb://event?id={event-id}
+        
+        // open facebook event on FB app
+        if UIApplication.shared.canOpenURL(url!) {
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+            } else {
+                UIApplication.shared.openURL(url!)
+            }
+        } else {
+            let safeURL = URL(string: "https://www.facebook.com/events/\(event.facebookId)")
+            
+            if UIApplication.shared.canOpenURL(safeURL!) {
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(safeURL!, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(safeURL!)
+                }
+            } else {
+                SVProgressHUD.showError(withStatus: LocalizableString.FacebookEventURLFails.localizedString)
+            }
+        }
+    }
+    
     // MARK: - Actions
     
     @IBAction func onLocationButtonClicked(sender: UIButton) {
@@ -259,6 +308,7 @@ extension EventsViewController: UITableViewDataSource {
         let cell: EventTableViewCell = tableView.dequeueCell(withIdentifier: EventTableViewCell.identifier, for: indexPath)
         let event = events![indexPath.row]
 
+        cell.delegate = self
         cell.eventName.text = event.name
         cell.eventDescription.text = event.information
         cell.eventStartDate.text = event.startDateString
@@ -293,6 +343,32 @@ extension EventsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return Constants.cellHeight
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let event = events![indexPath.row]
+        openEvent(event)
+    }
+}
+
+// MARK: - EventTableViewCellDelegate
+extension EventsViewController: EventTableViewCellDelegate {
+    
+    func eventCell(cell: EventTableViewCell, didClickedOnProfile button: UIButton) {
+        
+        guard let indexPath = tableView.indexPath(for: cell) else {
+            print("No index path for cell")
+            return
+        }
+        
+        guard let event = events?[indexPath.row] else {
+            print("No event for this index path")
+            return
+        }
+        
+        showUserProfile(for: event.ownerUser)
     }
 }
 

@@ -442,6 +442,12 @@ extension SettingsViewController: UITableViewDelegate {
                     gpaViewController!.placeDelegate = self
                 }
                 
+                let location = preferences.searchLocation?.coordinate ?? LocationManager.shared.currentLocationCoordinates?.coordinate
+                if let location = location {
+                    gpaViewController!.locationBias = LocationBias(latitude: location.latitude, longitude: location.longitude, radius: 20000)
+                    gpaViewController!.reset()
+                }
+                
                 ThemeManager.placeLogo(on: gpaViewController!.navigationItem)
                 present(gpaViewController!, animated: true, completion: nil)
             }

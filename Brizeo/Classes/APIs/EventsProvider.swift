@@ -12,6 +12,7 @@ import SwiftyUserDefaults
 import FBSDKShareKit
 import Moya
 import CoreLocation
+import FormatterKit
 
 extension DefaultsKeys {
     static let lastEventsUpdate = DefaultsKey<Date?>("lastEventsUpdate")
@@ -168,23 +169,14 @@ class EventsProvider {
             var events = [Event]()
             for eventData in attendedEvents {
                 
-                let name = eventData["name"] as? String
-                let description = eventData["description"] as? String
-                let id = eventData["id"] as! String
-                
-                // cover
-                var coverUrl: String?
-                if let coverDict = eventData["cover"] as? [String: Any], let url = coverDict["source"] as? String {
-                    coverUrl = url
-                }
-                
-                // attending count
-                let attendingCount = eventData["attending_count"] as? Int
-                
                 // start date
                 var startDate: Date? = nil
                 if let startDateStr = eventData["start_time"] as? String, let date = Helper.convertFacebookStringToDate(string: startDateStr) {
                     startDate = date
+                }
+                
+                if startDate == nil || startDate!.isInPast {
+                    continue
                 }
                 
                 // location
@@ -196,8 +188,32 @@ class EventsProvider {
                     longitude = location["longitude"] as? Double
                 }
                 
+                if longitude == nil || latitude == nil {
+                    continue
+                }
+                
+                let name = eventData["name"] as? String
+                let description = eventData["description"] as? String
+                let id = eventData["id"] as! String
+                
+                // cover
+                var coverUrl: String?
+                if let coverDict = eventData["cover"] as? [String: Any], let url = coverDict["source"] as? String {
+                    coverUrl = url
+                }
+                
+                // attending count & persons
+                let attendingCount = eventData["attending_count"] as? Int
+                var attendingIds: [String]?
+                
+                if let attendingUsersDict = eventData["attending"] as? [String: Any], let
+                    
+                    attendingUsers = attendingUsersDict["data"] as? [[String: String]] {
+                    attendingIds = attendingUsers.map({ $0["id"]! })
+                }
+                
                 // combine data into new event object
-                let event = Event(facebookId: id, name: name, information: description, latitude: latitude, longitude: longitude, imageLink: coverUrl, attendingsCount: attendingCount, startDate: startDate)
+                let event = Event(facebookId: id, name: name, information: description, latitude: latitude, longitude: longitude, imageLink: coverUrl, attendingsCount: attendingCount, startDate: startDate, attendingIds: attendingIds)
                 events.append(event)
             }
             

@@ -26,6 +26,8 @@ class Event: NSObject, Mappable {
         case ownerUser = "user"
         case ownerId = "ownerUser"
         case distance = "distance"
+        case attendingsUsers = "attendingsUsers"
+        case attendingsIds = "attendingsIds"
     }
     
     // MARK: - Properties
@@ -39,6 +41,8 @@ class Event: NSObject, Mappable {
     var longitude: Double?
     var previewImageLink: String?
     var attendingsCount: Int = 0
+    var attendingsIds: [String]?
+    var attendingsUsers: [User]?
     var startDate: Date?
     var ownerUser: User!
     var distance: Double?
@@ -100,9 +104,11 @@ class Event: NSObject, Mappable {
         ownerUser <- map[JSONKeys.ownerUser.rawValue]
         ownerId <- map[JSONKeys.ownerId.rawValue]
         distance <- map[JSONKeys.distance.rawValue]
+        attendingsIds <- map[JSONKeys.attendingsIds.rawValue]
+        attendingsUsers <- map[JSONKeys.attendingsUsers.rawValue]
     }
     
-    init(facebookId: String, name: String?, information: String?, latitude: Double?, longitude: Double?, imageLink: String?, attendingsCount: Int?, startDate: Date?) {
+    init(facebookId: String, name: String?, information: String?, latitude: Double?, longitude: Double?, imageLink: String?, attendingsCount: Int?, startDate: Date?, attendingIds: [String]?) {
         
         self.facebookId = facebookId
         self.name = name ?? "No name"
@@ -111,6 +117,7 @@ class Event: NSObject, Mappable {
         self.longitude = longitude
         self.previewImageLink = imageLink
         self.attendingsCount = attendingsCount ?? 0
+        self.attendingsIds = attendingIds
         self.startDate = startDate
         
         ownerId = UserProvider.shared.currentUser?.objectId ?? "-1"

@@ -187,7 +187,7 @@ class BranchProvider: NSObject {
         let clickedOnLink = Bool((installParams?[MetadataKeys.clickedOnLink.rawValue] as? NSNumber) ?? 0)
         let isFirstSession = Bool((installParams?[MetadataKeys.isFirstSession.rawValue] as? NSNumber) ?? 0)
         
-        if clickedOnLink && isFirstSession {
+        if clickedOnLink /*&& isFirstSession*/ {
             Branch.currentInstance.userCompletedAction(BuiltInKeys.installAfterInvitation.rawValue, withState: [String: String]())
 
             // operate who has invited the current user
