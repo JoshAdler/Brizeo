@@ -37,6 +37,7 @@ class EventsProvider {
             print("current user is not logged in Facebook")
             return
         }
+        //TODO: check it
         /*
         // update each 24 hours
         if Defaults[.lastEventsUpdate] != nil && Defaults[.lastEventsUpdate]!.isInSameDayOf(date: Date()) {

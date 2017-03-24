@@ -107,7 +107,7 @@ class User: Mappable {
     var profileImage: FileObjectInfo?
     var uploadFiles: [FileObject]?
     
-    var thumbnailImages: [String]?
+    var thumbnailImages: [String: String]?
     var profileUploadImage: UIImage?
     
     // match status
@@ -305,7 +305,7 @@ class User: Mappable {
         // files
         profileImage <- (map[JSONKeys.profileImage.rawValue], FileObjectInfoTransform())
         uploadFiles <- (map[JSONKeys.otherProfileImages.rawValue], FileObjectTransform())
-        thumbnailImages <- map[JSONKeys.thumbnailImages.rawValue]
+        thumbnailImages <- (map[JSONKeys.thumbnailImages.rawValue], ThumbnailImagesTransform())
         
         status <- (map[JSONKeys.status.rawValue], EnumTransform<MatchingStatus>())
         deviceToken <- map[JSONKeys.deviceToken.rawValue]
@@ -317,26 +317,19 @@ class User: Mappable {
                 return
             }
             
-            var files = [FileObject]()
-            
-            for i in 0 ..< uploadFiles.count {
+            for (key, value) in thumbnailImages {
                 
-                let url = thumbnailImages[i]
-                
-                if url.numberOfCharactersWithoutSpaces() == 0 {
-                     files.append(uploadFiles[i])
-                } else {
-                    
-                    let newFile = FileObject(
-                        thumbnailImage: FileObjectInfo(urlStr: thumbnailImages[i]),
-                        videoInfo: FileObjectInfo(urlStr: uploadFiles[i].mainUrl!)
-                    )
-                    files.append(newFile)
+                if value == "" {
+                    continue
                 }
+                
+                let newFile = FileObject(
+                    thumbnailImage: FileObjectInfo(urlStr: value),
+                    videoInfo: FileObjectInfo(urlStr: uploadFiles[Int(key)!].mainUrl!)
+                )
+                
+                self.uploadFiles?[Int(key)!] = newFile
             }
-            
-            self.uploadFiles = files
-            self.thumbnailImages = nil
         }
     }
     

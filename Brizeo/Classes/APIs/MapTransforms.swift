@@ -56,6 +56,39 @@ class FacebookDateTransform: TransformType {
     }
 }
 
+class ThumbnailImagesTransform: TransformType {
+    
+    public typealias Object = [String: String]
+    public typealias JSON = [String: String]
+    
+    public init() {}
+    
+    public func transformFromJSON(_ value: Any?) -> [String: String]? {
+        
+        if let result = value as? [String: String] {
+            return result
+        }
+        
+        if let result = value as? [String] {
+            
+            var dict = [String: String]()
+            
+            for i in 0..<result.count {
+                dict["\(i)"] = result[i] 
+            }
+            
+            return dict
+        }
+        
+        return nil
+    }
+    
+    public func transformToJSON(_ value: Dictionary<String, String>?) -> Dictionary<String, String>? {
+        
+        return value
+    }
+}
+
 class CountriesTransform: TransformType {
     public typealias Object = Array<Country>
     public typealias JSON = Array<String>
@@ -137,9 +170,7 @@ class FileObjectTransform: TransformType {
     open func transformToJSON(_ value: FileObject?) -> String? {
         
         if let value = value {
-            if value.isImage {
-                return value.imageUrl?.absoluteString
-            }
+            return value.mainUrl
         }
         
         return nil
