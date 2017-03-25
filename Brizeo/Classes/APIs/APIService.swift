@@ -18,6 +18,8 @@ enum APIService {
     case getUserWithStatus(currentUserId: String, searchedUserId: String)
     case reportUser(reporterId: String, reportedId: String)
     case updateUserFile(file: FileObject?, userId: String, type: String, oldURL: String?)
+    case mutualFriends(facebookId: String, token: String)
+    case getFacebookFriends(facebookIds: [String])
     
     // preferences
     case getPreferences(userId: String)
@@ -123,6 +125,10 @@ extension APIService: TargetType {
             return "/allevents/\(sortingFlag)"
         case .getMatchedEvents(let userId, let sortingFlag, _, _):
             return "/events/\(userId)/\(sortingFlag)"
+        case .mutualFriends(let facebookId, let token):
+            return "/mutual_friends/\(facebookId)/\(token)"
+        case .getFacebookFriends(_):
+            return "/fbusers/"
         }
     }
 
@@ -187,6 +193,9 @@ extension APIService: TargetType {
                 return dict
             }
             return nil
+        case .getFacebookFriends(let facebookIds):
+            let dict = ["fbids": facebookIds]
+            return dict
         default:
             return nil
         }
@@ -194,7 +203,7 @@ extension APIService: TargetType {
     
     var parameterEncoding: ParameterEncoding {
         switch self {
-        case .createNewUser(_), .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .deleteCountryForUser(_, _), .createNewMoment(_), .updateMoment(_), .updateNotification(_), .saveEvents(_), .getEvents(_, _, _), .getMatchedEvents(_, _, _, _):
+        case .createNewUser(_), .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .deleteCountryForUser(_, _), .createNewMoment(_), .updateMoment(_), .updateNotification(_), .saveEvents(_), .getEvents(_, _, _), .getMatchedEvents(_, _, _, _), .getFacebookFriends(_):
             return JSONEncoding.default
         default:
             return URLEncoding.default

@@ -81,16 +81,16 @@ class PreferencesProvider: NSObject {
                     return
                 }
                 
-                do {
+                //do {
 //                    let preferences = try response.mapObject(Preferences.self)
                     shared.currentUserPreferences = preferences
                     completion?(.success(preferences))
                     
                     print("successfully updated preferences info")
-                }
+                /*}
                 catch (let error) {
                     completion?(.failure(APIError(error: error)))
-                }
+                }*/
                 break
             case .failure(let error):
                 completion?(.failure(APIError(error: error)))

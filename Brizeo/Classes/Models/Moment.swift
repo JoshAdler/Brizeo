@@ -34,6 +34,7 @@ class Moment: Mappable, Equatable {
         case longitude = "currentLocation.longitude"
         case updatedAt = "updatedAt"
         case createdAt = "createdAt"
+        case compressedThumbnailImageURL = "compressedThumbnailImageURL"
     }
     
     struct Constants {
@@ -57,7 +58,8 @@ class Moment: Mappable, Equatable {
     var thumbnailFile: FileObjectInfo?
     var user: User!
     var updatedAt: Date? = Date()
-    var createdAt: Date?
+    var createdAt: Date? = Date()
+    var compressedThumbnailImageURL: String?
     
     //variables for uploading
     var image: UIImage?
@@ -139,16 +141,6 @@ class Moment: Mappable, Equatable {
         // likes information
         likesCount <- map[JSONKeys.numberOfLikes.rawValue]
         isLikedByCurrentUser <- (map[JSONKeys.likedByCurrentUser.rawValue], LikersTransform())
-//        
-//        if let likersIds: [String] = try! map.value(JSONKeys.likedByCurrentUser.rawValue) {
-//            let count = likersIds.count
-//            
-//            if count != likesCount {
-//                print("INCORRECT LIKERS NUMBER FOR MOMENT")
-//            }
-//            
-//            likesCount = count
-//        }
         
         // availability information
         readStatus <- map[JSONKeys.readStatus.rawValue]
@@ -166,6 +158,7 @@ class Moment: Mappable, Equatable {
         // uploaded image url
         file <- (map[JSONKeys.momentsUploadImage.rawValue], FileObjectInfoTransform())
         thumbnailFile <- (map[JSONKeys.thumbnailImage.rawValue], FileObjectInfoTransform())
+        compressedThumbnailImageURL <- map[JSONKeys.compressedThumbnailImageURL.rawValue]
     }
     
     // MARK: - Override methods

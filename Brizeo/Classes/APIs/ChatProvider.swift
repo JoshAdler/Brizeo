@@ -80,7 +80,7 @@ class ChatProvider: NSObject {
         do {
             try DBHandler?.managedObjectContext.save()
             Defaults[.isChatWithAdminCreated] = true
-        } catch (let error) {
+        } catch (_) {
             print("applozic error")
         }
     }
@@ -108,7 +108,7 @@ class ChatProvider: NSObject {
         
         do {
             try DBHandler?.managedObjectContext.save()
-        } catch (let error) {
+        } catch (_) {
             print("applozic error")
         }
     }

@@ -38,6 +38,8 @@ class UserProvider: NSObject {
     }
 
     typealias UserCompletion = (Result<User>) -> Void
+    typealias UsersCompletion = (Result<[User]>) -> Void
+    typealias MutualFriendsCompletion = (Result<(Int, [User])>) -> Void
     typealias EmptyCompletion = (Result<Void>) -> Void
     
     // MARK: - Properties
@@ -370,9 +372,103 @@ class UserProvider: NSObject {
             }
         }
     }
+    
+    class func getMutualFriends(for user: User, completion: @escaping MutualFriendsCompletion) {
+        
+        guard isUserLoggedInFacebook() else {
+            completion(.failure(APIError(code: 0, message: "User are not logged in Facebook.")))
+            return
+        }
+        
+        // load mutual facebook friends first
+        let token = FBSDKAccessToken.current()!.tokenString
+        loadMutualFacebookFriends(facebookId: user.facebookId, token: token!) { (result) in
+            
+            switch (result) {
+            case .success(let count, let ids):
+                
+                loadFacebookUsers(by: ids, completion: { (result) in
+                    
+                    switch (result) {
+                    case .success(let users):
+                        completion(.success(count ,users))
+                        break
+                    case .failure(let error):
+                        completion(.failure(APIError(error: error)))
+                        break
+                    default:
+                        break
+                    }
+                })
+                break
+            case .failure(let error):
+                completion(.failure(error))
+                break
+            default:
+                break
+            }
+        }
+    }
 
     // MARK: - Private methods
     
+    fileprivate class func loadFacebookUsers(by ids: [String]?, completion: @escaping (Result<[User]>) -> Void) {
+        
+        guard ids != nil && (ids?.count) ?? 0 > 0 else {
+            completion(.success([]))
+            return
+        }
+        
+        let provider = MoyaProvider<APIService>()
+        provider.request(.getFacebookFriends(facebookIds: ids!)) { (result) in
+            switch(result) {
+            case .success(let response):
+                do {
+                    
+                    let users = try response.mapArray(User.self)
+                    completion(.success(users))
+                } catch (let error) {
+                    completion(.failure(APIError(error: error)))
+                }
+                break
+            case .failure(let error):
+                completion(.failure(APIError(error: error)))
+                break
+            }
+        }
+    }
+    
+    fileprivate class func loadMutualFacebookFriends(facebookId: String, token: String, completion: @escaping (Result<(Int, [String])>) -> Void) {
+        
+        let provider = MoyaProvider<APIService>()
+        provider.request(.mutualFriends(facebookId: facebookId, token: token)) { (result) in
+            switch (result) {
+            case .success(let response):
+                
+                do {
+                    if let facebookItems = try response.mapJSON() as? [[String: Any]] {
+                        
+                        let ids = facebookItems.filter({ $0["id"] != nil }).map({ $0["id"] as! String }) 
+                        
+                        completion(.success(facebookItems.count, ids))
+                    } else {
+                        
+                        completion(.failure(APIError(code: 0, message: "Can't parse facebook result data.")))
+                    }
+                } catch (let error) {
+                    
+                    completion(.failure(APIError(error: error)))
+                }
+                break
+            case .failure(let error):
+                
+                completion(.failure(APIError(error: error)))
+                break
+            }
+        }
+    }
+
+
     fileprivate class func parseEducationHistory(from dict: [String: Any]) -> String? {
         var educationInfo: String? = nil
         
@@ -577,11 +673,10 @@ class UserProvider: NSObject {
                 }
                 
                 do {
-                    let userId = try response.mapString()
-                    user.objectId = userId
+                    let newUser = try response.mapObject(User.self)
                     
-                    shared.currentUser = user
-                    completion(.success(user))
+                    shared.currentUser = newUser
+                    completion(.success(newUser))
                 }
                 catch (let error) {
                     completion(.failure(APIError(error: error)))
@@ -689,61 +784,5 @@ class UserProvider: NSObject {
                 completion(.failure(APIError(code: 0, message: "Unable to retrieve info from Facebook")))
             }
         }
-    }
-    
-    class func getMutualFriendsOfCurrentUser(_ currUser: User, andSecondUser secondUser: User, completion: @escaping (Result<[(name:String, pictureURL:String)]>) -> Void) {
-
-        
-        return
-        /*
-        let currUserFBToken = FBSDKAccessToken.current()
-        let currUserFBId = currUser.facebookId
-        let secondUserFBId = "734396810046847"//secondUser.facebookId
-        
-        let userParams = ["id": currUserFBId, "token": currUserFBToken?.tokenString, "friend_id": secondUserFBId] as [String : Any]
-        let params = ["user":userParams]
-        
-        Alamofire.request(Configurations.AppURLs.BrizeoCheckURL, method: .post, parameters: params)
-            .validate()
-            .validate(contentType: ["application/json"])
-            .responseJSON { (response) in
-                switch response.result {
-                case .success(let value):
-                    
-                    var friendsInfo = [(name:String, pictureURL:String)]()
-                    if let json = value as? [[String: AnyObject]] {
-                        for friend in json {
-                            if  let name = friend["name"] as? String,
-                                let userId = friend["id"] as? String {
-                                
-                                let pictureURL = "https://graph.facebook.com/\(userId)/picture?type=large&return_ssl_resource=1"
-                                friendsInfo.append((name: name, pictureURL: pictureURL))
-                            }
-                        }
-                    }
-                    completion(.success(friendsInfo))
-                    break
-                case .failure(let error):
-                    debugPrint(error)
-                    completion(Result.failure(APIError(error: error)))
-                    break
-                }
-        }*/
-    }
-    
-    class func removeMatch(_ user: User, target: User, completion: @escaping (Result<Bool>) -> Void) {
-        
-//        let params : [String: AnyObject] = [UserParameterKey.UserIdKey : user.objectId! as AnyObject, UserParameterKey.TargetUserIdKey: target.objectId! as AnyObject]
-//        PFCloud.callFunction(inBackground: ParseFunction.RemoveMatch.name, withParameters: params) { (result, error) in
-//            
-//            if let error = error {
-//                
-//                completion(.failure(error.localizedDescription))
-//                
-//            } else {
-//                
-//                completion(.success(true))
-//            }
-//        }
     }
 }

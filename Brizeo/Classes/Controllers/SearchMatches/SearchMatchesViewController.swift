@@ -31,7 +31,7 @@ class SearchMatchesViewController: BasicViewController {
     var matches: [User]?
     var currentUser: User! = UserProvider.shared.currentUser!
     var detailsController: OtherPersonDetailsTabsViewController!
-    var mutualFriends: [(String, String)]?
+    var mutualFriends: [User]?
     
     // MARK: - Controller lifecycle
     

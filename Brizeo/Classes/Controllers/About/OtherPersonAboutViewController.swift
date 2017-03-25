@@ -31,7 +31,8 @@ class OtherPersonAboutViewController: UIViewController {
     
     @IBOutlet weak var passionsTableView: UITableView!
     
-    var mutualFriends: [(String, String)]?
+    var mutualFriends: [User]?
+    var mutualFriendsCount = 0 // RB: it is not the count of the value above
     var user: User!
     var locationString: String?
     
@@ -63,21 +64,23 @@ class OtherPersonAboutViewController: UIViewController {
     }
     
     fileprivate func fetchMutualFriends() {
-        UserProvider.getMutualFriendsOfCurrentUser(UserProvider.shared.currentUser!, andSecondUser: user, completion: { (result) in
+        
+        UserProvider.getMutualFriends(for: user) { (result) in
             switch result {
-            case .success(let value):
+            case .success(let count, let users):
                 // send notification
-                let notification = UIKit.Notification(name: NSNotification.Name.init(rawValue: mutualFriendsNotification), object: nil, userInfo: ["mutualFriends": value, "userId": self.user?.objectId])
+                let notification = UIKit.Notification(name: NSNotification.Name.init(rawValue: mutualFriendsNotification), object: nil, userInfo: ["mutualFriends": users, "count": count, "userId": self.user!.objectId])
                 NotificationCenter.default.post(notification)
                 
-                self.mutualFriends = value
+                self.mutualFriends = users
                 self.passionsTableView.reloadSections(IndexSet(integer: 2), with: .automatic)
-            case .failure(let error):
-                self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
+            case .failure(_):
+                print("Failing mutual friends")
+//                self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
             default:
                 break
             }
-        })
+        }
     }
 }
 
@@ -126,8 +129,10 @@ extension OtherPersonAboutViewController: UITableViewDataSource {
             }
         } else { // invite cell
             let cell = tableView.dequeueReusableCell(withIdentifier: OtherPersonAboutInviteTableViewCell.identifier, for: indexPath) as! OtherPersonAboutInviteTableViewCell
-//            cell.logoImageView.sd_setImage(with: mutualFriends![indexPath.row].0)
-            cell.titleLabel.text = mutualFriends![indexPath.row].1
+            let mutualFriend = mutualFriends![indexPath.row]
+            
+            cell.logoImageView.sd_setImage(with: mutualFriend.profileUrl)
+            cell.titleLabel.text = mutualFriend.displayName
             return cell
         }
     }

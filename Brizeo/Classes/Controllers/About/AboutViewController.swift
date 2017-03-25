@@ -106,12 +106,8 @@ class AboutViewController: UIViewController {
         registerHeaderViews()
         
         fetchPassions()
-//        fetchMutualFriends()
         
         configureKeyboardBehaviour()
-        
-//        // hide keyboard on click anywhere
-//        hideKeyboardWhenTappedAround()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -210,19 +206,6 @@ class AboutViewController: UIViewController {
                 }
             }
         }
-    }
-    
-    fileprivate func fetchMutualFriends() {
-//        UserProvider.getMutualFriendsOfCurrentUser(User.current()!, andSecondUser: user, completion: { (result) in
-//            switch result {
-//            case .success(let value):
-//                self.mutualFriends = value
-//                self.delegate.mutualFriendsCount(value.count)
-//                self.tableView.reloadSections(IndexSet(integer: Sections.mutualFriends.rawValue), with: UITableViewRowAnimation.automatic)
-//            case .failure(let error):
-//                self.showAlert(LocalizableString.Error.localizedString, message: error, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
-//            }
-//        })
     }
 }
 

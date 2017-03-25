@@ -11,6 +11,7 @@ import Moya_ObjectMapper
 import ObjectMapper
 
 class LastActiveDateTransform: TransformType {
+    
     public typealias Object = Date
     public typealias JSON = String
     
@@ -26,7 +27,7 @@ class LastActiveDateTransform: TransformType {
     
     open func transformToJSON(_ value: Date?) -> String? {
         if let date = value {
-            return date.toFacebookString
+            return date.toLongString
         }
         
         return nil
@@ -34,6 +35,7 @@ class LastActiveDateTransform: TransformType {
 }
 
 class FacebookDateTransform: TransformType {
+    
     public typealias Object = Date
     public typealias JSON = String
     

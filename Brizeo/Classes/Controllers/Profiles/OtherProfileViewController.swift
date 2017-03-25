@@ -50,7 +50,7 @@ class OtherProfileViewController: BasicViewController {
     
     var user: User?
     var userId: String?
-    var mutualFriends: [(String, String)]?
+    var mutualFriends: [User]?
     var passions: [Passion]?
     var detailsController: OtherPersonDetailsTabsViewController!
     
@@ -129,23 +129,25 @@ class OtherProfileViewController: BasicViewController {
     }
     
     fileprivate func fetchMutualFriends() {
+        
         guard let user = user else {
             return
         }
         
-        let currentUser = UserProvider.shared.currentUser!
-        UserProvider.getMutualFriendsOfCurrentUser(currentUser, andSecondUser: user, completion: { (result) in
+        UserProvider.getMutualFriends(for: user) { (result) in
             switch result {
-            case .success(let value):
-                self.mutualFriends = value
-                self.friendsCountLabel.text = "\(value.count)"
+            case .success(let count, let users):
+                
+                self.mutualFriends = users
+                self.friendsCountLabel.text = "\(count)"
             case .failure(let error):
+                
                 self.friendsCountLabel.text = "0"
-                self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
+                //self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
             default:
                 break
             }
-        })
+        }
     }
     
     fileprivate func fetchPassions() {
@@ -303,12 +305,13 @@ class OtherProfileViewController: BasicViewController {
         }
         
         if let userInfo = notification.userInfo as? [String: Any] {
-            let friends = userInfo["mutualFriends"] as? [(String, String)]
+            let friends = userInfo["mutualFriends"] as? [User]
             let userId = userInfo["userId"] as? String? ?? "-1"
+            let count = userInfo["count"] as? Int ?? 0
             
             if userId == user!.objectId {
                 self.mutualFriends = friends
-                self.friendsCountLabel.text = "\(mutualFriends?.count ?? 0)"
+                self.friendsCountLabel.text = "\(count)"
             }
         }
     }
@@ -392,6 +395,7 @@ class OtherProfileViewController: BasicViewController {
         if detailsController == nil {
             detailsController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.detailsControllerId)!
             detailsController.user = user
+            // TODO:
             detailsController.mutualFriends = mutualFriends
             
             detailsController.view.frame = CGRect(origin: CGPoint(x: 0, y: view.frame.height), size: CGSize(width: view.frame.width, height: view.frame.height - ThemeManager.tabbarHeight()))

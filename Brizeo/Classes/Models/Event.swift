@@ -28,6 +28,7 @@ class Event: NSObject, Mappable {
         case distance = "distance"
         case attendingsUsers = "attendingsUsers"
         case attendingsIds = "attendingsIds"
+        case facebookId = "facebookId"
     }
     
     // MARK: - Properties
@@ -94,6 +95,7 @@ class Event: NSObject, Mappable {
     func mapping(map: Map) {
 
         objectId <- map[JSONKeys.objectId.rawValue]
+        facebookId <- map[JSONKeys.facebookId.rawValue]
         name <- map[JSONKeys.name.rawValue]
         information <- map[JSONKeys.information.rawValue]
         latitude <- map[JSONKeys.latitude.rawValue]

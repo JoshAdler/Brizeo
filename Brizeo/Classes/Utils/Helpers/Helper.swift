@@ -166,13 +166,26 @@ class Helper: NSObject {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-        return dateFormatter.date(from: string)
+        
+        guard let date = dateFormatter.date(from: string) else {
+            return nil
+        }
+        
+        dateFormatter.timeZone = TimeZone.current
+        let timeStamp = dateFormatter.string(from: date)
+        
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        let newDate = dateFormatter.date(from: timeStamp)
+        
+        return newDate
     }
     
     class func convertFacebookStringToDate(string: String) -> Date? {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"//"yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-        return dateFormatter.date(from: string)
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        let date = dateFormatter.date(from: string)
+        
+        return date
     }
     
     class func minutes(since date: Date) -> String {

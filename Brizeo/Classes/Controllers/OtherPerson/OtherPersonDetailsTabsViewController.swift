@@ -29,7 +29,7 @@ class OtherPersonDetailsTabsViewController: BasicViewController {
     var momentsController: MomentsViewController!
     var tripsController: TripsViewController!
     var user: User!
-    var mutualFriends: [(String, String)]?
+    var mutualFriends: [User]?
     
     // MARK: - Controller lifecycle
     

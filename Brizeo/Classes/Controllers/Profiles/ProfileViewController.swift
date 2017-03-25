@@ -188,12 +188,12 @@ class ProfileViewController: UIViewController {
         let deleteMedia = UIAlertAction(title: LocalizableString.Delete.localizedString, style: UIAlertActionStyle.default, handler: {
             (alert: UIAlertAction!) -> Void in
             
-            guard self.indexOfMediaToChange >= 0 && self.indexOfMediaToChange < (self.user.uploadFiles?.count ?? 0) else {
+            guard self.indexOfMediaToChange >= 0 && self.indexOfMediaToChange < self.user.uploadFiles.count else {
                 assertionFailure("Bad index for deleting a media")
                 return
             }
             
-            let oldUrl = self.user.uploadFiles?[self.indexOfMediaToChange].mainUrl
+            let oldUrl = self.user.uploadFiles[self.indexOfMediaToChange].mainUrl
             self.uploadFile(file: nil, self.updateFileType, oldUrl)
         })
         
@@ -347,8 +347,8 @@ extension ProfileViewController: UICollectionViewDataSource {
         cell.isDeleteButtonHidden = true
 
         //TODO: check whether it can be video here.
-        if indexPath.row < (user.uploadFiles?.count ?? 0) {
-            if let imageURL = user.uploadFiles?[indexPath.row].imageUrl {
+        if indexPath.row < user.uploadFiles.count {
+            if let imageURL = user.uploadFiles[indexPath.row].imageUrl {
                 cell.imageView.sd_setImage(with: imageURL)
                 cell.isDeleteButtonHidden = false
             } else {
@@ -366,7 +366,7 @@ extension ProfileViewController: UICollectionViewDataSource {
 extension ProfileViewController: UICollectionViewDelegate {
     //TODO: check whether it is clicking okay with many uploaded files/idnexes/crashes
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.row < (user.uploadFiles?.count ?? 0) { // show media
+        if indexPath.row < user.uploadFiles.count { // show media
             let mediaController: MediaViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.mediaController)!
             mediaController.initialIndex = indexPath.row + 1
             mediaController.media = user.allMedia
@@ -418,8 +418,8 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         // get old url/new file
         var oldUrl: String? = nil
         if indexOfMediaToChange != -1 {
-            if indexOfMediaToChange < (user.uploadFiles?.count ?? 0) {
-                oldUrl = user.uploadFiles?[indexOfMediaToChange].mainUrl
+            if indexOfMediaToChange < user.uploadFiles.count {
+                oldUrl = user.uploadFiles[self.indexOfMediaToChange].mainUrl
             }
         }
         
@@ -473,8 +473,8 @@ extension ProfileViewController: GBHFacebookImagePickerDelegate {
                 // get old url/new file
                 var oldUrl: String? = nil
                 if self.indexOfMediaToChange != -1 {
-                    if self.indexOfMediaToChange < (self.user.uploadFiles?.count ?? 0) {
-                        oldUrl = self.user.uploadFiles?[self.indexOfMediaToChange].mainUrl
+                    if self.indexOfMediaToChange < self.user.uploadFiles.count {
+                        oldUrl = self.user.uploadFiles[self.indexOfMediaToChange].mainUrl
                     }
                 }
                 
@@ -540,8 +540,8 @@ extension ProfileViewController: OLInstagramImagePickerControllerDelegate {
                     // get old url/new file
                     var oldUrl: String? = nil
                     if self.indexOfMediaToChange != -1 {
-                        if self.indexOfMediaToChange < (self.user.uploadFiles?.count ?? 0) {
-                            oldUrl = self.user.uploadFiles?[self.indexOfMediaToChange].mainUrl
+                        if self.indexOfMediaToChange < self.user.uploadFiles.count {
+                            oldUrl = self.user.uploadFiles[self.indexOfMediaToChange].mainUrl
                         }
                     }
                     

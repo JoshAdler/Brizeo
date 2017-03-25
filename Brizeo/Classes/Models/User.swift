@@ -104,11 +104,11 @@ class User: Mappable {
     var locationLatitude: Double?
     
     // files
-    var profileImage: FileObjectInfo?
-    var uploadFiles: [FileObject]?
+    var thumbnailImageURLs: [String]?
+    var otherProfileImagesURLs: [String]?
     
-    var thumbnailImages: [String: String]?
-    var profileUploadImage: UIImage?
+    var profileImage: FileObjectInfo?
+    var uploadFiles = [FileObject]()
     
     // match status
     var status: MatchingStatus = .noActionsBetweenUsers
@@ -185,9 +185,7 @@ class User: Mappable {
             media.append(FileObject(info: profileImage!))
         }
         
-        if uploadFiles != nil {
-            media.append(contentsOf: uploadFiles!)
-        }
+        media.append(contentsOf: uploadFiles)
         
         return media
     }
@@ -258,11 +256,9 @@ class User: Mappable {
             profileImage = FileObjectInfo(urlStr: profileImageURL)
         }
         
-        var files = [FileObject]()
-        for url in uploadedURLs {
-            files.append(FileObject(info: FileObjectInfo(urlStr: url)))
+        if uploadedURLs.count > 0 {
+            otherProfileImagesURLs = uploadedURLs
         }
-        uploadFiles = files
     }
     
     func mapping(map: Map) {
@@ -304,31 +300,32 @@ class User: Mappable {
         
         // files
         profileImage <- (map[JSONKeys.profileImage.rawValue], FileObjectInfoTransform())
-        uploadFiles <- (map[JSONKeys.otherProfileImages.rawValue], FileObjectTransform())
-        thumbnailImages <- (map[JSONKeys.thumbnailImages.rawValue], ThumbnailImagesTransform())
+        thumbnailImageURLs <- map[JSONKeys.thumbnailImages.rawValue]
+        otherProfileImagesURLs <- map[JSONKeys.otherProfileImages.rawValue]
         
         status <- (map[JSONKeys.status.rawValue], EnumTransform<MatchingStatus>())
         deviceToken <- map[JSONKeys.deviceToken.rawValue]
         
         // operate already created upload files
-        if let thumbnailImages = thumbnailImages {
-            
-            guard let uploadFiles = uploadFiles else {
-                return
-            }
-            
-            for (key, value) in thumbnailImages {
+        uploadFiles.removeAll()
+        if otherProfileImagesURLs != nil && thumbnailImageURLs != nil {
+           
+            for i in 0..<otherProfileImagesURLs!.count {
                 
-                if value == "" {
-                    continue
+                let fileURL = otherProfileImagesURLs![i]
+                let thumbnailURL = thumbnailImageURLs![i]
+                var file: FileObject
+                
+                if thumbnailURL.numberOfCharactersWithoutSpaces() > 0 { // video
+                    file = FileObject(
+                        thumbnailImage: FileObjectInfo(urlStr: thumbnailURL),
+                        videoInfo: FileObjectInfo(urlStr: fileURL)
+                    )
+                } else { // image
+                    file = FileObject(info: FileObjectInfo(urlStr: fileURL))
                 }
                 
-                let newFile = FileObject(
-                    thumbnailImage: FileObjectInfo(urlStr: value),
-                    videoInfo: FileObjectInfo(urlStr: uploadFiles[Int(key)!].mainUrl!)
-                )
-                
-                self.uploadFiles?[Int(key)!] = newFile
+                uploadFiles.append(file)
             }
         }
     }
