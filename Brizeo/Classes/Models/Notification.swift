@@ -47,19 +47,15 @@ class Notification: Mappable {
     var senderUser: User?
     var moment: Moment?
     var pushType: NotificationType!
-    var createdAt: Date?
-    var updatedAt: Date?
+    var createdAt: String?
+    var updatedAt: String?
     var isAlreadyViewed: Bool = false
     
-    var shortTime: String? {
-        
-        guard let createdAt = createdAt else {
-            return nil
+    var createDate: Date? {
+        if let createdAt = createdAt {
+            return Helper.convertStringToDate(string: createdAt)
         }
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM d, yyyy"
-        return formatter.string(from: createdAt)
+        return nil
     }
     
     // MARK: - Init
@@ -73,8 +69,8 @@ class Notification: Mappable {
         senderUser <- map[JSONKeys.user.rawValue]
         moment <- map[JSONKeys.moment.rawValue]
         pushType <- (map[JSONKeys.pushType.rawValue], EnumTransform<NotificationType>())
-        createdAt <- (map[JSONKeys.createdAt.rawValue], LastActiveDateTransform())
-        updatedAt <- (map[JSONKeys.updatedAt.rawValue], LastActiveDateTransform())
+        createdAt <- map[JSONKeys.createdAt.rawValue]
+        updatedAt <- map[JSONKeys.updatedAt.rawValue]
         isAlreadyViewed <- map[JSONKeys.isAlreadyViewed.rawValue]
     }
 }
