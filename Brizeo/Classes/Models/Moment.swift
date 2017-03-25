@@ -58,7 +58,7 @@ class Moment: Mappable, Equatable {
     var thumbnailFile: FileObjectInfo?
     var user: User!
     var updatedAt: Date? = Date()
-    var createdAt: Date? = Date()
+    var createdAt: String?
     var compressedThumbnailImageURL: String?
     
     //variables for uploading
@@ -149,7 +149,7 @@ class Moment: Mappable, Equatable {
         // basic information
         capture <- map[JSONKeys.momentDescription.rawValue]
         updatedAt <- (map[JSONKeys.updatedAt.rawValue], LastActiveDateTransform())
-        createdAt <- (map[JSONKeys.createdAt.rawValue], LastActiveDateTransform())
+        createdAt <- map[JSONKeys.createdAt.rawValue]
         
         // location
         locationLongitude <- (map[JSONKeys.longitude.rawValue], LocationTransform())
