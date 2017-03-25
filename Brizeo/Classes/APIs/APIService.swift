@@ -134,7 +134,7 @@ extension APIService: TargetType {
 
     var method: Moya.Method {
         switch self {
-        case .createNewUser(_), .reportMoment(_, _), .reportUser(_, _), .notifyAdminAboutDownloads(_, _), .approveMatch(_, _), .updateUserFile(_, _, _, _), .saveEvents(_):
+        case .createNewUser(_), .reportMoment(_, _), .reportUser(_, _), .notifyAdminAboutDownloads(_, _), .approveMatch(_, _), .updateUserFile(_, _, _, _), .saveEvents(_), .getFacebookFriends(_):
             return .post
         case .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .createNewMoment(_), .likeMoment(_, _), .updateMoment(_), .updateNotification(_), .getEvents(_, _, _):
             return .put

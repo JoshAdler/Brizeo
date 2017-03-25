@@ -30,7 +30,16 @@ class FileObjectInfo: NSObject {
         url = JSON[JSONKeys.url.rawValue] as? String
     }
     
-    init(urlStr: String) {
+    init?(urlStr: String?) {
+        
+        guard let urlStr = urlStr else {
+            return nil
+        }
+        
+        guard urlStr.numberOfCharactersWithoutSpaces() > 0 else {
+            return nil
+        }
+        
         self.url = urlStr
     }
     

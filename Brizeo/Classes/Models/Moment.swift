@@ -59,7 +59,7 @@ class Moment: Mappable, Equatable {
     var user: User!
     var updatedAt: Date? = Date()
     var createdAt: String?
-    var compressedThumbnailImageURL: String?
+    var compressedThumbnailFile: FileObjectInfo?
     
     //variables for uploading
     var image: UIImage?
@@ -80,6 +80,10 @@ class Moment: Mappable, Equatable {
     var imageUrl: URL? {
         
         if let url = thumbnailFile?.url { // thumbnail url
+            return URL(string: url)
+        }
+        
+        if let url = compressedThumbnailFile?.url { // compressed url
             return URL(string: url)
         }
         
@@ -108,7 +112,7 @@ class Moment: Mappable, Equatable {
         if hasVideo {
             return FileObject(thumbnailImage: thumbnailFile!, videoInfo: file)
         } else {
-            return FileObject(info: file)
+            return FileObject(thumbnailImage: compressedThumbnailFile, imageInfo: file)
         }
     }
     
@@ -158,7 +162,7 @@ class Moment: Mappable, Equatable {
         // uploaded image url
         file <- (map[JSONKeys.momentsUploadImage.rawValue], FileObjectInfoTransform())
         thumbnailFile <- (map[JSONKeys.thumbnailImage.rawValue], FileObjectInfoTransform())
-        compressedThumbnailImageURL <- map[JSONKeys.compressedThumbnailImageURL.rawValue]
+        compressedThumbnailFile <- (map[JSONKeys.compressedThumbnailImageURL.rawValue], FileObjectInfoTransform())
     }
     
     // MARK: - Override methods

@@ -48,7 +48,7 @@ class User: Mappable {
         case objectId = "objectId"
         case personalText = "personalText"
         case profileImage = "mainProfileImage"
-        case uploadImages = "uploadImages"
+        case profileImageThumbnail = "mainthumbnailImage"
         case username = "username"
         case superUser = "superUser"
         case primaryPassionId = "primaryPassionId"
@@ -61,9 +61,9 @@ class User: Mappable {
         case invitedByUserId = "invitedByUserId"
         case invitedByUserName = "invitedByUserName"
         case status = "status"
-        case otherProfileImages = "otherProfileImages"
         case deviceToken = "deviceToken"
         case thumbnailImages = "thumbnailImages"
+        case otherProfileImages = "otherProfileImages"
     }
     
     // MARK: - Properties
@@ -107,7 +107,9 @@ class User: Mappable {
     var thumbnailImageURLs: [String]?
     var otherProfileImagesURLs: [String]?
     
-    var profileImage: FileObjectInfo?
+    var profileImageURL: String?
+    var profileImageThumbnailURL: String?
+    var profileImage: FileObject?
     var uploadFiles = [FileObject]()
     
     // match status
@@ -168,21 +170,18 @@ class User: Mappable {
             return false
         }
         
-        return profileImage?.url != nil
+        return profileImage?.imageUrl != nil
     }
     
     var profileUrl: URL? {
-        guard let url = profileImage?.url else {
-            return nil
-        }
-        return URL(string: url)
+        return profileImage?.imageUrl
     }
     
     var allMedia: [FileObject] {
         var media = [FileObject]()
         
         if hasProfileImage {
-            media.append(FileObject(info: profileImage!))
+            media.append(profileImage!)
         }
         
         media.append(contentsOf: uploadFiles)
@@ -252,8 +251,8 @@ class User: Mappable {
         self.lastActiveTime = lastActiveDate
         self.displayName = displayName ?? "Mr./Mrs"
         
-        if let profileImageURL = profileImageURL {
-            profileImage = FileObjectInfo(urlStr: profileImageURL)
+        if let profileImageURL = profileImageURL, let fileInfo = FileObjectInfo(urlStr: profileImageURL) {
+            profileImage = FileObject(info: fileInfo)
         }
         
         if uploadedURLs.count > 0 {
@@ -299,12 +298,19 @@ class User: Mappable {
         locationLatitude <- map[JSONKeys.latitude.rawValue]
         
         // files
-        profileImage <- (map[JSONKeys.profileImage.rawValue], FileObjectInfoTransform())
+        profileImageURL <- map[JSONKeys.profileImage.rawValue]
+        profileImageThumbnailURL <- map[JSONKeys.profileImageThumbnail.rawValue]
         thumbnailImageURLs <- map[JSONKeys.thumbnailImages.rawValue]
         otherProfileImagesURLs <- map[JSONKeys.otherProfileImages.rawValue]
         
         status <- (map[JSONKeys.status.rawValue], EnumTransform<MatchingStatus>())
         deviceToken <- map[JSONKeys.deviceToken.rawValue]
+        
+        // operate profile image
+        profileImage = FileObject(
+            thumbnailImage: FileObjectInfo(urlStr: profileImageThumbnailURL),
+            imageInfo: FileObjectInfo(urlStr: profileImageURL)
+        )
         
         // operate already created upload files
         uploadFiles.removeAll()
@@ -314,16 +320,10 @@ class User: Mappable {
                 
                 let fileURL = otherProfileImagesURLs![i]
                 let thumbnailURL = thumbnailImageURLs![i]
-                var file: FileObject
-                
-                if thumbnailURL.numberOfCharactersWithoutSpaces() > 0 { // video
-                    file = FileObject(
-                        thumbnailImage: FileObjectInfo(urlStr: thumbnailURL),
-                        videoInfo: FileObjectInfo(urlStr: fileURL)
-                    )
-                } else { // image
-                    file = FileObject(info: FileObjectInfo(urlStr: fileURL))
-                }
+                let file = FileObject(
+                    thumbnailImage: FileObjectInfo(urlStr: thumbnailURL),
+                    fileInfo: FileObjectInfo(urlStr: fileURL)!
+                )
                 
                 uploadFiles.append(file)
             }

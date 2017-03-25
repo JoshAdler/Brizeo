@@ -33,7 +33,7 @@ class FileObject: NSObject {
     var videoFile: FileObjectInfo?
     
     var isImage: Bool {
-        return imageFile != nil
+        return type == .image
     }
     
     var imageUrl: URL? {
@@ -79,13 +79,35 @@ class FileObject: NSObject {
         }
     }
     
-    init(info: FileObjectInfo) {
+    init(info: FileObjectInfo) { // image file
         imageFile = info
     }
     
-    init(thumbnailImage: FileObjectInfo, videoInfo: FileObjectInfo) {
+    init(thumbnailImage: FileObjectInfo, videoInfo: FileObjectInfo) { // video file
         thumbFile = thumbnailImage
         videoFile = videoInfo
         type = .video
+    }
+    
+    init(thumbnailImage: FileObjectInfo?, imageInfo: FileObjectInfo?) { // image file
+        thumbFile = thumbnailImage
+        imageFile = imageInfo
+        type = .image
+    }
+    
+    init(thumbnailImage: FileObjectInfo?, fileInfo: FileObjectInfo) { // unknown type
+        
+        if let path = fileInfo.url, let url = URL(string: path) {
+            
+            if url.pathExtension == "jpeg" || url.pathExtension == "jpg" || url.pathExtension == "png" {
+                type = .image
+                thumbFile = thumbnailImage
+                imageFile = fileInfo
+            } else {
+                type = .video
+                thumbFile = thumbnailImage
+                videoFile = fileInfo
+            }
+        }
     }
 }

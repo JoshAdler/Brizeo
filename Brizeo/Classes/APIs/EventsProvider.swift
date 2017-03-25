@@ -160,12 +160,13 @@ class EventsProvider {
             }
             
             // filter events to get only attended by current user
-            let attendedEvents = eventsArray.filter({
+            /*let attendedEvents = eventsArray.filter({
                 if let status = $0["rsvp_status"] as? String {
                     return status == "attending"
                 }
                 return false
-            })
+            })*/
+            let attendedEvents = eventsArray
             
             var events = [Event]()
             for eventData in attendedEvents {
