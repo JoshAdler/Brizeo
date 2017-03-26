@@ -48,6 +48,7 @@ class UserProvider: NSObject {
     
     var currentUser: User?
     var needToSaveChanges: Bool = false
+    var authToken: String?
     
     // MARK: - Init
     

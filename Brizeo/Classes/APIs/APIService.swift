@@ -131,7 +131,7 @@ extension APIService: TargetType {
             return "/fbusers/"
         }
     }
-
+    
     var method: Moya.Method {
         switch self {
         case .createNewUser(_), .reportMoment(_, _), .reportUser(_, _), .notifyAdminAboutDownloads(_, _), .approveMatch(_, _), .updateUserFile(_, _, _, _), .saveEvents(_), .getFacebookFriends(_):
@@ -274,4 +274,21 @@ extension APIService: TargetType {
             return .request
         }
     }
+    
+//    static func APIProvider() -> MoyaProvider<APIService> {
+//        
+//        let endpointClosure = { (target: APIService) -> Endpoint<APIService> in
+//            let defaultEndpoint = MoyaProvider.defaultEndpointMapping(for: target)
+//            
+//            // Sign all non-authenticating requests
+//            switch target {
+//            case .createNewUser(_), .getCurrentUser(_):
+//                return defaultEndpoint
+//            default:
+//                return defaultEndpoint.adding(newHTTPHeaderFields: ["AUTHENTICATION_TOKEN": UserProvider.shared.authToken ?? ""])
+//            }
+//        }
+//        let provider = MoyaProvider<APIService>(endpointClosure: endpointClosure)
+//        return provider
+//    }
 }
