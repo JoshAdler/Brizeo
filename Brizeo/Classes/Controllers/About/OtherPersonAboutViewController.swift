@@ -141,6 +141,18 @@ extension OtherPersonAboutViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension OtherPersonAboutViewController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let user = mutualFriends![indexPath.row]
+        let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
+        
+        otherPersonProfileController.user = user
+        otherPersonProfileController.userId = user.objectId
+        
+        Helper.currentTabNavigationController()?.pushViewController(otherPersonProfileController, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         if indexPath.section == 0 { // text cell
