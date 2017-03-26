@@ -36,6 +36,19 @@ class FileObject: NSObject {
         return type == .image
     }
     
+    var originalImageUrl: URL? {
+        
+        if let url = imageFile?.url { // image url
+            return URL(string: url)
+        }
+        
+        if let url = thumbFile?.url { // thumbnail url
+            return URL(string: url)
+        }
+        
+        return  nil
+    }
+    
     var imageUrl: URL? {
         
         if let url = thumbFile?.url { // thumbnail url

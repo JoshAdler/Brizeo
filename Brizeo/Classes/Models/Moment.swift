@@ -34,7 +34,6 @@ class Moment: Mappable, Equatable {
         case longitude = "currentLocation.longitude"
         case updatedAt = "updatedAt"
         case createdAt = "createdAt"
-        case compressedThumbnailImageURL = "compressedThumbnailImageURL"
     }
     
     struct Constants {
@@ -59,7 +58,6 @@ class Moment: Mappable, Equatable {
     var user: User!
     var updatedAt: Date? = Date()
     var createdAt: String?
-    var compressedThumbnailFile: FileObjectInfo?
     
     //variables for uploading
     var image: UIImage?
@@ -67,7 +65,7 @@ class Moment: Mappable, Equatable {
     var thumbnailImage: UIImage?
     
     var hasVideo: Bool {
-        return thumbnailFile != nil
+        return file.isVideoInfo
     }
     
     var hasLocation: Bool {
@@ -83,15 +81,28 @@ class Moment: Mappable, Equatable {
             return URL(string: url)
         }
         
-        if let url = compressedThumbnailFile?.url { // compressed url
-            return URL(string: url)
-        }
-        
         if let url = file?.url { // image url
             return URL(string: url)
         }
         
         return  nil
+    }
+    
+    var originalImageURL: URL? {
+        
+        var url: String?
+        
+        if hasVideo {
+            url = thumbnailFile?.url
+        } else {
+            url = file.url
+        }
+        
+        guard url != nil  else {
+            return nil
+        }
+        
+        return URL(string: url!)
     }
     
     var location: CLLocation? {
@@ -109,11 +120,12 @@ class Moment: Mappable, Equatable {
     }
     
     var asFileObject: FileObject {
-        if hasVideo {
+        return FileObject(thumbnailImage: thumbnailFile, fileInfo: file)
+        /*if hasVideo {
             return FileObject(thumbnailImage: thumbnailFile!, videoInfo: file)
         } else {
-            return FileObject(thumbnailImage: compressedThumbnailFile, imageInfo: file)
-        }
+            return FileObject(thumbnailImage: thumbnailFile!, imageInfo: file)
+        }*/
     }
     
     var shortCapture: String {
@@ -162,7 +174,6 @@ class Moment: Mappable, Equatable {
         // uploaded image url
         file <- (map[JSONKeys.momentsUploadImage.rawValue], FileObjectInfoTransform())
         thumbnailFile <- (map[JSONKeys.thumbnailImage.rawValue], FileObjectInfoTransform())
-        compressedThumbnailFile <- (map[JSONKeys.compressedThumbnailImageURL.rawValue], FileObjectInfoTransform())
     }
     
     // MARK: - Override methods

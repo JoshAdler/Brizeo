@@ -23,6 +23,19 @@ class FileObjectInfo: NSObject {
     var name: String?
     var url: String?
     
+    var isVideoInfo: Bool {
+        
+        guard let url = url, let link = URL(string: url) else {
+            return false
+        }
+        
+        if link.pathExtension == "jpeg" || link.pathExtension == "jpg" || link.pathExtension == "png" {
+            return false
+        } else {
+            return true
+        }
+    }
+    
     // MARK: - Init 
     
     init(with JSON: [String: Any]) {

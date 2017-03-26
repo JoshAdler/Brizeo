@@ -180,14 +180,14 @@ extension MediaViewController: UICollectionViewDataSource {
         switch item.type {
         case .video:
             cell.isPlayIconHidden = false
-            cell.imageView.sd_setImage(with: URL(string: item.thumbFile!.url!))
+//            cell.imageView.sd_setImage(with: URL(string: item.thumbFile!.url!))
             break
         case .image:
             cell.isPlayIconHidden = true
-            cell.imageView.sd_setImage(with: URL(string: item.imageFile!.url!))
             break
         }
 
+        cell.imageView.sd_setImage(with: item.originalImageUrl)
         captureLabel.text = moment != nil ? moment?.capture : nil
         
         return cell
