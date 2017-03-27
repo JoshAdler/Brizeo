@@ -240,7 +240,7 @@ class User: Mappable {
     // MARK: - Init methods
     
     required init?(map: Map) { }
-    
+    //TODO: there is a bug here with profileImageURL
     init(objectId: String, facebookId: String, displayName: String?, email: String, gender: Gender, profileImageURL: String?, workInfo: String?, studyInfo: String?, uploadedURLs: [String], lastActiveDate: Date?) {
         self.objectId = objectId
         self.facebookId = facebookId
@@ -250,10 +250,10 @@ class User: Mappable {
         self.email = email
         self.lastActiveTime = lastActiveDate
         self.displayName = displayName ?? "Mr./Mrs"
-        
-        if let profileImageURL = profileImageURL, let fileInfo = FileObjectInfo(urlStr: profileImageURL) {
-            profileImage = FileObject(info: fileInfo)
-        }
+        self.profileImageURL = profileImageURL
+        //if let profileImageURL = profileImageURL, let fileInfo = FileObjectInfo(urlStr: profileImageURL) {
+//            profileImage = FileObject(info: fileInfo)
+        //}
         
         if uploadedURLs.count > 0 {
             otherProfileImagesURLs = uploadedURLs

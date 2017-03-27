@@ -187,7 +187,7 @@ extension MediaViewController: UICollectionViewDataSource {
             break
         }
 
-        cell.imageView.sd_setImage(with: item.originalImageUrl)
+        cell.imageView.sd_setImage(with: item.imageUrl)//item.originalImageUrl)
         captureLabel.text = moment != nil ? moment?.capture : nil
         
         return cell

@@ -75,6 +75,7 @@ class UserProvider: NSObject {
         if shared.currentUser != nil {
             
             shared.currentUser?.deviceToken = ""
+            shared.authToken = nil
             UserProvider.updateUser(user: shared.currentUser!, completion: nil)
         }
         
