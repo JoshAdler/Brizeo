@@ -36,6 +36,10 @@ class UserProvider: NSObject {
         static let workParameters = ["fields" : "work"]
         static let educationParameters = ["fields" : "education"]
     }
+    
+    struct JSONKeys {
+        static let jwt = "jwt"
+    }
 
     typealias UserCompletion = (Result<User>) -> Void
     typealias UsersCompletion = (Result<[User]>) -> Void
@@ -86,7 +90,7 @@ class UserProvider: NSObject {
         }
         
         // load user by facebook id
-        let provider = MoyaProvider<APIService>()
+        let provider = APIService.APIProvider()
         provider.request(.getCurrentUser(facebookId: facebookId)) { (result) in
             switch result {
             case .success(let response):
@@ -97,11 +101,12 @@ class UserProvider: NSObject {
                 }
                 
                 do {
+                    // parse auth token
+                    shared.authToken = try response.mapString(atKeyPath: JSONKeys.jwt)
+                    
                     let user = try response.mapObject(User.self)
                     
                     shared.currentUser = user
-                    //updateUsersInfo()
-                    
                     completion?(.success(user))
                     
                     // load preferences
@@ -120,7 +125,7 @@ class UserProvider: NSObject {
     
     class func updateUser(user: User, completion: ((Result<User>) -> Void)?) {
         
-        let provider = MoyaProvider<APIService>()
+        let provider = APIService.APIProvider()
         provider.request(.updateUser(user: user)) { (result) in
             switch result {
             case .success(let response):
@@ -231,7 +236,7 @@ class UserProvider: NSObject {
             return
         }
         
-        let provider = MoyaProvider<APIService>()
+        let provider = APIService.APIProvider()
         provider.request(.updateUserFile(file: file, userId: currentUser.objectId, type: type.rawValue, oldURL: oldURL)) { (result) in
             switch result {
             case .success(let response):
@@ -322,7 +327,7 @@ class UserProvider: NSObject {
             return
         }
         
-        let provider = MoyaProvider<APIService>()
+        let provider = APIService.APIProvider()
         provider.request(.getUserWithStatus(currentUserId: currentUser.objectId, searchedUserId: searchedUserId)) { (result) in
             switch result {
             case .success(let response):
@@ -355,7 +360,7 @@ class UserProvider: NSObject {
             return
         }
         
-        let provider = MoyaProvider<APIService>()
+        let provider = APIService.APIProvider()
         provider.request(.reportUser(reporterId: currentUser.objectId, reportedId: user.objectId)) { (result) in
             switch result {
             case .success(let response):
@@ -420,7 +425,7 @@ class UserProvider: NSObject {
             return
         }
         
-        let provider = MoyaProvider<APIService>()
+        let provider = APIService.APIProvider()
         provider.request(.getFacebookFriends(facebookIds: ids!)) { (result) in
             switch(result) {
             case .success(let response):
@@ -441,7 +446,7 @@ class UserProvider: NSObject {
     
     fileprivate class func loadMutualFacebookFriends(facebookId: String, token: String, completion: @escaping (Result<(Int, [String])>) -> Void) {
         
-        let provider = MoyaProvider<APIService>()
+        let provider = APIService.APIProvider()
         provider.request(.mutualFriends(facebookId: facebookId, token: token)) { (result) in
             switch (result) {
             case .success(let response):
@@ -663,7 +668,7 @@ class UserProvider: NSObject {
     
     fileprivate class func createUser(user: User, completion: @escaping (Result<User>) -> Void) {
         
-        let provider = MoyaProvider<APIService>()
+        let provider = APIService.APIProvider()
         provider.request(.createNewUser(newUser: user)) { (result) in
             switch result {
             case .success(let response):
@@ -674,6 +679,9 @@ class UserProvider: NSObject {
                 }
                 
                 do {
+                    // parse auth token
+                    shared.authToken = try response.mapString(atKeyPath: JSONKeys.jwt)
+                    
                     let newUser = try response.mapObject(User.self)
                     
                     shared.currentUser = newUser

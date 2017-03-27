@@ -275,20 +275,20 @@ extension APIService: TargetType {
         }
     }
     
-//    static func APIProvider() -> MoyaProvider<APIService> {
-//        
-//        let endpointClosure = { (target: APIService) -> Endpoint<APIService> in
-//            let defaultEndpoint = MoyaProvider.defaultEndpointMapping(for: target)
-//            
-//            // Sign all non-authenticating requests
-//            switch target {
-//            case .createNewUser(_), .getCurrentUser(_):
-//                return defaultEndpoint
-//            default:
-//                return defaultEndpoint.adding(newHTTPHeaderFields: ["AUTHENTICATION_TOKEN": UserProvider.shared.authToken ?? ""])
-//            }
-//        }
-//        let provider = MoyaProvider<APIService>(endpointClosure: endpointClosure)
-//        return provider
-//    }
+    static func APIProvider() -> MoyaProvider<APIService> {
+        
+        let endpointClosure = { (target: APIService) -> Endpoint<APIService> in
+            let defaultEndpoint = MoyaProvider.defaultEndpointMapping(for: target)
+            
+            // Sign all non-authenticating requests
+            switch target {
+            case .createNewUser(_), .getCurrentUser(_):
+                return defaultEndpoint
+            default:
+                return defaultEndpoint.adding(newHTTPHeaderFields: ["x-access-token": UserProvider.shared.authToken ?? ""])
+            }
+        }
+        let provider = MoyaProvider<APIService>(endpointClosure: endpointClosure)
+        return provider
+    }
 }

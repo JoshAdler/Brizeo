@@ -26,7 +26,7 @@ class NotificationProvider: NSObject {
     
     class func getNotification(for userId: String, completion: @escaping NotificationsCompletion) {
         
-        let provider = MoyaProvider<APIService>()
+        let provider = APIService.APIProvider()
         provider.request(.getNotifications(userId: userId)) { (result) in
             switch result {
             case .success(let response):
@@ -60,7 +60,7 @@ class NotificationProvider: NSObject {
     
     class func updateNotification(notification: Notification, completion: ((Result<Notification>) -> Void)?) {
         
-        let provider = MoyaProvider<APIService>()
+        let provider = APIService.APIProvider()
         provider.request(.updateNotification(notification: notification)) { (result) in
             switch result {
             case .success(let response):

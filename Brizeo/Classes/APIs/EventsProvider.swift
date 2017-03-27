@@ -49,7 +49,7 @@ class EventsProvider {
             switch(result) {
             case .success(let events):
                 
-                let provider = MoyaProvider<APIService>()
+        let provider = APIService.APIProvider()
                 provider.request(.saveEvents(events: events)) { (result) in
                     
                     switch result {
@@ -82,7 +82,7 @@ class EventsProvider {
     
     class func getAllEvents(sortingFlag: SortingFlag, location: CLLocationCoordinate2D, completion: @escaping EventsCompletion) {
         
-        let provider = MoyaProvider<APIService>()
+        let provider = APIService.APIProvider()
         provider.request(.getEvents(sortFlag: sortingFlag.APIPresentation, longitude: location.longitude, latitude: location.latitude)) { (result) in
             
             switch result {
@@ -110,7 +110,7 @@ class EventsProvider {
     
     class func getMatchedEvents(sortingFlag: SortingFlag, location: CLLocationCoordinate2D, completion: @escaping EventsCompletion) {
         
-        let provider = MoyaProvider<APIService>()
+        let provider = APIService.APIProvider()
         provider.request(.getMatchedEvents(userId: UserProvider.shared.currentUser!.objectId, sortFlag: sortingFlag.APIPresentation, longitude: location.longitude, latitude: location.latitude)) { (result) in
             
             switch result {

@@ -25,7 +25,7 @@ class InfoProvider: NSObject {
             return
         }
         
-        let provider = MoyaProvider<APIService>()
+        let provider = APIService.APIProvider()
         provider.request(.notifyAdminAboutDownloads(userId: user.objectId, count: count)) { (result) in
             switch result {
             case .success(let response):

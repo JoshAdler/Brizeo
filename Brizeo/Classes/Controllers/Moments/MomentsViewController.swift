@@ -524,7 +524,7 @@ extension MomentsViewController: MomentTableViewCellDelegate {
         let likersController: LikesViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.likesControllerId)!
         likersController.moment = moment
         
-        navigationController?.pushViewController(likersController, animated: true)
+        Helper.currentTabNavigationController()?.pushViewController(likersController, animated: true)
     }
     
     func momentCellDidSelectOwnerProfile(_ cell: MomentTableViewCell) {

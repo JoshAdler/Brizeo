@@ -32,7 +32,7 @@ class PreferencesProvider: NSObject {
             return
         }
         
-        let provider = MoyaProvider<APIService>()
+        let provider = APIService.APIProvider()
         provider.request(.getPreferences(userId: userId)) { (result) in
             switch result {
             case .success(let response):
@@ -71,7 +71,7 @@ class PreferencesProvider: NSObject {
             return
         }
         
-        let provider = MoyaProvider<APIService>()
+        let provider = APIService.APIProvider()
         provider.request(.updatePreferences(userId: currentUser.objectId, preferences: preferences)) { (result) in
             switch result {
             case .success(let response):

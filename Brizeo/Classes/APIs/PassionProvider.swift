@@ -73,7 +73,7 @@ struct PassionsProvider {
     
     func getAllPassions(completion: ((Result<[Passion]>) -> Void)?) {
         
-        let provider = MoyaProvider<APIService>()
+        let provider = APIService.APIProvider()
         provider.request(.getAllPassions) { (result) in
             switch result {
             case .success(let response):
