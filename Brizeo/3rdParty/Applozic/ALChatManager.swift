@@ -363,11 +363,13 @@ func ALDefaultChatViewSettings ()
      
      
      /******************************************** NOTIIFCATION SETTINGS  ********************************************/
-     
-     ALUserDefaultsHandler.setDeviceApnsType(APNS_TYPE_DEVELOPMENT)
-     //For Distribution CERT::
-     //ALUserDefaultsHandler.setDeviceApnsType(APNS_TYPE_DISTRIBUTION)
-     
+    
+    #if PRODUCTION
+        ALUserDefaultsHandler.setDeviceApnsType(APNS_TYPE_DISTRIBUTION)
+    #else
+        ALUserDefaultsHandler.setDeviceApnsType(APNS_TYPE_DEVELOPMENT)
+    #endif
+    
      let appName = Bundle.main.infoDictionary!["CFBundleName"]
      ALApplozicSettings.setNotificationTitle((appName as AnyObject).string)
      

@@ -37,12 +37,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - AppDelegate livecycle
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
+
         //TODO: remove it before realise
         FirstEntranceProvider.shared.isFirstEntrancePassed = true
         
         // apply main theme for the app
         ThemeManager.applyGlobalTheme()
+        
+        registerForPushNotifications(application: application)
         
         // setup 3rd parties
         setupReachability()
@@ -54,8 +56,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // setup Facebook SDK
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-        
-        registerForPushNotifications(application: application)
 
         // TODO: replace GoogleAnalytics
 //        GoogleAnalyticsManager.setupGoogleAnalytics()
@@ -220,7 +220,7 @@ extension AppDelegate {
     }
     
     func connectToFcm() {
-        
+
         // Won't connect since there is no token
         guard FIRInstanceID.instanceID().token() != nil else {
             return;
@@ -242,6 +242,7 @@ extension AppDelegate {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         
         // firebase
+        FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: .prod)
         FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: .sandbox)
         
         // save token
@@ -285,6 +286,14 @@ extension AppDelegate {
         
         // Print full message.
         print(userInfo)
+        
+        if let dict = userInfo as? [String: Any] {
+            let pushNotification = PushNotification(dict: dict)
+            
+            if pushNotification.hasInfo {
+                NotificationProvider.operatePush(pushNotification)
+            }
+        }
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
@@ -312,6 +321,14 @@ extension AppDelegate {
         
         // Print full message.
         print("\(userInfo)")
+        
+        if let dict = userInfo as? [String: Any] {
+            let pushNotification = PushNotification(dict: dict)
+            
+            if pushNotification.hasInfo {
+                NotificationProvider.operatePush(pushNotification)
+            }
+        }
         
         completionHandler(.newData)
     }

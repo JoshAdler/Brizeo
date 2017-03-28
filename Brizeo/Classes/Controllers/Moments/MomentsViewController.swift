@@ -427,7 +427,24 @@ extension MomentsViewController: UITableViewDataSource {
         cell.actionButton.isEnabled = !moment.user.isSuperUser
         cell.playImageView.isHidden = !moment.hasVideo
         
-        cell.momentImageView.sd_setImage(with: moment.imageUrl)
+        if SDWebImageManager.shared().cachedImageExists(for: moment.imageUrl) {
+            cell.momentImageView.alpha = 1.0
+            cell.momentImageView.sd_setImage(with: moment.imageUrl)
+        } else {
+            cell.momentImageView.alpha = 0.0
+            cell.momentImageView.sd_setImage(with: moment.imageUrl, completed: { [weak cell, weak self] (image, error, cacheType, url) in
+                
+                if cell != nil && self != nil {
+                    guard let indexPath = tableView.indexPath(for: cell!) else { return }
+                    
+                    if self!.moments![indexPath.row].imageUrl != url { return }
+                    
+                    UIView.animate(withDuration: 0.2, animations: { 
+                        cell?.momentImageView.alpha = 1.0
+                    })
+                }
+            })
+        }
         cell.ownerLogoButton.sd_setImage(with: moment.user.profileUrl, for: .normal)
         
         cell.notificationView.isHidden = true

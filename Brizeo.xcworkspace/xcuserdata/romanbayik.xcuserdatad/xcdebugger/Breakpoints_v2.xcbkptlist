@@ -17,38 +17,6 @@
             endingLineNumber = "397"
             landmarkName = "getMutualFriends(for:completion:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "static Brizeo.UserProvider.(getMutualFriends (for : Brizeo.User, completion : (Brizeo.Result&lt;(Swift.Int, Swift.Array&lt;Brizeo.User&gt;)&gt;) -&gt; ()) -&gt; ()).(closure #1)"
-                  moduleName = "Brizeo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Brizeo/Classes/APIs/UserProvider.swift"
-                  timestampString = "512312420.211344"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "397"
-                  endingLineNumber = "397"
-                  offsetFromSymbolStart = "404">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "static Brizeo.UserProvider.(getMutualFriends (for : Brizeo.User, completion : (Brizeo.Result&lt;(Swift.Int, Swift.Array&lt;Brizeo.User&gt;)&gt;) -&gt; ()) -&gt; ()).(closure #1).(closure #1)"
-                  moduleName = "Brizeo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Brizeo/Classes/APIs/UserProvider.swift"
-                  timestampString = "512312420.212885"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "399"
-                  endingLineNumber = "399"
-                  offsetFromSymbolStart = "88">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -234,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Brizeo/AppDelegate.swift"
-            timestampString = "512309458.554896"
+            timestampString = "512388334.406603"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "245"
-            endingLineNumber = "245"
+            startingLineNumber = "249"
+            endingLineNumber = "249"
             landmarkName = "application(_:didRegisterForRemoteNotificationsWithDeviceToken:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -266,12 +234,12 @@
                   moduleName = "Brizeo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Brizeo/Classes/APIs/UserProvider.swift"
-                  timestampString = "512312420.239858"
+                  timestampString = "512388335.768396"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "704"
                   endingLineNumber = "704"
-                  offsetFromSymbolStart = "28">
+                  offsetFromSymbolStart = "23">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -281,12 +249,12 @@
                   moduleName = "Brizeo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Brizeo/Classes/APIs/UserProvider.swift"
-                  timestampString = "512312420.241049"
+                  timestampString = "512388335.769603"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "706"
                   endingLineNumber = "706"
-                  offsetFromSymbolStart = "44">
+                  offsetFromSymbolStart = "62">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -336,6 +304,70 @@
             startingLineNumber = "301"
             endingLineNumber = "301"
             landmarkName = "mapping(map:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Brizeo/Classes/APIs/UserProvider.swift"
+            timestampString = "512338645.046207"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "684"
+            endingLineNumber = "684"
+            landmarkName = "createUser(user:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Brizeo/Classes/Utils/Helpers/Helper.swift"
+            timestampString = "512387982.562183"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "166"
+            endingLineNumber = "166"
+            landmarkName = "convertStringToDate(string:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Brizeo/AppDelegate.swift"
+            timestampString = "512388334.406603"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "application(_:didFinishLaunchingWithOptions:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Brizeo/Classes/Utils/Helpers/Helper.swift"
+            timestampString = "512388334.406603"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
+            landmarkName = "convertStringToDate(string:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

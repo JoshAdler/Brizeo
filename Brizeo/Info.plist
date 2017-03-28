@@ -2,21 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string>SourceSansPro-Black.otf</string>
-        <string>SourceSansPro-BlackIt.otf</string>
-        <string>SourceSansPro-Bold.otf</string>
-        <string>SourceSansPro-BoldIt.otf</string>
-        <string>SourceSansPro-ExtraLight.otf</string>
-        <string>SourceSansPro-ExtraLightIt.otf</string>
-        <string>SourceSansPro-It.otf</string>
-        <string>SourceSansPro-Light.otf</string>
-        <string>SourceSansPro-LightIt.otf</string>
-        <string>SourceSansPro-Regular.otf</string>
-        <string>SourceSansPro-Semibold.otf</string>
-        <string>SourceSansPro-SemiboldIt.otf</string>
-	</array>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -53,7 +40,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>10</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -117,10 +104,25 @@
 	<string>Application would like to use your current location.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Application would like to use your current location.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Application would like to use your photo.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Application would like to use your microphone.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Application would like to use your photo.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>SourceSansPro-Black.otf</string>
+		<string>SourceSansPro-BlackIt.otf</string>
+		<string>SourceSansPro-Bold.otf</string>
+		<string>SourceSansPro-BoldIt.otf</string>
+		<string>SourceSansPro-ExtraLight.otf</string>
+		<string>SourceSansPro-ExtraLightIt.otf</string>
+		<string>SourceSansPro-It.otf</string>
+		<string>SourceSansPro-Light.otf</string>
+		<string>SourceSansPro-LightIt.otf</string>
+		<string>SourceSansPro-Regular.otf</string>
+		<string>SourceSansPro-Semibold.otf</string>
+		<string>SourceSansPro-SemiboldIt.otf</string>
+	</array>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

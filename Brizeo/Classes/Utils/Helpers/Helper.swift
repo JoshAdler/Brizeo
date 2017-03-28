@@ -171,6 +171,8 @@ class Helper: NSObject {
             return nil
         }
         
+        return date
+/*
         dateFormatter.timeZone = TimeZone.current
         let timeStamp = dateFormatter.string(from: date)
         
@@ -178,6 +180,7 @@ class Helper: NSObject {
         let newDate = dateFormatter.date(from: timeStamp)
         
         return newDate
+ */
     }
     
     class func convertFacebookStringToDate(string: String) -> Date? {

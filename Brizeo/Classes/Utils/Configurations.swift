@@ -37,7 +37,7 @@ class Configurations: NSObject {
     
     // MARK: - General
     struct General {
-        static let apiURL = "http://ec2-54-244-190-99.us-west-2.compute.amazonaws.com:3000"
+        static let apiURL = "http://34.208.151.167:3000"/*"http://ec2-54-244-190-99.us-west-2.compute.amazonaws.com:3000"*/
         static let termsOfUseURL = "http://brizeo.com/terms/"
         static let photosCountToLoadAtStart = 5
     }

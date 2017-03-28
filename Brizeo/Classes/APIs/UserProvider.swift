@@ -198,7 +198,7 @@ class UserProvider: NSObject {
                             createUser(user: user, completion: { (result) in
                                 switch(result) {
                                 case .failure(let error):
-                                    CLSNSLogv("ERROR: Unable to retrieve user details from Facebook: %@", getVaList([error as CVarArg]))
+                                    CLSNSLogv("ERROR: Unable to create user from Facebook: %@", getVaList([error as CVarArg]))
                                     completion(.failure(error))
                                     break
                                 case .success(let user):
