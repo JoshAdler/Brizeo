@@ -33,11 +33,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var reach: Reachability?
     var window: UIWindow?
     let gcmMessageIDKey = "gcm.message_id"
+    
+    static var originalAppDelegate: AppDelegate!
 
     // MARK: - AppDelegate livecycle
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-
+        
+        AppDelegate.originalAppDelegate = self
+        
         //TODO: remove it before realise
         FirstEntranceProvider.shared.isFirstEntrancePassed = true
         
@@ -51,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupFirebase()
         setupFabric()
         setupMixpanel()
-        //setupLocalytics(with: launchOptions)
+        setupLocalytics(with: launchOptions)
         setupApplozic(with: launchOptions)
         
         // setup Facebook SDK
@@ -138,7 +142,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - Class methods
     
     class func shared() -> AppDelegate {
-        return UIApplication.shared.delegate as! AppDelegate
+        return originalAppDelegate
     }
 }
 
@@ -234,6 +238,9 @@ extension AppDelegate {
                 print("Unable to connect to FCM. \(error)")
             } else {
                 print("Connected to FCM.")
+                
+                // save token
+                NotificationProvider.updateCurrentUserToken()
             }
         }
     }
@@ -362,7 +369,8 @@ extension AppDelegate {
     }
     
     fileprivate func setupLocalytics(with launchOptions: [AnyHashable: Any]?) {
-        Localytics.autoIntegrate(Configurations.Localytics.appKey, launchOptions: launchOptions)
+        Localytics.autoIntegrate("0b17f3d9a8b43eb9365c298-916e3088-9c82-11e6-ac90-0098ae15fcaa", launchOptions: launchOptions)
+        
     }
     
     fileprivate func setupMixpanel() {

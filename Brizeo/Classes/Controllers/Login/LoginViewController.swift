@@ -103,8 +103,9 @@ class LoginViewController: UIViewController {
         ChatProvider.registerUserInChat()
         ChatProvider.createChatWithSuperuser()
         
+        //TODO: hide before release
         // Placed here just for testing
-        //BranchProvider.operateFirstEntrance(with: UserProvider.shared.currentUser!)
+        BranchProvider.operateFirstEntrance(with: UserProvider.shared.currentUser!)
         
         // save token for push notifications
         NotificationProvider.updateCurrentUserToken()

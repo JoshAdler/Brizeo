@@ -116,6 +116,12 @@ class BranchProvider: NSObject {
     class func setupBranch(with launchOptions: [AnyHashable: Any]?) {
         
         let branch: Branch = Branch.currentInstance
+        
+        #if PRODUCTION
+        #else
+            branch.setDebug()
+        #endif
+        
         branch.initSession(launchOptions: launchOptions) { (params, error) in
             
             guard error == nil else {
