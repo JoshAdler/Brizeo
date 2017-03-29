@@ -21,6 +21,7 @@ class NotificationProvider: NSObject {
     // MARK: - Properties
     
     static let shared = NotificationProvider()
+    var currentToken: String?
     
     // MARK: - Class methods
     
@@ -52,9 +53,15 @@ class NotificationProvider: NSObject {
     }
     
     class func updateCurrentUserToken() {
-        if let token = FIRInstanceID.instanceID().token(), let currentUser = UserProvider.shared.currentUser {
+        if let token = NotificationProvider.shared.currentToken, let currentUser = UserProvider.shared.currentUser {
             currentUser.deviceToken = token
             UserProvider.updateUser(user: currentUser, completion: nil)
+        } else {
+            if UserProvider.shared.currentUser == nil {
+                print("no user")
+            } else {
+                print("no token")
+            }
         }
     }
     

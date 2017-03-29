@@ -46,9 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // apply main theme for the app
         ThemeManager.applyGlobalTheme()
-        
-        registerForPushNotifications(application: application)
-        
+
         // setup 3rd parties
         setupReachability()
         setupFirebase()
@@ -56,6 +54,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupMixpanel()
         setupLocalytics(with: launchOptions)
         setupApplozic(with: launchOptions)
+
+        registerForPushNotifications(application: application)
         
         // setup Facebook SDK
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -209,13 +209,18 @@ extension AppDelegate {
         completionHandler()
     }
     
-    @objc func tokenRefreshNotification(_ notification: NSNotification) {
-        
-        // save token for push notifications
-        NotificationProvider.updateCurrentUserToken()
+    @objc func tokenRefreshNotification(_ notification: Any) {
         
         if let refreshedToken = FIRInstanceID.instanceID().token() {
             print("InstanceID token: \(refreshedToken)")
+        
+            NotificationProvider.shared.currentToken = refreshedToken
+            NotificationProvider.updateCurrentUserToken()
+        } else {
+            if let notification = notification as? NSNotification, let newToken = notification.object as? String {
+                NotificationProvider.shared.currentToken = newToken
+                NotificationProvider.updateCurrentUserToken()
+            }
         }
         
         // Connect to FCM since connection may have failed when attempted before having a token.
@@ -237,9 +242,6 @@ extension AppDelegate {
                 print("Unable to connect to FCM. \(error)")
             } else {
                 print("Connected to FCM.")
-                
-                // save token
-                NotificationProvider.updateCurrentUserToken()
             }
         }
     }
@@ -250,8 +252,9 @@ extension AppDelegate {
         // firebase
         FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: .prod)
         FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: .sandbox)
-        
+
         // save token
+        NotificationProvider.shared.currentToken = FIRInstanceID.instanceID().token()
         NotificationProvider.updateCurrentUserToken()
         
         // applozic
