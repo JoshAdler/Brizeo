@@ -265,6 +265,9 @@ extension LocationManager : CLLocationManagerDelegate {
             return
         }
         
+        // track location
+        LocalyticsProvider.trackLocation(location.coordinate)
+        
         currentLocationCoordinates = location
         
         getLocationStringForLocation(location, completion: { (locationString) in

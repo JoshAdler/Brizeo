@@ -112,6 +112,9 @@ class LoginViewController: UIViewController {
         
         // update facebook events for current user
         EventsProvider.updateUserEventsIfNeeds()
+        
+        // track statistics
+        LocalyticsProvider.trackCurrentUser()
     }
     
     fileprivate func signUpWithFacebook() {

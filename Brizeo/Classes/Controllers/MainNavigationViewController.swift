@@ -26,6 +26,11 @@ class MainNavigationViewController: UINavigationController {
 extension MainNavigationViewController: MFMailComposeViewControllerDelegate {
     
     func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        
+        if error == nil && result == .sent {
+            LocalyticsProvider.trackInviteByEmail()
+        }
+        
         controller.dismiss(animated: true, completion: nil)
     }
 }
@@ -34,6 +39,11 @@ extension MainNavigationViewController: MFMailComposeViewControllerDelegate {
 extension MainNavigationViewController: MFMessageComposeViewControllerDelegate, UINavigationControllerDelegate {
     
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        
+        if result == .sent {
+            LocalyticsProvider.trackInviteBySMS()
+        }
+        
         controller.dismiss(animated: true, completion: nil)
     }
 }

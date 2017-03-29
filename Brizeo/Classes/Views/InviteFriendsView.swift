@@ -122,6 +122,8 @@ class InviteFriendsView: UIView {
             
             FBSDKAppInviteDialog.show(from: Helper.initialNavigationController(), with: content, delegate: self)
             
+            LocalyticsProvider.trackInviteByFBDialog()
+            
             // hide loading
             SVProgressHUD.dismiss()
         }

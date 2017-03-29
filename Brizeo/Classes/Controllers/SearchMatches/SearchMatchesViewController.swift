@@ -180,6 +180,8 @@ class SearchMatchesViewController: BasicViewController {
                     welf.hideLoader()
                     welf.loadMatchesIfNeeds()
                     
+                    LocalyticsProvider.trackUserDidDeclined()
+                    
                     break
                 case .failure(let error):
                     SVProgressHUD.showError(withStatus: error.localizedDescription)
@@ -208,6 +210,8 @@ class SearchMatchesViewController: BasicViewController {
                     if (welf.matches?.count ?? 0) > 0 {
                         welf.matches?.removeFirst()
                     }
+                    
+                    LocalyticsProvider.trackUserDidApproved()
                     
                     if user.status == .isMatched {
                         Helper.showMatchingCard(with: user, from: welf.navigationController!)
@@ -275,6 +279,9 @@ class SearchMatchesViewController: BasicViewController {
                     messageComposeVC.messageComposeDelegate = self
                     messageComposeVC.recipients = nil
                     self.present(messageComposeVC, animated: true, completion: nil)
+                    
+                    LocalyticsProvider.trackInviteByPicture()
+                    
                 } else {
                     SVProgressHUD.showError(withStatus: LocalizableString.ShareSmsFails.localizedString)
                 }

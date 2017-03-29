@@ -260,6 +260,8 @@ class OtherProfileViewController: BasicViewController {
                     welf.hideLoader()
                     welf.decreaseProfileViewHeight(true)
                     
+                    LocalyticsProvider.trackUserDidDeclined()
+                    
                     break
                 case .failure(let error):
                     SVProgressHUD.showError(withStatus: error.localizedDescription)
@@ -282,6 +284,8 @@ class OtherProfileViewController: BasicViewController {
                     
                     welf.hideLoader()
                     welf.decreaseProfileViewHeight(true)
+                    
+                    LocalyticsProvider.trackUserDidApproved()
                     
                     if welf.user!.status == .isMatched {
                         Helper.showMatchingCard(with: welf.user!, from: welf.navigationController!)
@@ -353,6 +357,9 @@ class OtherProfileViewController: BasicViewController {
                     messageComposeVC.messageComposeDelegate = self
                     messageComposeVC.recipients = nil
                     self.present(messageComposeVC, animated: true, completion: nil)
+                    
+                    LocalyticsProvider.trackInviteByPicture()
+                    
                 } else {
                     SVProgressHUD.showError(withStatus: LocalizableString.ShareSmsFails.localizedString)
                 }

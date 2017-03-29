@@ -118,56 +118,6 @@ class NotificationsViewController: UIViewController {
             Helper.currentTabNavigationController()?.pushViewController(otherPersonProfileController, animated: true)
         }
     }
-    
-    fileprivate func declineNotification(with sender: User, completion: @escaping (Void) -> Void) {
-        showBlackLoader()
-        
-        MatchesProvider.declineMatch(for: sender) { [weak self] (result) in
-            
-            if let welf = self {
-                
-                switch(result) {
-                case .success(_):
-                    
-                    welf.hideLoader()
-                    completion()
-                    
-                    break
-                case .failure(let error):
-                    SVProgressHUD.showError(withStatus: error.localizedDescription)
-                    break
-                default: break
-                }
-            }
-        }
-    }
-    
-    fileprivate func approveNotification(with sender: User, completion: @escaping (Void) -> Void) {
-        showBlackLoader()
-        
-        MatchesProvider.approveMatch(for: sender) { [weak self] (result) in
-            
-            if let welf = self {
-                
-                switch(result) {
-                case .success(_):
-                    
-                    welf.hideLoader()
-                    completion()
-                    
-                    if sender.status == .isMatched {
-                        Helper.showMatchingCard(with: sender, from: Helper.currentTabNavigationController()!)
-                    }
-                    
-                    break
-                case .failure(let error):
-                    SVProgressHUD.showError(withStatus: error.localizedDescription)
-                    break
-                default: break
-                }
-            }
-        }
-    }
 }
 
 // MARK: - UITableViewDataSource

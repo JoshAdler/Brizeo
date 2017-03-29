@@ -139,6 +139,7 @@
 		BB834A9A1E782B5D0051EEC4 /* AboutInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB834A991E782B5D0051EEC4 /* AboutInputTableViewCell.swift */; };
 		BB834A9C1E782D690051EEC4 /* AboutTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB834A9B1E782D690051EEC4 /* AboutTitleTableViewCell.swift */; };
 		BB8B6AD61E51047A00417D54 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB8B6AD41E51047A00417D54 /* Main.storyboard */; };
+		BB96E2721E8BD88E00375990 /* LocalyticsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB96E2711E8BD88E00375990 /* LocalyticsProvider.swift */; };
 		BBA0DC741E79408800F2BA6E /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA0DC731E79408800F2BA6E /* CustomSearchBar.swift */; };
 		BBA2DB351E7157760066B84B /* NSDate+Kogi.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA2DB341E7157760066B84B /* NSDate+Kogi.m */; };
 		BBA73FD11E7CAC2200777E1B /* sound_likes.wav in Resources */ = {isa = PBXBuildFile; fileRef = BBA73FCF1E7CAC2200777E1B /* sound_likes.wav */; };
@@ -164,6 +165,11 @@
 		BBD428191E41DDFD00DA6E6C /* OtherPersonAboutInviteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD428181E41DDFD00DA6E6C /* OtherPersonAboutInviteTableViewCell.swift */; };
 		BBD4281B1E41DE5100DA6E6C /* OtherPersonAboutInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD4281A1E41DE5100DA6E6C /* OtherPersonAboutInfoTableViewCell.swift */; };
 		BBD4281D1E41EEF100DA6E6C /* SearchMatchesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD4281C1E41EEF100DA6E6C /* SearchMatchesViewController.swift */; };
+		BBF64E2A1E8BE3F3001A9B77 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBF64E291E8BE3F3001A9B77 /* AdSupport.framework */; };
+		BBF64E2C1E8BE40A001A9B77 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BBF64E2B1E8BE40A001A9B77 /* libsqlite3.tbd */; };
+		BBF64E2E1E8BE412001A9B77 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BBF64E2D1E8BE412001A9B77 /* libz.tbd */; };
+		BBF64E301E8BE418001A9B77 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBF64E2F1E8BE418001A9B77 /* SystemConfiguration.framework */; };
+		BBF64E321E8BE420001A9B77 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBF64E311E8BE420001A9B77 /* CoreLocation.framework */; };
 		BBFBBB801E3CBCAA0002BF4B /* AutoCompleteTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFBBB7F1E3CBCAA0002BF4B /* AutoCompleteTextField.swift */; };
 		BBFBBB821E3CBD460002BF4B /* SettingsSearchLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFBBB811E3CBD460002BF4B /* SettingsSearchLocationCell.swift */; };
 		BBFBBB861E3CCAD70002BF4B /* SettingsLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFBBB851E3CCAD70002BF4B /* SettingsLocationCell.swift */; };
@@ -334,6 +340,7 @@
 		BB834A991E782B5D0051EEC4 /* AboutInputTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutInputTableViewCell.swift; sourceTree = "<group>"; };
 		BB834A9B1E782D690051EEC4 /* AboutTitleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutTitleTableViewCell.swift; sourceTree = "<group>"; };
 		BB8B6AD51E51047A00417D54 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		BB96E2711E8BD88E00375990 /* LocalyticsProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalyticsProvider.swift; sourceTree = "<group>"; };
 		BBA0DC731E79408800F2BA6E /* CustomSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
 		BBA2DB331E7157760066B84B /* NSDate+Kogi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+Kogi.h"; path = "KogiDate/NSDate+Kogi.h"; sourceTree = "<group>"; };
 		BBA2DB341E7157760066B84B /* NSDate+Kogi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+Kogi.m"; path = "KogiDate/NSDate+Kogi.m"; sourceTree = "<group>"; };
@@ -360,6 +367,11 @@
 		BBD428181E41DDFD00DA6E6C /* OtherPersonAboutInviteTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherPersonAboutInviteTableViewCell.swift; sourceTree = "<group>"; };
 		BBD4281A1E41DE5100DA6E6C /* OtherPersonAboutInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherPersonAboutInfoTableViewCell.swift; sourceTree = "<group>"; };
 		BBD4281C1E41EEF100DA6E6C /* SearchMatchesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchMatchesViewController.swift; sourceTree = "<group>"; };
+		BBF64E291E8BE3F3001A9B77 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		BBF64E2B1E8BE40A001A9B77 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		BBF64E2D1E8BE412001A9B77 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		BBF64E2F1E8BE418001A9B77 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		BBF64E311E8BE420001A9B77 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		BBFBBB7F1E3CBCAA0002BF4B /* AutoCompleteTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteTextField.swift; sourceTree = "<group>"; };
 		BBFBBB811E3CBD460002BF4B /* SettingsSearchLocationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSearchLocationCell.swift; sourceTree = "<group>"; };
 		BBFBBB851E3CCAD70002BF4B /* SettingsLocationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsLocationCell.swift; sourceTree = "<group>"; };
@@ -375,6 +387,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBF64E321E8BE420001A9B77 /* CoreLocation.framework in Frameworks */,
+				BBF64E301E8BE418001A9B77 /* SystemConfiguration.framework in Frameworks */,
+				BBF64E2E1E8BE412001A9B77 /* libz.tbd in Frameworks */,
+				BBF64E2C1E8BE40A001A9B77 /* libsqlite3.tbd in Frameworks */,
+				BBF64E2A1E8BE3F3001A9B77 /* AdSupport.framework in Frameworks */,
 				D1641CEBC257ED884DC91E75 /* Pods_Brizeo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -590,6 +607,7 @@
 				BB3EF58B1E6D672F006FB2ED /* InfoProvider.swift */,
 				BBCDA9321E6DF16500DCBB5D /* MapTransforms.swift */,
 				BBBA1DD21E74B07A000C55B8 /* FirstEntranceProvider.swift */,
+				BB96E2711E8BD88E00375990 /* LocalyticsProvider.swift */,
 			);
 			path = APIs;
 			sourceTree = "<group>";
@@ -1087,6 +1105,11 @@
 		BDDFE09F23659A9CFB6CA708 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BBF64E311E8BE420001A9B77 /* CoreLocation.framework */,
+				BBF64E2F1E8BE418001A9B77 /* SystemConfiguration.framework */,
+				BBF64E2D1E8BE412001A9B77 /* libz.tbd */,
+				BBF64E2B1E8BE40A001A9B77 /* libsqlite3.tbd */,
+				BBF64E291E8BE3F3001A9B77 /* AdSupport.framework */,
 				BB7EAEAB1E6077E9007986CD /* Applozic.framework */,
 				EF77DB0EB2C6249A6F0A358D /* Pods_Brizeo.framework */,
 			);
@@ -1403,6 +1426,7 @@
 				BB099F0C1E3F4EC700133794 /* PersonalDetailsTabsViewController.swift in Sources */,
 				8874556F1CC5366200F0D45F /* User.swift in Sources */,
 				88CA7A671CBEF06A00231AB2 /* AppDelegate.swift in Sources */,
+				BB96E2721E8BD88E00375990 /* LocalyticsProvider.swift in Sources */,
 				BB7EAEAF1E607848007986CD /* ALChatManager.swift in Sources */,
 				BB1FF6F51E51ECDC002343CE /* ConfirmationView.swift in Sources */,
 				BBFBBB821E3CBD460002BF4B /* SettingsSearchLocationCell.swift in Sources */,

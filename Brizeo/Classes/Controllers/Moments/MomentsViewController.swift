@@ -245,7 +245,7 @@ class MomentsViewController: UIViewController {
             
             switch result {
             case .success(let updatedMoment):
-                GoogleAnalyticsManager.userHitLikeMoment.sendEvent()
+                LocalyticsProvider.trackMomentLike(momentId: moment.objectId)
                 
                 if let index = self.moments?.index(of: moment) {
                     self.moments?[index] = updatedMoment

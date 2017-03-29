@@ -157,6 +157,9 @@ class MediaViewController: UIViewController {
                     messageComposeVC.messageComposeDelegate = self
                     messageComposeVC.recipients = nil
                     self.present(messageComposeVC, animated: true, completion: nil)
+                    
+                    LocalyticsProvider.trackInviteByPicture()
+                    
                 } else {
                     SVProgressHUD.showError(withStatus: "Sorry, you can't use iMessages on this device.")
                 }

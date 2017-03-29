@@ -18,7 +18,6 @@ import Firebase
 import Reachability
 import Applozic
 
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

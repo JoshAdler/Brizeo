@@ -135,6 +135,9 @@ class ChooseView: UIView {
             vc.add(#imageLiteral(resourceName: "ic_brizeo_invite_image"))
             vc.add(URL(string: url))
             Helper.initialNavigationController().present(vc, animated: true, completion: nil)
+            
+            LocalyticsProvider.trackInviteByTwitter()
+            
         } else {
             SVProgressHUD.showError(withStatus: LocalizableString.ShareTwitterFails.localizedString)
         }
@@ -146,6 +149,8 @@ class ChooseView: UIView {
         content.imageURL = URL(string: Configurations.Invite.previewURL)
         content.contentTitle = LocalizableString.TryBrizeo.localizedStringWithArguments([UserProvider.shared.currentUser!.displayName])
         content.contentDescription = LocalizableString.BrizeoShareDescription.localizedString
+        
+        LocalyticsProvider.trackInviteByMessanger()
         
         FBSDKMessageDialog.show(with: content, delegate: self)
     }
@@ -177,6 +182,8 @@ class ChooseView: UIView {
             } else {
                 UIApplication.shared.openURL(url!)
             }
+            
+            LocalyticsProvider.trackInviteByWhatsapp()
         } else {
             SVProgressHUD.showError(withStatus: LocalizableString.ShareWhatsappFails.localizedString)
         }

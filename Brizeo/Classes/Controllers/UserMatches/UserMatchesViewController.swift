@@ -160,6 +160,8 @@ class UserMatchesViewController: UIViewController {
                         welf.matches.remove(at: index)
                     }
                     
+                    LocalyticsProvider.trackUnMatchPerson()
+                    
                     welf.filterContentForSearchText(searchText: welf.customSearchBar.text ?? "")
                     
                     break
