@@ -389,16 +389,32 @@ class UserProvider: NSObject {
         
         // load mutual facebook friends first
         let token = FBSDKAccessToken.current()!.tokenString
-        loadMutualFacebookFriends(facebookId: user.facebookId, token: token!) { (result) in
+        loadMutualFacebookFriends(facebookId: user.facebookId ?? "", token: token!) { (result) in
             
             switch (result) {
-            case .success(let count, let ids):
+            case .success(let users):
                 
-                loadFacebookUsers(by: ids, completion: { (result) in
+                loadFacebookUsers(allUsers: users, completion: { (result) in
                     
                     switch (result) {
                     case .success(let users):
-                        completion(.success(count ,users))
+
+                        let sortedUsers = users.sorted(by: { (user1: User, user2: User) -> Bool in
+                            return user1.displayName < user2.displayName
+//                            if user1.facebookId != nil && user2.facebookId != nil {
+//                                return user1.displayName < user2.displayName
+//                            } else {
+//                                if user1.facebookId != nil {
+//                                    return true
+//                                } else if user2.facebookId != nil {
+//                                    return false
+//                                } else {
+//                                    return user1.displayName < user2.displayName
+//                                }
+//                            }
+                        })
+                        
+                        completion(.success(users.count, sortedUsers))
                         break
                     case .failure(let error):
                         completion(.failure(APIError(error: error)))
@@ -419,21 +435,33 @@ class UserProvider: NSObject {
 
     // MARK: - Private methods
     
-    fileprivate class func loadFacebookUsers(by ids: [String]?, completion: @escaping (Result<[User]>) -> Void) {
+    fileprivate class func loadFacebookUsers(allUsers: [User], completion: @escaping (Result<[User]>) -> Void) {
         
-        guard ids != nil && (ids?.count) ?? 0 > 0 else {
-            completion(.success([]))
+        let ids = allUsers.filter({ $0.facebookId != nil }).map({ $0.facebookId! })
+        
+        guard ids.count > 0 else {
+            completion(.success(allUsers))
             return
         }
         
         let provider = APIService.APIProvider()
-        provider.request(.getFacebookFriends(facebookIds: ids!)) { (result) in
+        provider.request(.getFacebookFriends(facebookIds: ids)) { (result) in
             switch(result) {
             case .success(let response):
                 do {
                     
-                    let users = try response.mapArray(User.self)
-                    completion(.success(users))
+                    var appUsers = try response.mapArray(User.self)
+                    var usedIds = appUsers.map({ $0.facebookId! })
+                    var filteredUsers = allUsers.filter({
+                        if $0.facebookId == nil {
+                            return true
+                        } else {
+                            return !usedIds.contains($0.facebookId!)
+                        }
+                    })
+                    let totalUsers = appUsers + filteredUsers
+                    
+                    completion(.success(totalUsers))
                 } catch (let error) {
                     completion(.failure(APIError(error: error)))
                 }
@@ -445,7 +473,7 @@ class UserProvider: NSObject {
         }
     }
     
-    fileprivate class func loadMutualFacebookFriends(facebookId: String, token: String, completion: @escaping (Result<(Int, [String])>) -> Void) {
+    fileprivate class func loadMutualFacebookFriends(facebookId: String, token: String, completion: @escaping (Result<([User])>) -> Void) {
         
         let provider = APIService.APIProvider()
         provider.request(.mutualFriends(facebookId: facebookId, token: token)) { (result) in
@@ -454,10 +482,9 @@ class UserProvider: NSObject {
                 
                 do {
                     if let facebookItems = try response.mapJSON() as? [[String: Any]] {
+                        let fakeUsers = facebookItems.map({ return User(fakeUserJSON: $0) })
                         
-                        let ids = facebookItems.filter({ $0["id"] != nil }).map({ $0["id"] as! String }) 
-                        
-                        completion(.success(facebookItems.count, ids))
+                        completion(.success(fakeUsers))
                     } else {
                         
                         completion(.failure(APIError(code: 0, message: "Can't parse facebook result data.")))

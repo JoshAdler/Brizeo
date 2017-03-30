@@ -35,6 +35,9 @@ class User: Mappable {
     
     enum JSONKeys: String {
         case age = "age"
+        case name = "name"
+        case data = "data"
+        case url = "url"
         case facebookId = "facebookId"
         case id = "id"
         case facebook = "facebook"
@@ -64,13 +67,14 @@ class User: Mappable {
         case deviceToken = "deviceToken"
         case thumbnailImages = "thumbnailImages"
         case otherProfileImages = "otherProfileImages"
+        case picture = "picture"
     }
     
     // MARK: - Properties
     
     // ids
     var objectId: String = "0"
-    var facebookId: String!
+    var facebookId: String?
     
     // basic information
     var username: String?
@@ -239,6 +243,19 @@ class User: Mappable {
     
     // MARK: - Init methods
     
+    init(fakeUserJSON: [String: Any]) {
+        
+        facebookId = fakeUserJSON[JSONKeys.id.rawValue] as? String
+        
+        if let name = fakeUserJSON[JSONKeys.name.rawValue] as? String {
+            self.displayName = name
+        }
+        
+        if let pictureDict = fakeUserJSON[JSONKeys.picture.rawValue] as? [String: Any], let data = pictureDict[JSONKeys.data.rawValue] as? [String: Any], let link = data[JSONKeys.url.rawValue] as? String {
+            self.profileImage = FileObject(info: FileObjectInfo(urlStr: link)!)
+        }
+    }
+    
     required init?(map: Map) { }
     //TODO: there is a bug here with profileImageURL
     init(objectId: String, facebookId: String, displayName: String?, email: String, gender: Gender, profileImageURL: String?, workInfo: String?, studyInfo: String?, uploadedURLs: [String], lastActiveDate: Date?) {
@@ -329,7 +346,7 @@ class User: Mappable {
             }
         }
     }
-    
+
     // MARK: - Public methods
     
     func removeCountry(countryToRemove: Country) {

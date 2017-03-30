@@ -25,6 +25,7 @@ class OtherPersonAboutViewController: UIViewController {
     struct StoryboardIds {
         static let otherProfileControllerId = "OtherProfileViewController"
         static let profileControllerId = "PersonalTabsViewController"
+        static let inviteFaceUserCellId = "inviteFaceUserCellId"
     }
     
     // MARK: - Properties
@@ -68,6 +69,7 @@ class OtherPersonAboutViewController: UIViewController {
         UserProvider.getMutualFriends(for: user) { (result) in
             switch result {
             case .success(let count, let users):
+                
                 // send notification
                 let notification = UIKit.Notification(name: NSNotification.Name.init(rawValue: mutualFriendsNotification), object: nil, userInfo: ["mutualFriends": users, "count": count, "userId": self.user!.objectId])
                 NotificationCenter.default.post(notification)
@@ -76,7 +78,6 @@ class OtherPersonAboutViewController: UIViewController {
                 self.passionsTableView.reloadSections(IndexSet(integer: 2), with: .automatic)
             case .failure(_):
                 print("Failing mutual friends")
-//                self.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
             default:
                 break
             }
@@ -128,9 +129,16 @@ extension OtherPersonAboutViewController: UITableViewDataSource {
                 return cell
             }
         } else { // invite cell
-            let cell = tableView.dequeueReusableCell(withIdentifier: OtherPersonAboutInviteTableViewCell.identifier, for: indexPath) as! OtherPersonAboutInviteTableViewCell
             let mutualFriend = mutualFriends![indexPath.row]
+            var cell: OtherPersonAboutInviteTableViewCell
             
+            if mutualFriend.facebookId != nil {
+                cell = tableView.dequeueCell(withIdentifier: OtherPersonAboutInviteTableViewCell.identifier, for: indexPath)
+            } else {
+                cell = tableView.dequeueCell(withIdentifier: StoryboardIds.inviteFaceUserCellId, for: indexPath)
+            }
+            
+            cell.delegate = self
             cell.logoImageView.sd_setImage(with: mutualFriend.profileUrl)
             cell.titleLabel.text = mutualFriend.displayName
             return cell
@@ -145,6 +153,11 @@ extension OtherPersonAboutViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         
         let user = mutualFriends![indexPath.row]
+        
+        if user.facebookId == nil { // invite friend
+            return
+        }
+        
         let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
         
         otherPersonProfileController.user = user
@@ -203,6 +216,15 @@ extension OtherPersonAboutViewController: InvitedByCellDelegate {
             otherPersonProfileController.userId = user.invitedByUserId!
             Helper.currentTabNavigationController()?.pushViewController(otherPersonProfileController, animated: true)
         }
+    }
+}
+
+// MARK: - OtherPersonAboutInviteCellDelegate
+extension OtherPersonAboutViewController: OtherPersonAboutInviteCellDelegate {
+    
+    func inviteCell(cell: OtherPersonAboutInviteTableViewCell, didClickedOnInvite button: UIButton) {
+        let inviteFriendView: InviteFriendsView = InviteFriendsView.loadFromNib()
+        inviteFriendView.present(on: Helper.initialNavigationController().view)
     }
 }
 
