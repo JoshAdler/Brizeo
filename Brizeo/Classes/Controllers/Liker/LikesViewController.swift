@@ -35,6 +35,7 @@ class LikesViewController: BasicViewController {
     var moment: Moment!
     var currentUser = UserProvider.shared.currentUser!
     var topRefresher: UIRefreshControl!
+    var event: Event?
     
     // MARK: - Controller lifecycle
     
@@ -45,9 +46,6 @@ class LikesViewController: BasicViewController {
         topRefresher = UIRefreshControl()
         topRefresher.addTarget(self, action: #selector(LikesViewController.refreshTableView), for: .valueChanged)
         likesTableView.addSubview(topRefresher)
-        
-        self.title = LocalizableString.LikesTitle.localizedString
-    
         likesTableView.tableFooterView = UIView()
     }
     
@@ -56,13 +54,50 @@ class LikesViewController: BasicViewController {
         
         Helper.mainTabBarController()?.tabBar.isHidden = false
         
-        loadLikers()
+        if isEventAvailable() {
+            loadEventAttendings()
+        } else {
+            loadLikers()
+        }
     }
     
     // MARK: - Private methods
     
+    fileprivate func isEventAvailable() -> Bool {
+        return event != nil
+    }
+    
     @objc fileprivate func refreshTableView() {
-        loadLikers()
+        if isEventAvailable() {
+            loadEventAttendings()
+        } else {
+            loadLikers()
+        }
+    }
+    
+    fileprivate func loadEventAttendings() {
+        
+        guard let ids = event!.attendingsIds else {
+            print("No attendings")
+            return
+        }
+        
+        UserProvider.loadFacebookUsers(with: ids) { (result) in
+            
+            switch result {
+            case .success(let users):
+                self.users = users
+                self.likesTableView.reloadData()
+            case .failure(let error):
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+            default:
+                break
+            }
+            
+            self.topRefresher.endRefreshing()
+            self.activityIndicator.stopAnimating()
+            self.likesTableView.isHidden = false
+        }
     }
     
     fileprivate func loadLikers() {
@@ -118,12 +153,12 @@ extension LikesViewController: UITableViewDelegate {
         if user.objectId == currentUser.objectId { // show my profile
             let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
             
-            navigationController?.pushViewController(profileController, animated: true)
+            Helper.currentTabNavigationController()?.pushViewController(profileController, animated: true)
         } else {
             let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
             otherPersonProfileController.user = user
             
-            navigationController?.pushViewController(otherPersonProfileController, animated: true)
+            Helper.currentTabNavigationController()?.pushViewController(otherPersonProfileController, animated: true)
         }
     }
 
@@ -141,7 +176,7 @@ extension LikesViewController: UITableViewDelegate {
         // title label
         let lblTitle = UILabel(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: Constants.headerViewHeight))
         lblTitle.backgroundColor = UIColor.clear
-        lblTitle.text = LocalizableString.LikersHeaderTitle.localizedString
+        lblTitle.text = isEventAvailable() ? LocalizableString.EventsAttendingsHeaderTitle.localizedString : LocalizableString.LikersHeaderTitle.localizedString
         lblTitle.font = UIFont(name: "SourceSansPro-Semibold", size: 16.0)
         lblTitle.textAlignment = .center
         lblTitle.textColor = HexColor("5f5f5f")
@@ -165,12 +200,12 @@ extension LikesViewController: LikesTableViewCellDelegate {
         if user.objectId == currentUser.objectId { // show my profile
             let profileController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.profileControllerId)!
             
-            navigationController?.pushViewController(profileController, animated: true)
+            Helper.currentTabNavigationController()?.pushViewController(profileController, animated: true)
         } else {
             let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
             otherPersonProfileController.user = user
             
-            navigationController?.pushViewController(otherPersonProfileController, animated: true)
+            Helper.currentTabNavigationController()?.pushViewController(otherPersonProfileController, animated: true)
         }
     }
 }

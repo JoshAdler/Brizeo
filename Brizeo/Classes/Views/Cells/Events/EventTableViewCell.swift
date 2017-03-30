@@ -11,6 +11,7 @@ import UIKit
 protocol EventTableViewCellDelegate: class {
     
     func eventCell(cell: EventTableViewCell, didClickedOnProfile button: UIButton)
+    func eventCell(cell: EventTableViewCell, didClickedOnAttendings button: UIButton)
 }
 
 class EventTableViewCell: UITableViewCell {
@@ -36,6 +37,7 @@ class EventTableViewCell: UITableViewCell {
         }
     }
     @IBOutlet weak var profileButton: UIButton!
+    @IBOutlet weak var attendingButton: UIButton!
     @IBOutlet weak var eventStartDate: UILabel!
     @IBOutlet weak var eventName: UILabel!
     @IBOutlet weak var eventDescription: UILabel!
@@ -61,5 +63,9 @@ class EventTableViewCell: UITableViewCell {
     
     @IBAction func onProfileButtonClicked(sender: UIButton) {
         delegate?.eventCell(cell: self, didClickedOnProfile: sender)
+    }
+    
+    @IBAction func onAttendingButtonClicked(sender: UIButton) {
+        delegate?.eventCell(cell: self, didClickedOnAttendings: sender)
     }
 }

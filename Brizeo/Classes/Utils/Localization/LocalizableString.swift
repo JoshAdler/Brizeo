@@ -10,6 +10,7 @@ import Foundation
 
 enum LocalizableString: String {
     
+    case EventsAttendingsHeaderTitle = "Brizeo Members Attending"
     case Attending = "Attending"
     case Popularity = "Popularity"
     case Nearest = "Nearest"

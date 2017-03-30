@@ -87,6 +87,7 @@ class EventsViewController: UIViewController {
     struct StoryboardIds {
         static let otherProfileControllerId = "OtherProfileViewController"
         static let profileControllerId = "PersonalTabsViewController"
+        static let likesControllerId = "LikesViewController"
     }
     
     // MARK: - Properties
@@ -369,6 +370,24 @@ extension EventsViewController: EventTableViewCellDelegate {
         }
         
         showUserProfile(for: event.ownerUser)
+    }
+    
+    func eventCell(cell: EventTableViewCell, didClickedOnAttendings button: UIButton) {
+        
+        guard let indexPath = tableView.indexPath(for: cell) else {
+            print("No index path for cell")
+            return
+        }
+        
+        guard let event = events?[indexPath.row] else {
+            print("No event for this index path")
+            return
+        }
+        
+        let likersController: LikesViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.likesControllerId)!
+        likersController.event = event
+        
+        Helper.currentTabNavigationController()?.pushViewController(likersController, animated: true)
     }
 }
 

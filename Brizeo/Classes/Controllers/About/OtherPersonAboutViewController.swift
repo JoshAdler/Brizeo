@@ -140,7 +140,7 @@ extension OtherPersonAboutViewController: UITableViewDataSource {
             
             cell.delegate = self
             cell.logoImageView.sd_setImage(with: mutualFriend.profileUrl)
-            cell.titleLabel.text = mutualFriend.displayName
+            cell.titleLabel.text = mutualFriend.shortName
             return cell
         }
     }

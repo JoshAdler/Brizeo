@@ -432,10 +432,8 @@ class UserProvider: NSObject {
             }
         }
     }
-
-    // MARK: - Private methods
     
-    fileprivate class func loadFacebookUsers(allUsers: [User], completion: @escaping (Result<[User]>) -> Void) {
+    class func loadFacebookUsers(allUsers: [User], completion: @escaping (Result<[User]>) -> Void) {
         
         let ids = allUsers.filter({ $0.facebookId != nil }).map({ $0.facebookId! })
         
@@ -472,6 +470,33 @@ class UserProvider: NSObject {
             }
         }
     }
+    
+    class func loadFacebookUsers(with ids: [String], completion: @escaping (Result<[User]>) -> Void) {
+        
+        guard ids.count > 0 else {
+            completion(.success([User]()))
+            return
+        }
+        
+        let provider = APIService.APIProvider()
+        provider.request(.getFacebookFriends(facebookIds: ids)) { (result) in
+            switch(result) {
+            case .success(let response):
+                do {
+                    let users = try response.mapArray(User.self)
+                    completion(.success(users))
+                } catch (let error) {
+                    completion(.failure(APIError(error: error)))
+                }
+                break
+            case .failure(let error):
+                completion(.failure(APIError(error: error)))
+                break
+            }
+        }
+    }
+
+    // MARK: - Private methods
     
     fileprivate class func loadMutualFacebookFriends(facebookId: String, token: String, completion: @escaping (Result<([User])>) -> Void) {
         
