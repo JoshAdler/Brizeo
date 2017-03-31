@@ -68,11 +68,46 @@ class LocalyticsProvider: NSObject {
         Localytics.incrementValue(by: 1, forProfileAttribute: "GreenMarkClicks", with: .application)
     }
     
+    class func trackItsAMatch() {
+        Localytics.incrementValue(by: 1, forProfileAttribute: "ItsAMatchCount", with: .application)
+    }
+    
     class func trackUserDidDeclined() {
         Localytics.incrementValue(by: 1, forProfileAttribute: "RedCrossClicks", with: .application)
     }
     
     class func trackMomentLike(momentId: String) {
         Localytics.incrementValue(by: 1, forProfileAttribute: "LikedMomentCount", with: .application)
+        Localytics.tagEvent("User liked moment", attributes: ["MomentId" : momentId])
+    }
+    
+    // MARK: - Events
+    
+    class func userViewNotifications() {
+        Localytics.tagEvent("Notification screen")
+    }
+    
+    class func userGoProfileFromNotifications() {
+        Localytics.tagEvent("User went to Profile from Notifications")
+    }
+    
+    class func userViewMomentsWall() {
+        Localytics.tagEvent("Moments screen")
+    }
+    
+    class func userGoProfileFromMoments() {
+        Localytics.tagEvent("User went to Profile from Moments")
+    }
+    
+    class func userGoProfileFromLikers() {
+        Localytics.tagEvent("User went to Profile from Likers")
+    }
+    
+    class func userGoProfileFromEventAttendings() {
+        Localytics.tagEvent("User went to Profile from Event Attendings")
+    }
+    
+    class func userViewLikers() {
+        Localytics.tagEvent("Likers screen")
     }
 }

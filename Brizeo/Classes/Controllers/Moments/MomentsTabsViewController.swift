@@ -63,6 +63,8 @@ class MomentsTabsViewController: BasicViewController {
         super.viewWillAppear(animated)
         
         Helper.initialNavigationController().setNavigationBarHidden(true, animated: animated)
+        
+        LocalyticsProvider.userViewMomentsWall()
     }
     
     override func viewDidAppear(_ animated: Bool) {

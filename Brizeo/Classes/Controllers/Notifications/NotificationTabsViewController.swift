@@ -50,6 +50,8 @@ class NotificationTabsViewController: BasicViewController {
         
         navigationController?.setNavigationBarHidden(false, animated: animated)
         Helper.mainTabBarController()?.tabBar.isHidden = false
+        
+        LocalyticsProvider.userViewNotifications()
     }
     
     // MARK: - Public methods

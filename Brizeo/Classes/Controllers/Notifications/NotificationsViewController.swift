@@ -244,6 +244,8 @@ extension NotificationsViewController: NotificationsTableViewCellDelegate {
             otherPersonProfileController.userId = senderUser.objectId
             
             Helper.currentTabNavigationController()?.pushViewController(otherPersonProfileController, animated: true)
+            
+            LocalyticsProvider.userGoProfileFromNotifications()
         }
     }
 }

@@ -86,6 +86,8 @@ class OtherProfileViewController: BasicViewController {
                 // hide/show action buttons
                 if !welf.user!.shouldBeAction {
                     welf.decreaseProfileViewHeight(true)
+                } else {
+                    welf.setActionButtonsHidden(false)
                 }
                 
                 welf.fetchMutualFriends()
@@ -193,6 +195,13 @@ class OtherProfileViewController: BasicViewController {
                     break
                 }
             }
+        }
+    }
+    
+    fileprivate func setActionButtonsHidden(_ isHidden: Bool) {
+        UIView.animate(withDuration: 0.5) { 
+            self.approveButton.alpha = isHidden ? 0.0 : 1.0
+            self.declineButton.alpha = isHidden ? 0.0 : 1.0
         }
     }
     

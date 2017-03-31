@@ -278,6 +278,9 @@ class Helper: NSObject {
     
     class func showMatchingCard(with user: User, from controller: UINavigationController) {
         
+        // save statistics
+        LocalyticsProvider.trackItsAMatch()
+        
         // play sound
         let isSoundEnables = PreferencesProvider.shared.currentUserPreferences?.isNotificationsNewMatchesOn ?? true
         

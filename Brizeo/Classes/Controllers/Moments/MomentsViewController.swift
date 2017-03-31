@@ -234,6 +234,8 @@ class MomentsViewController: UIViewController {
             otherPersonProfileController.userId = userIdentifier
 
             navigationController?.pushViewController(otherPersonProfileController, animated: true)
+            
+            LocalyticsProvider.userGoProfileFromMoments()
         }
     }
     
@@ -542,6 +544,8 @@ extension MomentsViewController: MomentTableViewCellDelegate {
         likersController.moment = moment
         
         Helper.currentTabNavigationController()?.pushViewController(likersController, animated: true)
+        
+        LocalyticsProvider.userViewLikers()
     }
     
     func momentCellDidSelectOwnerProfile(_ cell: MomentTableViewCell) {

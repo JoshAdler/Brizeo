@@ -159,6 +159,12 @@ extension LikesViewController: UITableViewDelegate {
             otherPersonProfileController.user = user
             
             Helper.currentTabNavigationController()?.pushViewController(otherPersonProfileController, animated: true)
+            
+            if isEventAvailable() {
+                LocalyticsProvider.userGoProfileFromEventAttendings()
+            } else {
+                LocalyticsProvider.userGoProfileFromLikers()
+            }
         }
     }
 
