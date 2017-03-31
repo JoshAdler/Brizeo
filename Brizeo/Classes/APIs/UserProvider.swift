@@ -448,9 +448,9 @@ class UserProvider: NSObject {
             case .success(let response):
                 do {
                     
-                    var appUsers = try response.mapArray(User.self)
-                    var usedIds = appUsers.map({ $0.facebookId! })
-                    var filteredUsers = allUsers.filter({
+                    let appUsers = try response.mapArray(User.self)
+                    let usedIds = appUsers.map({ $0.facebookId! })
+                    let filteredUsers = allUsers.filter({
                         if $0.facebookId == nil {
                             return true
                         } else {

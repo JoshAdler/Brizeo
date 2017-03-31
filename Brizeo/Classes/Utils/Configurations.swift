@@ -72,7 +72,7 @@ class Configurations: NSObject {
     
     // MARK: - Invite
     struct Invite {
-        static let previewURL = "https://firebasestorage.googleapis.com/v0/b/brizeo-7571c.appspot.com/o/InviteImages%2Fic_brizeo_invite_image%402x.png?alt=media&token=841e0496-8df9-46ed-9109-b6dd7856e570"
+        static let previewURL = "https://firebasestorage.googleapis.com/v0/b/brizeo-7571c.appspot.com/o/InviteImages%2FBroaden%20your%20Inner%20CircleThrough%20Moments.png?alt=media&token=6b6317ff-f01c-4a58-b2b8-b46bd7be3c32"//"https://firebasestorage.googleapis.com/v0/b/brizeo-7571c.appspot.com/o/InviteImages%2Finvite_brizeo.png?alt=media&token=8962285f-48d2-4965-a3f7-735ee83b90ec"
     }
     
 }

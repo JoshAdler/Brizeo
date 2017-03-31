@@ -134,6 +134,11 @@ class InviteFriendsView: UIView {
 extension InviteFriendsView: FBSDKAppInviteDialogDelegate {
     
     func appInviteDialog(_ appInviteDialog: FBSDKAppInviteDialog!, didFailWithError error: Error!) {
+        let alert = UIAlertController(title: LocalizableString.Error.localizedString, message: error.localizedDescription, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: LocalizableString.Ok.localizedString, style: .cancel, handler: nil))
+        
+        Helper.initialNavigationController().present(alert, animated: true, completion: nil)
     }
     
     func appInviteDialog(_ appInviteDialog: FBSDKAppInviteDialog!, didCompleteWithResults results: [AnyHashable : Any]!) {
