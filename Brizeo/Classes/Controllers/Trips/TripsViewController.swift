@@ -134,8 +134,6 @@ class TripsViewController: UIViewController {
                     welf.user = user
                     welf.tableView.reloadData()
                     
-                    GoogleAnalyticsManager.userSelectCountry(country: country.name).sendEvent()
-                    
                     break
                 case .failure(let error):
                     welf.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Ok.localizedString, completion: nil)

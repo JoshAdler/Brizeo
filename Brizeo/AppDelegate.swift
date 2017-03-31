@@ -218,8 +218,11 @@ extension AppDelegate {
             NotificationProvider.updateCurrentUserToken()
         } else {
             if let notification = notification as? NSNotification, let newToken = notification.object as? String {
-                NotificationProvider.shared.currentToken = newToken
-                NotificationProvider.updateCurrentUserToken()
+                
+                if NotificationProvider.shared.currentToken != newToken {
+                    NotificationProvider.shared.currentToken = newToken
+                    NotificationProvider.updateCurrentUserToken()
+                }
             }
         }
         

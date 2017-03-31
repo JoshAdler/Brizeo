@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		690DB8F31CD00F4500733D90 /* Tutorials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 690DB8F21CD00F4500733D90 /* Tutorials.swift */; };
 		692B1B471CE5351C00C4906C /* CountryPicker.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 692B1B461CE5351C00C4906C /* CountryPicker.bundle */; };
 		692D2FB61CCAC99A00434B54 /* Passion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692D2FB51CCAC99A00434B54 /* Passion.swift */; };
 		69722B9D1CDBE0030064E0B5 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B568F91CCA77A6003A21EE /* Helper.swift */; };
@@ -15,7 +14,6 @@
 		69C215201CCE453D00F4C069 /* CustomLocation.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 69C2151F1CCE453D00F4C069 /* CustomLocation.gpx */; };
 		69C215241CCE52D000F4C069 /* MatchStartChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C215221CCE52D000F4C069 /* MatchStartChatViewController.swift */; };
 		69D2DB961CEA0A4A00150256 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69D2DB951CEA0A4A00150256 /* GoogleService-Info.plist */; };
-		69D2DB981CEA0AD800150256 /* GoogleAnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69D2DB971CEA0AD800150256 /* GoogleAnalyticsManager.swift */; };
 		69EFA9741CDA99FA00885EEA /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EFA9731CDA99FA00885EEA /* LocationManager.swift */; };
 		69F422901CE65F1D00F8A0A4 /* new_message.wav in Resources */ = {isa = PBXBuildFile; fileRef = 69F4228F1CE65F1D00F8A0A4 /* new_message.wav */; };
 		756EAB6C1E1E37C400E81221 /* EventsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756EAB6B1E1E37C400E81221 /* EventsProvider.swift */; };
@@ -29,8 +27,6 @@
 		88A6279F1CC5725D006A191A /* ProfileMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A6279E1CC5725D006A191A /* ProfileMedia.swift */; };
 		88A627A31CC5789F006A191A /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A627A11CC5789F006A191A /* LoginViewController.swift */; };
 		88B568E01CC6740F003A21EE /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B568DF1CC6740F003A21EE /* Preferences.swift */; };
-		88B568F61CC93E53003A21EE /* DeviceAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B568F51CC93E53003A21EE /* DeviceAction.swift */; };
-		88B568F81CC9700C003A21EE /* CaptionedPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B568F71CC9700C003A21EE /* CaptionedPhoto.swift */; };
 		88B568FF1CD904D0003A21EE /* UserProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B568FD1CD904D0003A21EE /* UserProvider.swift */; };
 		88B569001CD904D0003A21EE /* MatchesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B568FE1CD904D0003A21EE /* MatchesProvider.swift */; };
 		88B569021CD904E3003A21EE /* PreferencesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B569011CD904E3003A21EE /* PreferencesProvider.swift */; };
@@ -199,14 +195,12 @@
 /* Begin PBXFileReference section */
 		078B3E832DB60A88C1747506 /* Pods-Brizeo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brizeo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Brizeo/Pods-Brizeo.release.xcconfig"; sourceTree = "<group>"; };
 		2E68A4F7EA84288D8B53FD40 /* Pods-Brizeo.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brizeo.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-Brizeo/Pods-Brizeo.adhoc.xcconfig"; sourceTree = "<group>"; };
-		690DB8F21CD00F4500733D90 /* Tutorials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tutorials.swift; sourceTree = "<group>"; };
 		692B1B461CE5351C00C4906C /* CountryPicker.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = CountryPicker.bundle; sourceTree = "<group>"; };
 		692D2FB51CCAC99A00434B54 /* Passion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Passion.swift; sourceTree = "<group>"; };
 		69722BA81CDC05D70064E0B5 /* Localizable.stringsdict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.stringsdict; path = Localizable.stringsdict; sourceTree = "<group>"; };
 		69C2151F1CCE453D00F4C069 /* CustomLocation.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = CustomLocation.gpx; sourceTree = "<group>"; };
 		69C215221CCE52D000F4C069 /* MatchStartChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchStartChatViewController.swift; sourceTree = "<group>"; };
 		69D2DB951CEA0A4A00150256 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		69D2DB971CEA0AD800150256 /* GoogleAnalyticsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoogleAnalyticsManager.swift; sourceTree = "<group>"; };
 		69EFA9731CDA99FA00885EEA /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		69F4228F1CE65F1D00F8A0A4 /* new_message.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = new_message.wav; sourceTree = "<group>"; };
 		756EAB6B1E1E37C400E81221 /* EventsProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventsProvider.swift; sourceTree = "<group>"; };
@@ -220,8 +214,6 @@
 		88A6279E1CC5725D006A191A /* ProfileMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileMedia.swift; sourceTree = "<group>"; };
 		88A627A11CC5789F006A191A /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		88B568DF1CC6740F003A21EE /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
-		88B568F51CC93E53003A21EE /* DeviceAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceAction.swift; sourceTree = "<group>"; };
-		88B568F71CC9700C003A21EE /* CaptionedPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CaptionedPhoto.swift; sourceTree = "<group>"; };
 		88B568F91CCA77A6003A21EE /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		88B568FB1CCFFB6C003A21EE /* Brizeo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Brizeo.entitlements; sourceTree = "<group>"; };
 		88B568FD1CD904D0003A21EE /* UserProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProvider.swift; sourceTree = "<group>"; };
@@ -561,12 +553,8 @@
 			isa = PBXGroup;
 			children = (
 				8873F72C1CBFFF520053EAB8 /* BrizeoImage.swift */,
-				88B568F51CC93E53003A21EE /* DeviceAction.swift */,
-				88B568F71CC9700C003A21EE /* CaptionedPhoto.swift */,
 				88B568F91CCA77A6003A21EE /* Helper.swift */,
-				690DB8F21CD00F4500733D90 /* Tutorials.swift */,
 				88C188661CDB85240011F3A6 /* PaginationHelper.swift */,
-				69D2DB971CEA0AD800150256 /* GoogleAnalyticsManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1392,7 +1380,6 @@
 				BB1EF48C1E3AAAAC00231ACC /* EventsViewController.swift in Sources */,
 				BB22CF911E4CBFDD0096A3D3 /* VerticallyCenteredTextView.swift in Sources */,
 				BB3EF58C1E6D672F006FB2ED /* InfoProvider.swift in Sources */,
-				690DB8F31CD00F4500733D90 /* Tutorials.swift in Sources */,
 				BB3EF5821E69A037006FB2ED /* FileObject.swift in Sources */,
 				BBD125771E3FF4D900E17750 /* MomentTableViewCell.swift in Sources */,
 				88C188651CDB82CF0011F3A6 /* MomentsProvider.swift in Sources */,
@@ -1404,7 +1391,6 @@
 				BB1EF4881E3AA5AE00231ACC /* MainTabBarController.swift in Sources */,
 				BBBA1DDB1E74CEB6000C55B8 /* FirstEntranceUserView.swift in Sources */,
 				88B568E01CC6740F003A21EE /* Preferences.swift in Sources */,
-				69D2DB981CEA0AD800150256 /* GoogleAnalyticsManager.swift in Sources */,
 				BB4ED5CC1E3B3FEC005B3487 /* PeopleNotificationTableViewCell.swift in Sources */,
 				BB1EF4711E3A97FD00231ACC /* Configurations.swift in Sources */,
 				BB3B95001E44C3CD002298AF /* InviteFriendTableViewCell.swift in Sources */,
@@ -1436,8 +1422,6 @@
 				BB4ED5F91E3C06D8005B3487 /* SettingsNotificationCell.swift in Sources */,
 				BB1FB6CB1E3FED48008F2614 /* MomentsViewController.swift in Sources */,
 				88B569001CD904D0003A21EE /* MatchesProvider.swift in Sources */,
-				88B568F61CC93E53003A21EE /* DeviceAction.swift in Sources */,
-				88B568F81CC9700C003A21EE /* CaptionedPhoto.swift in Sources */,
 				BBFBBB801E3CBCAA0002BF4B /* AutoCompleteTextField.swift in Sources */,
 				BBD4281B1E41DE5100DA6E6C /* OtherPersonAboutInfoTableViewCell.swift in Sources */,
 				BB3EF57D1E696CE4006FB2ED /* Gender.swift in Sources */,
