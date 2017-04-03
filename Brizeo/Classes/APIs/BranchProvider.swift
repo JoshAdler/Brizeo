@@ -117,6 +117,7 @@ class BranchProvider: NSObject {
         
         let branch: Branch = Branch.currentInstance
         
+        //TODO: remove before release
         //#if PRODUCTION
         //#else
             branch.setDebug()

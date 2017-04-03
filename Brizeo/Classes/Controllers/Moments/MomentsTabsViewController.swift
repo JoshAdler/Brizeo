@@ -278,8 +278,7 @@ class MomentsTabsViewController: BasicViewController {
         mediaController.isSharingEnabled = true
         mediaController.moment = moment
         
-        let navigation = navigationController ?? Helper.currentTabNavigationController()
-        navigation?.pushViewController(mediaController, animated: true)
+        Helper.currentTabNavigationController()?.pushViewController(mediaController, animated: true)
     }
     
     fileprivate func showUserProfile(with userId: String?, orMoment moment: Moment?) {
@@ -291,7 +290,7 @@ class MomentsTabsViewController: BasicViewController {
             otherPersonProfileController.user = moment?.user
             otherPersonProfileController.userId = userIdentifier
             
-            navigationController?.pushViewController(otherPersonProfileController, animated: true)
+            Helper.currentTabNavigationController()?.pushViewController(otherPersonProfileController, animated: true)
         }
     }
 }

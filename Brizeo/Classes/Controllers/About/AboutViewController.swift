@@ -210,7 +210,18 @@ class AboutViewController: UIViewController {
 }
 
 // MARK: - UITextViewDelegate
-extension AboutViewController: UITextViewDelegate {}
+extension AboutViewController: UITextViewDelegate {
+    
+    func textViewDidChange(_ textView: UITextView) {
+        user.personalText = textView.text
+    }
+    
+    func textViewShouldEndEditing(_ textView: UITextView) -> Bool {
+        user.personalText = textView.text
+        
+        return true
+    }
+}
 
 // MARK: - UITableViewDataSource
 extension AboutViewController: UITableViewDataSource {
@@ -399,8 +410,7 @@ extension AboutViewController: AboutSaveTableViewCellDelegate {
         
         showBlackLoader()
         
-        let currentUser = UserProvider.shared.currentUser!
-        UserProvider.updateUser(user: currentUser) { (result) in
+        UserProvider.updateUser(user: user) { (result) in
             switch(result) {
             case .success(_):
                 

@@ -42,11 +42,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppDelegate.originalAppDelegate = self
         
         //TODO: remove it before realise
-        FirstEntranceProvider.shared.isFirstEntrancePassed = true
+        //FirstEntranceProvider.shared.isFirstEntrancePassed = true
         
         // apply main theme for the app
         ThemeManager.applyGlobalTheme()
-
+        
         // setup 3rd parties
         setupReachability()
         setupFirebase()
@@ -59,10 +59,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // setup Facebook SDK
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-
-        // TODO: replace GoogleAnalytics
-//        GoogleAnalyticsManager.setupGoogleAnalytics()
-//        GoogleAnalyticsManager.sendUserProfilePictures()
 
         // setup managers
         LocationManager.setup()
