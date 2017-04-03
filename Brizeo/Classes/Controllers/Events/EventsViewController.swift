@@ -137,6 +137,8 @@ class EventsViewController: UIViewController {
         
         LocationManager.updateUserLocation()
         
+        tableView.estimatedRowHeight = 300
+        
         // set top refresher
         topRefresher = UIRefreshControl()
         topRefresher.addTarget(self, action: #selector(EventsViewController.refreshTableView), for: .valueChanged)
@@ -329,6 +331,7 @@ extension EventsViewController: UITableViewDataSource {
         }
         
         // owner profile url
+        event.ownerUser = UserProvider.shared.currentUser
         if let profileURL = event.ownerUser.profileUrl {
             cell.eventOwnerImageView.sd_setImage(with: profileURL)
         } else {
