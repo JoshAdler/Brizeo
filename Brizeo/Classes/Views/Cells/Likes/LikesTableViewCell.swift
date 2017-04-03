@@ -23,8 +23,6 @@ class LikesTableViewCell: UITableViewCell {
         didSet {
             profileButton.setTitle(LocalizableString.Profile.localizedString, for: .normal)
             profileButton.layer.cornerRadius = 5.0
-//            profileButton.layer.borderWidth = 1.0
-//            profileButton.layer.borderColor = HexColor("")
         }
     }
     weak var delegate: LikesTableViewCellDelegate?
