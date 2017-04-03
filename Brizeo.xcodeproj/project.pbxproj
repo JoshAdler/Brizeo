@@ -166,6 +166,7 @@
 		BBF64E2E1E8BE412001A9B77 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BBF64E2D1E8BE412001A9B77 /* libz.tbd */; };
 		BBF64E301E8BE418001A9B77 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBF64E2F1E8BE418001A9B77 /* SystemConfiguration.framework */; };
 		BBF64E321E8BE420001A9B77 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBF64E311E8BE420001A9B77 /* CoreLocation.framework */; };
+		BBF64E371E9234BC001A9B77 /* OptionsInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBF64E361E9234BC001A9B77 /* OptionsInputTableViewCell.swift */; };
 		BBFBBB801E3CBCAA0002BF4B /* AutoCompleteTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFBBB7F1E3CBCAA0002BF4B /* AutoCompleteTextField.swift */; };
 		BBFBBB821E3CBD460002BF4B /* SettingsSearchLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFBBB811E3CBD460002BF4B /* SettingsSearchLocationCell.swift */; };
 		BBFBBB861E3CCAD70002BF4B /* SettingsLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBFBBB851E3CCAD70002BF4B /* SettingsLocationCell.swift */; };
@@ -364,6 +365,7 @@
 		BBF64E2D1E8BE412001A9B77 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		BBF64E2F1E8BE418001A9B77 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		BBF64E311E8BE420001A9B77 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		BBF64E361E9234BC001A9B77 /* OptionsInputTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsInputTableViewCell.swift; sourceTree = "<group>"; };
 		BBFBBB7F1E3CBCAA0002BF4B /* AutoCompleteTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoCompleteTextField.swift; sourceTree = "<group>"; };
 		BBFBBB811E3CBD460002BF4B /* SettingsSearchLocationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsSearchLocationCell.swift; sourceTree = "<group>"; };
 		BBFBBB851E3CCAD70002BF4B /* SettingsLocationCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsLocationCell.swift; sourceTree = "<group>"; };
@@ -798,6 +800,7 @@
 		BB1EF4771E3AA54600231ACC /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				BBF64E351E9234A7001A9B77 /* Options */,
 				BB1FF6FA1E52047A002343CE /* ChooseView */,
 				BB7AD2621E48C3C200502AE2 /* Likes */,
 				BB3B94FE1E44C3C3002298AF /* InviteFriends */,
@@ -1072,6 +1075,14 @@
 				BBD428121E41CF6B00DA6E6C /* OtherPersonDetailsTabsViewController.swift */,
 			);
 			path = OtherPerson;
+			sourceTree = "<group>";
+		};
+		BBF64E351E9234A7001A9B77 /* Options */ = {
+			isa = PBXGroup;
+			children = (
+				BBF64E361E9234BC001A9B77 /* OptionsInputTableViewCell.swift */,
+			);
+			name = Options;
 			sourceTree = "<group>";
 		};
 		BBFBBB7E1E3CBCAA0002BF4B /* AutoCompleteTextField */ = {
@@ -1418,6 +1429,7 @@
 				BBFBBB821E3CBD460002BF4B /* SettingsSearchLocationCell.swift in Sources */,
 				BB1FF6E11E51A050002343CE /* MatchViewController.swift in Sources */,
 				BB4ED5C71E3B3CE4005B3487 /* NotificationsViewController.swift in Sources */,
+				BBF64E371E9234BC001A9B77 /* OptionsInputTableViewCell.swift in Sources */,
 				BB4ED5CA1E3B3F24005B3487 /* LikesNotificationTableViewCell.swift in Sources */,
 				BB4ED5F91E3C06D8005B3487 /* SettingsNotificationCell.swift in Sources */,
 				BB1FB6CB1E3FED48008F2614 /* MomentsViewController.swift in Sources */,

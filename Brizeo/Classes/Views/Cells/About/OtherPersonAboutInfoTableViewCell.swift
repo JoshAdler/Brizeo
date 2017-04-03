@@ -62,10 +62,10 @@ class OtherPersonAboutInfoTableViewCell: UITableViewCell {
         }
         
         // study
-        educationLabel.text = user.studyInfo ?? "Unknown"
+        educationLabel.text = user.studyInfo ?? "Not set"
         
         // work
-        workLabel.text = user.workInfo ?? "Unknown"
+        workLabel.text = user.workInfo ?? "Not set"
     }
     
     func applyLocationWithUser(user: User, locationString: String?) {

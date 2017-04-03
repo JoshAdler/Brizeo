@@ -10,6 +10,8 @@ import Foundation
 
 enum LocalizableString: String {
     
+    case CustomWorkPlaceholder = "You can type your custom occupation."
+    case CustomEducationPlaceholder = "You can type your custom school."
     case EventsAttendingsHeaderTitle = "Brizeo Members Attending"
     case Attending = "Attending"
     case Popularity = "Popularity"

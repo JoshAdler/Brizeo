@@ -117,10 +117,10 @@ class BranchProvider: NSObject {
         
         let branch: Branch = Branch.currentInstance
         
-        #if PRODUCTION
-        #else
+        //#if PRODUCTION
+        //#else
             branch.setDebug()
-        #endif
+        //#endif
         
         branch.initSession(launchOptions: launchOptions) { (params, error) in
             

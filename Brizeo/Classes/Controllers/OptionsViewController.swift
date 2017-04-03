@@ -8,6 +8,8 @@
 
 import UIKit
 import SVProgressHUD
+import Typist
+import ChameleonFramework
 
 class OptionsViewController: BasicViewController {
 
@@ -20,6 +22,7 @@ class OptionsViewController: BasicViewController {
     
     struct Constants {
         static let cellViewHeight: CGFloat = 54.0
+        static let headerHeight: CGFloat = 53.0
     }
     
     // MARK: - Properties
@@ -33,6 +36,9 @@ class OptionsViewController: BasicViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        registerHeaderViews()
+        configureKeyboardBehaviour()
         
         tableView.estimatedRowHeight = 55.0
         
@@ -72,6 +78,29 @@ class OptionsViewController: BasicViewController {
     }
     
     // MARK: - Private methods
+    
+    fileprivate func registerHeaderViews() {
+        tableView.register(UINib(nibName: SettingsBigHeaderView.nibName, bundle: nil), forHeaderFooterViewReuseIdentifier: SettingsBigHeaderView.nibName)
+    }
+    
+    fileprivate func configureKeyboardBehaviour() {
+        let keyboard = Typist.shared
+        
+        keyboard
+            .on(event: .willHide, do: { (options) in
+                UIView.animate(withDuration: options.animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(options.animationCurve.rawValue)), animations: {
+                    
+                    self.tableView.contentSize = CGSize(width: self.tableView.contentSize.width, height: self.tableView.contentSize.height - options.endFrame.height)
+                }, completion: nil)
+            })
+            .on(event: .willShow, do: { (options) in
+                UIView.animate(withDuration: options.animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(options.animationCurve.rawValue)), animations: {
+                    
+                    self.tableView.contentSize = CGSize(width: self.tableView.contentSize.width, height: self.tableView.contentSize.height + options.endFrame.height)
+                }, completion: nil)
+            })
+            .start()
+    }
     
     fileprivate func loadContent() {
         showBlackLoader()
@@ -121,26 +150,77 @@ class OptionsViewController: BasicViewController {
 // MARK: - UITableViewDataSource
 extension OptionsViewController: UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return values?.count ?? 0
+        if section == 0 {
+            return values?.count ?? 0
+        } else {
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: SettingsCheckmarkCell = tableView.dequeueCell(withIdentifier: SettingsCheckmarkCell.identifier, for: indexPath)
-        
-        let value = values![indexPath.row]
-        
-        cell.titleLabel.text = value
-        
-        let selectedValue = (type == .education) ? user.studyInfo : user.workInfo
-        cell.isChecked = value == selectedValue
-        
-        return cell
+        if indexPath.section == 0 {
+            let cell: SettingsCheckmarkCell = tableView.dequeueCell(withIdentifier: SettingsCheckmarkCell.identifier, for: indexPath)
+            
+            let value = values![indexPath.row]
+            
+            cell.titleLabel.text = value
+            
+            let selectedValue = (type == .education) ? user.studyInfo : user.workInfo
+            cell.isChecked = value == selectedValue
+            
+            return cell
+        } else { // input cell
+            let cell: OptionsInputTableViewCell = tableView.dequeueCell(withIdentifier: OptionsInputTableViewCell.identifier, for: indexPath)
+            cell.textField.placeholder = type == .work ? LocalizableString.CustomWorkPlaceholder.localizedString : LocalizableString.CustomEducationPlaceholder.localizedString
+            
+            let selectedValue = (type == .education) ? user.studyInfo : user.workInfo
+            
+            if selectedValue == nil {
+                cell.isChecked = true
+                cell.textField.text = selectedValue
+            } else if values != nil && !values!.contains(selectedValue!) {
+                cell.isChecked = true
+                cell.textField.text = selectedValue
+            }
+            else {
+                cell.isChecked = false
+                cell.textField.text = nil
+            }
+            
+            return cell
+        }
     }
 }
 
 // MARK: - UITableViewDelegate
 extension OptionsViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return Constants.headerHeight
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let headerView: SettingsHeaderView = tableView.dequeueReusableHeaderFooterView(withIdentifier: SettingsBigHeaderView.nibName)
+        
+        var sectionTitle: String
+        if type == .work {
+            sectionTitle = section == 0 ? "My Occupation" : "General Occupation"
+        } else { //education
+            sectionTitle = section == 0 ? "My School" : "General School"
+        }
+        
+        headerView.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: tableView.frame.width, height: Constants.headerHeight))
+        headerView.contentView.backgroundColor = HexColor("224EA3")
+        headerView.titleLabel.text = sectionTitle
+        headerView.titleLabel.textColor = .white
+        return headerView
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -158,6 +238,28 @@ extension OptionsViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension//Constants.cellViewHeight
+        return UITableViewAutomaticDimension
+    }
+}
+
+// MARK: - UITextFieldDelegate
+extension OptionsViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        
+        if let text = textField.text {
+            if text.numberOfCharactersWithoutSpaces() > 0 {
+                if type == .work {
+                    user.workInfo = textField.text
+                } else { // education
+                    user.studyInfo = textField.text
+                }
+                
+                tableView.reloadData()
+            }
+        }
+        
+        return true
     }
 }
