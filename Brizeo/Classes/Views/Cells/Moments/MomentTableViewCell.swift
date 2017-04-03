@@ -29,10 +29,11 @@ class MomentTableViewCell: UITableViewCell {
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var actionButton: UIButton!
     @IBOutlet weak var notificationView: UILabel!
-    @IBOutlet weak var ownerLogoButton: UIButton! {
+    @IBOutlet weak var ownerLogoButton: UIButton!
+    @IBOutlet weak var ownerLogoImageView: UIImageView! {
         didSet {
-            ownerLogoButton.layer.borderWidth = 2.0
-            ownerLogoButton.layer.borderColor = HexColor("e1ee11")?.cgColor
+            ownerLogoImageView.layer.borderWidth = 2.0
+            ownerLogoImageView.layer.borderColor = HexColor("e1ee11")?.cgColor
         }
     }
     @IBOutlet weak var numberOfLikesButton: UIButton! {
@@ -57,6 +58,10 @@ class MomentTableViewCell: UITableViewCell {
         
         if ownerLogoButton != nil {
             ownerLogoButton.layer.cornerRadius = ownerLogoButton.frame.height / 2.0
+        }
+        
+        if ownerLogoImageView != nil {
+            ownerLogoImageView.layer.cornerRadius = ownerLogoImageView.frame.height / 2.0
         }
     }
 

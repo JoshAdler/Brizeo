@@ -343,7 +343,7 @@ extension EventsViewController: UITableViewDataSource {
 extension EventsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return Constants.cellHeight
+        return UITableViewAutomaticDimension//Constants.cellHeight
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

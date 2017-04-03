@@ -41,15 +41,15 @@ class EventsProvider {
         /*
         // update each 24 hours
         if Defaults[.lastEventsUpdate] != nil && Defaults[.lastEventsUpdate]!.isInSameDayOf(date: Date()) {
-            print("Don't need to update")
-            return
-        }*/
+         print("Don't need to update")
+         return
+         }*/
         
         fetchUserEventsFromFacebook { (result) in
             switch(result) {
             case .success(let events):
                 
-        let provider = APIService.APIProvider()
+                let provider = APIService.APIProvider()
                 provider.request(.saveEvents(events: events)) { (result) in
                     
                     switch result {

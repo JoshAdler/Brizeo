@@ -26,12 +26,12 @@
                   moduleName = "Brizeo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Brizeo/Classes/APIs/UserProvider.swift"
-                  timestampString = "512659335.758669"
+                  timestampString = "512901460.693882"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "397"
                   endingLineNumber = "397"
-                  offsetFromSymbolStart = "388">
+                  offsetFromSymbolStart = "439">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -41,12 +41,12 @@
                   moduleName = "Brizeo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Brizeo/Classes/APIs/UserProvider.swift"
-                  timestampString = "512659335.760297"
+                  timestampString = "512901460.696317"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "399"
                   endingLineNumber = "399"
-                  offsetFromSymbolStart = "84">
+                  offsetFromSymbolStart = "58">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -314,12 +314,12 @@
                   moduleName = "Brizeo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Brizeo/Classes/Controllers/Liker/LikesViewController.swift"
-                  timestampString = "512659335.799759"
+                  timestampString = "512901460.740604"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "85"
                   endingLineNumber = "85"
-                  offsetFromSymbolStart = "260">
+                  offsetFromSymbolStart = "236">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -329,12 +329,12 @@
                   moduleName = "Brizeo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Brizeo/Classes/Controllers/Liker/LikesViewController.swift"
-                  timestampString = "512659335.800828"
+                  timestampString = "512901460.741899"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "87"
                   endingLineNumber = "87"
-                  offsetFromSymbolStart = "80">
+                  offsetFromSymbolStart = "54">
                </Location>
             </Locations>
          </BreakpointContent>

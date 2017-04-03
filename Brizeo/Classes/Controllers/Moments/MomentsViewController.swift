@@ -447,8 +447,8 @@ extension MomentsViewController: UITableViewDataSource {
                 }
             })
         }
-        cell.ownerLogoButton.sd_setImage(with: moment.user.profileUrl, for: .normal)
-        
+
+        cell.ownerLogoImageView.sd_setImage(with: moment.user.profileUrl)
         cell.notificationView.isHidden = true
         
         // set locations for the moment
