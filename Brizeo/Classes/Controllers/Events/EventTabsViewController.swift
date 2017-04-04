@@ -30,15 +30,15 @@ class EventTabsViewController: BasicViewController {
         super.viewDidLoad()
                 
         prepareController()
-        
-        // update facebook events for current user
-        EventsProvider.updateUserEventsIfNeeds()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         Helper.mainTabBarController()?.tabBar.isHidden = false
+        
+        // update facebook events for current user
+        EventsProvider.updateUserEventsIfNeeds()
     }
     
     // MARK: - Private methods

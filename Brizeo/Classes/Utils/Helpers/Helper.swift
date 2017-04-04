@@ -291,7 +291,6 @@ class Helper: NSObject {
         // send a chat message to other user
         ChatProvider.createMatchingChat(with: user)
         
-        
         let matchingController: MatchViewController = controllerFromStoryboard(controllerId: "MatchViewController")!
         
         matchingController.user = user

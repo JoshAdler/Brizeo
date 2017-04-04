@@ -75,7 +75,7 @@ class PreferencesProvider: NSObject {
         provider.request(.updatePreferences(userId: currentUser.objectId, preferences: preferences)) { (result) in
             switch result {
             case .success(let response):
-                
+                print("UPDATED PREFERENCES")
                 guard response.statusCode == 200 else {
                     completion?(.failure(APIError(code: response.statusCode, message: nil)))
                     return
