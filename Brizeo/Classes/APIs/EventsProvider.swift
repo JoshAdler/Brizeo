@@ -27,7 +27,7 @@ class EventsProvider {
     // MARK: - Class methods
     
     class func updateUserEventsIfNeeds() {
-        
+
         guard UserProvider.shared.currentUser != nil else {
             print("no current user")
             return

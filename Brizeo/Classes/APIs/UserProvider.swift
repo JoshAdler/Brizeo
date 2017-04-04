@@ -733,7 +733,7 @@ class UserProvider: NSObject {
                 
                 do {
                     // parse auth token
-                    shared.authToken = try response.mapString(atKeyPath: JSONKeys.jwt)
+                    //shared.authToken = try response.mapString(atKeyPath: JSONKeys.jwt)
                     
                     let newUser = try response.mapObject(User.self)
                     

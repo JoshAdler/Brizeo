@@ -62,8 +62,8 @@ class ChatProvider: NSObject {
         let messageDBService = ALMessageDBService()
         let message = ALMessage()
         
-        message.contactIds = UserProvider.shared.currentUser!.objectId
-        message.to = Configurations.Applozic.superUserId  //super admin id
+        message.contactIds = Configurations.Applozic.superUserId//UserProvider.shared.currentUser!.objectId //super admin id
+        message.to = UserProvider.shared.currentUser!.objectId//Configurations.Applozic.superUserId
         message.createdAtTime = NSNumber(value: Date().timeIntervalSince1970 * 1000.0)
         message.deviceKey = ALUserDefaultsHandler.getDeviceKeyString()
         message.sendToDevice = false
@@ -110,6 +110,18 @@ class ChatProvider: NSObject {
             try DBHandler?.managedObjectContext.save()
         } catch (_) {
             print("applozic error")
+        }
+    }
+    
+    class func removeConversation(with user: User) {
+        
+        ALMessageService.deleteMessageThread(user.objectId, orChannelKey: nil) { (string, error) in
+            if error != nil {
+                print("Some error while removing conversation for user with id \(user.objectId). Reason: \(error!.localizedDescription)")
+                return
+            }
+            
+            print("Successfully removed conversation with user with id \(user.objectId)")
         }
     }
 }

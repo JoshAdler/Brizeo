@@ -156,6 +156,9 @@ class UserMatchesViewController: UIViewController {
                     
                     welf.hideLoader()
                     
+                    // remove chat with this person
+                    ChatProvider.removeConversation(with: user)
+                    
                     if let index = welf.matches.index(where: { $0.objectId == user.objectId }) {
                         welf.matches.remove(at: index)
                     }

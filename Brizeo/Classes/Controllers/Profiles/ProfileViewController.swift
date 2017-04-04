@@ -345,8 +345,7 @@ extension ProfileViewController: UICollectionViewDataSource {
         cell.delegate = self
         cell.imageView.image = #imageLiteral(resourceName: "ic_add_photo_plus")
         cell.isDeleteButtonHidden = true
-
-        //TODO: check whether it can be video here.
+        
         if indexPath.row < user.uploadFiles.count {
             if let imageURL = user.uploadFiles[indexPath.row].imageUrl {
                 cell.imageView.sd_setImage(with: imageURL)
