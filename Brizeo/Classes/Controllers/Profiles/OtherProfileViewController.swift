@@ -153,7 +153,7 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
             return
         }
         
-        nameLabel.text = "\(user.displayName), \(user.age)"
+        nameLabel.text = "\(user.shortName/*displayName*/), \(user.age)"
         studyLabel.text = user.studyInfo
         workLabel.text = user.workInfo
         

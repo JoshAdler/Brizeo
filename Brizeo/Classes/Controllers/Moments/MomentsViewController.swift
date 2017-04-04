@@ -421,7 +421,7 @@ extension MomentsViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: MomentTableViewCell.identifier) as! MomentTableViewCell
         
         cell.delegate = self
-        cell.ownerNameLabel.text = moment.user.displayName
+        cell.ownerNameLabel.text = moment.user.shortName/*displayName*/
         cell.momentDescriptionLabel.text = moment.shortCapture
         cell.numberOfLikesButton.setTitle("\(moment.likesCount)", for: .normal)
         cell.likeButton.isHidden = moment.ownerId == currentUser.objectId

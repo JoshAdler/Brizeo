@@ -131,7 +131,7 @@ extension LikesViewController: UITableViewDataSource {
         let cell: LikesTableViewCell = tableView.dequeueCell(withIdentifier: LikesTableViewCell.identifier, for: indexPath)
         
         cell.delegate = self
-        cell.titleLabel.text = user.isCurrent ? "You" : user.displayName
+        cell.titleLabel.text = user.isCurrent ? "You" : user.shortName/*displayName*/
         
         if user.hasProfileImage {
             cell.profileLogoImageView.sd_setImage(with: user.profileUrl!)

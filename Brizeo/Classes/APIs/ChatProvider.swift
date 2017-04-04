@@ -27,7 +27,7 @@ class ChatProvider: NSObject {
         let chatManager : ALChatManager = ALChatManager(applicationKey: Configurations.Applozic.appKey as NSString)
         let user = ALUser()
         
-        user.displayName = currentUser.displayName
+        user.displayName = currentUser.shortName//currentUser.displayName
         user.userId = currentUser.objectId
         user.email = currentUser.email
         user.applicationId = Configurations.Applozic.appKey
@@ -73,7 +73,7 @@ class ChatProvider: NSObject {
         message.delivered = false
         message.fileMetaKey = nil
         message.type = "5"
-        message.message = LocalizableString.ChatAdminWelcomeMessage.localizedStringWithArguments([UserProvider.shared.currentUser!.displayName])
+        message.message = LocalizableString.ChatAdminWelcomeMessage.localizedStringWithArguments([UserProvider.shared.currentUser!.shortName/*displayName*/])
         message.groupId = nil
         messageDBService.createMessageEntityForDBInsertion(with: message)
         

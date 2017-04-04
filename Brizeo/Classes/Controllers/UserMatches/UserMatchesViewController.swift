@@ -196,7 +196,7 @@ extension UserMatchesViewController: UITableViewDataSource {
     
         cell.delegate = self
         cell.rightUtilityButtons = rightUtilsButtons()
-        cell.nameLabel.text = user.displayName
+        cell.nameLabel.text = user.shortName/*displayName*/
         
         if user.hasProfileImage {
             cell.avatarImageView.sd_setImage(with: user.profileUrl)

@@ -121,10 +121,10 @@ class User: Mappable {
     
     // helper variables
     
-    var shortName: String? {
+    var shortName: String {
         let displayNameArray = displayName.components(separatedBy: " ")
         
-        return displayNameArray.first
+        return displayNameArray.first ?? "Someone"
     }
     
     var isCurrent: Bool {
@@ -268,9 +268,6 @@ class User: Mappable {
         self.lastActiveTime = lastActiveDate
         self.displayName = displayName ?? "Mr./Mrs"
         self.profileImageURL = profileImageURL
-        //if let profileImageURL = profileImageURL, let fileInfo = FileObjectInfo(urlStr: profileImageURL) {
-//            profileImage = FileObject(info: fileInfo)
-        //}
         
         if uploadedURLs.count > 0 {
             otherProfileImagesURLs = uploadedURLs

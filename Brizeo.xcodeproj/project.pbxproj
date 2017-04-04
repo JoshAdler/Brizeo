@@ -12,7 +12,6 @@
 		69722B9D1CDBE0030064E0B5 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B568F91CCA77A6003A21EE /* Helper.swift */; };
 		69722BA91CDC05D70064E0B5 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 69722BA81CDC05D70064E0B5 /* Localizable.stringsdict */; };
 		69C215201CCE453D00F4C069 /* CustomLocation.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 69C2151F1CCE453D00F4C069 /* CustomLocation.gpx */; };
-		69C215241CCE52D000F4C069 /* MatchStartChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C215221CCE52D000F4C069 /* MatchStartChatViewController.swift */; };
 		69D2DB961CEA0A4A00150256 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69D2DB951CEA0A4A00150256 /* GoogleService-Info.plist */; };
 		69EFA9741CDA99FA00885EEA /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EFA9731CDA99FA00885EEA /* LocationManager.swift */; };
 		69F422901CE65F1D00F8A0A4 /* new_message.wav in Resources */ = {isa = PBXBuildFile; fileRef = 69F4228F1CE65F1D00F8A0A4 /* new_message.wav */; };
@@ -237,7 +236,6 @@
 		692D2FB51CCAC99A00434B54 /* Passion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Passion.swift; sourceTree = "<group>"; };
 		69722BA81CDC05D70064E0B5 /* Localizable.stringsdict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.stringsdict; path = Localizable.stringsdict; sourceTree = "<group>"; };
 		69C2151F1CCE453D00F4C069 /* CustomLocation.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = CustomLocation.gpx; sourceTree = "<group>"; };
-		69C215221CCE52D000F4C069 /* MatchStartChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchStartChatViewController.swift; sourceTree = "<group>"; };
 		69D2DB951CEA0A4A00150256 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		69EFA9731CDA99FA00885EEA /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		69F4228F1CE65F1D00F8A0A4 /* new_message.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = new_message.wav; sourceTree = "<group>"; };
@@ -459,7 +457,6 @@
 		691D6C9C1CC931FC00428A39 /* Match */ = {
 			isa = PBXGroup;
 			children = (
-				69C215211CCE52A500F4C069 /* Match Start Chat */,
 				BB1FF6E01E51A050002343CE /* MatchViewController.swift */,
 			);
 			path = Match;
@@ -473,15 +470,6 @@
 				88CA7A721CBEF06A00231AB2 /* Info.plist */,
 			);
 			name = "Support Files";
-			sourceTree = "<group>";
-		};
-		69C215211CCE52A500F4C069 /* Match Start Chat */ = {
-			isa = PBXGroup;
-			children = (
-				69C215221CCE52D000F4C069 /* MatchStartChatViewController.swift */,
-			);
-			name = "Match Start Chat";
-			path = Cells;
 			sourceTree = "<group>";
 		};
 		75989FC71DFB368A00D03586 /* Events */ = {
@@ -1510,7 +1498,6 @@
 				BBD1257B1E4078E600E17750 /* OtherProfileViewController.swift in Sources */,
 				69722B9D1CDBE0030064E0B5 /* Helper.swift in Sources */,
 				BB1EF48A1E3AA7D100231ACC /* EventTabsViewController.swift in Sources */,
-				69C215241CCE52D000F4C069 /* MatchStartChatViewController.swift in Sources */,
 				8CEB3DD81D8934D3009DE31F /* Notification.swift in Sources */,
 				75989FDE1DFB76B600D03586 /* ViewPagerOptions.swift in Sources */,
 				BBD428151E41D02E00DA6E6C /* OtherPersonAboutViewController.swift in Sources */,

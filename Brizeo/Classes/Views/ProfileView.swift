@@ -24,7 +24,7 @@ class ProfileView: UIView {
     // MARK: - Public methods
     
     func applyUser(user: User) {
-        nameLabel.text = "\(user.displayName), \(user.age)"
+        nameLabel.text = "\(user.shortName/*displayName*/), \(user.age)"
         studyLabel.text = user.studyInfo
         workLabel.text = user.workInfo
         
