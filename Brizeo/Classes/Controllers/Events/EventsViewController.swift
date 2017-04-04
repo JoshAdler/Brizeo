@@ -331,7 +331,6 @@ extension EventsViewController: UITableViewDataSource {
         }
         
         // owner profile url
-        event.ownerUser = UserProvider.shared.currentUser
         if let profileURL = event.ownerUser.profileUrl {
             cell.eventOwnerImageView.sd_setImage(with: profileURL)
         } else {

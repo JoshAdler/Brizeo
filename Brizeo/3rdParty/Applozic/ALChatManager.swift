@@ -314,10 +314,9 @@ func ALDefaultChatViewSettings ()
     
     
     /***************************************  SEND RECEIVE MESSAGES SETTINGS  ***************************************/
-    
     ALApplozicSettings.setSendMsgTextColor(UIColor.white)
     ALApplozicSettings.setReceiveMsgTextColor(HexColor("2d2d2d"))//"59656b"))//(UIColor.gray)
-    ALApplozicSettings.setColorForReceiveMessages(HexColor("d3ecf5"))//(UIColor(red:255/255, green:255/255, blue:255/255, alpha:1))
+    ALApplozicSettings.setColorForReceiveMessages(UIColor.white)//(UIColor(red:255/255, green:255/255, blue:255/255, alpha:1))
     ALApplozicSettings.setColorForSendMessages(HexColor("1a9dd5"))//(UIColor (red:66.0/255, green:173.0/255, blue:247.0/255, alpha:1))
     
     //****************** DATE COLOUR : AT THE BOTTOM OF MESSAGE BUBBLE ******************/
@@ -434,7 +433,7 @@ func ALDefaultChatViewSettings ()
     ALUserDefaultsHandler.setLoginUserConatactVisibility(false)
     ALApplozicSettings.setUserProfileHidden(false)
     ALApplozicSettings.setFontFace("SourceSansPro-Regular")//("Helvetica")
-    ALApplozicSettings.setCustomMessageFontSize(16)
+    ALApplozicSettings.setCustomMessageFontSize(30)
     ALApplozicSettings.setChatWallpaperImageName("<WALLPAPER NAME>")
     ALApplozicSettings.setChatViewBGColor(UIColor.white)
     ALApplozicSettings.setBubbleCornerRadius(15.0)
