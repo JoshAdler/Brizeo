@@ -210,9 +210,9 @@ extension OptionsViewController: UITableViewDelegate {
         
         var sectionTitle: String
         if type == .work {
-            sectionTitle = section == 0 ? "My Occupation" : "General Occupation"
+            sectionTitle = section == 0 ? "My Occupation" : "General Occupation (Click Return to Add)"
         } else { //education
-            sectionTitle = section == 0 ? "My School" : "General School"
+            sectionTitle = section == 0 ? "My School" : "General School (Click Return to Add)"
         }
         
         headerView.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: tableView.frame.width, height: Constants.headerHeight))

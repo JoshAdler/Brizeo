@@ -316,7 +316,7 @@ func ALDefaultChatViewSettings ()
     /***************************************  SEND RECEIVE MESSAGES SETTINGS  ***************************************/
     
     ALApplozicSettings.setSendMsgTextColor(UIColor.white)
-    ALApplozicSettings.setReceiveMsgTextColor(HexColor("59656b"))//(UIColor.gray)
+    ALApplozicSettings.setReceiveMsgTextColor(HexColor("2d2d2d"))//"59656b"))//(UIColor.gray)
     ALApplozicSettings.setColorForReceiveMessages(HexColor("d3ecf5"))//(UIColor(red:255/255, green:255/255, blue:255/255, alpha:1))
     ALApplozicSettings.setColorForSendMessages(HexColor("1a9dd5"))//(UIColor (red:66.0/255, green:173.0/255, blue:247.0/255, alpha:1))
     
@@ -434,12 +434,12 @@ func ALDefaultChatViewSettings ()
     ALUserDefaultsHandler.setLoginUserConatactVisibility(false)
     ALApplozicSettings.setUserProfileHidden(false)
     ALApplozicSettings.setFontFace("SourceSansPro-Regular")//("Helvetica")
-    ALApplozicSettings.setCustomMessageFontSize(14)
+    ALApplozicSettings.setCustomMessageFontSize(16)
     ALApplozicSettings.setChatWallpaperImageName("<WALLPAPER NAME>")
     ALApplozicSettings.setChatViewBGColor(UIColor.white)
     ALApplozicSettings.setBubbleCornerRadius(15.0)
-    ALApplozicSettings.setColorReceiveTextCell(UIColor(colorLiteralRed: 173.0/255, green: 216.0/255, blue: 230.0/255, alpha: 1.0)) // LIGHT BLUE
-    ALApplozicSettings.setColorSendTextCell(UIColor(colorLiteralRed: 211.0/255, green: 211.0/255, blue: 211.0/255, alpha: 1.0)) // LIGHT GREY
+    ALApplozicSettings.setColorReceiveTextCell(HexColor("cbcbcb"))
+    ALApplozicSettings.setColorSendTextCell(HexColor("1f4ba5"))
     /****************************************************************************************************************/
     
     
