@@ -11,8 +11,9 @@ import ChameleonFramework
 import MessageUI
 import SVProgressHUD
 import SDWebImage
+import Applozic
 
-class OtherProfileViewController: BasicViewController {
+class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
 
     // MARK: - Types
     
@@ -23,6 +24,7 @@ class OtherProfileViewController: BasicViewController {
     struct StoryboardIds {
         static let detailsControllerId = "OtherPersonDetailsTabsViewController"
         static let mediaControllerId = "MediaViewController"
+        static let personalTabsController = "PersonalTabsViewController"
     }
     
     // MARK: - Properties
@@ -59,6 +61,15 @@ class OtherProfileViewController: BasicViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "ic_nav_logo"))
+        imageView.contentMode = .scaleAspectFit
+        
+        let titleView = UIView(frame: CGRect(x: 0, y: 0, width: 90, height: 44))
+        imageView.frame = titleView.bounds
+        titleView.addSubview(imageView)
+        
+        navigationItem.titleView = titleView
+        
         loadUserIfNeeds()
         
         //add mutual friends observer
@@ -70,10 +81,35 @@ class OtherProfileViewController: BasicViewController {
         
         navigationController?.setNavigationBarHidden(false, animated: animated)
         tabBarController?.tabBar.isHidden = false
+        
+        if let navigationController = navigationController {
+            navigationItem.backBarButtonItem = UIBarButtonItem(title: LocalizableString.Back.localizedString, style: .plain, target: nil, action: nil)
+            
+            if navigationController.viewControllers.count < 2 {
+                navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_settings").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(onLeftButtonClicked(sender:)))
+                navigationItem.leftBarButtonItem?.width = #imageLiteral(resourceName: "ic_search").size.width
+            }
+            
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_search").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(onRightButtonClicked(sender:)))
+        }
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    @IBAction func onBackButtonClicked(sender: UIBarButtonItem) {
+        _ = navigationController?.popViewController(animated: true)
+    }
+    
+    func onLeftButtonClicked(sender: UIBarButtonItem?) {
+        let personalController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.personalTabsController)!
+        navigationController?.pushViewController(personalController, animated: true)
+    }
+    
+    func onRightButtonClicked(sender: UIBarButtonItem) {
+        let inviteFriendView: InviteFriendsView = InviteFriendsView.loadFromNib()
+        inviteFriendView.present(on: Helper.initialNavigationController().view)
     }
     
     // MARK: - Private methods
@@ -229,7 +265,7 @@ class OtherProfileViewController: BasicViewController {
     fileprivate func loadStatusBetweenUsers(completion: @escaping (Void) -> Void) {
         showBlackLoader()
         
-        guard let userIdentifier = userId ?? user?.objectId else {
+        guard let userIdentifier = userId ?? user?.objectId ?? alContact.userId else {
             print("Can't load user without id")
             hideLoader()
             return

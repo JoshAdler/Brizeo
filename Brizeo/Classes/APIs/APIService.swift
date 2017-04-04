@@ -124,7 +124,7 @@ extension APIService: TargetType {
         case .getEvents(let sortingFlag, _, _):
             return "/allevents/\(sortingFlag)"
         case .getMatchedEvents(let userId, let sortingFlag, _, _):
-            return "/events/\(userId)/\(sortingFlag)"
+            return "/events-by-user/\(userId)/\(sortingFlag)"
         case .mutualFriends(let facebookId, let token):
             return "/mutual_friends/\(facebookId)/\(token)"
         case .getFacebookFriends(_):

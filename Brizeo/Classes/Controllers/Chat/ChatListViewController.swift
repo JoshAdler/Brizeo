@@ -10,44 +10,70 @@ import UIKit
 import SVProgressHUD
 import Applozic
 
-class ChatListViewController: BasicViewController {
+class ChatListViewController: ALSubViewController {//BasicViewController {
 
+    // MARK: - Types
+    
+    struct StoryboardIds {
+        static let personalTabsController = "PersonalTabsViewController"
+    }
+    
     // MARK: - Properties
     
     @IBOutlet weak var containerView: UIView!
-    var chatController: ALMessagesViewController?
     
     // MARK: - Controller lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(operateApplozicChat(notification:)), name: NSNotification.Name(rawValue: "GoToMessages"), object: nil)
+        // place title view
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "ic_nav_logo"))
+        imageView.contentMode = .scaleAspectFit
+        
+        let titleView = UIView(frame: CGRect(x: 0, y: 0, width: 90, height: 44))
+        imageView.frame = titleView.bounds
+        titleView.addSubview(imageView)
+        
+        navigationItem.titleView = titleView
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        if let navigationController = navigationController {
+            navigationItem.backBarButtonItem = UIBarButtonItem(title: LocalizableString.Back.localizedString, style: .plain, target: nil, action: nil)
+            
+            if navigationController.viewControllers.count < 2 {
+                navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_settings").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(onLeftButtonClicked(sender:)))
+                navigationItem.leftBarButtonItem?.width = #imageLiteral(resourceName: "ic_search").size.width
+            }
+            
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_search").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(onRightButtonClicked(sender:)))
+        }
+        
         Helper.mainTabBarController()?.tabBar.isHidden = false
         
         let storyboard = UIStoryboard(name: "Applozic", bundle: Bundle(for: ALChatViewController.self))
-        chatController = storyboard.instantiateViewController(withIdentifier: "ALViewController") as? ALMessagesViewController
+        msgView = storyboard.instantiateViewController(withIdentifier: "ALViewController") as? ALMessagesViewController
         
-        showViewControllerInContainerView(chatController!)
+        showViewControllerInContainerView(msgView)
     }
-    
+
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - Public methods
     
-    func operateApplozicChat(notification: NSNotification) {
-        if let dict = notification.userInfo, let key = dict["key"] as? NSNumber {
-            
-            chatController!.insertChannelMessage(key)
-            _ = navigationController?.popToRootViewController(animated: true)
-        }
+    func onLeftButtonClicked(sender: UIBarButtonItem?) {
+        let personalController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.personalTabsController)!
+        navigationController?.pushViewController(personalController, animated: true)
+    }
+    
+    func onRightButtonClicked(sender: UIBarButtonItem) {
+        let inviteFriendView: InviteFriendsView = InviteFriendsView.loadFromNib()
+        inviteFriendView.present(on: Helper.initialNavigationController().view)
     }
     
     // MARK: - Private methods

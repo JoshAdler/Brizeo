@@ -136,6 +136,8 @@
 		BB834A9C1E782D690051EEC4 /* AboutTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB834A9B1E782D690051EEC4 /* AboutTitleTableViewCell.swift */; };
 		BB8B6AD61E51047A00417D54 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB8B6AD41E51047A00417D54 /* Main.storyboard */; };
 		BB96E2721E8BD88E00375990 /* LocalyticsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB96E2711E8BD88E00375990 /* LocalyticsProvider.swift */; };
+		BB9D17D81E939DAD00F50EF6 /* Applozic.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB9D17D51E939D8700F50EF6 /* Applozic.framework */; };
+		BB9D17D91E939DAD00F50EF6 /* Applozic.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BB9D17D51E939D8700F50EF6 /* Applozic.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		BBA0DC741E79408800F2BA6E /* CustomSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA0DC731E79408800F2BA6E /* CustomSearchBar.swift */; };
 		BBA2DB351E7157760066B84B /* NSDate+Kogi.m in Sources */ = {isa = PBXBuildFile; fileRef = BBA2DB341E7157760066B84B /* NSDate+Kogi.m */; };
 		BBA73FD11E7CAC2200777E1B /* sound_likes.wav in Resources */ = {isa = PBXBuildFile; fileRef = BBA73FCF1E7CAC2200777E1B /* sound_likes.wav */; };
@@ -191,7 +193,42 @@
 			remoteGlobalIDString = 88CA7A621CBEF06A00231AB2;
 			remoteInfo = Brizeo;
 		};
+		BB9D17D41E939D8700F50EF6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BB9D17D01E939D8700F50EF6 /* Applozic.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6D6DF07D1BC535C800EBA00F;
+			remoteInfo = Applozic;
+		};
+		BB9D17D61E939DA200F50EF6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BB9D17D01E939D8700F50EF6 /* Applozic.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 6D6DF07C1BC535C800EBA00F;
+			remoteInfo = Applozic;
+		};
+		BB9D17DA1E939DAD00F50EF6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BB9D17D01E939D8700F50EF6 /* Applozic.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 6D6DF07C1BC535C800EBA00F;
+			remoteInfo = Applozic;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BB9D17DC1E939DAD00F50EF6 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				BB9D17D91E939DAD00F50EF6 /* Applozic.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		078B3E832DB60A88C1747506 /* Pods-Brizeo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Brizeo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Brizeo/Pods-Brizeo.release.xcconfig"; sourceTree = "<group>"; };
@@ -334,6 +371,7 @@
 		BB834A9B1E782D690051EEC4 /* AboutTitleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutTitleTableViewCell.swift; sourceTree = "<group>"; };
 		BB8B6AD51E51047A00417D54 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BB96E2711E8BD88E00375990 /* LocalyticsProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalyticsProvider.swift; sourceTree = "<group>"; };
+		BB9D17D01E939D8700F50EF6 /* Applozic.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Applozic.xcodeproj; path = Applozic/Applozic.xcodeproj; sourceTree = "<group>"; };
 		BBA0DC731E79408800F2BA6E /* CustomSearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSearchBar.swift; sourceTree = "<group>"; };
 		BBA2DB331E7157760066B84B /* NSDate+Kogi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDate+Kogi.h"; path = "KogiDate/NSDate+Kogi.h"; sourceTree = "<group>"; };
 		BBA2DB341E7157760066B84B /* NSDate+Kogi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSDate+Kogi.m"; path = "KogiDate/NSDate+Kogi.m"; sourceTree = "<group>"; };
@@ -384,6 +422,7 @@
 				BBF64E321E8BE420001A9B77 /* CoreLocation.framework in Frameworks */,
 				BBF64E301E8BE418001A9B77 /* SystemConfiguration.framework in Frameworks */,
 				BBF64E2E1E8BE412001A9B77 /* libz.tbd in Frameworks */,
+				BB9D17D81E939DAD00F50EF6 /* Applozic.framework in Frameworks */,
 				BBF64E2C1E8BE40A001A9B77 /* libsqlite3.tbd in Frameworks */,
 				BBF64E2A1E8BE3F3001A9B77 /* AdSupport.framework in Frameworks */,
 				D1641CEBC257ED884DC91E75 /* Pods_Brizeo.framework in Frameworks */,
@@ -605,6 +644,7 @@
 		88CA7A5A1CBEF06A00231AB2 = {
 			isa = PBXGroup;
 			children = (
+				BB9D17D01E939D8700F50EF6 /* Applozic.xcodeproj */,
 				88CA7A651CBEF06A00231AB2 /* Brizeo */,
 				88CA7A7A1CBEF06A00231AB2 /* BrizeoTests */,
 				88CA7A851CBEF06A00231AB2 /* BrizeoUITests */,
@@ -1019,6 +1059,14 @@
 			path = Applozic;
 			sourceTree = "<group>";
 		};
+		BB9D17D11E939D8700F50EF6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BB9D17D51E939D8700F50EF6 /* Applozic.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		BBA2DB321E71576B0066B84B /* KogiDate */ = {
 			isa = PBXGroup;
 			children = (
@@ -1130,10 +1178,13 @@
 				693E538D1CFF3C4B00A2E904 /* ShellScript */,
 				5F6956F7C529C7FEE3F0DAFF /* [CP] Embed Pods Frameworks */,
 				303DEA5D83071FABAD3B1E0B /* [CP] Copy Pods Resources */,
+				BB9D17DC1E939DAD00F50EF6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				BB9D17D71E939DA200F50EF6 /* PBXTargetDependency */,
+				BB9D17DB1E939DAD00F50EF6 /* PBXTargetDependency */,
 			);
 			name = Brizeo;
 			productName = Brizeo;
@@ -1223,6 +1274,12 @@
 			mainGroup = 88CA7A5A1CBEF06A00231AB2;
 			productRefGroup = 88CA7A641CBEF06A00231AB2 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = BB9D17D11E939D8700F50EF6 /* Products */;
+					ProjectRef = BB9D17D01E939D8700F50EF6 /* Applozic.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				88CA7A621CBEF06A00231AB2 /* Brizeo */,
@@ -1231,6 +1288,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		BB9D17D51E939D8700F50EF6 /* Applozic.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Applozic.framework;
+			remoteRef = BB9D17D41E939D8700F50EF6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		88CA7A611CBEF06A00231AB2 /* Resources */ = {
@@ -1525,6 +1592,16 @@
 			isa = PBXTargetDependency;
 			target = 88CA7A621CBEF06A00231AB2 /* Brizeo */;
 			targetProxy = 88CA7A831CBEF06A00231AB2 /* PBXContainerItemProxy */;
+		};
+		BB9D17D71E939DA200F50EF6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Applozic;
+			targetProxy = BB9D17D61E939DA200F50EF6 /* PBXContainerItemProxy */;
+		};
+		BB9D17DB1E939DAD00F50EF6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Applozic;
+			targetProxy = BB9D17DA1E939DAD00F50EF6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

@@ -1,0 +1,36 @@
+-x
+objective-c
+-arch
+i386
+-std=gnu99
+-fobjc-arc
+-fmodules
+-gmodules
+-fbuild-session-file=/var/folders/ky/75tvh6g9523_ftz8x8q1bhy80000gn/C/com.apple.DeveloperTools/8.2.1-8C1002/Xcode/ModuleCache/Session.modulevalidation
+-Xclang
+-fmodule-implementation-of
+-Xclang
+Applozic
+-fpascal-strings
+-Os
+-fno-common
+-DNS_BLOCK_ASSERTIONS=1
+-DOBJC_OLD_DISPATCH_PROTOTYPES=0
+-isysroot
+/Users/Abhishek/Downloads/Mac Softwares/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator10.2.sdk
+-fasm-blocks
+-mios-simulator-version-min=8.0
+-g
+-fobjc-abi-version=2
+-fobjc-legacy-dispatch
+-iquote
+-ivfsoverlay
+/Users/Abhishek/Documents/Github/Applozic-iOS-SDK/sample-with-framework/Applozic/build/Applozic.build/all-product-headers.yaml
+-iquote
+-I/Users/Abhishek/Library/Developer/Xcode/DerivedData/applozicdemo-djqhbwmtyhvpyzfpcozfzarkmirq/Build/Products/Release-iphonesimulator/include
+-F/Users/Abhishek/Library/Developer/Xcode/DerivedData/applozicdemo-djqhbwmtyhvpyzfpcozfzarkmirq/Build/Products/Release-iphonesimulator
+-F/Users/Abhishek/Documents/Github/Applozic-iOS-SDK/sample-with-framework/Applozic
+i386-apple-darwin16.4.0
+"4.2.1 Compatible Apple LLVM 8.0.0 (clang-800.0.42.1)"
+SDK_PRODUCT_BUILD_VERSION=14C89
+14C89

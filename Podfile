@@ -47,7 +47,7 @@ target 'Brizeo' do
     pod 'SwiftyUserDefaults'
     
     # main chat
-    pod 'Applozic', '~>3.8'
+#    pod 'Applozic', '~>3.8'
     
     # for keyboard management
     pod 'Typist'

@@ -270,6 +270,14 @@ extension LocationManager : CLLocationManagerDelegate {
         
         currentLocationCoordinates = location
         
+        // update user's current location
+        if let currentUser = UserProvider.shared.currentUser {
+            if currentUser.location != currentLocationCoordinates {
+                currentUser.location = currentLocationCoordinates
+                UserProvider.updateUser(user: currentUser, completion: nil)
+            }
+        }
+        
         getLocationStringForLocation(location, completion: { (locationString) in
             self.currentLocationString = locationString
             self.completionBlock?(locationString, location)

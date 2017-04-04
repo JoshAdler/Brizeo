@@ -1,0 +1,22 @@
+dependencies: \
+  /Users/Abhishek/Documents/Github/Applozic-iOS-SDK/sample-with-framework/Applozic/Applozic/ViewControllers/ALReceiverUserProfileVC.m \
+  /Users/Abhishek/Documents/Github/Applozic-iOS-SDK/sample-with-framework/Applozic/Applozic/ViewControllers/ALReceiverUserProfileVC.h \
+  /Users/Abhishek/Documents/Github/Applozic-iOS-SDK/sample-with-framework/Applozic/build/Applozic.build/Release-iphonesimulator/Applozic.build/module.modulemap \
+  /Users/Abhishek/Documents/Github/Applozic-iOS-SDK/sample-with-framework/Applozic/Applozic/ALContactService.h \
+  /Users/Abhishek/Documents/Github/Applozic-iOS-SDK/sample-with-framework/Applozic/Applozic/DomainClasses/ALContact.h \
+  /Users/Abhishek/Documents/Github/Applozic-iOS-SDK/sample-with-framework/Applozic/Applozic/DomainClasses/ALJson.h \
+  /Users/Abhishek/Documents/Github/Applozic-iOS-SDK/sample-with-framework/Applozic/Applozic/DomainClasses/DB_CONTACT.h \
+  /Users/Abhishek/Documents/Github/Applozic-iOS-SDK/sample-with-framework/Applozic/Applozic/Utilities/ALUtilityClass.h \
+  /Users/Abhishek/Documents/Github/Applozic-iOS-SDK/sample-with-framework/Applozic/Applozic/ALChatLauncher.h \
+  /Users/Abhishek/Documents/Github/Applozic-iOS-SDK/sample-with-framework/Applozic/Applozic/ALConversationProxy.h \
+  /Users/Abhishek/Documents/Github/Applozic-iOS-SDK/sample-with-framework/Applozic/Applozic/ALTopicDetail.h \
+  /Users/Abhishek/Documents/Github/Applozic-iOS-SDK/sample-with-framework/Applozic/Applozic/DB_ConversationProxy.h \
+  /Users/Abhishek/Documents/Github/Applozic-iOS-SDK/sample-with-framework/Applozic/Applozic/DomainClasses/ALMessage.h \
+  /Users/Abhishek/Documents/Github/Applozic-iOS-SDK/sample-with-framework/Applozic/Applozic/DomainClasses/ALFileMetaInfo.h \
+  /Users/Abhishek/Documents/Github/Applozic-iOS-SDK/sample-with-framework/Applozic/Applozic/Resources/lib/SDWebImage/UIImageView+WebCache.h \
+  /Users/Abhishek/Documents/Github/Applozic-iOS-SDK/sample-with-framework/Applozic/Applozic/Resources/lib/SDWebImage/SDWebImageCompat.h \
+  /Users/Abhishek/Documents/Github/Applozic-iOS-SDK/sample-with-framework/Applozic/Applozic/Resources/lib/SDWebImage/SDWebImageManager.h \
+  /Users/Abhishek/Documents/Github/Applozic-iOS-SDK/sample-with-framework/Applozic/Applozic/Resources/lib/SDWebImage/SDWebImageOperation.h \
+  /Users/Abhishek/Documents/Github/Applozic-iOS-SDK/sample-with-framework/Applozic/Applozic/Resources/lib/SDWebImage/SDWebImageDownloader.h \
+  /Users/Abhishek/Documents/Github/Applozic-iOS-SDK/sample-with-framework/Applozic/Applozic/Resources/lib/SDWebImage/SDImageCache.h \
+  /Users/Abhishek/Documents/Github/Applozic-iOS-SDK/sample-with-framework/Applozic/Applozic/Handlers/ALApplozicSettings.h
