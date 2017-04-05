@@ -216,17 +216,24 @@ class EventsProvider {
                 }
                 
                 // attending count & persons
-                let attendingCount = eventData["attending_count"] as? Int
-                var attendingIds: [String]?
+                let attendingCount = eventData["attending_count"] as? Int ?? 0
+                let interestedCount = eventData["interested_count"] as? Int ?? 0
+                var attendingIds: [String] = [String]()
                 
                 if let attendingUsersDict = eventData["attending"] as? [String: Any], let
                     
                     attendingUsers = attendingUsersDict["data"] as? [[String: String]] {
-                    attendingIds = attendingUsers.map({ $0["id"]! })
+                    attendingIds.append(contentsOf: attendingUsers.map({ $0["id"]! }))
+                }
+                
+                if let interestedUsersDict = eventData["interested"] as? [String: Any], let
+                    
+                    interestedUsers = interestedUsersDict["data"] as? [[String: String]] {
+                    attendingIds.append(contentsOf: interestedUsers.map({ $0["id"]! }))
                 }
                 
                 // combine data into new event object
-                let event = Event(facebookId: id, name: name, information: description, latitude: latitude, longitude: longitude, imageLink: coverUrl, attendingsCount: attendingCount, startDate: startDate, attendingIds: attendingIds)
+                let event = Event(facebookId: id, name: name, information: description, latitude: latitude, longitude: longitude, imageLink: coverUrl, attendingsCount: attendingCount + interestedCount, startDate: startDate, attendingIds: attendingIds)
                 events.append(event)
             }
             

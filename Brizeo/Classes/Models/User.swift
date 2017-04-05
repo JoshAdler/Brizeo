@@ -333,7 +333,12 @@ class User: Mappable {
             for i in 0..<otherProfileImagesURLs!.count {
                 
                 let fileURL = otherProfileImagesURLs![i]
-                let thumbnailURL = thumbnailImageURLs![i]
+                var thumbnailURL: String? = nil
+                
+                if i < thumbnailImageURLs!.count {
+                    thumbnailURL = thumbnailImageURLs![i]
+                }
+                
                 let file = FileObject(
                     thumbnailImage: FileObjectInfo(urlStr: thumbnailURL),
                     fileInfo: FileObjectInfo(urlStr: fileURL)!

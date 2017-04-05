@@ -31,7 +31,7 @@ class UserProvider: NSObject {
     struct FacebookConstants {
         static let permissions = ["public_profile", "email", "user_photos", "user_birthday", "user_friends", "user_education_history", "user_work_history", "user_events"]
         static let parameters = ["fields" : "id, email, first_name, last_name, name, birthday, gender, work, education, picture.width(1000).height(1000), albums{photos.height(1000){images},name}"]
-        static let eventParameters = ["fields" : "events.limit(50).since(){name,description,cover,is_canceled,attending_count,rsvp_status,start_time,place,id,attending.limit(400){id,installed},interested.limit(400){id,installed},interested_count}"]
+        static let eventParameters = ["fields" : "events.limit(50).since(){name,description,cover,is_canceled,attending_count,rsvp_status,start_time,place,id,attending.limit(400){id},interested.limit(400){id},interested_count}"]
         static let shortParameters = ["fields" : "work, education"]
         static let workParameters = ["fields" : "work"]
         static let educationParameters = ["fields" : "education"]

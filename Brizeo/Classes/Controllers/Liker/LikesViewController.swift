@@ -78,7 +78,9 @@ class LikesViewController: BasicViewController {
     fileprivate func loadEventAttendings() {
         
         guard let ids = event!.attendingsIds else {
-            print("No attendings")
+            
+            self.users = []
+            self.likesTableView.reloadData()
             return
         }
         

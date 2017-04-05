@@ -59,7 +59,7 @@ class OptionsViewController: BasicViewController {
         UserProvider.updateUser(user: user, completion: nil)
     }
     
-    override func onBackButtonClicked(sender: UIBarButtonItem) {
+    override func onBackButtonClicked(sender: UIBarButtonItem?) {
         
         guard let navigationController = navigationController else {
             return
@@ -226,15 +226,35 @@ extension OptionsViewController: UITableViewDelegate {
         
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let value = values![indexPath.row]
-    
-        if type == .education {
-            user.studyInfo = value
-        } else { // work
-            user.workInfo = value
+        if indexPath.section == 0 {
+            let value = values![indexPath.row]
+            
+            if type == .education {
+                user.studyInfo = value
+            } else { // work
+                user.workInfo = value
+            }
+            
+            tableView.reloadData()
+        } else { // input cell
+            
+            guard let cell = tableView.cellForRow(at: indexPath) as? OptionsInputTableViewCell else {
+                return
+            }
+            
+            if cell.isChecked {
+            
+                view.endEditing(true)
+                
+                if type == .education {
+                   user.studyInfo = "Unknown"
+                } else {
+                    user.workInfo = "Unknown"
+                }
+                
+                onBackButtonClicked(sender: nil)
+            }
         }
-        
-        tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

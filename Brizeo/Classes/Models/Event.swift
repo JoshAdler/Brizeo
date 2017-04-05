@@ -41,8 +41,8 @@ class Event: NSObject, Mappable {
     var latitude: Double?
     var longitude: Double?
     var previewImageLink: String?
-    var attendingsCount: Int = 0
-    var attendingsIds: [String]?
+    var attendingsCount: Int = 0 /* in real life it is attendings + interested */
+    var attendingsIds: [String]? /* in real life it is attendings + interested */
     var attendingsUsers: [User]?
     var startDate: Date?
     var ownerUser: User!

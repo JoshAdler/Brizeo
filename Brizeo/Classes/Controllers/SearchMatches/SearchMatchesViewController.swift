@@ -256,7 +256,7 @@ class SearchMatchesViewController: BasicViewController {
         
         UIView.animate(withDuration: 0.5, animations: {
             self.detailsController.view.transform = CGAffineTransform.identity
-            self.detailsController.view.frame = CGRect(origin: CGPoint.zero, size: self.view.frame.size)
+            self.detailsController.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height - 50.0)
         }) { (isFinished) in
             self.detailsController.didControllerChangedPosition(completionHandler: nil)
         }
