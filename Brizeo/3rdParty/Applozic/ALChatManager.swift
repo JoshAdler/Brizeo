@@ -312,7 +312,6 @@ func ALDefaultChatViewSettings ()
     ALApplozicSettings.setTitleForBackButtonChatVC("")               /*  SET BACK BUTTON FOR CHAT VC */
     /****************************************************************************************************************/
     
-    
     /***************************************  SEND RECEIVE MESSAGES SETTINGS  ***************************************/
     ALApplozicSettings.setSendMsgTextColor(UIColor.white)
     ALApplozicSettings.setReceiveMsgTextColor(HexColor("2d2d2d"))//"59656b"))//(UIColor.gray)
@@ -387,8 +386,8 @@ func ALDefaultChatViewSettings ()
     
     let sendButtonColor = HexColor("1f4ba5")//UIColor(red:66.0/255, green:173.0/255, blue:247.0/255, alpha:1)   /*  SET COLOR FOR SEND BUTTON   */
     ALApplozicSettings.setColorForSendButton(sendButtonColor)
-    
-    ALApplozicSettings.setColorForTypeMsgBackground(HexColor("999999"))//(UIColor.clear)             /*  SET COLOR FOR TYPE MESSAGE OUTER VIEW */
+    ALApplozicSettings.setColorForTypeMsgBackground(UIColor.white)
+    /*  SET COLOR FOR TYPE MESSAGE OUTER VIEW */
     ALApplozicSettings.setMsgTextViewBGColor(UIColor.white)//(HexColor("f6f6f6"))//(UIColor.red)//(UIColor.lightGray)                /*  SET BG COLOR FOR MESSAGE TEXT VIEW */
     ALApplozicSettings.setPlaceHolderColor(UIColor.gray)                       /*  SET COLOR FOR PLACEHOLDER TEXT */
     ALApplozicSettings.setVisibilityNoConversationLabelChatVC(true)            /*  SET NO CONVERSATION LABEL IN CHAT VC    */

@@ -51,6 +51,8 @@ static CGFloat const sendTextViewCornerRadius = 5.0f;
 //    self.sendMessageTextView.frame.size.height/5;
     
     self.sendMessageTextView.textContainer.lineBreakMode = NSLineBreakByCharWrapping;
+    self.sendMessageTextView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    self.sendMessageTextView.layer.borderWidth = 1.0;
 //    self.sendMessageTextView.textContainerInset = UIEdgeInsetsMake(self.attachmentOutlet.frame.origin.x, // Top
 //                                                                   self.attachmentOutlet.frame.size.width,// Left
 //                                                                   self.attachmentOutlet.frame.origin.y, // Bottom
