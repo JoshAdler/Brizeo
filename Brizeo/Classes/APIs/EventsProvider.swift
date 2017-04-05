@@ -146,7 +146,11 @@ class EventsProvider {
             return
         }
         
-        FBSDKGraphRequest(graphPath: "me", parameters: UserProvider.FacebookConstants.eventParameters).start { (connection, result, error) in
+        var parameters = UserProvider.FacebookConstants.eventParameters
+        let newValue = (parameters["fields"]! as NSString).replacingOccurrences(of: "since()", with: "since(\(Int64(Date().timeIntervalSince1970)))")
+        parameters["fields"] = newValue
+        
+        FBSDKGraphRequest(graphPath: "me", parameters: parameters).start { (connection, result, error) in
             
             if error != nil {
                 CLSNSLogv("ERROR: Error issuing graph request: %@", getVaList([error as! CVarArg]))
