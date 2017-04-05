@@ -136,7 +136,7 @@ extension APIService: TargetType {
         switch self {
         case .createNewUser(_), .reportMoment(_, _), .reportUser(_, _), .notifyAdminAboutDownloads(_, _), .approveMatch(_, _), .updateUserFile(_, _, _, _), .saveEvents(_), .getFacebookFriends(_):
             return .post
-        case .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .createNewMoment(_), .likeMoment(_, _), .updateMoment(_), .updateNotification(_), .getEvents(_, _, _):
+        case .updatePreferences(_, _), .updateUser(_), .addCountryForUser(_, _), .createNewMoment(_), .likeMoment(_, _), .updateMoment(_), .updateNotification(_), .getEvents(_, _, _), .getMatchedEvents(_, _, _, _):
             return .put
         case .deleteCountryForUser(_, _), .unlikeMoment(_, _), .deleteMoment(_, _), .declineMatch(_, _):
             return .delete
@@ -182,7 +182,7 @@ extension APIService: TargetType {
             
             let finalDict = ["newevents": eventsDict]
             return finalDict
-        case .getEvents(_, let longitude, let latitude):
+        case .getEvents(_, let longitude, let latitude), .getMatchedEvents(_, _, let longitude, let latitude):
             if let longitude = longitude, let latitude = latitude {
                 
                 let dict = [
