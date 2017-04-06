@@ -45,16 +45,20 @@ class UserMatchesViewController: UIViewController {
     }
     
     var user : User!
+    var isSelected = false
     
     fileprivate var topRefresher: UIRefreshControl!
     fileprivate var matches = [User]()
     fileprivate var paginator = PaginationHelper(pagesSize: 100)
     fileprivate var filteredUsers: [User]?
+    fileprivate var keyboardTypist: Typist!
     
     // MARK: - Controller lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        configureKeyboardBehaviour()
         
         // set top refresher
         topRefresher = UIRefreshControl()
@@ -70,19 +74,11 @@ class UserMatchesViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        configureKeyboardBehaviour()
-        
         topRefresher.endRefreshing()
         
         if matches.count == 0 {
             loadMatches()
         }
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        Typist.shared.clear()
     }
     
     // MARK: - Public methods
@@ -111,16 +107,28 @@ class UserMatchesViewController: UIViewController {
     // MARK: - Private methods
     
     fileprivate func configureKeyboardBehaviour() {
-        let keyboard = Typist.shared
+        keyboardTypist = Typist()
         
-        keyboard
+        keyboardTypist
             .on(event: .willHide, do: { (options) in
+                
+                if !self.isSelected {
+                    return
+                }
+                
+                print("Will hide on matches")
                 self.tableViewBottomConstraint.constant = 0
             })
             .on(event: .willShow, do: { (options) in
+                
+                if !self.isSelected {
+                    return
+                }
+                
+                print("Will show on matches")
                 self.tableViewBottomConstraint.constant = options.endFrame.height
             })
-            .start()
+        .start()
     }
     
     fileprivate func filterContentForSearchText(searchText: String) {

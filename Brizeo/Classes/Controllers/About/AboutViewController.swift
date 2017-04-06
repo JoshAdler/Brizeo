@@ -93,32 +93,30 @@ class AboutViewController: UIViewController {
     @IBOutlet weak var passionsTableView: UITableView!
     
     var user: User!
+    var isSelected = false
     
     fileprivate var mutualFriends = [(name:String, pictureURL:String)]()
     fileprivate var selectedPassion = [String: Int]()
     fileprivate var passions: [Passion]?
+    fileprivate var keyboardTypist: Typist!
+    fileprivate var defaultTableViewContentHeight: CGFloat = -1.0
     
     // MARK: - Controller lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureKeyboardBehaviour()
+        
         registerHeaderViews()
         
         fetchPassions()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        configureKeyboardBehaviour()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         UserProvider.updateUser(user: UserProvider.shared.currentUser!, completion: nil)
-        Typist.shared.clear()
     }
     
     // MARK: - Private methods
@@ -128,22 +126,34 @@ class AboutViewController: UIViewController {
     }
     
     fileprivate func configureKeyboardBehaviour() {
-        let keyboard = Typist.shared
+        keyboardTypist = Typist()
         
-        keyboard
+        keyboardTypist
             .on(event: .willHide, do: { (options) in
+                
+                if !self.isSelected {
+                    return
+                }
+                
+                print("Will hide on about")
                 UIView.animate(withDuration: options.animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(options.animationCurve.rawValue)), animations: {
 
-                    self.passionsTableView.contentSize = CGSize(width: self.passionsTableView.contentSize.width, height: self.passionsTableView.contentSize.height - options.endFrame.height)
+                    self.passionsTableView.contentSize = CGSize(width: self.passionsTableView.contentSize.width, height: self.defaultTableViewContentHeight)
                 }, completion: nil)
             })
             .on(event: .willShow, do: { (options) in
+                
+                if !self.isSelected {
+                    return
+                }
+                
+                print("Will show on about")
                 UIView.animate(withDuration: options.animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(options.animationCurve.rawValue)), animations: {
                 
-                    self.passionsTableView.contentSize = CGSize(width: self.passionsTableView.contentSize.width, height: self.passionsTableView.contentSize.height + options.endFrame.height)
+                    self.passionsTableView.contentSize = CGSize(width: self.passionsTableView.contentSize.width, height: self.defaultTableViewContentHeight + options.endFrame.height)
                 }, completion: nil)
             })
-            .start()
+        .start()
     }
     
     fileprivate func setSelectedPassions() {
@@ -216,6 +226,15 @@ class AboutViewController: UIViewController {
 
 // MARK: - UITextViewDelegate
 extension AboutViewController: UITextViewDelegate {
+    
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        
+        if defaultTableViewContentHeight == -1.0 {
+            defaultTableViewContentHeight = passionsTableView.contentSize.height
+        }
+        
+        return true
+    }
     
     func textViewDidChange(_ textView: UITextView) {
         user.personalText = textView.text

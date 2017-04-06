@@ -26,15 +26,19 @@ class TripsViewController: UIViewController {
     @IBOutlet fileprivate weak var activityIndicator: UIActivityIndicatorView!
     
     var user: User!
+    var isSelected = false
 
     fileprivate var searchBar: CustomSearchBar?
     fileprivate var filteredCountries: [Country]?
+    fileprivate var keyboardTypist: Typist!
     
     // MARK: - Controller lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        configureKeyboardBehaviour()
+        
         if user.isCurrent {
             searchBar = CustomSearchBar(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: view.frame.width, height: Constants.searchBarHeight)))
             searchBar?.delegate = self
@@ -48,17 +52,14 @@ class TripsViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        activityIndicator.stopAnimating()
         
-        configureKeyboardBehaviour()
+        activityIndicator.stopAnimating()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         view.endEditing(true)
-        
-        Typist.shared.clear()
     }
     
     // MARK: - Private methods
@@ -83,16 +84,28 @@ class TripsViewController: UIViewController {
     }
     
     fileprivate func configureKeyboardBehaviour() {
-        let keyboard = Typist.shared
+        keyboardTypist = Typist()
         
-        keyboard
+        keyboardTypist
             .on(event: .willHide, do: { (options) in
+                
+                if !self.isSelected {
+                    return
+                }
+                
+                print("Will hide on trips")
                 self.tableViewBottomConstraint.constant = 0
             })
             .on(event: .willShow, do: { (options) in
+                
+                if !self.isSelected {
+                    return
+                }
+                
+                print("Will show on trips")
                 self.tableViewBottomConstraint.constant = options.endFrame.height
             })
-            .start()
+        .start()
     }
     
     fileprivate func filterContentForSearchText(searchText: String) {
@@ -156,7 +169,10 @@ class TripsViewController: UIViewController {
         searchBar?.showsCancelButton = false
         searchBar?.setNeedsDisplay()
         searchBar?.text = nil
-        filterContentForSearchText(searchText: searchBar!.text!)
+        //filterContentForSearchText(searchText: searchBar!.text!)
+        filteredCountries = nil
+        
+        tableView.reloadData()
     }
 }
 

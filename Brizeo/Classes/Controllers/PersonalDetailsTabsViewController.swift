@@ -8,6 +8,7 @@
 
 import UIKit
 import CarbonKit
+import Typist
 
 class PersonalDetailsTabsViewController: BasicViewController {
 
@@ -55,6 +56,21 @@ class PersonalDetailsTabsViewController: BasicViewController {
         carbonTabSwipeNavigation.pagesScrollView?.isScrollEnabled = false
     }
     
+    // MARK: - Private methods
+    
+    fileprivate func configureKeyboardBehaviour() {
+        let keyboard = Typist.shared
+        
+        keyboard
+            .on(event: .willHide, do: { (options) in
+                print("Hide")
+            })
+            .on(event: .willShow, do: { (options) in
+                print("Show")
+            })
+            .start()
+    }
+    
     // MARK: - Public methods
     
     func didControllerChangedPosition(isOpened: Bool, completionHandler: ((Void) -> Void)?) {
@@ -100,6 +116,13 @@ extension PersonalDetailsTabsViewController: CarbonTabSwipeNavigationDelegate {
         } else {
             return tripsController
         }
+    }
+    
+    func carbonTabSwipeNavigation(_ carbonTabSwipeNavigation: CarbonTabSwipeNavigation, didMoveAt index: UInt) {
+        
+        aboutController.isSelected = index == 0
+        matchesController.isSelected = index == 1
+        tripsController.isSelected = index == 2
     }
 }
 

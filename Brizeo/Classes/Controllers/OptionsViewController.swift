@@ -31,11 +31,14 @@ class OptionsViewController: BasicViewController {
     var user: User!
     var type: ContentType!
     var values: [String]?
+    var keyboardTypist: Typist!
     
     // MARK: - Controller lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        configureKeyboardBehaviour()
         
         registerHeaderViews()
         
@@ -47,18 +50,27 @@ class OptionsViewController: BasicViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        configureKeyboardBehaviour()
-        
         if values == nil || values?.count == 0 {
             loadContent()
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        keyboardTypist.start()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        keyboardTypist.stop()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         UserProvider.updateUser(user: user, completion: nil)
-        Typist.shared.clear()
     }
     
     override func onBackButtonClicked(sender: UIBarButtonItem?) {
@@ -86,16 +98,18 @@ class OptionsViewController: BasicViewController {
     }
     
     fileprivate func configureKeyboardBehaviour() {
-        let keyboard = Typist.shared
+        keyboardTypist = Typist()
         
-        keyboard
+        keyboardTypist
             .on(event: .willHide, do: { (options) in
+                print("will hide options")
                 UIView.animate(withDuration: options.animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(options.animationCurve.rawValue)), animations: {
                     
                     self.tableView.contentSize = CGSize(width: self.tableView.contentSize.width, height: self.tableView.contentSize.height - options.endFrame.height)
                 }, completion: nil)
             })
             .on(event: .willShow, do: { (options) in
+                print("will show options")
                 UIView.animate(withDuration: options.animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(options.animationCurve.rawValue)), animations: {
                     
                     self.tableView.contentSize = CGSize(width: self.tableView.contentSize.width, height: self.tableView.contentSize.height + options.endFrame.height)
