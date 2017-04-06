@@ -148,6 +148,8 @@
     self.placeHolderTxt = @"Write a Message...";
     self.sendMessageTextView.text = self.placeHolderTxt;
     
+    self.shouldOpenProfile = true;
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -3699,6 +3701,10 @@
         return;
     }
     
+    if (!self.shouldOpenProfile) {
+        return;
+    }
+    
     [self.mActivityIndicator startAnimating];
     
     NSString * viewID = [ALApplozicSettings getCustomReceiverVC];
@@ -3730,6 +3736,10 @@
 
 - (void)openUserProfile:(ALMessage *)alMessage {
 
+    if (!self.shouldOpenProfile) {
+        return;
+    }
+    
     ALContactService *cnService = [ALContactService new];
     UIStoryboard * storyboard = [UIStoryboard storyboardWithName:[ALApplozicSettings getClientStoryBoard] bundle:nil];
     NSString * viewID = [ALApplozicSettings getCustomReceiverVC];

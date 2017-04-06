@@ -43,6 +43,7 @@
 
 @property (nonatomic) BOOL refreshMainView;
 @property (nonatomic) BOOL refresh;
+@property (nonatomic) BOOL shouldOpenProfile;
 @property (strong, nonatomic) NSString * displayName;
 
 @property (strong, nonatomic) NSString * text;

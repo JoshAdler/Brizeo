@@ -13,6 +13,7 @@ import SWTableViewCell
 import SDWebImage
 import SVProgressHUD
 import Typist
+import Applozic
 
 class UserMatchesViewController: UIViewController {
 
@@ -78,6 +79,16 @@ class UserMatchesViewController: UIViewController {
         
         if matches.count == 0 {
             loadMatches()
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        print("disappear")
+        
+        if let charNavController = presentedViewController as? UINavigationController, let chatController = charNavController.viewControllers[0] as? ALChatViewController {
+            chatController.shouldOpenProfile = false
         }
     }
     
@@ -272,7 +283,7 @@ extension UserMatchesViewController: SWTableViewCellDelegate {
             
             let user = self.filteredUsers![indexPath.row]
             
-            ChatProvider.startChat(with: user.objectId, from: self)
+            ChatProvider.startChat(with: user.objectId, from: Helper.initialNavigationController())// self)
             tableView.endEditing(true)
             tableView.reloadData()
         }
