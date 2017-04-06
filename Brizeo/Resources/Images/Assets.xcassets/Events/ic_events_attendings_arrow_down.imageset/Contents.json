@@ -2,12 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "ic_attending.png",
+      "filename" : "ic_events_attendings_arrow_down.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "ic_attending@2x.png",
+      "filename" : "ic_events_attendings_arrow_down@2x.png",
       "scale" : "2x"
     },
     {
