@@ -132,7 +132,7 @@ extension OtherPersonAboutViewController: UITableViewDataSource {
             let mutualFriend = mutualFriends![indexPath.row]
             var cell: OtherPersonAboutInviteTableViewCell
             
-            if mutualFriend.facebookId != nil {
+            if mutualFriend.objectId != "0" {
                 cell = tableView.dequeueCell(withIdentifier: OtherPersonAboutInviteTableViewCell.identifier, for: indexPath)
             } else {
                 cell = tableView.dequeueCell(withIdentifier: StoryboardIds.inviteFaceUserCellId, for: indexPath)
