@@ -109,6 +109,7 @@ class CreateMomentViewController: UIViewController {
     // MARK: - Private methods
     
     fileprivate func applyMoment() {
+        
         // rename post => update
         rightNavigationButton.title = LocalizableString.Update.localizedString
         
@@ -191,10 +192,6 @@ class CreateMomentViewController: UIViewController {
     }
     
     fileprivate func setupLocationTextField() {
-        addLocationTextField.dataSourceDelegate = self
-        addLocationTextField.rowHeight = 50.0
-        addLocationTextField.dropDownTableViewHeight = 150
-        addLocationTextField.animationStyle = .slide
         addLocationTextField.text = LocationManager.shared.currentLocationString ?? LocalizableString.Location.localizedString
     }
     
@@ -388,43 +385,6 @@ extension CreateMomentViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
-    }
-}
-
-// MARK: - ZTDropDownTextFieldDataSourceDelegate
-extension CreateMomentViewController: ZTDropDownTextFieldDataSourceDelegate {
-    
-    func dropDownTextField(_ dropDownTextField: ZTDropDownTextField, numberOfRowsInSection section: Int) -> Int {
-        return suggestions?.count ?? 0
-    }
-    
-    func dropDownTextField(_ dropDownTextField: ZTDropDownTextField, didSelectRowAtIndexPath indexPath: IndexPath) {
-        guard let selectedMark = self.autocompleteLocationsResults?[indexPath.row] else {
-            print("No selected mark")
-            return
-        }
-        
-        // select mark
-        addLocationTextField.text = selectedMark.placemark.asString()
-        selectedLocation = selectedMark.placemark.coordinate
-        
-        // end editing
-        addLocationTextField.resignFirstResponder()
-        
-        // clear previous results
-        autocompleteLocationsResults = nil
-        suggestions = nil
-    }
-    
-    func dropDownTextField(_ dropDownTextField: ZTDropDownTextField, cellForRowAtIndexPath indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = dropDownTextField.dropDownTableView.dequeueReusableCell(withIdentifier: "Cell") ?? UITableViewCell(style: .default, reuseIdentifier: "Cell")
-        
-        cell.textLabel!.text = suggestions?[indexPath.row] ?? ""
-        cell.textLabel!.font = addLocationTextField.font!
-        cell.textLabel!.textColor = UIColor.darkGray
-        
-        return cell
     }
 }
 

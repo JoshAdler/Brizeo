@@ -61,8 +61,6 @@ class UserMatchesViewController: UIViewController {
         topRefresher.addTarget(self, action: #selector(UserMatchesViewController.resetMatches), for: .valueChanged)
         tableView.addSubview(topRefresher)
         
-        configureKeyboardBehaviour()
-        
 //        tableView.addInfiniteScroll { [unowned self] (tableView) in
 //            self.paginator.increaseCurrentPage()
 //            self.loadMatches()
@@ -72,11 +70,19 @@ class UserMatchesViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        configureKeyboardBehaviour()
+        
         topRefresher.endRefreshing()
         
         if matches.count == 0 {
             loadMatches()
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        Typist.shared.clear()
     }
     
     // MARK: - Public methods

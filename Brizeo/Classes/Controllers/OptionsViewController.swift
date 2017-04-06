@@ -38,7 +38,6 @@ class OptionsViewController: BasicViewController {
         super.viewDidLoad()
         
         registerHeaderViews()
-        configureKeyboardBehaviour()
         
         tableView.estimatedRowHeight = 55.0
         
@@ -47,6 +46,8 @@ class OptionsViewController: BasicViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        configureKeyboardBehaviour()
         
         if values == nil || values?.count == 0 {
             loadContent()
@@ -57,6 +58,7 @@ class OptionsViewController: BasicViewController {
         super.viewWillDisappear(animated)
         
         UserProvider.updateUser(user: user, completion: nil)
+        Typist.shared.clear()
     }
     
     override func onBackButtonClicked(sender: UIBarButtonItem?) {

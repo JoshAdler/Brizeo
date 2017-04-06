@@ -106,6 +106,10 @@ class AboutViewController: UIViewController {
         registerHeaderViews()
         
         fetchPassions()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         configureKeyboardBehaviour()
     }
@@ -114,6 +118,7 @@ class AboutViewController: UIViewController {
         super.viewWillDisappear(animated)
         
         UserProvider.updateUser(user: UserProvider.shared.currentUser!, completion: nil)
+        Typist.shared.clear()
     }
     
     // MARK: - Private methods
@@ -127,16 +132,16 @@ class AboutViewController: UIViewController {
         
         keyboard
             .on(event: .willHide, do: { (options) in
-//                UIView.animate(withDuration: options.animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(options.animationCurve.rawValue)), animations: {
+                UIView.animate(withDuration: options.animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(options.animationCurve.rawValue)), animations: {
 
                     self.passionsTableView.contentSize = CGSize(width: self.passionsTableView.contentSize.width, height: self.passionsTableView.contentSize.height - options.endFrame.height)
-//                }, completion: nil)
+                }, completion: nil)
             })
             .on(event: .willShow, do: { (options) in
-//                UIView.animate(withDuration: options.animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(options.animationCurve.rawValue)), animations: {
+                UIView.animate(withDuration: options.animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(options.animationCurve.rawValue)), animations: {
                 
                     self.passionsTableView.contentSize = CGSize(width: self.passionsTableView.contentSize.width, height: self.passionsTableView.contentSize.height + options.endFrame.height)
-//                }, completion: nil)
+                }, completion: nil)
             })
             .start()
     }

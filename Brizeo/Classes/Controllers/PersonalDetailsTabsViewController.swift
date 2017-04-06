@@ -54,7 +54,7 @@ class PersonalDetailsTabsViewController: BasicViewController {
         carbonTabSwipeNavigation.insert(intoRootViewController: self, andTargetView: targetView)
         carbonTabSwipeNavigation.pagesScrollView?.isScrollEnabled = false
     }
-
+    
     // MARK: - Public methods
     
     func didControllerChangedPosition(isOpened: Bool, completionHandler: ((Void) -> Void)?) {

@@ -23,12 +23,7 @@ class EventTableViewCell: UITableViewCell {
             locationImageView.image = locationImageView.image!.withRenderingMode(.alwaysTemplate)
         }
     }
-    @IBOutlet weak var attendingImageView: UIImageView! {
-        didSet {
-            attendingImageView.image = attendingImageView.image!.withRenderingMode(.alwaysTemplate)
-        }
-    }
-    
+    @IBOutlet weak var attendingImageView: UIImageView!
     @IBOutlet weak var eventImageView: UIImageView!
     @IBOutlet weak var eventOwnerImageView: UIImageView! {
         didSet {

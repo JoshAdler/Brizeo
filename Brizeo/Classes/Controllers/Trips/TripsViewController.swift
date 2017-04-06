@@ -43,19 +43,22 @@ class TripsViewController: UIViewController {
             tableView.tableHeaderView = searchBar
         }
         
-        configureKeyboardBehaviour()
         tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         activityIndicator.stopAnimating()
+        
+        configureKeyboardBehaviour()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         view.endEditing(true)
+        
+        Typist.shared.clear()
     }
     
     // MARK: - Private methods
