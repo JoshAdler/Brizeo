@@ -96,6 +96,7 @@ enum LocalizableString: String {
     case FacebookInviteMessage = "Whether you are at home or abroad connect through Moments with Brizeo"
     case SharePersonMessage = "I found someone interesting on Brizeo. Let me know what you think!"
     case ShareMomentMessage = "You have to see this great %@! Check out Brizeo and let me know what you think!"
+    case ShareTwitterText = "Whether you're at home or abroad, connect through Moments with Brizeo."
     case ShareDefaultText = "%@ invites you to join Brizeo!\n\nWhether you're at home or abroad, Brizeo provides a multilayered platform to meet new people and broaden your inner circle.  Connect through your favorite Moments, primary Passions, and live Events. Check it out at %@"
     case BrizeoShareWithFacebook = "Connect at home and abroad."
     case BrizeoShareDescription = "Whether you're at home or abroad, Brizeo provides a multilayered platform to meet new people and broaden your inner circle.  Connect through your favorite Moments, primary Passions, and live Events."

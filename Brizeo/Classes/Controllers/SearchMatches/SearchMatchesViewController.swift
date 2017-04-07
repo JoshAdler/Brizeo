@@ -35,10 +35,6 @@ class SearchMatchesViewController: BasicViewController {
     
     // MARK: - Controller lifecycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -158,9 +154,9 @@ class SearchMatchesViewController: BasicViewController {
     }
     
     fileprivate func loadMatchesIfNeeds() {
-        if matches == nil || matches?.count == 0 {
+        //if matches == nil || matches?.count == 0 {
             fetchMatchesList()
-        }
+        //}
     }
     
     fileprivate func declineUser(user: User) {

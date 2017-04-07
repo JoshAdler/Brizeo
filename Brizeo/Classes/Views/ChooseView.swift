@@ -128,7 +128,7 @@ class ChooseView: UIView {
     }
 
     fileprivate func shareWithTwitter(url: String) {
-        let modifiedURLString = LocalizableString.ShareDefaultText.localizedStringWithArguments([UserProvider.shared.currentUser!.shortName/*displayName*/, url])
+        let modifiedURLString = LocalizableString.ShareTwitterText.localizedStringWithArguments([UserProvider.shared.currentUser!.shortName/*displayName*/, url])
         
         if let vc = SLComposeViewController(forServiceType: SLServiceTypeTwitter) {
             vc.setInitialText(modifiedURLString)
