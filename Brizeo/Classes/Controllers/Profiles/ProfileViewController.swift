@@ -52,6 +52,7 @@ class ProfileViewController: UIViewController {
     var indexOfMediaToChange = -1
     var uploadUserHelpView: FirstEntranceUserView?
     var updateFileType: UpdateFileType = .main
+    var isSelected = false
     
     var bottomSpaceHeight: CGFloat {
         return bottomView.frame.height

@@ -8,6 +8,7 @@
 
 import UIKit
 import CarbonKit
+import SVProgressHUD
 
 class PersonalTabsViewController: BasicViewController {
 
@@ -60,11 +61,6 @@ class PersonalTabsViewController: BasicViewController {
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        //navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-    
     // MARK: - Actions
     
     @IBAction override func onBackButtonClicked(sender: UIBarButtonItem) {
@@ -72,6 +68,30 @@ class PersonalTabsViewController: BasicViewController {
         if FirstEntranceProvider.shared.isFirstEntrancePassed == false && FirstEntranceProvider.shared.currentStep == .profile {
             // show force screen
             profileController.hideHelpView(isHidden: false)
+            return
+        }
+        
+//        if settingsController.isSelected {
+        if let preferences = settingsController.preferences {
+         
+            showBlackLoader()
+            
+            PreferencesProvider.updatePreferences(preferences: preferences, completion: { (result) in
+                switch(result) {
+                    case .success(_):
+                        self.hideLoader()
+                        
+                        super.onBackButtonClicked(sender: sender)
+                    break
+                case .failure(let error):
+                    print("Error during saving preferences")
+                    
+                    SVProgressHUD.showError(withStatus: error.localizedDescription)
+                    break
+                default:
+                    break
+                }
+            })
         } else {
             super.onBackButtonClicked(sender: sender)
         }
@@ -139,5 +159,11 @@ extension PersonalTabsViewController: CarbonTabSwipeNavigationDelegate {
         } else {
             return settingsController
         }
+    }
+    
+    func carbonTabSwipeNavigation(_ carbonTabSwipeNavigation: CarbonTabSwipeNavigation, didMoveAt index: UInt) {
+        
+        profileController.isSelected = index == 0
+        settingsController.isSelected = index == 1
     }
 }

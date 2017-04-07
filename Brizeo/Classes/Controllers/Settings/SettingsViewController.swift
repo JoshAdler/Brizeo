@@ -146,6 +146,7 @@ class SettingsViewController: UIViewController {
     // basic objects
     var user: User! = UserProvider.shared.currentUser!
     var preferences: Preferences!
+    var isSelected = false
     
     // for location
     var currentLocationString = LocalizableString.Location.localizedString
@@ -186,12 +187,6 @@ class SettingsViewController: UIViewController {
         
         // reload gender
         tableView.reloadRows(at: [IndexPath(row: 2, section: 2)], with: .automatic)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        PreferencesProvider.updatePreferences(preferences: preferences, completion: nil)
     }
     
     // MARK: - Private methods
