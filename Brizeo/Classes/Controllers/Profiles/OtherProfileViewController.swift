@@ -120,7 +120,7 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
             if let welf = self {
                 
                 // hide/show action buttons
-                if !welf.user!.shouldBeAction {
+                if !welf.user!.shouldBeAction || welf.user!.isSuperUser {
                     welf.decreaseProfileViewHeight(true)
                 } else {
                     welf.setActionButtonsHidden(false)
