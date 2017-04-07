@@ -17,8 +17,8 @@ class Preferences: Mappable {
     
     enum JSONKeys: String {
         case objectId = "objectId"
-        case ageLowerLimit = "upperAgeLimit"
-        case ageUpperLimit = "lowerAgeLimit"
+        case ageLowerLimit = "lowerAgeLimit"
+        case ageUpperLimit = "upperAgeLimit"
         case genders = "genders"
         case maxSearchDistance = "maxSearchDistance"
         case searchLocationLatitude = "searchLocation.latitude"
