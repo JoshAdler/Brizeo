@@ -27,7 +27,7 @@ class SearchMatchesViewController: BasicViewController {
     @IBOutlet weak var detailsButton: UIButton!
     @IBOutlet weak var actionsButton: UIButton!
     
-    var swipeView: DMSwipeCardsView<Any>!
+    var swipeView: DMSwipeCardsView<Any>?
     var matches: [User]?
     var currentUser: User! = UserProvider.shared.currentUser!
     var detailsController: OtherPersonDetailsTabsViewController!
@@ -41,7 +41,8 @@ class SearchMatchesViewController: BasicViewController {
         navigationController?.setNavigationBarHidden(false, animated: animated)
         Helper.mainTabBarController()?.tabBar.isHidden = false
         
-        loadMatchesIfNeeds()
+        fetchMatchesList()
+        //loadMatchesIfNeeds()
     }
     
     // MARK: - Private methods
@@ -60,6 +61,26 @@ class SearchMatchesViewController: BasicViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    fileprivate func fetchMutualFriends(for user: User) {
+        
+        mutualFriends = nil
+        
+        UserProvider.getMutualFriends(for: user) { (result) in
+            switch result {
+            case .success(let count, let users):
+                
+                // send notification
+                Helper.sendNotification(with: mutualFriendsNotification, object: nil, dict: ["mutualFriends": users, "count": count, "userId": user.objectId])
+                
+                self.mutualFriends = users
+            case .failure(_):
+                print("Failing mutual friends")
+            default:
+                break
+            }
+        }
+    }
+    
     fileprivate func fetchMatchesList() {
         setButtonsHidden(isHidden: true)
         showBlackLoader()
@@ -73,6 +94,9 @@ class SearchMatchesViewController: BasicViewController {
                     welf.presentErrorAlert(message: error.localizedDescription)
                     break
                 case .success(let potentialMatches):
+                    welf.swipeView?.removeFromSuperview()
+                    welf.swipeView = nil
+                    
                     welf.matches = potentialMatches
                     welf.operateMatches()
                     break
@@ -115,8 +139,8 @@ class SearchMatchesViewController: BasicViewController {
             swipeView = DMSwipeCardsView<Any>(frame: frame,
                                                viewGenerator: viewGenerator,
                                                overlayGenerator: overlayGenerator)
-            swipeView.delegate = self
-            view.addSubview(swipeView)
+            swipeView!.delegate = self
+            view.addSubview(swipeView!)
         }
     }
     
@@ -139,9 +163,15 @@ class SearchMatchesViewController: BasicViewController {
             }
             
             setupSwipeViewIfNeeds()
-            swipeView.addCards(matches)
+            swipeView?.addCards(matches)
             
             setButtonsHidden(isHidden: false)
+            
+            // load mutual friends
+            if let user = matches.first {
+                fetchMutualFriends(for: user)
+            }
+            
         } else {
             print("No matches")
         }
@@ -154,9 +184,9 @@ class SearchMatchesViewController: BasicViewController {
     }
     
     fileprivate func loadMatchesIfNeeds() {
-        //if matches == nil || matches?.count == 0 {
+        if matches == nil || matches?.count == 0 {
             fetchMatchesList()
-        //}
+        }
     }
     
     fileprivate func declineUser(user: User) {
@@ -169,8 +199,14 @@ class SearchMatchesViewController: BasicViewController {
                 switch(result) {
                 case .success(_):
                     
+                    welf.detailsController = nil
+                    
                     if (welf.matches?.count ?? 0) > 0 {
                         welf.matches?.removeFirst()
+                    }
+                    
+                    if let nextUser = welf.matches?.first {
+                        welf.fetchMutualFriends(for: nextUser)
                     }
                     
                     welf.hideLoader()
@@ -203,8 +239,14 @@ class SearchMatchesViewController: BasicViewController {
                 switch(result) {
                 case .success(_):
                     
+                    welf.detailsController = nil
+                    
                     if (welf.matches?.count ?? 0) > 0 {
                         welf.matches?.removeFirst()
+                    }
+                    
+                    if let nextUser = welf.matches?.first {
+                        welf.fetchMutualFriends(for: nextUser)
                     }
                     
                     LocalyticsProvider.trackUserDidApproved()
@@ -243,7 +285,6 @@ class SearchMatchesViewController: BasicViewController {
             detailsController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.detailsControllerId)!
             detailsController.user = matches!.first
             detailsController.mutualFriends = mutualFriends
-            
             detailsController.view.frame = CGRect(origin: CGPoint(x: 0, y: view.frame.height), size: CGSize(width: view.frame.width, height: view.frame.height))
             detailsController.view.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
         }
@@ -342,11 +383,12 @@ extension SearchMatchesViewController: DMSwipeCardsViewDelegate {
     }
     
     func reachedEndOfStack() {
+        return
         //clear old data
-        matches?.removeAll()
-        
-        // fetch new data
-        fetchMatchesList()
+//        matches?.removeAll()
+//        
+//        // fetch new data
+//        fetchMatchesList()
     }
 }
 

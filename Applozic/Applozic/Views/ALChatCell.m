@@ -5,7 +5,7 @@
 //  Copyright (c) 2015 AppLozic. All rights reserved.
 //
 
-#define MESSAGE_TEXT_SIZE 14
+#define MESSAGE_TEXT_SIZE 17//14
 #define DATE_LABEL_SIZE 12
 
 #import "ALChatCell.h"

@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Brizeo/Classes/Controllers/Trips/TripsViewController.swift"
-            timestampString = "513179869.244629"
+            filePath = "Brizeo/Classes/Controllers/SearchMatches/SearchMatchesViewController.swift"
+            timestampString = "513346535.533821"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "168"
-            endingLineNumber = "168"
-            landmarkName = "hideSearchBar()"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
+            landmarkName = "operateMatches()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,13 +25,45 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Applozic/Applozic/ViewControllers/ALChatViewController.m"
-            timestampString = "513183001.111378"
+            filePath = "Brizeo/Classes/Controllers/SearchMatches/SearchMatchesViewController.swift"
+            timestampString = "513346535.533821"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3739"
-            endingLineNumber = "3739"
-            landmarkName = "-openUserProfile:"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
+            landmarkName = "setupSwipeViewIfNeeds()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Brizeo/Classes/Controllers/SearchMatches/SearchMatchesViewController.swift"
+            timestampString = "513347070.256495"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "388"
+            endingLineNumber = "388"
+            landmarkName = "reachedEndOfStack()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Brizeo/Classes/Controllers/SearchMatches/SearchMatchesViewController.swift"
+            timestampString = "513346959.46257"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "202"
+            endingLineNumber = "202"
+            landmarkName = "declineUser(user:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -20,10 +20,42 @@ class ProfileView: UIView {
     @IBOutlet weak var studyLabel: UILabel!
     @IBOutlet weak var friendsCountLabel: UILabel!
     @IBOutlet weak var interestView: OtherPersonInterestView!
+    var currentUserId: String?
+    
+    // MARK: - Override methods
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceivedMutualFriendsNotification(notification:)), name: NSNotification.Name(rawValue: mutualFriendsNotification), object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    // MARK: - Private methods
+    
+    @objc fileprivate func didReceivedMutualFriendsNotification(notification: UIKit.Notification) {
+        
+        guard currentUserId != nil else {
+            return
+        }
+        
+        if let userInfo = notification.userInfo as? [String: Any] {
+            let friends = userInfo["mutualFriends"] as? [User]
+            let userId = userInfo["userId"] as? String? ?? "-1"
+            
+            if userId == currentUserId {
+                setMutualFriendsCount(count: friends?.count ?? 0)
+            }
+        }
+    }
     
     // MARK: - Public methods
     
     func applyUser(user: User) {
+        currentUserId = user.objectId
         nameLabel.text = "\(user.shortName/*displayName*/), \(user.age)"
         
         if user.hasProfileImage {
