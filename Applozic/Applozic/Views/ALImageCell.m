@@ -163,7 +163,7 @@ UIViewController * modalCon;
         {
             [self.mChannelMemberName setText:receiverName];
             [self.mChannelMemberName setHidden:NO];
-            [self.mChannelMemberName setTextColor: [ALColorUtility getColorForAlphabet:receiverName]];
+            [self.mChannelMemberName setTextColor: /*[ALColorUtility getColorForAlphabet:receiverName]*/[UIColor blackColor]];
             
             self.mBubleImageView.frame = CGRectMake(self.mUserProfileImageView.frame.size.width + BUBBLE_PADDING_X,
                                                     0, viewSize.width - BUBBLE_PADDING_Y,

@@ -115,7 +115,7 @@
             CELL_HEIGHT = viewSize.width - 190;
             [self.mChannelMemberName setText:receiverName];
             [self.mChannelMemberName setHidden:NO];
-            [self.mChannelMemberName setTextColor: [ALColorUtility getColorForAlphabet:receiverName]];
+            [self.mChannelMemberName setTextColor: /*[ALColorUtility getColorForAlphabet:receiverName]*/[UIColor blackColor]];
             self.mBubleImageView.frame = CGRectMake(BUBBLE_ABSCISSA, ZERO, CELL_WIDTH, CELL_HEIGHT);
             
             self.mChannelMemberName.frame = CGRectMake(self.mBubleImageView.frame.origin.x + 5,

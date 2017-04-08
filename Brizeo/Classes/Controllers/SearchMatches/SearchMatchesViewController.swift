@@ -26,6 +26,8 @@ class SearchMatchesViewController: BasicViewController {
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var detailsButton: UIButton!
     @IBOutlet weak var actionsButton: UIButton!
+    @IBOutlet weak var approveButton: UIButton!
+    @IBOutlet weak var declineButton: UIButton!
     
     var swipeView: DMSwipeCardsView<Any>?
     var matches: [User]?
@@ -136,6 +138,7 @@ class SearchMatchesViewController: BasicViewController {
             }
             
             let frame = swipeViewContainerView.frame
+            
             swipeView = DMSwipeCardsView<Any>(frame: frame,
                                                viewGenerator: viewGenerator,
                                                overlayGenerator: overlayGenerator)
@@ -181,6 +184,8 @@ class SearchMatchesViewController: BasicViewController {
         detailsButton.isHidden = isHidden
         actionsButton.isHidden = isHidden
         shareButton.isHidden = isHidden
+        approveButton.isHidden = isHidden
+        declineButton.isHidden = isHidden
     }
     
     fileprivate func loadMatchesIfNeeds() {
@@ -189,7 +194,7 @@ class SearchMatchesViewController: BasicViewController {
         }
     }
     
-    fileprivate func declineUser(user: User) {
+    fileprivate func declineUser(user: User, _ isPressedByButton: Bool) {
         showBlackLoader()
         
         MatchesProvider.declineMatch(for: user) { [weak self] (result) in
@@ -198,6 +203,13 @@ class SearchMatchesViewController: BasicViewController {
                 
                 switch(result) {
                 case .success(_):
+                    
+                    if isPressedByButton {
+                        if let topCard = welf.swipeView?.topCard() {
+                            topCard.removeFromSuperview()
+                        }
+                        welf.swipeView?.swipeTopCardRight()
+                    }
                     
                     welf.detailsController = nil
                     
@@ -229,7 +241,7 @@ class SearchMatchesViewController: BasicViewController {
         }
     }
     
-    fileprivate func approveUser(user: User) {
+    fileprivate func approveUser(user: User, _ isPressedByButton: Bool) {
         showBlackLoader()
         
         MatchesProvider.approveMatch(for: user) { [weak self] (result) in
@@ -238,6 +250,13 @@ class SearchMatchesViewController: BasicViewController {
                 
                 switch(result) {
                 case .success(_):
+                    
+                    if isPressedByButton {
+                        if let topCard = welf.swipeView?.topCard() {
+                            topCard.removeFromSuperview()
+                        }
+                        welf.swipeView?.swipeTopCardRight()
+                    }
                     
                     welf.detailsController = nil
                     
@@ -274,6 +293,26 @@ class SearchMatchesViewController: BasicViewController {
     }
     
     // MARK: - Actions
+    
+    @IBAction func onApproveButtonClicked(sender: UIButton) {
+
+        guard let currentUser = matches?.first else {
+            print("Can't decline anybody because there is no users")
+            return
+        }
+        
+        approveUser(user: currentUser, true)
+    }
+    
+    @IBAction func onDeclineButtonClicked(sender: UIButton) {
+        
+        guard let currentUser = matches?.first else {
+            print("Can't decline anybody because there is no users")
+            return
+        }
+        
+        declineUser(user: currentUser, true)
+    }
     
     @IBAction func onDetailButtonClicked(sender: UIButton) {
         guard matches != nil else {
@@ -365,13 +404,13 @@ extension SearchMatchesViewController: DMSwipeCardsViewDelegate {
     func swipedLeft(_ object: Any) {
         print("left")
         
-        declineUser(user: object as! User)
+        declineUser(user: object as! User, false)
     }
     
     func swipedRight(_ object: Any) {
         print("right")
         
-        approveUser(user: object as! User)
+        approveUser(user: object as! User, false)
     }
     
     func cardTapped(_ object: Any) {

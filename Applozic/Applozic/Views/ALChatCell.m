@@ -221,7 +221,7 @@
         {
             [self.mChannelMemberName setHidden:NO];
             
-            [self.mChannelMemberName setTextColor: [ALColorUtility getColorForAlphabet:receiverName]];
+            [self.mChannelMemberName setTextColor: /*[ALColorUtility getColorForAlphabet:receiverName]*/[UIColor blackColor]];
             
             if(theTextSize.width < receiverNameSize.width)
             {

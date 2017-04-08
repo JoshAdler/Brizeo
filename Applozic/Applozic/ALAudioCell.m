@@ -186,7 +186,7 @@
         {
             [self.mChannelMemberName setHidden:YES];
             [self.mChannelMemberName setHidden:NO];
-            [self.mChannelMemberName setTextColor: [ALColorUtility getColorForAlphabet:receiverName]];
+            [self.mChannelMemberName setTextColor: [UIColor blackColor]];// [ALColorUtility getColorForAlphabet:receiverName]];
             [self.mChannelMemberName setText:receiverName];
             
             [self.mBubleImageView setFrame:CGRectMake(self.mUserProfileImageView.frame.size.width + BUBBLE_PADDING_X,

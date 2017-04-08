@@ -17,7 +17,7 @@ public enum SwipeMode {
 public protocol DMSwipeCardsViewDelegate: class {
 	func swipedLeft(_ object: Any)
 	func swipedRight(_ object: Any)
-  func cardTapped(_ object: Any)
+    func cardTapped(_ object: Any)
 	func reachedEndOfStack()
 }
 
@@ -28,8 +28,8 @@ public class DMSwipeCardsView<Element>: UIView {
 
 	fileprivate let viewGenerator: ViewGenerator
 	fileprivate let overlayGenerator: OverlayGenerator?
-	fileprivate var allCards = [Element]()
-	fileprivate var loadedCards = [DMSwipeCard]()
+	var allCards = [Element]()
+	var loadedCards = [DMSwipeCard]()
 
 	public typealias ViewGenerator = (_ element: Element, _ frame: CGRect) -> (UIView)
 	public typealias OverlayGenerator = (_ mode: SwipeMode, _ frame: CGRect) -> (UIView)
@@ -87,48 +87,75 @@ public class DMSwipeCardsView<Element>: UIView {
 		}
 	}
 
-	func swipeTopCardRight() {
-		// TODO: not yet supported
-		fatalError("Not yet supported")
+	public func swipeTopCardRight() {
+        
+        self.loadedCards.removeFirst()
+        self.allCards.removeFirst()
+        if self.allCards.isEmpty {
+            self.isUserInteractionEnabled = false
+            self.delegate?.reachedEndOfStack()
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) {
+            self.loadNextCard()
+        }
 	}
 
-	func swipeTopCardLeft() {
-		// TODO: not yet supported
-		fatalError("Not yet supported")
-	}
+    public func swipeTopCardLeft() {
+        
+        self.loadedCards.removeFirst()
+        self.allCards.removeFirst()
+        if self.allCards.isEmpty {
+            self.isUserInteractionEnabled = false
+            self.delegate?.reachedEndOfStack()
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) {
+            self.loadNextCard()
+        }
+    }
+    
+    public func topCard() -> UIView? {
+        guard loadedCards.count > 0 else {
+            return nil
+        }
+        
+        return loadedCards.first
+    }
 }
 
 extension DMSwipeCardsView: DMSwipeCardDelegate {
-	func cardSwipedLeft(_ card: DMSwipeCard) {
-		self.handleSwipedCard(card)
-		DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) {
-			self.delegate?.swipedLeft(card.obj)
-			self.loadNextCard()
-		}
-	}
-
-	func cardSwipedRight(_ card: DMSwipeCard) {
-		self.handleSwipedCard(card)
-		DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) {
-			self.delegate?.swipedRight(card.obj)
-			self.loadNextCard()
-		}
-	}
-
-  func cardTapped(_ card: DMSwipeCard) {
-    self.delegate?.cardTapped(card.obj)
-  }
+    func cardSwipedLeft(_ card: DMSwipeCard) {
+        self.handleSwipedCard(card)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) {
+            self.delegate?.swipedLeft(card.obj)
+            self.loadNextCard()
+        }
+    }
+    
+    func cardSwipedRight(_ card: DMSwipeCard) {
+        self.handleSwipedCard(card)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.001) {
+            self.delegate?.swipedRight(card.obj)
+            self.loadNextCard()
+        }
+    }
+    
+    func cardTapped(_ card: DMSwipeCard) {
+        self.delegate?.cardTapped(card.obj)
+    }
 }
 
 extension DMSwipeCardsView {
-	fileprivate func handleSwipedCard(_ card: DMSwipeCard) {
-		self.loadedCards.removeFirst()
-		self.allCards.removeFirst()
-		if self.allCards.isEmpty {
-      self.isUserInteractionEnabled = false
-			self.delegate?.reachedEndOfStack()
-		}
-	}
+    
+    fileprivate func handleSwipedCard(_ card: DMSwipeCard) {
+        self.loadedCards.removeFirst()
+        self.allCards.removeFirst()
+        if self.allCards.isEmpty {
+            self.isUserInteractionEnabled = false
+            self.delegate?.reachedEndOfStack()
+        }
+    }
 
 	fileprivate func loadNextCard() {
 		if self.allCards.count - self.loadedCards.count > 0 {
