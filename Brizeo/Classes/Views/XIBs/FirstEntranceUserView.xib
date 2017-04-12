@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -26,6 +28,12 @@
                         <action selector="onArrowUpButtonClickedWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="wsi-V8-0e7"/>
                     </connections>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_popup_change_settings" translatesAutoresizingMaskIntoConstraints="NO" id="7oC-9D-OIA">
+                    <rect key="frame" x="222" y="116" width="119" height="76.5"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="7oC-9D-OIA" secondAttribute="height" multiplier="120:77" id="NbI-h1-rXP"/>
+                    </constraints>
+                </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_new_user_initial" translatesAutoresizingMaskIntoConstraints="NO" id="MOM-Yn-wnv">
                     <rect key="frame" x="57.5" y="306" width="266" height="281"/>
                 </imageView>
@@ -37,7 +45,9 @@
                 <constraint firstAttribute="bottom" secondItem="gPh-cr-rWS" secondAttribute="bottom" id="Lel-Ow-V1b"/>
                 <constraint firstItem="gPh-cr-rWS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Sec-QC-gee"/>
                 <constraint firstAttribute="trailing" secondItem="gPh-cr-rWS" secondAttribute="trailing" id="ava-k2-hEL"/>
+                <constraint firstItem="7oC-9D-OIA" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="116" id="jJH-G9-jRs"/>
                 <constraint firstItem="MOM-Yn-wnv" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" constant="3" id="klS-pW-EUP"/>
+                <constraint firstItem="7oC-9D-OIA" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="1.5" id="rLq-ie-iK4"/>
                 <constraint firstAttribute="bottom" secondItem="2oU-Vg-JlL" secondAttribute="bottom" constant="20" id="sU6-4K-utL"/>
                 <constraint firstItem="2oU-Vg-JlL" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="xRK-US-eWY"/>
             </constraints>
@@ -48,6 +58,7 @@
         </view>
     </objects>
     <resources>
+        <image name="bg_popup_change_settings" width="119" height="76"/>
         <image name="ic_down_arrow" width="35" height="35"/>
         <image name="ic_new_user_initial" width="266" height="281"/>
     </resources>

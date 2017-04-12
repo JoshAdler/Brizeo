@@ -124,4 +124,18 @@ class Event: NSObject, Mappable {
         
         ownerId = UserProvider.shared.currentUser?.objectId ?? "-1"
     }
+    
+    init(facebookId: String, name: String?, information: String?, latitude: Double?, longitude: Double?, imageLink: String?, attendingsCount: Int?, startDate: Date?) {
+        
+        self.facebookId = facebookId
+        self.name = name ?? "No name"
+        self.information = information ?? "No description"
+        self.latitude = latitude
+        self.longitude = longitude
+        self.previewImageLink = imageLink
+        self.attendingsCount = attendingsCount ?? 0
+        self.startDate = startDate
+        
+        ownerId = UserProvider.shared.currentUser?.objectId ?? "-1"
+    }
 }

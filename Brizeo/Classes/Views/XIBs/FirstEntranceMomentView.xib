@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -26,20 +28,65 @@
                         <action selector="onCreateButtonClickedWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="ZRl-PU-1MC"/>
                     </connections>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_popup_settings" translatesAutoresizingMaskIntoConstraints="NO" id="4uE-ud-Xpc">
+                    <rect key="frame" x="57" y="31" width="58" height="37"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_popup_invite" translatesAutoresizingMaskIntoConstraints="NO" id="Am4-U6-3X3">
+                    <rect key="frame" x="234" y="31" width="84" height="34"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="Am4-U6-3X3" secondAttribute="height" multiplier="42:17" id="tOk-mj-rC2"/>
+                    </constraints>
+                </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_new_moment_initial" translatesAutoresizingMaskIntoConstraints="NO" id="MOM-Yn-wnv">
                     <rect key="frame" x="94" y="269" width="233" height="172"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_popup_events" translatesAutoresizingMaskIntoConstraints="NO" id="yxn-EV-KiW">
+                    <rect key="frame" x="16.5" y="539" width="42.5" height="71"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="yxn-EV-KiW" secondAttribute="height" multiplier="42:71" id="iMJ-sb-uSn"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_popup_search" translatesAutoresizingMaskIntoConstraints="NO" id="lmZ-P1-85b">
+                    <rect key="frame" x="91" y="523" width="43" height="87"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="lmZ-P1-85b" secondAttribute="height" multiplier="43:87" id="2Kl-vW-UvR"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_popup_notifications" translatesAutoresizingMaskIntoConstraints="NO" id="v7a-lR-Ck1">
+                    <rect key="frame" x="222" y="524" width="81" height="86"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="v7a-lR-Ck1" secondAttribute="height" multiplier="81:86" id="vU5-Sg-WDd"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_popup_message" translatesAutoresizingMaskIntoConstraints="NO" id="LSH-dV-2v0">
+                    <rect key="frame" x="305" y="553" width="60" height="57"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="LSH-dV-2v0" secondAttribute="height" multiplier="60:57" id="l4F-JQ-PYk"/>
+                    </constraints>
                 </imageView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="MOM-Yn-wnv" firstAttribute="top" secondItem="2oU-Vg-JlL" secondAttribute="bottom" constant="16" id="0Wz-oX-sgs"/>
+                <constraint firstItem="lmZ-P1-85b" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="6/10" id="6We-dW-NTP"/>
+                <constraint firstItem="Am4-U6-3X3" firstAttribute="top" secondItem="4uE-ud-Xpc" secondAttribute="top" id="7BX-kH-3Kf"/>
                 <constraint firstItem="gPh-cr-rWS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="7Ra-Xc-8AH"/>
+                <constraint firstItem="4uE-ud-Xpc" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="31" id="Hfh-Za-3nB"/>
+                <constraint firstItem="v7a-lR-Ck1" firstAttribute="bottom" secondItem="yxn-EV-KiW" secondAttribute="bottom" id="KUB-0y-5mg"/>
+                <constraint firstItem="yxn-EV-KiW" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="0.2" id="LKc-9I-2Yf"/>
                 <constraint firstAttribute="bottom" secondItem="gPh-cr-rWS" secondAttribute="bottom" id="Lel-Ow-V1b"/>
+                <constraint firstItem="LSH-dV-2v0" firstAttribute="bottom" secondItem="yxn-EV-KiW" secondAttribute="bottom" id="NPd-Dy-HVy"/>
                 <constraint firstItem="2oU-Vg-JlL" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="207" id="Rdi-sV-JVV"/>
+                <constraint firstAttribute="trailing" secondItem="Am4-U6-3X3" secondAttribute="trailing" constant="57" id="SQX-61-gXN"/>
                 <constraint firstItem="gPh-cr-rWS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Sec-QC-gee"/>
                 <constraint firstItem="MOM-Yn-wnv" firstAttribute="trailing" secondItem="2oU-Vg-JlL" secondAttribute="trailing" constant="-13" id="YFz-pI-AWb"/>
                 <constraint firstAttribute="trailing" secondItem="gPh-cr-rWS" secondAttribute="trailing" id="ava-k2-hEL"/>
                 <constraint firstAttribute="trailing" secondItem="2oU-Vg-JlL" secondAttribute="trailing" constant="35" id="cnG-UT-Pix"/>
+                <constraint firstAttribute="bottom" secondItem="yxn-EV-KiW" secondAttribute="bottom" constant="57" id="e5T-ts-xIg"/>
+                <constraint firstItem="4uE-ud-Xpc" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="57" id="eK1-tP-Bgx"/>
+                <constraint firstItem="LSH-dV-2v0" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="2" constant="-40" id="kVk-Bi-4NZ"/>
+                <constraint firstItem="v7a-lR-Ck1" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="1.4" id="nzr-dk-ELj"/>
+                <constraint firstItem="lmZ-P1-85b" firstAttribute="bottom" secondItem="yxn-EV-KiW" secondAttribute="bottom" id="rCn-43-NFV"/>
             </constraints>
             <connections>
                 <outlet property="createButton" destination="2oU-Vg-JlL" id="HEw-3g-LPb"/>
@@ -49,6 +96,12 @@
         </view>
     </objects>
     <resources>
+        <image name="bg_popup_events" width="42" height="71"/>
+        <image name="bg_popup_invite" width="84" height="33"/>
+        <image name="bg_popup_message" width="60" height="56"/>
+        <image name="bg_popup_notifications" width="81" height="86"/>
+        <image name="bg_popup_search" width="43" height="86"/>
+        <image name="bg_popup_settings" width="58" height="37"/>
         <image name="camera-icon" width="46" height="46"/>
         <image name="ic_new_moment_initial" width="233" height="172"/>
     </resources>

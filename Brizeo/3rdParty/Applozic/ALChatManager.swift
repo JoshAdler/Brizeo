@@ -288,7 +288,6 @@ func makeFinalProxyWithGeneratedProxy (_ generatedProxy:ALConversationProxy, res
 
 func ALDefaultChatViewSettings ()
 {
-    
     //////////////////////////   SET AUTHENTICATION-TYPE-ID FOR INTERNAL USAGE ONLY ////////////////////////
     ALUserDefaultsHandler.setUserAuthenticationTypeId(TYPE_APPLOZIC)
     ////////////////////////// ////////////////////////// ////////////////////////// ///////////////////////

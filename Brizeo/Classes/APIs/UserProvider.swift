@@ -31,7 +31,11 @@ class UserProvider: NSObject {
     struct FacebookConstants {
         static let permissions = ["public_profile", "email", "user_photos", "user_birthday", "user_friends", "user_education_history", "user_work_history", "user_events"]
         static let parameters = ["fields" : "id, email, first_name, last_name, name, birthday, gender, work, education, picture.width(1000).height(1000), albums{photos.height(1000){images},name}"]
-        static let eventParameters = ["fields" : "events.limit(50).since(){name,description,cover,is_canceled,attending_count,rsvp_status,start_time,place,id,attending.limit(400){id},interested.limit(400){id},interested_count}"]
+        static let eventParameters = ["fields" : "events.limit(30).since(){name,description,cover,is_canceled,attending_count,rsvp_status,start_time,place,id,attending.limit(100){id},interested.limit(100){id},interested_count}"]
+        
+        static let newEventsParameters = ["fields" : "events.limit(50).since(){name,description,cover,is_canceled,attending_count,rsvp_status,start_time,place,id,interested_count}"]
+        static let newEventParameters = ["fields" : "attending.limit(1000){installed,id},interested.limit(1000){id,installed}"]
+
         static let shortParameters = ["fields" : "work, education"]
         static let workParameters = ["fields" : "work"]
         static let educationParameters = ["fields" : "education"]
@@ -89,6 +93,9 @@ class UserProvider: NSObject {
             completion?(.failure(APIError.unknown(message: "Your current session is expired. Please login.")))
             return
         }
+        
+        // David 10203847100897725
+        // Josh 10153844300844791
         
         // load user by facebook id
         let provider = APIService.APIProvider()
