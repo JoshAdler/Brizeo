@@ -66,7 +66,7 @@ class Helper: NSObject {
         }
         return controller
     }
-    //TODO: use sound from Josh for notifications
+    
     // carbon
     class func createCarbonController(with items: [String], _ delegate: CarbonTabSwipeNavigationDelegate) -> CarbonTabSwipeNavigation {
         let controller = CarbonTabSwipeNavigation(items: items, delegate: delegate)

@@ -42,8 +42,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppDelegate.originalAppDelegate = self
         
         //TODO: remove it before realise
-//        FirstEntranceProvider.shared.isFirstEntrancePassed = false
-//        FirstEntranceProvider.shared.currentStep = .profile
+        FirstEntranceProvider.shared.isFirstEntrancePassed = false
+        FirstEntranceProvider.shared.currentStep = .moments
+        FirstEntranceProvider.shared.goingToCreateMoment = false
         
         // apply main theme for the app
         ThemeManager.applyGlobalTheme()

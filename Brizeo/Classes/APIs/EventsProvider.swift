@@ -123,7 +123,9 @@ class EventsProvider {
     class func getMatchedEvents(sortingFlag: SortingFlag, location: CLLocationCoordinate2D, completion: @escaping EventsCompletion) {
         
         let provider = APIService.APIProvider()
-        provider.request(.getMatchedEvents(userId: UserProvider.shared.currentUser!.objectId, sortFlag: sortingFlag.APIPresentation, longitude: location.longitude, latitude: location.latitude)) { (result) in
+        let sortingFlag = sortingFlag == .nearest ? "distance" : "popular"
+        
+        provider.request(.getMatchedEvents(userId: UserProvider.shared.currentUser!.objectId, sortFlag: sortingFlag, longitude: location.longitude, latitude: location.latitude)) { (result) in
             
             switch result {
             case .success(let response):
