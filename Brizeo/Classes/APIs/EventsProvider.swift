@@ -180,6 +180,10 @@ class EventsProvider {
                 persons.append(contentsOf: installedInterested)
             }
             
+            if persons.count == 0 {
+                persons.append("-1")
+            }
+            
             completion(.success(persons))
         }
     }
