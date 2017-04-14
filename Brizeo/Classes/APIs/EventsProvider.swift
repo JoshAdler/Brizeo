@@ -67,6 +67,7 @@ class EventsProvider {
                     switch result {
                     case .success(_):
                         
+                        print("Successfully saved events")
                         Defaults[.lastEventsUpdate] = Date()
                         break
                     case .failure(_):

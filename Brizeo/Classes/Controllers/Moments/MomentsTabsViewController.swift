@@ -384,11 +384,13 @@ extension MomentsTabsViewController: OLInstagramImagePickerControllerDelegate {
     func instagramImagePicker(_ imagePicker: OLInstagramImagePickerController!, didFinishPickingImages images: [Any]!) {
         
         guard images.count > 0 else {
+            imagePicker.dismiss(animated: true, completion: nil)
             print("No image selected")
             return
         }
         
         guard let instagramImage = images.first as? OLInstagramImage else {
+            imagePicker.dismiss(animated: true, completion: nil)
             return
         }
         
