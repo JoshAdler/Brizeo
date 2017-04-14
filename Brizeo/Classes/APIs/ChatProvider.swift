@@ -43,6 +43,18 @@ class ChatProvider: NSObject {
         chatManager.registerUser(user)
     }
     
+    class func logout() {
+        
+        let registerUserClientService: ALRegisterUserClientService = ALRegisterUserClientService()
+        registerUserClientService.logout { (response, error) in
+            if error == nil {
+                print("Successfully logged out from Applozic")
+            } else {
+                print("Failurlly logged out from Applozic")
+            }
+        }
+    }
+    
     class func startChat(with userId: String?, from controller: UIViewController) {
         let chatManager : ALChatManager = ALChatManager(applicationKey: Configurations.Applozic.appKey as NSString)
 //        if userId != nil {

@@ -86,8 +86,8 @@ class UserMatchesViewController: UIViewController {
         super.viewDidDisappear(animated)
         
         print("disappear")
-        
-        if let charNavController = presentedViewController as? UINavigationController, let chatController = charNavController.viewControllers[0] as? ALChatViewController {
+        //TODO: fix this
+        if let charNavController = Helper.currentTabNavigationController()?.presentedViewController as? UINavigationController, let chatController = charNavController.viewControllers[0] as? ALChatViewController {
             chatController.shouldOpenProfile = false
         }
     }

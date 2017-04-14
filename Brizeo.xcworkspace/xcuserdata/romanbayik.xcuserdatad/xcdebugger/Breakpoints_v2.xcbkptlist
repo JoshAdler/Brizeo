@@ -90,12 +90,12 @@
                   moduleName = "Brizeo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Brizeo/Classes/Controllers/SearchMatches/SearchMatchesViewController.swift"
-                  timestampString = "513782096.859708"
+                  timestampString = "513850168.765418"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "260"
                   endingLineNumber = "260"
-                  offsetFromSymbolStart = "396">
+                  offsetFromSymbolStart = "296">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -105,12 +105,12 @@
                   moduleName = "Brizeo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Brizeo/Classes/Controllers/SearchMatches/SearchMatchesViewController.swift"
-                  timestampString = "513782096.861007"
+                  timestampString = "513850168.76663"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "260"
                   endingLineNumber = "260"
-                  offsetFromSymbolStart = "606">
+                  offsetFromSymbolStart = "472">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -273,6 +273,54 @@
             endingLineNumber = "355"
             landmarkName = "tableView(_:didSelectRowAt:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Brizeo/Classes/Controllers/UserMatches/UserMatchesViewController.swift"
+            timestampString = "513847552.917337"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "viewDidDisappear(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Brizeo.UserMatchesViewController.viewDidDisappear (Swift.Bool) -&gt; ()"
+                  moduleName = "Brizeo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Brizeo/Classes/Controllers/UserMatches/UserMatchesViewController.swift"
+                  timestampString = "513850168.791466"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "90"
+                  endingLineNumber = "90"
+                  offsetFromSymbolStart = "276">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Brizeo.UserMatchesViewController.viewDidDisappear (Swift.Bool) -&gt; ()"
+                  moduleName = "Brizeo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Brizeo/Classes/Controllers/UserMatches/UserMatchesViewController.swift"
+                  timestampString = "513850168.792796"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "90"
+                  endingLineNumber = "90"
+                  offsetFromSymbolStart = "504">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

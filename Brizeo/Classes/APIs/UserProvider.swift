@@ -14,6 +14,7 @@ import FBSDKLoginKit
 import Moya
 import Moya_ObjectMapper
 import FBSDKShareKit
+import Applozic
 
 enum UpdateFileType: String {
     case main
@@ -74,6 +75,8 @@ class UserProvider: NSObject {
     class func logout() {
         let loginManager = FBSDKLoginManager()
         loginManager.logOut()
+        
+        ChatProvider.logout()
         
         // erase token for pushes
         if shared.currentUser != nil {
