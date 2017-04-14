@@ -27,7 +27,7 @@ class ChatProvider: NSObject {
         let chatManager : ALChatManager = ALChatManager(applicationKey: Configurations.Applozic.appKey as NSString)
         let user = ALUser()
         
-        user.displayName = currentUser.shortName//currentUser.displayName
+        user.displayName = currentUser.shortName
         user.userId = currentUser.objectId
         user.email = currentUser.email
         user.applicationId = Configurations.Applozic.appKey
@@ -66,32 +66,27 @@ class ChatProvider: NSObject {
     
     class func createChatWithSuperuser() {
         
-        if Defaults[.isChatWithAdminCreated] == true {
-            return
-        }
-        
         let DBHandler = ALDBHandler.sharedInstance()
         let messageDBService = ALMessageDBService()
         let message = ALMessage()
         
-        message.contactIds = Configurations.Applozic.superUserId//UserProvider.shared.currentUser!.objectId //super admin id
-        message.to = UserProvider.shared.currentUser!.objectId//Configurations.Applozic.superUserId
+        message.contactIds = Configurations.Applozic.superUserId //super admin id
+        message.to = UserProvider.shared.currentUser!.objectId
         message.createdAtTime = NSNumber(value: Date().timeIntervalSince1970 * 1000.0)
         message.deviceKey = ALUserDefaultsHandler.getDeviceKeyString()
         message.sendToDevice = false
         message.shared = false
         message.fileMeta = nil
-        message.key = "brizeo_welcome_message"
+        message.key = "brizeo_welcome_message_\(UserProvider.shared.currentUser!.objectId)"
         message.delivered = false
         message.fileMetaKey = nil
         message.type = "5"
-        message.message = LocalizableString.ChatAdminWelcomeMessage.localizedStringWithArguments([UserProvider.shared.currentUser!.shortName/*displayName*/])
+        message.message = LocalizableString.ChatAdminWelcomeMessage.localizedStringWithArguments([UserProvider.shared.currentUser!.shortName])
         message.groupId = nil
         messageDBService.createMessageEntityForDBInsertion(with: message)
         
         do {
             try DBHandler?.managedObjectContext.save()
-            Defaults[.isChatWithAdminCreated] = true
         } catch (_) {
             print("applozic error")
         }
