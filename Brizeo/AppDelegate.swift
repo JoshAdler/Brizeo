@@ -372,7 +372,7 @@ extension AppDelegate {
     }
     
     fileprivate func setupLocalytics(with launchOptions: [AnyHashable: Any]?) {
-        Localytics.autoIntegrate("0b17f3d9a8b43eb9365c298-916e3088-9c82-11e6-ac90-0098ae15fcaa", launchOptions: launchOptions)
+        Localytics.autoIntegrate(Configurations.Localytics.appKey, launchOptions: launchOptions)
         
     }
     

@@ -99,6 +99,7 @@ class UserProvider: NSObject {
         
         // David 10203847100897725
         // Josh 10153844300844791
+        // Superuser 112753052483419
         
         // load user by facebook id
         let provider = APIService.APIProvider()

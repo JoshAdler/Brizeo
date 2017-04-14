@@ -80,7 +80,8 @@ class ChatProvider: NSObject {
         message.key = "brizeo_welcome_message_\(UserProvider.shared.currentUser!.objectId)"
         message.delivered = false
         message.fileMetaKey = nil
-        message.type = "5"
+        message.type = "4"
+        message.status = NSNumber(value: 5)
         message.message = LocalizableString.ChatAdminWelcomeMessage.localizedStringWithArguments([UserProvider.shared.currentUser!.shortName])
         message.groupId = nil
         messageDBService.createMessageEntityForDBInsertion(with: message)
@@ -94,6 +95,7 @@ class ChatProvider: NSObject {
     
     class func createMatchingChat(with user: User) {
         
+        /*
         let DBHandler = ALDBHandler.sharedInstance()
         let messageDBService = ALMessageDBService()
         let message = ALMessage()
@@ -117,6 +119,14 @@ class ChatProvider: NSObject {
             try DBHandler?.managedObjectContext.save()
         } catch (_) {
             print("applozic error")
+        }*/
+        
+        let message = ALMessageService.createCustomTextMessageEntitySend(to: user.objectId, withText: LocalizableString.ItsAMatch.localizedString)
+        
+        ALMessageService.sendMessages(message) { (message, error) in
+            if error != nil {
+                print("Applozic error took place for matching")
+            }
         }
     }
     

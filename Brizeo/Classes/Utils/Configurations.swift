@@ -44,7 +44,7 @@ class Configurations: NSObject {
     
     // MARK: - Localytics
     struct Localytics {
-        static let appKey = "asd"
+        static let appKey = "0b17f3d9a8b43eb9365c298-916e3088-9c82-11e6-ac90-0098ae15fcaa"
     }
     
     // MARK: - Applozic
