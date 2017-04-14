@@ -35,7 +35,6 @@ class NotificationTabsViewController: BasicViewController {
         likesController.delegate = self
         
         peopleController = Helper.controllerFromStoryboard(controllerId: Constants.notificationsControllerId)!
-        peopleController.contentType = .newMatches
         peopleController.delegate = self
         
         let carbonTabSwipeNavigation = Helper.createCarbonController(with: Constants.titles, self)
@@ -83,7 +82,7 @@ extension NotificationTabsViewController: CarbonTabSwipeNavigationDelegate {
 // MARK: - NotificationsViewControllerDelegate
 extension NotificationTabsViewController: NotificationsViewControllerDelegate {
     
-    func loadNotifications(for type: NotificationType, _ withLoading: Bool, completionHandler: @escaping ([Notification]?) -> Void) {
+    func loadNotifications(for type: NotificationType?, _ withLoading: Bool, completionHandler: @escaping ([Notification]?) -> Void) {
         
         if withLoading {
             showBlackLoader()
@@ -98,8 +97,13 @@ extension NotificationTabsViewController: NotificationsViewControllerDelegate {
             switch result {
             case .success(let notifications):
                 
-                let filteredNotifications = notifications.filter({ $0.pushType == type })
-                completionHandler(filteredNotifications)
+                if type == nil { // all matches types
+                    let filteredNotifications = notifications.filter({ $0.pushType != NotificationType.momentsLikes })
+                    completionHandler(filteredNotifications)
+                } else {
+                    let filteredNotifications = notifications.filter({ $0.pushType == type })
+                    completionHandler(filteredNotifications)
+                }
             case .failure(let error):
                 
                 if withLoading {

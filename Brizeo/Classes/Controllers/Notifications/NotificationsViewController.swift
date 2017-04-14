@@ -25,7 +25,7 @@ protocol NotificationsTableViewCellDelegate: class {
 
 protocol NotificationsViewControllerDelegate: class {
     
-    func loadNotifications(for type: NotificationType, _ withLoading: Bool, completionHandler: @escaping ([Notification]?) -> Void)
+    func loadNotifications(for type: NotificationType?, _ withLoading: Bool, completionHandler: @escaping ([Notification]?) -> Void)
 }
 
 class NotificationsViewController: UIViewController {
@@ -50,7 +50,7 @@ class NotificationsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     var notifications: [Notification]?
-    var contentType: NotificationType = .momentsLikes
+    var contentType: NotificationType?
     var index: Int = 0
     var topRefresher: UIRefreshControl!
     weak var delegate: NotificationsViewControllerDelegate?
