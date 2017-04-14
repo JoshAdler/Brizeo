@@ -49,7 +49,7 @@ class Configurations: NSObject {
     
     // MARK: - Applozic
     struct Applozic {
-        static let appKey = "324a31b8f131bb0d6f69f9164f3a7cfd6"
+        static let appKey = "6200b8dd12d9efb7c14b2d543bfa849d"//"324a31b8f131bb0d6f69f9164f3a7cfd6"
         static let superUserId = "WlsuoQxwUB"
     }
     
