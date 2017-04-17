@@ -154,9 +154,13 @@ class UserMatchesViewController: UIViewController {
         tableView.reloadData()
     }
     
-    fileprivate func rightUtilsButtons() -> [AnyObject] {
+    fileprivate func rightUtilsButtons(for user: User) -> [AnyObject] {
         let rightUtilityButtons = NSMutableArray()
-        rightUtilityButtons.sw_addUtilityButton(with: .clear, icon: #imageLiteral(resourceName: "ic_delete_button_matches"))
+        
+        if !user.isSuperUser {
+            rightUtilityButtons.sw_addUtilityButton(with: .clear, icon: #imageLiteral(resourceName: "ic_delete_button_matches"))
+        }
+        
         rightUtilityButtons.sw_addUtilityButton(with: .clear, icon: #imageLiteral(resourceName: "ic_chat_button_matches"))
         return rightUtilityButtons as [AnyObject]
     }
@@ -220,7 +224,7 @@ extension UserMatchesViewController: UITableViewDataSource {
         let user = filteredUsers![indexPath.row]
     
         cell.delegate = self
-        cell.rightUtilityButtons = rightUtilsButtons()
+        cell.rightUtilityButtons = rightUtilsButtons(for: user)
         cell.nameLabel.text = user.shortName/*displayName*/
         
         if user.hasProfileImage {
