@@ -98,8 +98,15 @@ class UserMatchesViewController: UIViewController {
             if let welf = self {
                 switch(result) {
                 case .success(let users):
-                    welf.matches = users
-                    //                self.paginator.addNewElements(&self.matches, newElements: value)
+                    let superUser = users.filter({ return $0.isSuperUser })
+                    let restUsers = users.filter({ return !$0.isSuperUser }).sorted(by: { return $0.displayName < $1.displayName })
+                    
+                    var allUsers = [User]()
+                    
+                    allUsers.append(contentsOf: superUser)
+                    allUsers.append(contentsOf: restUsers)
+                    
+                    welf.matches = allUsers
                     welf.filterContentForSearchText(searchText: "")
                     break
                 case .failure(let error):
