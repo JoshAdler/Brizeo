@@ -243,18 +243,29 @@ class SettingsViewController: UIViewController {
     }
     
     fileprivate func getLocationString() {
+        
         if let preferences = preferences {
             let geocoder = CLGeocoder()
             
             if !preferences.hasLocation {
+                
+                // place current location
+                searchLocationString = currentLocationString
+                preferences.searchLocation = LocationManager.shared.currentLocationCoordinates
+                
+                // update tableview
+                tableView.reloadRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
+                
                 return
             }
             
             geocoder.reverseGeocodeLocation(preferences.searchLocation!) {
                 (placemarks, error) in
                 if (placemarks != nil) {
+                    
                     let placemark = placemarks!.first
                     var locationName: String = ""
+                    
                     if let cityName = placemark?.locality {
                         locationName = locationName + cityName + ", "
                     }
