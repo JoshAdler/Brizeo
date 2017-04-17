@@ -174,7 +174,7 @@ class EventsViewController: UIViewController {
             showBlackLoader()
         }
         
-        if !shouldHideLocation && selectedLocation == nil {
+        if !shouldHideLocation && self.selectedLocation == nil {
             hideLoader()
             SVProgressHUD.showError(withStatus: "Please choose some location to see events.")
             return
@@ -185,7 +185,9 @@ class EventsViewController: UIViewController {
 //            return
 //        }
         
-        EventsProvider.getEvents(contentType: type, sortingFlag: selectedflag, location: selectedLocation!, completion: { (result) in
+        let selectedLocation = self.selectedLocation ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
+        
+        EventsProvider.getEvents(contentType: type, sortingFlag: selectedflag, location: selectedLocation, completion: { (result) in
             switch (result) {
             case .success(let events):
                 
