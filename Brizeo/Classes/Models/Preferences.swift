@@ -88,7 +88,7 @@ class Preferences: Mappable {
     
     func updateApplozicNotificationMode() {
         
-        let mode: Int16 = isNotificationsMessagesOn ? 0 : 1
+        let mode: Int16 = isNotificationsMessagesOn ? 0 : 2
         ALRegisterUserClientService.updateNotificationMode(mode) { (response, error) in
             if error == nil {
                 ALUserDefaultsHandler.setNotificationMode(mode)
