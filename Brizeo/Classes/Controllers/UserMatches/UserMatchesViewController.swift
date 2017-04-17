@@ -85,8 +85,6 @@ class UserMatchesViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        print("disappear")
-        //TODO: fix this
         if let charNavController = Helper.currentTabNavigationController()?.presentedViewController as? UINavigationController, let chatController = charNavController.viewControllers[0] as? ALChatViewController {
             chatController.shouldOpenProfile = false
         }
@@ -210,6 +208,13 @@ class UserMatchesViewController: UIViewController {
         paginator.resetPages()
         loadMatches()
     }
+    
+    fileprivate func startChat(with user: User) {
+        
+        ChatProvider.startChat(with: user.objectId, from: Helper.initialNavigationController())
+        tableView.endEditing(true)
+        tableView.reloadData()
+    }
 }
 
 // MARK: - UITableViewDataSource
@@ -273,6 +278,12 @@ extension UserMatchesViewController: SWTableViewCellDelegate {
             
             let user = self.filteredUsers![indexPath.row]
             
+            // start chat for superuser
+            if user.isSuperUser {
+                startChat(with: user)
+                return
+            }
+            
             // show confirmation
             let confirmationView: ConfirmationView = ConfirmationView.loadFromNib()
             confirmationView.present(on: Helper.initialNavigationController().view, confirmAction: {
@@ -286,10 +297,7 @@ extension UserMatchesViewController: SWTableViewCellDelegate {
             }
             
             let user = self.filteredUsers![indexPath.row]
-            
-            ChatProvider.startChat(with: user.objectId, from: Helper.initialNavigationController())// self)
-            tableView.endEditing(true)
-            tableView.reloadData()
+            startChat(with: user)
         }
     }
 }
