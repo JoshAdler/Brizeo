@@ -90,7 +90,7 @@
                   moduleName = "Brizeo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Brizeo/Classes/Controllers/SearchMatches/SearchMatchesViewController.swift"
-                  timestampString = "514112162.591092"
+                  timestampString = "514162033.076607"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "260"
@@ -105,7 +105,7 @@
                   moduleName = "Brizeo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Brizeo/Classes/Controllers/SearchMatches/SearchMatchesViewController.swift"
-                  timestampString = "514112162.592233"
+                  timestampString = "514162033.077835"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "260"
@@ -281,13 +281,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Brizeo/Classes/Controllers/Settings/SettingsViewController.swift"
-            timestampString = "514112160.188395"
+            filePath = "Brizeo/Classes/Models/Preferences.swift"
+            timestampString = "514161732.9017"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "248"
-            endingLineNumber = "248"
-            landmarkName = "getLocationString()"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
+            landmarkName = "updateApplozicNotificationMode()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Brizeo/Classes/Controllers/Moments/MomentsViewController.swift"
+            timestampString = "514161842.196015"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "577"
+            endingLineNumber = "577"
+            landmarkName = "momentCellDidSelectMoreOptions(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -426,7 +426,7 @@ extension MomentsViewController: UITableViewDataSource {
         cell.numberOfLikesButton.setTitle("\(moment.likesCount)", for: .normal)
         cell.likeButton.isHidden = moment.ownerId == currentUser.objectId
         cell.setButtonHighligted(isHighligted: moment.isLikedByCurrentUser)
-        cell.actionButton.isEnabled = !moment.user.isSuperUser
+        cell.actionButton.isEnabled = !moment.user.isSuperUser || (moment.user.isSuperUser && currentUser.isSuperUser)
         cell.playImageView.isHidden = !moment.hasVideo
         
         if SDWebImageManager.shared().cachedImageExists(for: moment.imageUrl) {
