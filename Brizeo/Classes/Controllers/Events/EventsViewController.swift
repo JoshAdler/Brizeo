@@ -129,6 +129,7 @@ class EventsViewController: UIViewController {
     var topRefresher: UIRefreshControl!
     var type = EventsContentType.all
     var shouldReload = false
+    var shouldHideLocation = false
     
     // MARK: - Controller lifecycle
     
@@ -143,6 +144,11 @@ class EventsViewController: UIViewController {
         topRefresher = UIRefreshControl()
         topRefresher.addTarget(self, action: #selector(EventsViewController.refreshTableView), for: .valueChanged)
         tableView.addSubview(topRefresher)
+        
+        if shouldHideLocation {
+            locationImageView.isHidden = true
+            locationTextField.isHidden = true
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -168,13 +174,18 @@ class EventsViewController: UIViewController {
             showBlackLoader()
         }
         
-        guard let selectedLocation = selectedLocation else {
+        if !shouldHideLocation && selectedLocation == nil {
             hideLoader()
             SVProgressHUD.showError(withStatus: "Please choose some location to see events.")
             return
         }
+//        guard let selectedLocation = selectedLocation else {
+//            hideLoader()
+//            SVProgressHUD.showError(withStatus: "Please choose some location to see events.")
+//            return
+//        }
         
-        EventsProvider.getEvents(contentType: type, sortingFlag: selectedflag, location: selectedLocation, completion: { (result) in
+        EventsProvider.getEvents(contentType: type, sortingFlag: selectedflag, location: selectedLocation!, completion: { (result) in
             switch (result) {
             case .success(let events):
                 
@@ -245,6 +256,10 @@ class EventsViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func onLocationButtonClicked(sender: UIButton) {
+        
+        if shouldHideLocation {
+            return
+        }
         
         if gpaViewController == nil {
             gpaViewController = GooglePlacesAutocomplete(

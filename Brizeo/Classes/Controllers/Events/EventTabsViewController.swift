@@ -49,6 +49,7 @@ class EventTabsViewController: BasicViewController {
         allEventsController.type = .all
         
         myMatchesController = Helper.controllerFromStoryboard(controllerId: Constants.eventControllerId)!
+        myMatchesController.shouldHideLocation = true
         myMatchesController.type = .matches
         
         let carbonTabSwipeNavigation = Helper.createCarbonController(with: Constants.titles, self)
