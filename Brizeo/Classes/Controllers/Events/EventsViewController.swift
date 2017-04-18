@@ -307,7 +307,7 @@ class EventsViewController: UIViewController {
                     sender.setTitle(action.title, for: .normal)
                     
                     //self.refreshTableView()
-                    loadEvents(true)
+                    self.loadEvents(true)
                 }
             }))
         }
