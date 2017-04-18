@@ -63,8 +63,8 @@ enum SortingFlag: LocalizedString {
     static func allOptions() -> [SortingFlag] {
         
         return [
-            .popularity,
-            .nearest
+            .nearest,
+            .popularity
         ]
     }
 }
@@ -124,7 +124,7 @@ class EventsViewController: UIViewController {
     
     var gpaViewController: GooglePlacesAutocomplete?
     var events: [Event]?
-    var selectedflag = SortingFlag.popularity
+    var selectedflag = SortingFlag.nearest
     var selectedLocation: CLLocationCoordinate2D?
     var topRefresher: UIRefreshControl!
     var type = EventsContentType.all
@@ -306,7 +306,8 @@ class EventsViewController: UIViewController {
                     self.selectedflag = flag
                     sender.setTitle(action.title, for: .normal)
                     
-                    self.refreshTableView()
+                    //self.refreshTableView()
+                    loadEvents(true)
                 }
             }))
         }
