@@ -18,7 +18,7 @@ class ChatProvider: NSObject {
 
     // MARK: - Class methods
     
-    class func registerUserInChat() {
+    class func registerUserInChat(completionHandler: ((Bool) -> Void)?) {
         guard let currentUser = UserProvider.shared.currentUser else {
             print("Error: can't register user in chat because current user is nil")
             return
@@ -40,7 +40,9 @@ class ChatProvider: NSObject {
         ALUserDefaultsHandler.setEmailId(user.email)
         ALUserDefaultsHandler.setDisplayName(user.displayName)
         
-        chatManager.registerUser(user)
+        chatManager.registerUser(user) { (response, error) in
+            completionHandler?(error == nil)
+        }
     }
     
     class func logout() {
