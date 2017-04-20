@@ -28,6 +28,9 @@ class ProfileView: UIView {
         super.awakeFromNib()
         
         NotificationCenter.default.addObserver(self, selector: #selector(didReceivedMutualFriendsNotification(notification:)), name: NSNotification.Name(rawValue: mutualFriendsNotification), object: nil)
+        
+        layer.borderColor = HexColor("F6F6F6")!.cgColor
+        layer.borderWidth = 1.0
     }
     
     deinit {

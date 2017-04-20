@@ -144,7 +144,7 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     // basic objects
-    var user: User! = UserProvider.shared.currentUser!
+    var user: User!
     var preferences: Preferences!
     var isSelected = false
     
@@ -157,7 +157,9 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        user = UserProvider.shared.currentUser!
+        
         registerHeaderViews()
         LocationManager.shared.updateLocation()
         loadPreferences()
@@ -165,6 +167,8 @@ class SettingsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        user = UserProvider.shared.currentUser!
         
         let result = LocationManager.shared.requestCurrentLocation { [weak self] (locationString, location) in
             

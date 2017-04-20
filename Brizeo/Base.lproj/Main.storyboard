@@ -594,6 +594,10 @@
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NVv-Rs-9A3">
                                         <rect key="frame" x="314" y="3" width="51" height="46"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="NVv-Rs-9A3" secondAttribute="height" multiplier="51:46" id="9IS-BF-r3b"/>
+                                            <constraint firstAttribute="width" constant="51" id="HKV-gx-f2i"/>
+                                        </constraints>
                                         <state key="normal" image="camera-icon"/>
                                         <connections>
                                             <action selector="onCreateButtonClicked:" destination="CNo-6y-3JQ" eventType="touchUpInside" id="fAQ-g5-heI"/>
@@ -2763,19 +2767,19 @@
                                             <constraint firstAttribute="height" constant="100" id="Agw-BQ-FHX"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MXG-Cy-7LV">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="MXG-Cy-7LV">
                                         <rect key="frame" x="25" y="456" width="263" height="0.0"/>
                                         <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="24"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6mt-AF-to2">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="6mt-AF-to2">
                                         <rect key="frame" x="25" y="540" width="301" height="0.0"/>
                                         <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T9j-vS-uhn">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="T9j-vS-uhn">
                                         <rect key="frame" x="25" y="540" width="301" height="0.0"/>
                                         <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="14"/>
                                         <nil key="textColor"/>
@@ -2814,14 +2818,16 @@
                                     <constraint firstItem="T9j-vS-uhn" firstAttribute="leading" secondItem="6mt-AF-to2" secondAttribute="leading" id="3CC-lv-eRi"/>
                                     <constraint firstItem="Za4-rP-mxy" firstAttribute="centerX" secondItem="eFK-sq-d2X" secondAttribute="centerX" id="3dc-ZJ-UpG"/>
                                     <constraint firstItem="lOr-4w-H3p" firstAttribute="width" secondItem="Za4-rP-mxy" secondAttribute="width" id="5bS-t3-fPi"/>
-                                    <constraint firstAttribute="bottom" secondItem="T9j-vS-uhn" secondAttribute="bottom" constant="14" id="8FY-2n-UYG"/>
+                                    <constraint firstAttribute="bottom" secondItem="T9j-vS-uhn" secondAttribute="bottom" priority="700" constant="14" id="8FY-2n-UYG"/>
                                     <constraint firstItem="49E-Dp-RcY" firstAttribute="width" secondItem="Za4-rP-mxy" secondAttribute="width" id="8qN-UW-ZlI"/>
-                                    <constraint firstItem="MXG-Cy-7LV" firstAttribute="top" secondItem="lOr-4w-H3p" secondAttribute="bottom" constant="11" id="RnY-EE-aeC"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="T9j-vS-uhn" secondAttribute="bottom" constant="1" id="Frt-aL-Rd3"/>
+                                    <constraint firstItem="MXG-Cy-7LV" firstAttribute="top" secondItem="lOr-4w-H3p" secondAttribute="bottom" priority="700" constant="11" id="RnY-EE-aeC"/>
                                     <constraint firstItem="MXG-Cy-7LV" firstAttribute="leading" secondItem="WFQ-ue-NwK" secondAttribute="trailing" id="RvR-xl-uVa"/>
                                     <constraint firstItem="ezV-RJ-2s2" firstAttribute="leading" secondItem="MXG-Cy-7LV" secondAttribute="trailing" constant="10" id="S4a-fb-f2g"/>
                                     <constraint firstAttribute="bottom" secondItem="WFQ-ue-NwK" secondAttribute="bottom" id="Sre-qP-IB9"/>
                                     <constraint firstItem="49E-Dp-RcY" firstAttribute="height" secondItem="Za4-rP-mxy" secondAttribute="height" id="Tgt-0w-ZEG"/>
                                     <constraint firstItem="izz-5F-dQh" firstAttribute="leading" secondItem="6mt-AF-to2" secondAttribute="trailing" constant="10" id="Vmf-3p-5xG"/>
+                                    <constraint firstItem="6mt-AF-to2" firstAttribute="top" relation="greaterThanOrEqual" secondItem="MXG-Cy-7LV" secondAttribute="bottom" id="Wbm-zJ-eLb"/>
                                     <constraint firstItem="M3d-6L-BSZ" firstAttribute="leading" secondItem="ezV-RJ-2s2" secondAttribute="trailing" constant="8" id="ZnC-pq-sPZ"/>
                                     <constraint firstItem="ezV-RJ-2s2" firstAttribute="centerY" secondItem="M3d-6L-BSZ" secondAttribute="centerY" constant="1" id="a2z-Nv-Uqy"/>
                                     <constraint firstItem="Za4-rP-mxy" firstAttribute="top" secondItem="eFK-sq-d2X" secondAttribute="top" id="bF4-60-cay"/>
@@ -2839,6 +2845,7 @@
                                     <constraint firstItem="49E-Dp-RcY" firstAttribute="centerY" secondItem="Za4-rP-mxy" secondAttribute="centerY" id="u1X-Ye-WpG"/>
                                     <constraint firstItem="lOr-4w-H3p" firstAttribute="height" secondItem="Za4-rP-mxy" secondAttribute="height" multiplier="105/842" id="v9C-dZ-xnV"/>
                                     <constraint firstItem="lOr-4w-H3p" firstAttribute="centerX" secondItem="Za4-rP-mxy" secondAttribute="centerX" id="w3n-Si-X9S"/>
+                                    <constraint firstItem="MXG-Cy-7LV" firstAttribute="top" relation="greaterThanOrEqual" secondItem="lOr-4w-H3p" secondAttribute="bottom" id="wTk-S7-PLt"/>
                                     <constraint firstItem="izz-5F-dQh" firstAttribute="width" secondItem="eFK-sq-d2X" secondAttribute="width" multiplier="50/723" id="yZh-L4-JWT"/>
                                 </constraints>
                             </view>

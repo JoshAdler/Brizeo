@@ -100,11 +100,22 @@ class MomentsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-                
+        
+        currentUser = UserProvider.shared.currentUser!
+        
         let count = moments?.count ?? 0
         if count == 0 {
             momentsTableView.isHidden = true
             loadMoments(with: true, removeOldMoments: false)
+        } else {
+            
+            for indexPath in momentsTableView.indexPathsForVisibleRows ?? [] {
+                if moments![indexPath.row].user.objectId == currentUser.objectId {
+                    moments![indexPath.row].user = currentUser
+                }
+            }
+            
+            momentsTableView.reloadData()
         }
         
         tabBarController?.tabBar.isHidden = false
