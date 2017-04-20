@@ -17,6 +17,8 @@ import UserNotifications
 import Firebase
 import Reachability
 import Applozic
+import GooglePlaces
+import GoogleMaps
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -41,6 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         AppDelegate.originalAppDelegate = self
         
+        
+        
         //TODO: remove it before realise
 //        FirstEntranceProvider.shared.isFirstEntrancePassed = false
 //        FirstEntranceProvider.shared.currentStep = .moments
@@ -54,6 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupFirebase()
         setupFabric()
         setupMixpanel()
+        setupGooglePlaces()
         setupLocalytics(with: launchOptions)
         setupApplozic(with: launchOptions)
 
@@ -385,6 +390,11 @@ extension AppDelegate {
         FIRApp.configure()
         
         NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.tokenRefreshNotification(_:)), name: NSNotification.Name.firInstanceIDTokenRefresh, object: nil)
+    }
+    
+    fileprivate func setupGooglePlaces() {
+        GMSPlacesClient.provideAPIKey(Configurations.GooglePlaces.key)
+        GMSServices.provideAPIKey(Configurations.GooglePlaces.key)
     }
     
     fileprivate func setupReachability() {

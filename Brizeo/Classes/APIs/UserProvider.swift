@@ -117,14 +117,22 @@ class UserProvider: NSObject {
                     shared.authToken = try response.mapString(atKeyPath: JSONKeys.jwt)
                     
                     let user = try response.mapObject(User.self)
-                    
                     shared.currentUser = user
-                    completion?(.success(user))
                     
-                    ChatProvider.registerUserInChat(completionHandler: nil)
-                    
-                    // load preferences
-                    PreferencesProvider.loadPreferences(for: user.objectId, fromCache: false, completion: nil)
+                    ChatProvider.registerUserInChat(completionHandler: { (isSuccess) in
+                        if isSuccess {
+                            
+                            completion?(.success(user))
+                            
+                            // load preferences
+                            PreferencesProvider.loadPreferences(for: user.objectId, fromCache: false, completion: nil)
+
+                        } else {
+                            print("Can't register user in Chat")
+                            completion?(.failure(APIError.unknown(message: "Error: Can't register Applozic user")))
+                        }
+                    })
+//                    ChatProvider.registerUserInChat(completionHandler: nil)
                 }
                 catch (let error) {
                     completion?(.failure(APIError(error: error)))

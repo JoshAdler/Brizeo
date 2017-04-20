@@ -81,6 +81,16 @@ PODS:
   - GBHFacebookImagePicker (1.1.4):
     - FBSDKCoreKit (~> 4.20.0)
     - FBSDKLoginKit (~> 4.20.0)
+  - GoogleMaps (2.2.0):
+    - GoogleMaps/Maps (= 2.2.0)
+  - GoogleMaps/Base (2.2.0)
+  - GoogleMaps/Maps (2.2.0):
+    - GoogleMaps/Base
+  - GooglePlacePicker (2.2.0):
+    - GoogleMaps (= 2.2.0)
+    - GooglePlaces (= 2.2.0)
+  - GooglePlaces (2.2.0):
+    - GoogleMaps/Base (= 2.2.0)
   - GooglePlacesAutocomplete (0.3.0)
   - GoogleToolboxForMac/Defines (2.1.1)
   - GoogleToolboxForMac/Logger (2.1.1):
@@ -149,6 +159,9 @@ DEPENDENCIES:
   - Firebase/Messaging
   - FormatterKit
   - GBHFacebookImagePicker
+  - GoogleMaps
+  - GooglePlacePicker
+  - GooglePlaces
   - GooglePlacesAutocomplete (from `https://github.com/danielkiedrowski/ios_google_places_autocomplete.git`)
   - IGLDropDownMenu
   - InstagramImagePicker
@@ -206,6 +219,9 @@ SPEC CHECKSUMS:
   FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   FormatterKit: 4b8f29acc9b872d5d12a63efb560661e8f2e1b98
   GBHFacebookImagePicker: 52d20a64f5a0120d6e41b3033f0ab23fa8f47248
+  GoogleMaps: 104c418d61ab8a05dff06ed0784c25ea9d37da45
+  GooglePlacePicker: 345b1aabd42c9d6d9bf2369c1bae1234d903e764
+  GooglePlaces: bca867d5e9da15384c794b945e4226848bc6e9d9
   GooglePlacesAutocomplete: 7694636fce561c9d8ac807b8e490d299a730a633
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   IGLDropDownMenu: ae118618ae858fa66ce7c2ac80ed9124a710b228
@@ -232,6 +248,6 @@ SPEC CHECKSUMS:
   UIScrollView-InfiniteScroll: 14e204c50ca4040467e1cbfa141dad7a18919b56
   ZTDropDownTextField: a9cb5db41b66eb28a7c38afaf4c334fb2a81034e
 
-PODFILE CHECKSUM: 54a78b4d2ce5fa7ca3c619f2cf88233fffef0420
+PODFILE CHECKSUM: e83f7a81f67ef318f71809856a0622aca5b9afc1
 
 COCOAPODS: 1.2.0

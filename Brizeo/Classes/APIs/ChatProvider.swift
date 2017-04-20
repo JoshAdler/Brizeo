@@ -48,6 +48,7 @@ class ChatProvider: NSObject {
     class func logout() {
         
         let registerUserClientService: ALRegisterUserClientService = ALRegisterUserClientService()
+        
         registerUserClientService.logout { (response, error) in
             if error == nil {
                 print("Successfully logged out from Applozic")
