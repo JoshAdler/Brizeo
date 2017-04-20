@@ -276,7 +276,7 @@ class SearchMatchesViewController: BasicViewController {
                     LocalyticsProvider.trackUserDidApproved()
                     
                     if user.status == .isMatched {
-                        Helper.showMatchingCard(with: user, from: welf.navigationController!)
+                        Helper.showMatchingCard(with: user, from: welf.navigationController!, false)
                     } else {
                         welf.loadMatchesIfNeeds()
                     }

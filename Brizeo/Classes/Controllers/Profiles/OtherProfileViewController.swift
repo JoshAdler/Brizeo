@@ -333,7 +333,7 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
                     LocalyticsProvider.trackUserDidApproved()
                     
                     if welf.user!.status == .isMatched {
-                        Helper.showMatchingCard(with: welf.user!, from: welf.navigationController!)
+                        Helper.showMatchingCard(with: welf.user!, from: welf.navigationController!, false)
                     }
                     
                     break

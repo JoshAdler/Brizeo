@@ -276,7 +276,7 @@ class Helper: NSObject {
     
     // MARK: - Matching card
     
-    class func showMatchingCard(with user: User, from controller: UINavigationController) {
+    class func showMatchingCard(with user: User, from controller: UINavigationController, _ isFromPush: Bool) {
         
         // save statistics
         LocalyticsProvider.trackItsAMatch()
@@ -288,8 +288,11 @@ class Helper: NSObject {
             playSound(title: NotificationType.newMatches.soundTitle)
         }
         
-        // send a chat message to other user
-        ChatProvider.createMatchingChat(with: user)
+        if !isFromPush {
+    
+            // send a chat message to other user
+            ChatProvider.createMatchingChat(with: user)
+        }
         
         let matchingController: MatchViewController = controllerFromStoryboard(controllerId: "MatchViewController")!
         

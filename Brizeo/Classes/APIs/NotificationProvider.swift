@@ -110,12 +110,12 @@ class NotificationProvider: NSObject {
                 case .success(let user):
                     
                     if let currentNotification = Helper.currentTabNavigationController() {
-                        Helper.showMatchingCard(with: user, from: currentNotification)
+                        Helper.showMatchingCard(with: user, from: currentNotification, true)
                     }
                     
                     break
                 case .failure(let error):
-                    print("Error during getting user by \(userId) for push matching: \(error.errorDescription)")
+                    print("Error during getting user by \(userId) for push matching: \(String(describing: error.errorDescription))")
                     break
                 default:
                     break
