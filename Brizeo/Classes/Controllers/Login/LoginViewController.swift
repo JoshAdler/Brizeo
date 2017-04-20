@@ -100,9 +100,7 @@ class LoginViewController: UIViewController {
     fileprivate func operateCurrentUser() {
         LocationManager.updateUserLocation()
         BranchProvider.checkUserReward()
-        ChatProvider.registerUserInChat()
-        //ChatProvider.createChatWithSuperuser()
-
+        
         // save token for push notifications
         NotificationProvider.updateCurrentUserToken()
         

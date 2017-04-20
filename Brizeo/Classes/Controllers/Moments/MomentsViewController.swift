@@ -38,13 +38,28 @@ class MomentsViewController: UIViewController {
     @IBOutlet weak fileprivate var tableViewTopConstraint: NSLayoutConstraint!
     @IBOutlet weak fileprivate var momentsTableView: UITableView!
     @IBOutlet weak fileprivate var addMomentButton: UIButton!
-    @IBOutlet weak fileprivate var newestButton: UIButton!
-    @IBOutlet weak fileprivate var popularButton: UIButton!
+    @IBOutlet weak fileprivate var newestButton: UIButton! {
+        didSet {
+            newestButton.titleLabel?.numberOfLines = 1
+            newestButton.titleLabel?.adjustsFontSizeToFitWidth = true
+            newestButton.titleLabel?.lineBreakMode = NSLineBreakMode.byClipping
+        }
+    }
+    @IBOutlet weak fileprivate var popularButton: UIButton! {
+        didSet {
+            popularButton.titleLabel?.numberOfLines = 1
+            popularButton.titleLabel?.adjustsFontSizeToFitWidth = true
+            popularButton.titleLabel?.lineBreakMode = NSLineBreakMode.byClipping
+        }
+    }
     @IBOutlet weak fileprivate var filterButton: DropMenuButton! {
         didSet {
             filterButton.layer.cornerRadius = 5.0
             filterButton.layer.borderWidth = 1.0
             filterButton.layer.borderColor = HexColor("818181")!.cgColor
+            filterButton.titleLabel?.numberOfLines = 1
+            filterButton.titleLabel?.adjustsFontSizeToFitWidth = true
+            filterButton.titleLabel?.lineBreakMode = NSLineBreakMode.byClipping
         }
     }
     

@@ -130,6 +130,43 @@ class ChatProvider: NSObject {
         }
     }
     
+    class func createMatchingChat(with userId: String) {
+        
+        /*
+         let DBHandler = ALDBHandler.sharedInstance()
+         let messageDBService = ALMessageDBService()
+         let message = ALMessage()
+         
+         message.contactIds = user.objectId
+         message.to = user.objectId
+         message.createdAtTime = NSNumber(value: Date().timeIntervalSince1970 * 1000.0)
+         message.deviceKey = ALUserDefaultsHandler.getDeviceKeyString()
+         message.sendToDevice = true
+         message.shared = true
+         message.fileMeta = nil
+         message.key = "brizeo_matching_message_\(user.objectId)_\(UserProvider.shared.currentUser!.objectId)"
+         message.delivered = false
+         message.fileMetaKey = nil
+         message.type = "5" //DELIVERED_AND_READ
+         message.message = LocalizableString.ItsAMatch.localizedString
+         message.groupId = nil
+         messageDBService.createMessageEntityForDBInsertion(with: message)
+         
+         do {
+         try DBHandler?.managedObjectContext.save()
+         } catch (_) {
+         print("applozic error")
+         }*/
+        
+        let message = ALMessageService.createCustomTextMessageEntitySend(to: userId, withText: LocalizableString.ItsAMatch.localizedString)
+        
+        ALMessageService.sendMessages(message) { (message, error) in
+            if error != nil {
+                print("Applozic error took place for matching")
+            }
+        }
+    }
+    
     class func removeConversation(with user: User) {
         
         ALMessageService.deleteMessageThread(user.objectId, orChannelKey: nil) { (string, error) in

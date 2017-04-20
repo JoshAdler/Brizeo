@@ -121,6 +121,8 @@ class UserProvider: NSObject {
                     shared.currentUser = user
                     completion?(.success(user))
                     
+                    ChatProvider.registerUserInChat()
+                    
                     // load preferences
                     PreferencesProvider.loadPreferences(for: user.objectId, fromCache: false, completion: nil)
                 }
@@ -220,6 +222,8 @@ class UserProvider: NSObject {
                                     
                                     BranchProvider.operateFirstEntrance(with: user)
                                     ChatProvider.createChatWithSuperuser()
+                                    ChatProvider.registerUserInChat()
+                                    ChatProvider.createMatchingChat(with: Configurations.Applozic.superUserId)
                                     
                                     completion(.success(user))
                                     break
