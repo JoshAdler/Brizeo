@@ -90,7 +90,7 @@
                   moduleName = "Brizeo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Brizeo/Classes/Controllers/SearchMatches/SearchMatchesViewController.swift"
-                  timestampString = "514373506.403004"
+                  timestampString = "514382451.181972"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "260"
@@ -105,7 +105,7 @@
                   moduleName = "Brizeo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Brizeo/Classes/Controllers/SearchMatches/SearchMatchesViewController.swift"
-                  timestampString = "514373506.404416"
+                  timestampString = "514382451.183166"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "260"
@@ -346,12 +346,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Brizeo/Classes/APIs/UserProvider.swift"
-            timestampString = "514359547.960107"
+            timestampString = "514382338.442857"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "753"
-            endingLineNumber = "753"
+            startingLineNumber = "760"
+            endingLineNumber = "760"
             landmarkName = "createUser(user:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Brizeo/Classes/APIs/UserProvider.swift"
+            timestampString = "514382448.166722"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "347"
+            endingLineNumber = "347"
+            landmarkName = "getUserWithStatus(for:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

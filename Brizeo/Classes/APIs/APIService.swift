@@ -285,7 +285,11 @@ extension APIService: TargetType {
             case .createNewUser(_), .getCurrentUser(_):
                 return defaultEndpoint
             default:
-                return defaultEndpoint.adding(newHTTPHeaderFields: ["x-access-token": UserProvider.shared.authToken ?? ""])
+                return defaultEndpoint.adding(newHTTPHeaderFields: [
+                    "x-access-token": UserProvider.shared.authToken ?? "",
+                    "x-user-id": UserProvider.shared.currentUser?.objectId ?? ""
+                                                                    ]
+                )
             }
         }
         let provider = MoyaProvider<APIService>(endpointClosure: endpointClosure)
