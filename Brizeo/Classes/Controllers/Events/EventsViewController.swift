@@ -136,31 +136,58 @@ class EventsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        LocationManager.updateUserLocation()
-        
         tableView.estimatedRowHeight = 300
         
         // set top refresher
         topRefresher = UIRefreshControl()
         topRefresher.addTarget(self, action: #selector(EventsViewController.refreshTableView), for: .valueChanged)
         tableView.addSubview(topRefresher)
-        
-        if shouldHideLocation {
-            locationImageView.isHidden = true
-            locationTextField.isHidden = true
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if selectedLocation == nil {
-            selectedLocation = LocationManager.shared.currentLocationCoordinates?.coordinate
-            locationTextField.text = LocationManager.shared.currentLocationString
-        }
-        
-        if events == nil || events?.count == 0 || shouldReload {
-            loadEvents(true)
+        if shouldHideLocation {
+            
+            locationImageView.isHidden = true
+            locationTextField.isHidden = true
+            
+            if self.events == nil || self.events?.count == 0 || self.shouldReload {
+                self.loadEvents(true)
+            }
+        } else {
+            
+            if selectedLocation == nil {
+                
+                // set current location
+                let currentLocation = LocationManager.shared.requestCurrentLocation({ (locationStr, locationCoordinates) in
+                    
+                    self.selectedLocation = locationCoordinates?.coordinate
+                    self.locationTextField.text = locationStr
+                    
+                    if self.events == nil || self.events?.count == 0 || self.shouldReload {
+                        self.loadEvents(true)
+                    } else {
+                        self.hideLoader()
+                    }
+                })
+                
+                if currentLocation.0 != nil && currentLocation.1 != nil {
+                    
+                    selectedLocation = currentLocation.1!.coordinate
+                    locationTextField.text = currentLocation.0
+                    
+                    if events == nil || events?.count == 0 || shouldReload {
+                        loadEvents(true)
+                    }
+                } else {
+                    showBlackLoader()
+                }
+            }
+            
+            if self.events == nil || self.events?.count == 0 || self.shouldReload {
+                self.loadEvents(true)
+            }
         }
     }
     
@@ -179,11 +206,6 @@ class EventsViewController: UIViewController {
             SVProgressHUD.showError(withStatus: "Please choose some location to see events.")
             return
         }
-//        guard let selectedLocation = selectedLocation else {
-//            hideLoader()
-//            SVProgressHUD.showError(withStatus: "Please choose some location to see events.")
-//            return
-//        }
         
         let selectedLocation = self.selectedLocation ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
         
