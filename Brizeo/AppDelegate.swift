@@ -56,7 +56,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setupFirebase()
         setupFabric()
         setupMixpanel()
-        setupGooglePlaces()
         setupLocalytics(with: launchOptions)
         setupApplozic(with: launchOptions)
 
@@ -388,11 +387,6 @@ extension AppDelegate {
         FIRApp.configure()
         
         NotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.tokenRefreshNotification(_:)), name: NSNotification.Name.firInstanceIDTokenRefresh, object: nil)
-    }
-    
-    fileprivate func setupGooglePlaces() {
-        GMSPlacesClient.provideAPIKey(Configurations.GooglePlaces.key)
-        GMSServices.provideAPIKey(Configurations.GooglePlaces.key)
     }
     
     fileprivate func setupReachability() {
