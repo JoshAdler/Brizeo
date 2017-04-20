@@ -62,9 +62,6 @@ target 'Brizeo' do
     
     # google places for location
     pod 'GooglePlacesAutocomplete', :git => 'https://github.com/danielkiedrowski/ios_google_places_autocomplete.git'
-    pod 'GooglePlaces'
-    pod 'GooglePlacePicker'
-    pod 'GoogleMaps'
     
     # text view placeholder
     pod 'KMPlaceholderTextView', '~> 1.3.0'

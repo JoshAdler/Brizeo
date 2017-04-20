@@ -13,8 +13,6 @@ import Alamofire
 import AlamofireImage
 import MapKit
 import CLLocationManager_blocks
-import GooglePlaces
-    import GooglePlacePicker
 
 class LocationManager: NSObject {
     
@@ -253,32 +251,6 @@ class LocationManager: NSObject {
                 break
             }
         }
-    }
-    
-    func getLocationString(for location: CLLocation, completion:@escaping ((String) -> Void)) {
-        
-        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-        let northEast = CLLocationCoordinate2D(latitude: center.latitude + 0.001, longitude: center.longitude + 0.001)
-        let southWest = CLLocationCoordinate2D(latitude: center.latitude - 0.001, longitude: center.longitude - 0.001)
-        let viewport = GMSCoordinateBounds(coordinate: northEast, coordinate: southWest)
-        let config = GMSPlacePickerConfig(viewport: viewport)
-        let placePicker = GMSPlacePicker(config: config)
-        
-        placePicker.pickPlace(callback: {(place, error) -> Void in
-            if let error = error {
-                print("Pick Place error: \(error.localizedDescription)")
-                return
-            }
-            
-            if let place = place {
-//                self.nameLabel.text = place.name
-//                self.addressLabel.text = place.formattedAddress?.components(separatedBy: ", ")
-//                    .joined(separator: "\n")
-            } else {
-//                self.nameLabel.text = "No place selected"
-//                self.addressLabel.text = ""
-            }
-        })
     }
 }
 
