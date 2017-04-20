@@ -17,8 +17,6 @@ import UserNotifications
 import Firebase
 import Reachability
 import Applozic
-import GooglePlaces
-import GoogleMaps
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
