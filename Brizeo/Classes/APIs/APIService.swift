@@ -65,7 +65,14 @@ enum APIService {
 }
 
 extension APIService: TargetType {
-    var baseURL: URL { return URL(string: Configurations.General.apiURL)! }
+    var baseURL: URL {
+        switch self {
+        case .getCurrentUser(_), .createNewUser(_):
+            return URL(string: Configurations.General.shortApiURL)!
+        default:
+            return URL(string: Configurations.General.longApiURL)!
+        }
+    }
     
     var path: String {
         switch self {
