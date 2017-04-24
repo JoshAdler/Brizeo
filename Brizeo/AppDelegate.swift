@@ -40,14 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         AppDelegate.originalAppDelegate = self
-        
-        
-        
-        //TODO: remove it before realise
-//        FirstEntranceProvider.shared.isFirstEntrancePassed = false
-//        FirstEntranceProvider.shared.currentStep = .moments
-//        FirstEntranceProvider.shared.goingToCreateMoment = false
-        
+    
         // apply main theme for the app
         ThemeManager.applyGlobalTheme()
         
@@ -248,7 +241,6 @@ extension AppDelegate {
             }
         }
     }
-    //TODO: change it just before release
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         

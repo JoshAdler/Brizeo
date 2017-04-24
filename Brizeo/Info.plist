@@ -108,6 +108,8 @@
 	<string>Application would like to use your microphone.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Application would like to use your photo.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Application would like to use your contacts.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>SourceSansPro-Black.otf</string>
