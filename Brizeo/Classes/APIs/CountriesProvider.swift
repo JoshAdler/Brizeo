@@ -15,8 +15,7 @@ class CountriesProvider: NSObject {
     
     class func addCountry(country: Country, for userId: String, completion: @escaping (Result<User>) -> Void) {
         
-        let provider = APIService.APIProvider()
-        provider.request(.addCountryForUser(country: country, userId: userId)) { (result) in
+        APIService.performRequest(request: .addCountryForUser(country: country, userId: userId)) { (result) in
             switch result {
             case .success(let response):
                 
@@ -50,8 +49,7 @@ class CountriesProvider: NSObject {
     
     class func deleteCountry(country: Country, for userId: String, completion: @escaping (Result<User>) -> Void) {
         
-        let provider = APIService.APIProvider()
-        provider.request(.deleteCountryForUser(country: country, userId: userId)) { (result) in
+        APIService.performRequest(request: .deleteCountryForUser(country: country, userId: userId)) { (result) in
             switch result {
             case .success(let response):
                 

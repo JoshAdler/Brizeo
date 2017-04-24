@@ -28,8 +28,7 @@ class MatchesProvider {
             return
         }
         
-        let provider = APIService.APIProvider()
-        provider.request(.approveMatch(approverId: currentUser.objectId, userId: user.objectId)) { (result) in
+        APIService.performRequest(request: .approveMatch(approverId: currentUser.objectId, userId: user.objectId)) { (result) in
             switch result {
             case .success(let response):
                 
@@ -62,8 +61,7 @@ class MatchesProvider {
             return
         }
         
-        let provider = APIService.APIProvider()
-        provider.request(.declineMatch(approverId: currentUser.objectId, userId: user.objectId)) { (result) in
+        APIService.performRequest(request: .declineMatch(approverId: currentUser.objectId, userId: user.objectId)) { (result) in
             switch result {
             case .success(let response):
                 
@@ -96,8 +94,7 @@ class MatchesProvider {
             return
         }
         
-        let provider = APIService.APIProvider()
-        provider.request(.getUsersForMatch(userId: currentUser.objectId)) { (result) in
+        APIService.performRequest(request: .getUsersForMatch(userId: currentUser.objectId)) { (result) in
             switch result {
             case .success(let response):
                 
@@ -128,8 +125,7 @@ class MatchesProvider {
             return
         }
         
-        let provider = APIService.APIProvider()
-        provider.request(.getMatchesForUser(userId: currentUser.objectId)) { (result) in
+        APIService.performRequest(request: .getMatchesForUser(userId: currentUser.objectId)) { (result) in
             switch result {
             case .success(let response):
                 

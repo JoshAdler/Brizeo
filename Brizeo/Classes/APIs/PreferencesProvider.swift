@@ -32,8 +32,7 @@ class PreferencesProvider: NSObject {
             return
         }
         
-        let provider = APIService.APIProvider()
-        provider.request(.getPreferences(userId: userId)) { (result) in
+        APIService.performRequest(request: .getPreferences(userId: userId)) { (result) in
             switch result {
             case .success(let response):
                 
@@ -71,26 +70,16 @@ class PreferencesProvider: NSObject {
             return
         }
         
-        let provider = APIService.APIProvider()
-        provider.request(.updatePreferences(userId: currentUser.objectId, preferences: preferences)) { (result) in
+        APIService.performRequest(request: .updatePreferences(userId: currentUser.objectId, preferences: preferences)) { (result) in
             switch result {
             case .success(let response):
-                print("UPDATED PREFERENCES")
                 guard response.statusCode == 200 else {
                     completion?(.failure(APIError(code: response.statusCode, message: nil)))
                     return
                 }
-                
-                //do {
-//                    let preferences = try response.mapObject(Preferences.self)
-                    shared.currentUserPreferences = preferences
-                    completion?(.success(preferences))
-                    
-                    print("successfully updated preferences info")
-                /*}
-                catch (let error) {
-                    completion?(.failure(APIError(error: error)))
-                }*/
+
+                shared.currentUserPreferences = preferences
+                completion?(.success(preferences))
                 break
             case .failure(let error):
                 completion?(.failure(APIError(error: error)))

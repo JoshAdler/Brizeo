@@ -25,8 +25,7 @@ class InfoProvider: NSObject {
             return
         }
         
-        let provider = APIService.APIProvider()
-        provider.request(.notifyAdminAboutDownloads(userId: user.objectId, count: count)) { (result) in
+        APIService.performRequest(request: .notifyAdminAboutDownloads(userId: user.objectId, count: count)) { (result) in
             switch result {
             case .success(let response):
                 

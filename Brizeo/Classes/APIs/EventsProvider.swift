@@ -61,8 +61,7 @@ class EventsProvider {
                     return
                 }
                 
-                let provider = APIService.APIProvider()
-                provider.request(.saveEvents(events: events)) { (result) in
+                APIService.performRequest(request: .saveEvents(events: events), completionHandler: { (result) in
                     
                     switch result {
                     case .success(_):
@@ -73,7 +72,7 @@ class EventsProvider {
                     case .failure(_):
                         break
                     }
-                }
+                })
                 break
             case .failure(_):
                 
@@ -95,8 +94,7 @@ class EventsProvider {
     
     class func getAllEvents(sortingFlag: SortingFlag, location: CLLocationCoordinate2D, completion: @escaping EventsCompletion) {
         
-        let provider = APIService.APIProvider()
-        provider.request(.getEvents(sortFlag: sortingFlag.APIPresentation, longitude: location.longitude, latitude: location.latitude)) { (result) in
+        APIService.performRequest(request: .getEvents(sortFlag: sortingFlag.APIPresentation, longitude: location.longitude, latitude: location.latitude)) { (result) in
             
             switch result {
             case .success(let response):
@@ -123,10 +121,9 @@ class EventsProvider {
     
     class func getMatchedEvents(sortingFlag: SortingFlag, location: CLLocationCoordinate2D, completion: @escaping EventsCompletion) {
         
-        let provider = APIService.APIProvider()
         let sortingFlag = sortingFlag == .nearest ? "distance" : "popular"
         
-        provider.request(.getMatchedEvents(userId: UserProvider.shared.currentUser!.objectId, sortFlag: sortingFlag, longitude: location.longitude, latitude: location.latitude)) { (result) in
+        APIService.performRequest(request: .getMatchedEvents(userId: UserProvider.shared.currentUser!.objectId, sortFlag: sortingFlag, longitude: location.longitude, latitude: location.latitude)) { (result) in
             
             switch result {
             case .success(let response):

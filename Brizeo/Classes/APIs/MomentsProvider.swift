@@ -64,8 +64,7 @@ class MomentsProvider {
     
     class func getMoments(for userId: String, sortingFlag: MomentsSortingFlag, filterFlag: String?, completion: @escaping MomentsCompletion) {
         
-        let provider = APIService.APIProvider()
-        provider.request(.getMoments(userId: userId, sortingFlag: sortingFlag, filterFlag: filterFlag ?? "all")) { (result) in
+        APIService.performRequest(request: .getMoments(userId: userId, sortingFlag: sortingFlag, filterFlag: filterFlag ?? "all")) { (result) in
             switch result {
             case .success(let response):
                 
@@ -92,8 +91,7 @@ class MomentsProvider {
         
         moment.updatedAt = Date()
         
-        let provider = APIService.APIProvider()
-        provider.request(.updateMoment(moment: moment)) { (result) in
+        APIService.performRequest(request: .updateMoment(moment: moment)) { (result) in
             switch result {
             case .success(let response):
                 
@@ -115,8 +113,7 @@ class MomentsProvider {
     
     class func getAllMoments(sortingFlag: MomentsSortingFlag, filterFlag: String?, completion: @escaping MomentsCompletion) {
         
-        let provider = APIService.APIProvider()
-        provider.request(.getAllMoments(sortingFlag: sortingFlag, filterFlag: filterFlag ?? "all")) { (result) in
+        APIService.performRequest(request: .getAllMoments(sortingFlag: sortingFlag, filterFlag: filterFlag ?? "all")) { (result) in
             switch result {
             case .success(let response):
                 
@@ -141,8 +138,7 @@ class MomentsProvider {
     
     class func getMoment(with momentId: String, completion: @escaping MomentCompletion) {
         
-        let provider = APIService.APIProvider()
-        provider.request(.getMoment(momentId: momentId)) { (result) in
+        APIService.performRequest(request: .getMoment(momentId: momentId)) { (result) in
             switch result {
             case .success(let response):
                 
@@ -167,8 +163,7 @@ class MomentsProvider {
     
     class func getMatchedMoments(userId: String, sortingFlag: MomentsSortingFlag, filterFlag: String?, completion: @escaping MomentsCompletion) {
         
-         let provider = APIService.APIProvider()
-        provider.request(.getMatchedMoments(userId: userId, sortingFlag: sortingFlag, filterFlag: filterFlag ?? "all")) { (result) in
+        APIService.performRequest(request: .getMatchedMoments(userId: userId, sortingFlag: sortingFlag, filterFlag: filterFlag ?? "all")) { (result) in
             switch result {
             case .success(let response):
                 
@@ -193,8 +188,7 @@ class MomentsProvider {
     
     class func create(new moment: Moment, completion: @escaping MomentCompletion) {
         
-        let provider = APIService.APIProvider()
-        provider.request(.createNewMoment(moment: moment)) { (result) in
+        APIService.performRequest(request: .createNewMoment(moment: moment)) { (result) in
             switch result {
             case .success(let response):
                 
@@ -227,8 +221,7 @@ class MomentsProvider {
             return
         }
         
-        let provider = APIService.APIProvider()
-        provider.request(.deleteMoment(moment: moment, userId: user.objectId)) { (result) in
+        APIService.performRequest(request: .deleteMoment(moment: moment, userId: user.objectId)) { (result) in
             switch result {
             case .success(let response):
                 
@@ -255,8 +248,7 @@ class MomentsProvider {
             return
         }
         
-        let provider = APIService.APIProvider()
-        provider.request(.getLikersForMoment(moment: moment, userId: user.objectId)) { (result) in
+        APIService.performRequest(request: .getLikersForMoment(moment: moment, userId: user.objectId)) { (result) in
             switch result {
             case .success(let response):
                 
@@ -288,8 +280,7 @@ class MomentsProvider {
             return
         }
         
-        let provider = APIService.APIProvider()
-        provider.request(.reportMoment(moment: moment, reporterId: user.objectId)) { (result) in
+        APIService.performRequest(request: .reportMoment(moment: moment, reporterId: user.objectId)) { (result) in
             switch result {
             case .success(let response):
                 guard response.statusCode == 200 else {
@@ -314,8 +305,7 @@ class MomentsProvider {
             return
         }
         
-        let provider = APIService.APIProvider()
-        provider.request(.likeMoment(moment: momentToLike, userId: user.objectId)) { (result) in
+        APIService.performRequest(request: .likeMoment(moment: momentToLike, userId: user.objectId)) { (result) in
             switch result {
             case .success(let response):
                 
@@ -351,8 +341,7 @@ class MomentsProvider {
             return
         }
         
-        let provider = APIService.APIProvider()
-        provider.request(.unlikeMoment(moment: momentToUnlike, userId: user.objectId)) { (result) in
+        APIService.performRequest(request: .unlikeMoment(moment: momentToUnlike, userId: user.objectId)) { (result) in
             switch result {
             case .success(let response):
                 
@@ -393,223 +382,3 @@ class MomentsProvider {
     }
 }
 
-//MARK: - Private Methods
-extension MomentsProvider {
-
-    fileprivate static func getAllMoments(paginator: PaginationHelper, userId: String, completion: @escaping MomentsCompletion) {
-        
-//        let params: [String : AnyObject] = [UserParameterKey.UserIdKey : userId as AnyObject,
-//                                            MomentsKey.SkipKey : paginator.totalElements as AnyObject,
-//                                            MomentsKey.SizeKey : paginator.elementsPerPage as AnyObject]
-//        
-//        PFCloud.callFunction(inBackground: ParseFunction.GetEverybodyMoments.name, withParameters: params) { (objects, error) in
-//            
-//            if let error = error {
-//                
-//                completion(.failure(error.localizedDescription))
-//                
-//            } else if let moments = objects as? [Moment] {
-//                
-//                for moment in moments {
-//                    
-//                    MomentsProvider.userDidLikeMoment(moment, userId: userId, completion: { (result) in
-//                        
-//                        switch result {
-//                            
-//                        case .success(let liked):
-//                            
-//                            moment.likedByCurrentUser = liked
-//                            break
-//                        case .failure(_):
-//                            break
-//                        }
-//                    })
-//                }
-//                
-//                let delayTime = DispatchTime.now() + Double(Int64(1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-//                DispatchQueue.main.asyncAfter(deadline: delayTime) {
-//                    completion(.success(moments))
-//                }
-//            }
-//        }
-    }
-    
-    fileprivate static func getAllMomentsWithQuery(paginator: PaginationHelper, userId: String, completion: @escaping MomentsCompletion) {
-        
-//        let query = Moment.query(paginator)
-//        query.findObjectsInBackground { (objects, error) in
-//            if let error = error {
-//                
-//                completion(.failure(error.localizedDescription))
-//                
-//            } else if let moments = objects as? [Moment] {
-//                
-//                for moment in moments {
-//                    
-//                    MomentsProvider.userDidLikeMoment(moment, userId: userId, completion: { (result) in
-//                        
-//                        switch result {
-//                            
-//                        case .success(let liked):
-//                            
-//                            moment.likedByCurrentUser = liked
-//                            break
-//                        case .failure(_):
-//                            break
-//                        }
-//                    })
-//                }
-//                
-//                let delayTime = DispatchTime.now() + Double(Int64(1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-//                DispatchQueue.main.asyncAfter(deadline: delayTime) {
-//                    completion(.success(moments))
-//                }
-//            }
-//        }
-    }
-    
-    fileprivate static func getMyMatchesMoments(paginator: PaginationHelper, userId: String, completion: @escaping MomentsCompletion) {
-        
-//        let params: [String : AnyObject] = [UserParameterKey.UserIdKey : userId as AnyObject,
-//                                            MomentsKey.SkipKey : paginator.totalElements as AnyObject,
-//                                            MomentsKey.SizeKey : paginator.elementsPerPage as AnyObject]
-//        
-//        PFCloud.callFunction(inBackground: ParseFunction.GetMatchesMoments.name, withParameters: params) { (objects, error) in
-//            
-//            if let error = error {
-//                
-//                completion(.failure(error.localizedDescription))
-//                
-//            } else if let moments = objects as? [Moment] {
-//                
-//                for moment in moments {
-//                    
-//                    MomentsProvider.userDidLikeMoment(moment, userId: userId, completion: { (result) in
-//                        
-//                        switch result {
-//                            
-//                        case .success(let liked):
-//                            
-//                            moment.likedByCurrentUser = liked
-//                            break
-//                        case .failure(_):
-//                            break
-//                        }
-//                    })
-//                }
-//                let delayTime = DispatchTime.now() + Double(Int64(1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-//                DispatchQueue.main.asyncAfter(deadline: delayTime) {
-//                    completion(.success(moments))
-//                }
-//            }
-//        }
-    }
-    
-    fileprivate static func getMyMatchesMomentsNewest(paginator: PaginationHelper, userId: String, completion: @escaping MomentsCompletion) {
-        
-//        let query = Moment.query(paginator)
-//        query.whereKey("user", matchesQuery: User.matchQuery(userId))
-//        query.findObjectsInBackground { (objects, error) in
-//            if let error = error {
-//                
-//                completion(.failure(error.localizedDescription))
-//                
-//            } else if let moments = objects as? [Moment] {
-//                
-//                for moment in moments {
-//                    
-//                    MomentsProvider.userDidLikeMoment(moment, userId: userId, completion: { (result) in
-//                        
-//                        switch result {
-//                            
-//                        case .success(let liked):
-//                            
-//                            moment.likedByCurrentUser = liked
-//                            break
-//                        case .failure(_):
-//                            break
-//                        }
-//                    })
-//                }
-//                
-//                let delayTime = DispatchTime.now() + Double(Int64(1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-//                DispatchQueue.main.asyncAfter(deadline: delayTime) {
-//                    completion(.success(moments))
-//                }
-//            }
-//        }
-    }
-    
-    fileprivate static func getMyMoments(paginator: PaginationHelper, userId: String, completion: @escaping MomentsCompletion) {
-        
-//        let query = Moment.queryMost(paginator)
-//        query.whereKey("user", matchesQuery: User.myQuery(userId))
-//        query.findObjectsInBackground { (objects, error) in
-//            if let error = error {
-//                
-//                completion(.failure(error.localizedDescription))
-//                
-//            } else if let moments = objects as? [Moment] {
-//                
-//                for moment in moments {
-//                    
-//                    MomentsProvider.userDidLikeMoment(moment, userId: userId, completion: { (result) in
-//                        
-//                        switch result {
-//                            
-//                        case .success(let liked):
-//                            
-//                            moment.likedByCurrentUser = liked
-//                            break
-//                        case .failure(_):
-//                            break
-//                        }
-//                    })
-//                }
-//                
-//                let delayTime = DispatchTime.now() + Double(Int64(1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-//                DispatchQueue.main.asyncAfter(deadline: delayTime) {
-//                    completion(.success(moments))
-//                }
-//            }
-//        }
-
-    }
-    
-  
-    
-    fileprivate static func getMyMomentsNewest(paginator: PaginationHelper, userId: String, completion: @escaping MomentsCompletion) {
-        
-//        let query = Moment.query(paginator)
-//        query.whereKey("user", matchesQuery: User.myQuery(userId))
-//        query.findObjectsInBackground { (objects, error) in
-//            if let error = error {
-//                
-//                completion(.failure(error.localizedDescription))
-//                
-//            } else if let moments = objects as? [Moment] {
-//                
-//                for moment in moments {
-//                    
-//                    MomentsProvider.userDidLikeMoment(moment, userId: userId, completion: { (result) in
-//                        
-//                        switch result {
-//                            
-//                        case .success(let liked):
-//                            
-//                            moment.likedByCurrentUser = liked
-//                            break
-//                        case .failure(_):
-//                            break
-//                        }
-//                    })
-//                }
-//                
-//                let delayTime = DispatchTime.now() + Double(Int64(1 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
-//                DispatchQueue.main.asyncAfter(deadline: delayTime) {
-//                    completion(.success(moments))
-//                }
-//            }
-//        }
-    }
-}

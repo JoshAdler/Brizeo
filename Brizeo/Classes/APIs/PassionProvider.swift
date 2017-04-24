@@ -26,7 +26,7 @@ struct PassionsProvider {
     }
     
     // MARK: - Public methods
-    //TODO: add reachability and load passions when the internet connection appears
+    
     func retrieveAllPassions(_ fromCache: Bool, _ completion: ((Result<[Passion]>) -> Void)?) {
         
         let isCacheUsed = fromCache && passions != nil
@@ -73,8 +73,7 @@ struct PassionsProvider {
     
     func getAllPassions(completion: ((Result<[Passion]>) -> Void)?) {
         
-        let provider = APIService.APIProvider()
-        provider.request(.getAllPassions) { (result) in
+        APIService.performRequest(request: .getAllPassions) { (result) in
             switch result {
             case .success(let response):
                 guard response.statusCode == 200 else {

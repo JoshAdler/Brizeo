@@ -147,8 +147,7 @@ class UserProvider: NSObject {
     
     class func updateUser(user: User, completion: ((Result<User>) -> Void)?) {
         
-        let provider = APIService.APIProvider()
-        provider.request(.updateUser(user: user)) { (result) in
+        APIService.performRequest(request: .updateUser(user: user)) { (result) in
             switch result {
             case .success(let response):
                 
@@ -267,8 +266,7 @@ class UserProvider: NSObject {
             return
         }
         
-        let provider = APIService.APIProvider()
-        provider.request(.updateUserFile(file: file, userId: currentUser.objectId, type: type.rawValue, oldURL: oldURL)) { (result) in
+        APIService.performRequest(request: .updateUserFile(file: file, userId: currentUser.objectId, type: type.rawValue, oldURL: oldURL)) { (result) in
             switch result {
             case .success(let response):
                 
@@ -358,8 +356,7 @@ class UserProvider: NSObject {
             return
         }
         
-        let provider = APIService.APIProvider()
-        provider.request(.getUserWithStatus(currentUserId: currentUser.objectId, searchedUserId: searchedUserId)) { (result) in
+        APIService.performRequest(request: .getUserWithStatus(currentUserId: currentUser.objectId, searchedUserId: searchedUserId)) { (result) in
             switch result {
             case .success(let response):
 
@@ -391,8 +388,7 @@ class UserProvider: NSObject {
             return
         }
         
-        let provider = APIService.APIProvider()
-        provider.request(.reportUser(reporterId: currentUser.objectId, reportedId: user.objectId)) { (result) in
+        APIService.performRequest(request: .reportUser(reporterId: currentUser.objectId, reportedId: user.objectId)) { (result) in
             switch result {
             case .success(let response):
                 
@@ -472,8 +468,7 @@ class UserProvider: NSObject {
             return
         }
         
-        let provider = APIService.APIProvider()
-        provider.request(.getFacebookFriends(facebookIds: ids)) { (result) in
+        APIService.performRequest(request: .getFacebookFriends(facebookIds: ids)) { (result) in
             switch(result) {
             case .success(let response):
                 do {
@@ -508,8 +503,7 @@ class UserProvider: NSObject {
             return
         }
         
-        let provider = APIService.APIProvider()
-        provider.request(.getFacebookFriends(facebookIds: ids)) { (result) in
+        APIService.performRequest(request: .getFacebookFriends(facebookIds: ids)) { (result) in
             switch(result) {
             case .success(let response):
                 do {
@@ -530,8 +524,7 @@ class UserProvider: NSObject {
     
     fileprivate class func loadMutualFacebookFriends(facebookId: String, token: String, completion: @escaping (Result<([User])>) -> Void) {
         
-        let provider = APIService.APIProvider()
-        provider.request(.mutualFriends(facebookId: facebookId, token: token)) { (result) in
+        APIService.performRequest(request: .mutualFriends(facebookId: facebookId, token: token)) { (result) in
             switch (result) {
             case .success(let response):
                 
@@ -763,7 +756,7 @@ class UserProvider: NSObject {
                 
                 do {
                     // parse auth token
-                    //shared.authToken = try response.mapString(atKeyPath: JSONKeys.jwt)
+                    shared.authToken = try response.mapString(atKeyPath: JSONKeys.jwt)
                     
                     let newUser = try response.mapObject(User.self)
                     

@@ -8,6 +8,10 @@
 
 import Foundation
 import Moya
+import Result
+import SVProgressHUD
+
+let shouldLogoutNotification = "shouldLogoutNotification"
 
 enum APIService {
     
@@ -301,5 +305,34 @@ extension APIService: TargetType {
         }
         let provider = MoyaProvider<APIService>(endpointClosure: endpointClosure)
         return provider
+    }
+}
+
+extension APIService {
+
+    static func performRequest(request: APIService, completionHandler: @escaping Completion) {
+        
+        let provider = APIService.APIProvider()
+        provider.request(request) { (result) in
+            switch (result) {
+            case .success(let response):
+                
+                guard response.statusCode != 403 else {
+                    
+                    // logout
+                    SVProgressHUD.dismiss()
+                    UserProvider.logout()
+                    Helper.goToInitialController(true)
+                    
+                    return
+                }
+                
+                completionHandler(result)
+                
+                break
+            default:
+                completionHandler(result)
+            }
+        }
     }
 }
