@@ -319,6 +319,8 @@ extension APIService {
                 
                 guard response.statusCode != 403 else {
                     
+                    print("FAIL REQUEST: \(request)")
+                    
                     // logout
                     SVProgressHUD.dismiss()
                     UserProvider.logout()

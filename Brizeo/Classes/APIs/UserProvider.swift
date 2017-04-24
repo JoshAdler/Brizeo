@@ -73,6 +73,7 @@ class UserProvider: NSObject {
     }
     
     class func logout() {
+        print("LOGOUT USER")
         let loginManager = FBSDKLoginManager()
         loginManager.logOut()
         

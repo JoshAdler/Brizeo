@@ -61,9 +61,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         LocationManager.setup()
         BranchProvider.setupBranch(with: launchOptions)
         
-        // fetch initial data to cache 
-        PassionsProvider.shared.retrieveAllPassions(false, nil)
-        
         return true
     }
     
@@ -389,6 +386,11 @@ extension AppDelegate {
         // Set the blocks
         self.reach!.reachableBlock = {
             (reach: Reachability?) -> Void in
+            
+            if UserProvider.shared.authToken == nil {
+                print("Don't load anything because we don't have a auth token")
+                return
+            }
             
             PassionsProvider.shared.getAllPassions(completion: nil)
             

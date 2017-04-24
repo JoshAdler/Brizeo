@@ -103,6 +103,9 @@ class LoginViewController: UIViewController {
         
         // track statistics
         LocalyticsProvider.trackCurrentUser()
+        
+        // fetch initial data to cache
+        PassionsProvider.shared.retrieveAllPassions(false, nil)
     }
     
     fileprivate func signUpWithFacebook() {
