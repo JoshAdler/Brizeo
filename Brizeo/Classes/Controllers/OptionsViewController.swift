@@ -293,6 +293,8 @@ extension OptionsViewController: UITextFieldDelegate {
                 }
                 
                 tableView.reloadData()
+                
+                onBackButtonClicked(sender: nil)
             }
         }
         
