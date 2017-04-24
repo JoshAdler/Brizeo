@@ -172,7 +172,7 @@
         [user setAppModuleName:[ALUserDefaultsHandler getAppModuleName]];
     }
     [user setUserTypeId:[ALUserDefaultsHandler getUserTypeId]];
-    
+    [user setUnreadCountType:[ALUserDefaultsHandler getUnreadCountType]];
     
     NSError * error;
     NSData * postdata = [NSJSONSerialization dataWithJSONObject:user.dictionary options:0 error:&error];
