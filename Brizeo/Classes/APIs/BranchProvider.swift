@@ -56,7 +56,7 @@ class BranchProvider: NSObject {
     class func inviteByParams(otherParams: [MetadataKeys: String]?) -> [MetadataKeys: String] {
         var params = [
             MetadataKeys.invitedByUserId: UserProvider.shared.currentUser!.objectId,
-            MetadataKeys.invitedByUserName: UserProvider.shared.currentUser!.displayName
+            MetadataKeys.invitedByUserName: UserProvider.shared.currentUser!.shortName
         ]
         
         if let otherParams = otherParams {

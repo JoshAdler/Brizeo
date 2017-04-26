@@ -36,7 +36,7 @@ enum LocalizableString: String {
     case FacebookEventURLFails = "Sorry, but it looks like you don't have Facebook app installed."  
     case BranchUnavailable = "Sorry, but you can't share the app now. Please try later."
     case SMSShare = "SMS Message"
-    case MessangerShare = "Messanger"
+    case MessangerShare = "Messenger"
     case WhatsappShare = "WhatsApp"
     case EmailShare = "E-Mail"
     case TwitterShare = "Twitter"
