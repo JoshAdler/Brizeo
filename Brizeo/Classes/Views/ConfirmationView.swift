@@ -35,6 +35,7 @@ class ConfirmationView: UIView {
     }
     @IBOutlet weak var centerView: UIView!
     @IBOutlet weak var backgroundView: UIView!
+    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     @IBOutlet weak var textLabel: UILabel! {
         didSet {
             textLabel.text = LocalizableString.ConfirmationText.localizedString
