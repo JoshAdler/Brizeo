@@ -101,10 +101,13 @@ class CountriesTransform: TransformType {
         var countries = [Country]()
         
         if let array = value as? [String] {
+            
             for code in array {
                 countries.append(Country.initWith(code))
             }
         }
+        
+        countries.sort(by: { return $0.name < $1.name })
         
         return countries
     }

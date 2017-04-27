@@ -31,6 +31,9 @@ class CountriesProvider: NSObject {
                         for code in countriesArray {
                             countries.append(Country.initWith(code))
                         }
+                        
+                        countries.sort(by: { return $0.name < $1.name })
+                        
                         UserProvider.shared.currentUser?.countries = countries
                         completion(.success(UserProvider.shared.currentUser!))
                     } else {
@@ -65,6 +68,9 @@ class CountriesProvider: NSObject {
                         for code in countriesArray {
                             countries.append(Country.initWith(code))
                         }
+                        
+                        countries.sort(by: { return $0.name < $1.name })
+                        
                         UserProvider.shared.currentUser?.countries = countries
                         completion(.success(UserProvider.shared.currentUser!))
                     } else {

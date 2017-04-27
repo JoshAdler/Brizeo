@@ -80,6 +80,8 @@ class TripsViewController: UIViewController {
             countries.append(Country.initWith(code))
         }
         
+        countries.sort(by: { return $0.name < $1.name })
+        
         return countries
     }
     
