@@ -96,6 +96,8 @@ class MomentsViewController: UIViewController {
         fetchPassions()
         initFilterButton()
         hideFilterViewIfNeeds()
+        
+        LocationManager.shared.checkAccessStatus()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -120,12 +122,6 @@ class MomentsViewController: UIViewController {
         
         tabBarController?.tabBar.isHidden = false
         navigationController?.setNavigationBarHidden(false, animated: animated)
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        LocationManager.shared.checkAccessStatus()
     }
     
     deinit {
