@@ -10,6 +10,11 @@ import UIKit
 
 class Configurations: NSObject {
 
+    // MARK: - Quality
+    struct Quality {
+        static let videoQuality = UIImagePickerControllerQualityType.typeMedium
+    }
+    
     // MARK: - MixPanel
     struct MixPanel {
         static let token = "1a26483d830e36c23ff927ef6d1394b4"

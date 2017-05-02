@@ -149,7 +149,7 @@ class ProfileViewController: UIViewController {
         // action for video from library
         let libraryVideoMedia = UIAlertAction(title: LocalizableString.VideoLibrary.localizedString, style: UIAlertActionStyle.default, handler: {
             (alert: UIAlertAction!) -> Void in
-            imagePicker.videoQuality = UIImagePickerControllerQualityType.typeHigh
+            imagePicker.videoQuality = Configurations.Quality.videoQuality
             imagePicker.videoMaximumDuration = 14
             imagePicker.sourceType = .photoLibrary
             imagePicker.mediaTypes = [kUTTypeMovie as String]
@@ -178,7 +178,7 @@ class ProfileViewController: UIViewController {
             imagePicker.sourceType = .camera
             imagePicker.mediaTypes = [kUTTypeMovie as String]
             imagePicker.cameraCaptureMode = .video
-            imagePicker.videoQuality = UIImagePickerControllerQualityType.typeHigh
+            imagePicker.videoQuality = Configurations.Quality.videoQuality
             imagePicker.showsCameraControls = true
             imagePicker.modalPresentationStyle = .popover
             
@@ -364,7 +364,7 @@ extension ProfileViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 extension ProfileViewController: UICollectionViewDelegate {
-    //TODO: check whether it is clicking okay with many uploaded files/idnexes/crashes
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row < user.uploadFiles.count { // show media
             let mediaController: MediaViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.mediaController)!
@@ -404,14 +404,18 @@ extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationCo
         
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             let fixedImage = pickedImage.fixedOrientation()
-            let fileInfo = FileObjectInfo(image: fixedImage)
+            let compressedImage = Helper.compress(image: fixedImage)
+            let fileInfo = FileObjectInfo(image: compressedImage)
             
             file = FileObject(info: fileInfo)
         }
         
         if let videoURL = info[UIImagePickerControllerMediaURL] as? URL {
-            let thumbnailFileInfo = FileObjectInfo(image: Helper.generateThumbnail(from: videoURL)!)
+            let thumbnailImage = Helper.generateThumbnail(from: videoURL)!
+            let compresedImage = Helper.compress(image: thumbnailImage)
+            let thumbnailFileInfo = FileObjectInfo(image: compresedImage)
             let fileInfo = FileObjectInfo(url: videoURL)
+            
             file = FileObject(thumbnailImage: thumbnailFileInfo, videoInfo: fileInfo)
         }
         
@@ -461,14 +465,15 @@ extension ProfileViewController: FirstEntranceUserViewDelegate {
 extension ProfileViewController: GBHFacebookImagePickerDelegate {
     
     func facebookImagePicker(imagePicker: UIViewController, imageModel: GBHFacebookImage) {
-        print("Image URL : \(imageModel.fullSizeUrl), Image Id: \(imageModel.imageId)")
         
         DispatchQueue.main.async {
             
             if let pickedImage = imageModel.image {
                 
+                let compressedImage = Helper.compress(image: pickedImage)
+                
                 // create file
-                let file: FileObject = FileObject(info: FileObjectInfo(image: pickedImage))
+                let file: FileObject = FileObject(info: FileObjectInfo(image: compressedImage))
                 
                 // get old url/new file
                 var oldUrl: String? = nil
@@ -534,8 +539,10 @@ extension ProfileViewController: OLInstagramImagePickerControllerDelegate {
                 
                 if image != nil {
                     
+                    let compressedImage = Helper.compress(image: image!)
+                    
                     // create file
-                    let file: FileObject = FileObject(info: FileObjectInfo(image: image!))
+                    let file: FileObject = FileObject(info: FileObjectInfo(image: compressedImage))
                     
                     // get old url/new file
                     var oldUrl: String? = nil

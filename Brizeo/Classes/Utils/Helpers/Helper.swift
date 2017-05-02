@@ -299,6 +299,55 @@ class Helper: NSObject {
         matchingController.user = user
         controller.pushViewController(matchingController, animated: true)
     }
+    
+    // MARK: - Picture
+    
+    class func compress(image: UIImage) -> UIImage {
+        
+        let maxWidth: CGFloat = 414.0 /* iPhone * Plus */
+        let maxHeight: CGFloat = 736.0 /* iPhone * Plus */
+        var desireWidth: CGFloat = 0.0
+        var desireHeight: CGFloat = 0.0
+        
+        if image.size.width > image.size.height {
+            
+            desireWidth = maxWidth * 3.0 /* 3x because screen rendering */
+            desireHeight = (image.size.height * desireWidth) / image.size.width
+        } else if image.size.width < image.size.height {
+            
+            desireHeight = maxHeight * 3.0 /* 3x because screen rendering */
+            desireWidth = (image.size.width * desireHeight) / image.size.height
+        } else { // square
+            
+            desireWidth = maxWidth * 3.0 /* 3x because screen rendering */
+            desireHeight = desireWidth
+        }
+        
+        guard image.size.width > desireWidth && image.size.height > desireHeight else {
+            print("Info: Image doesn't require compression")
+            return image
+        }
+        
+        guard let resizedImage = resizeImage(image: image, to: CGSize(width: desireWidth, height: desireHeight)) else {
+            
+            print("Error: Can't compress image for some reason.")
+            
+            return image
+        }
+        
+        print("Info: Compressed image from \(image.size) to \(resizedImage.size)")
+        
+        return resizedImage
+    }
+    
+    class func resizeImage(image: UIImage, to size: CGSize) -> UIImage? {
+        
+        UIGraphicsBeginImageContextWithOptions(size, false, image.scale)
+        defer { UIGraphicsEndImageContext() }
+        image.draw(in: CGRect(origin: .zero, size: size))
+        
+        return UIGraphicsGetImageFromCurrentImageContext()
+    }
 }
 
 

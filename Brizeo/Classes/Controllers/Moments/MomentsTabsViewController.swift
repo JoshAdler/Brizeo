@@ -151,7 +151,7 @@ class MomentsTabsViewController: BasicViewController {
         alertView.addAction(UIAlertAction(title: LocalizableString.PhotoLibrary.localizedString, style: UIAlertActionStyle.default, handler: {
             (alert: UIAlertAction!) -> Void in
             
-            imagePicker.videoQuality = UIImagePickerControllerQualityType.typeHigh
+            imagePicker.videoQuality = Configurations.Quality.videoQuality
             imagePicker.sourceType = .photoLibrary
             imagePicker.mediaTypes = [kUTTypeImage as String]
             imagePicker.modalPresentationStyle = .popover
@@ -162,7 +162,7 @@ class MomentsTabsViewController: BasicViewController {
         alertView.addAction(UIAlertAction(title: LocalizableString.VideoLibrary.localizedString, style: UIAlertActionStyle.default, handler: {
             (alert: UIAlertAction!) -> Void in
             
-            imagePicker.videoQuality = UIImagePickerControllerQualityType.typeHigh
+            imagePicker.videoQuality = Configurations.Quality.videoQuality
             imagePicker.videoMaximumDuration = 14
             imagePicker.allowsEditing = true
             imagePicker.sourceType = .photoLibrary
@@ -230,13 +230,20 @@ class MomentsTabsViewController: BasicViewController {
         FirstEntranceProvider.shared.goingToCreateMoment = true
         
         let createMomentController: CreateMomentViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.createMomentControllerId)!
-        createMomentController.image = image
+        
+        if image != nil {
+            let compressedImage = Helper.compress(image: image!)
+            createMomentController.image = compressedImage
+        }
+        
         createMomentController.videoURL = videoURL
         
         if let videoURL = videoURL {
             // generate thumbnail from video url
-            let thumbnailImage = Helper.generateThumbnail(from: videoURL)
-            createMomentController.thumbnailImage = thumbnailImage
+            if let thumbnailImage = Helper.generateThumbnail(from: videoURL) {
+                let compressedThumbnailImage = Helper.compress(image: thumbnailImage)
+                createMomentController.thumbnailImage = compressedThumbnailImage
+            }
         }
         
         navigationController?.pushViewController(createMomentController, animated: true)
