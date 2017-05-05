@@ -36,6 +36,14 @@
 				<string>brizeo</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>amp0b17f3d9a8b43eb9365c298-916e3088-9c82-11e6-ac90-0098ae15fcaa</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>5</string>

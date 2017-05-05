@@ -83,8 +83,8 @@ class UserProvider: NSObject {
         if shared.currentUser != nil {
             
             shared.currentUser?.deviceToken = ""
-            shared.authToken = nil
             UserProvider.updateUser(user: shared.currentUser!, completion: nil)
+            shared.authToken = nil
         }
         
         shared.currentUser = nil
@@ -176,9 +176,12 @@ class UserProvider: NSObject {
     class func logInUser(with location: CLLocation?, from controller: UIViewController, completion: @escaping ((Result<User>) -> Void)) {
         
         let loginManager = FBSDKLoginManager()
-        loginManager.loginBehavior = .web
+        loginManager.loginBehavior = .systemAccount
+//        loginManager.loginBehavior = .web
         loginManager.logIn(withReadPermissions: FacebookConstants.permissions, from: controller) { (result, error) in
         
+            controller.showBlackLoader()
+            
             guard error == nil else {
                 CLSNSLogv("ERROR: Error logging into Facebook: %@", getVaList([error! as CVarArg]))
                 completion(.failure(APIError(error: error!)))

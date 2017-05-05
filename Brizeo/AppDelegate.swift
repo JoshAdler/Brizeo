@@ -145,7 +145,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
         UNUserNotificationCenter.current().requestAuthorization(
             options: authOptions,
-            completionHandler: {_, _ in })
+            completionHandler: { granted, error in
+                Localytics.didRequestUserNotificationAuthorization(withOptions: authOptions.rawValue, granted: granted)
+        })
         
         FIRMessaging.messaging().remoteMessageDelegate = self
 
@@ -159,7 +161,7 @@ extension AppDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
 
         print("userNotificationCenter, willPresent")
-        
+    
         let userInfo = notification.request.content.userInfo
         if let messageID = userInfo[gcmMessageIDKey] {
             print("Message ID: \(messageID)")
@@ -183,6 +185,10 @@ extension AppDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
     
         print("userNotificationCenter, didReceive")
+        
+        // localytics notification
+        Localytics.didReceiveNotificationResponse(userInfo: response.notification.request.content.userInfo)
+        
         let userInfo = response.notification.request.content.userInfo
         if let messageID = userInfo[gcmMessageIDKey] {
             print("Message ID: \(messageID)")

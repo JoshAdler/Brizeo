@@ -109,6 +109,9 @@ class LoginViewController: UIViewController {
     }
     
     fileprivate func signUpWithFacebook() {
+        
+        hideLoader()
+        
         UserProvider.logInUser(with: LocationManager.shared.currentLocationCoordinates, from: self) { [unowned self] (result) in
             switch (result) {
             case .success(_):

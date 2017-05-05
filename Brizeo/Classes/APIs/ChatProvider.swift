@@ -54,6 +54,7 @@ class ChatProvider: NSObject {
                 print("Successfully logged out from Applozic")
             } else {
                 print("Failurlly logged out from Applozic")
+                print("Error: \(error!.localizedDescription)")
             }
         }
     }
