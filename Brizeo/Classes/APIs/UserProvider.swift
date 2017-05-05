@@ -176,8 +176,6 @@ class UserProvider: NSObject {
     class func logInUser(with location: CLLocation?, from controller: UIViewController, completion: @escaping ((Result<User>) -> Void)) {
         
         let loginManager = FBSDKLoginManager()
-        loginManager.loginBehavior = .systemAccount
-//        loginManager.loginBehavior = .web
         loginManager.logIn(withReadPermissions: FacebookConstants.permissions, from: controller) { (result, error) in
         
             controller.showBlackLoader()
