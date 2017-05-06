@@ -42,8 +42,8 @@ class Configurations: NSObject {
     
     // MARK: - General
     struct General {
-        static let shortApiURL = "http://34.208.151.167:3000"
-        static let longApiURL = "http://34.208.151.167:3000/brizeo"
+        static let productionServerURL = "http://34.208.151.167:3000"
+        static let developmentServerURL = "34.208.151.167:4000"
         static let termsOfUseURL = "http://brizeo.com/terms/"
         static let photosCountToLoadAtStart = 5
     }
@@ -81,4 +81,17 @@ class Configurations: NSObject {
         static let previewURL = "https://firebasestorage.googleapis.com/v0/b/brizeo-7571c.appspot.com/o/InviteImages%2FBroaden%20your%20Inner%20CircleThrough%20Moments.png?alt=media&token=6b6317ff-f01c-4a58-b2b8-b46bd7be3c32"//"https://firebasestorage.googleapis.com/v0/b/brizeo-7571c.appspot.com/o/InviteImages%2Finvite_brizeo.png?alt=media&token=8962285f-48d2-4965-a3f7-735ee83b90ec"
     }
     
+    // MARK: - Class methods
+    
+    class func shortApiURL() -> String {
+        return baseServerURL()
+    }
+    
+    class func longApiURL() -> String {
+        return baseServerURL() + "/brizeo"
+    }
+    
+    class func baseServerURL() -> String {
+        return General.productionServerURL // General.developmentServerURL
+    }
 }

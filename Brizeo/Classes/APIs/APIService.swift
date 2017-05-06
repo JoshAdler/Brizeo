@@ -72,9 +72,9 @@ extension APIService: TargetType {
     var baseURL: URL {
         switch self {
         case .getCurrentUser(_), .createNewUser(_):
-            return URL(string: Configurations.General.shortApiURL)!
+            return URL(string: Configurations.shortApiURL())!
         default:
-            return URL(string: Configurations.General.longApiURL)!
+            return URL(string: Configurations.longApiURL())!
         }
     }
     
