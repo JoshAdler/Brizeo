@@ -31,7 +31,7 @@ enum APIService {
     
     // moment
     case getMoments(userId: String, sortingFlag: MomentsSortingFlag, filterFlag: String)
-    case getAllMoments(sortingFlag: MomentsSortingFlag, filterFlag: String)
+    case getAllMoments(sortingFlag: MomentsSortingFlag, filterFlag: String, pageIndex: Int)
     case getMatchedMoments(userId: String, sortingFlag: MomentsSortingFlag, filterFlag: String)
     case createNewMoment(moment: Moment)
     case getLikersForMoment(moment: Moment, userId: String)
@@ -98,8 +98,8 @@ extension APIService: TargetType {
             return "/countries/\(userId)"
         case .getMoments(let userId, let sortingFlag, let filterFlag):
             return "/moments/\(userId)/\(sortingFlag.rawValue)/\(filterFlag)"
-        case .getAllMoments(let sortingFlag, let filterFlag):
-            return "/moments/\(sortingFlag.rawValue)/\(filterFlag)"
+        case .getAllMoments(let sortingFlag, let filterFlag, let pageIndex):
+            return "/allmoments/\(sortingFlag.rawValue)/\(filterFlag)/\(pageIndex)"
         case .likeMoment(let moment, let userId), .unlikeMoment(let moment, let userId):
             return "/likemoments/\(userId)/\(moment.objectId)"
         case .getMatchedMoments(let userId, let sortingFlag, let filterFlag):

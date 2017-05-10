@@ -43,7 +43,7 @@ class Configurations: NSObject {
     // MARK: - General
     struct General {
         static let productionServerURL = "http://34.208.151.167:3000"
-        static let developmentServerURL = "34.208.151.167:4000"
+        static let developmentServerURL = "http://34.208.151.167:4000"
         static let termsOfUseURL = "http://brizeo.com/terms/"
         static let photosCountToLoadAtStart = 5
     }
@@ -92,6 +92,6 @@ class Configurations: NSObject {
     }
     
     class func baseServerURL() -> String {
-        return General.productionServerURL // General.developmentServerURL
+        return General.developmentServerURL//General.productionServerURL //
     }
 }

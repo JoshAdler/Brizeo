@@ -111,9 +111,9 @@ class MomentsProvider {
         }
     }
     
-    class func getAllMoments(sortingFlag: MomentsSortingFlag, filterFlag: String?, completion: @escaping MomentsCompletion) {
+    class func getAllMoments(sortingFlag: MomentsSortingFlag, filterFlag: String?,currentPageIndex: Int, completion: @escaping MomentsCompletion) {
         
-        APIService.performRequest(request: .getAllMoments(sortingFlag: sortingFlag, filterFlag: filterFlag ?? "all")) { (result) in
+        APIService.performRequest(request: .getAllMoments(sortingFlag: sortingFlag, filterFlag: filterFlag ?? "all", pageIndex: currentPageIndex)) { (result) in
             switch result {
             case .success(let response):
                 
@@ -373,7 +373,7 @@ class MomentsProvider {
         
         switch type {
         case .allMoments:
-            getAllMoments(sortingFlag: sortingFlag, filterFlag: filterPassion?.objectId, completion: completion)
+            getAllMoments(sortingFlag: sortingFlag, filterFlag: filterPassion?.objectId, currentPageIndex: paginator.currentPage, completion: completion)
         case .myMatches(let userId):
             getMatchedMoments(userId: userId, sortingFlag: sortingFlag, filterFlag: filterPassion?.objectId, completion: completion)
         case .myMoments(let userId):

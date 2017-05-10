@@ -70,7 +70,8 @@ class MomentsViewController: UIViewController {
     
     weak var parentDelegate: MomentsTabsViewControllerDelegate?
     
-    fileprivate var paginator = PaginationHelper(pagesSize: 20)
+    fileprivate var refreshControl: UIRefreshControl?
+    fileprivate var paginator = PaginationHelper(pagesSize: 30)
     fileprivate var moments: [Moment]?
     fileprivate var sortedMoments: [Moment]?
     fileprivate var passions: [Passion]?
@@ -83,11 +84,7 @@ class MomentsViewController: UIViewController {
         super.viewDidLoad()
         
         setupTableView()
-        
-//        momentsTableView.addInfiniteScroll { [unowned self] (tableView) in
-//            self.paginator.increaseCurrentPage()
-//            self.loadMoments(with: false)
-//        }
+        addInfinityScroll()
 
         NotificationCenter.default.addObserver(self, selector: #selector(MomentsViewController.updateTableView), name: NSNotification.Name(rawValue: updateMomentNotification), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(MomentsViewController.updateTableView), name: NSNotification.Name(rawValue: LocalizableString.SomebodyLikeYourMoment.localizedString), object: nil)
@@ -130,16 +127,6 @@ class MomentsViewController: UIViewController {
     
     // MARK: - Actions
     
-//    func onFilterButtonClicked(_ index: Int) {
-//        if index == 0 { // no filtering
-//            selectedPassion = nil
-//        } else {
-//            selectedPassion = passions?[index - 1]
-//        }
-//        
-//        resetMoments()
-//    }
-    
     @IBAction func onFilterButtonClicked(_ sender: UIButton) {
 
         guard passions != nil && passions!.count > 0 else {
@@ -153,6 +140,7 @@ class MomentsViewController: UIViewController {
         alertController.addAction(UIAlertAction(title: Constants.defaultFilterTitle, style: .default, handler: { (action) in
             
             self.selectedPassion = nil
+            self.addInfinityScroll()
             sender.setTitle(action.title, for: .normal)
             
             self.resetMoments()
@@ -161,6 +149,7 @@ class MomentsViewController: UIViewController {
         for passion in passions! {
             alertController.addAction(UIAlertAction(title: passion.displayName, style: .default, handler: { (action) in
                 
+                self.momentsTableView.removeInfiniteScroll()
                 self.selectedPassion = self.passions!.filter({ $0.displayName == action.title }).first
                 sender.setTitle(action.title, for: .normal)
                 
@@ -216,8 +205,8 @@ class MomentsViewController: UIViewController {
     }
     
     func refreshTableView(_ sender: UIRefreshControl) {
-        sender.endRefreshing()
-        resetMoments()
+        paginator.resetPages()
+        loadMoments(with: false, removeOldMoments: true)
     }
     
     func hideHelpView(isHidden: Bool) {
@@ -244,6 +233,14 @@ class MomentsViewController: UIViewController {
     }
     
     // MARK: - Private methods
+    
+    fileprivate func addInfinityScroll() {
+        
+        momentsTableView.addInfiniteScroll { [unowned self] (tableView) in
+            self.paginator.increaseCurrentPage()
+            self.loadMoments(with: false, removeOldMoments: false)
+        }
+    }
     
     fileprivate func showUserProfile(with userId: String?, orMoment moment: Moment?) {
         let userIdentifier = userId ?? moment?.ownerId ?? "-1"
@@ -358,13 +355,13 @@ class MomentsViewController: UIViewController {
     fileprivate func setupTableView() {
         momentsTableView.prefetchDataSource = self
         
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(MomentsViewController.refreshTableView), for: .valueChanged)
+        refreshControl = UIRefreshControl()
+        refreshControl!.addTarget(self, action: #selector(MomentsViewController.refreshTableView), for: .valueChanged)
         
         momentsTableView.rowHeight = UITableViewAutomaticDimension
         momentsTableView.estimatedRowHeight = 400
         momentsTableView.tableFooterView = UIView()
-        momentsTableView.addSubview(refreshControl)
+        momentsTableView.addSubview(refreshControl!)
     }
     
     fileprivate func resetMoments() {
@@ -381,6 +378,8 @@ class MomentsViewController: UIViewController {
             
             switch result {
             case .success(let newMoments):
+                
+                self.refreshControl?.endRefreshing()
                 SVProgressHUD.dismiss()
                 
                 if removeOldMoments {

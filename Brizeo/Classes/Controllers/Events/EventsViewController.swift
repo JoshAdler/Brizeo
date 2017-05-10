@@ -39,8 +39,10 @@ struct LocalizedString: ExpressibleByStringLiteral, Equatable {
 }
 
 enum SortingFlag: LocalizedString {
+    
     case popularity = "Popularity"
     case nearest = "Nearest"
+    case earliest = "Date"
     
     var localizedString: String {
         return self.rawValue.value
@@ -53,6 +55,8 @@ enum SortingFlag: LocalizedString {
             return "nearest"
         case .popularity:
             return "popular"
+        case .earliest:
+            return "earliest"
         }
     }
     
@@ -63,6 +67,7 @@ enum SortingFlag: LocalizedString {
     static func allOptions() -> [SortingFlag] {
         
         return [
+            .earliest,
             .nearest,
             .popularity
         ]
@@ -208,6 +213,8 @@ class EventsViewController: UIViewController {
         }
         
         let selectedLocation = self.selectedLocation ?? CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
+        
+        print("Location: \(selectedLocation.longitude), \(selectedLocation.latitude)")
         
         EventsProvider.getEvents(contentType: type, sortingFlag: selectedflag, location: selectedLocation, completion: { (result) in
             switch (result) {
