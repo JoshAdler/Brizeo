@@ -129,7 +129,7 @@ class EventsViewController: UIViewController {
     
     var gpaViewController: GooglePlacesAutocomplete?
     var events: [Event]?
-    var selectedflag = SortingFlag.nearest
+    var selectedflag = SortingFlag.earliest//SortingFlag.nearest
     var selectedLocation: CLLocationCoordinate2D?
     var topRefresher: UIRefreshControl!
     var type = EventsContentType.all
@@ -156,43 +156,43 @@ class EventsViewController: UIViewController {
             
             locationImageView.isHidden = true
             locationTextField.isHidden = true
+        }
+        //            if self.events == nil || self.events?.count == 0 || self.shouldReload {
+        //                self.loadEvents(true)
+        //            }
+        //        } else {
+        
+        if selectedLocation == nil {
             
-            if self.events == nil || self.events?.count == 0 || self.shouldReload {
-                self.loadEvents(true)
-            }
-        } else {
-            
-            if selectedLocation == nil {
+            // set current location
+            let currentLocation = LocationManager.shared.requestCurrentLocation({ (locationStr, locationCoordinates) in
                 
-                // set current location
-                let currentLocation = LocationManager.shared.requestCurrentLocation({ (locationStr, locationCoordinates) in
-                    
-                    self.selectedLocation = locationCoordinates?.coordinate
-                    self.locationTextField.text = locationStr
-                    
-                    if self.events == nil || self.events?.count == 0 || self.shouldReload {
-                        self.loadEvents(true)
-                    } else {
-                        self.hideLoader()
-                    }
-                })
+                self.selectedLocation = locationCoordinates?.coordinate
+                self.locationTextField.text = locationStr
                 
-                if currentLocation.0 != nil && currentLocation.1 != nil {
-                    
-                    selectedLocation = currentLocation.1!.coordinate
-                    locationTextField.text = currentLocation.0
-                    
-                    if events == nil || events?.count == 0 || shouldReload {
-                        loadEvents(true)
-                    }
+                if self.events == nil || self.events?.count == 0 || self.shouldReload {
+                    self.loadEvents(true)
                 } else {
-                    showBlackLoader()
+                    self.hideLoader()
                 }
-            }
+            })
             
-            if self.events == nil || self.events?.count == 0 || self.shouldReload {
-                self.loadEvents(true)
+            if currentLocation.0 != nil && currentLocation.1 != nil {
+                
+                selectedLocation = currentLocation.1!.coordinate
+                locationTextField.text = currentLocation.0
+                
+                if events == nil || events?.count == 0 || shouldReload {
+                    loadEvents(true)
+                }
+            } else {
+                showBlackLoader()
             }
+            //            }
+        }
+        
+        if self.events == nil || self.events?.count == 0 || self.shouldReload {
+            self.loadEvents(true)
         }
     }
     

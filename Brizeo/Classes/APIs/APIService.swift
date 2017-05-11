@@ -201,6 +201,8 @@ extension APIService: TargetType {
                     "lon": longitude
                 ]
                 
+                print("Location for event: \(dict)")
+                
                 return dict
             }
             return nil

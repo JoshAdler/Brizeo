@@ -121,9 +121,15 @@ class EventsProvider {
     
     class func getMatchedEvents(sortingFlag: SortingFlag, location: CLLocationCoordinate2D, completion: @escaping EventsCompletion) {
         
-        let sortingFlag = sortingFlag == .nearest ? "distance" : "popular"
+        var sortingFlagString = ""
         
-        APIService.performRequest(request: .getMatchedEvents(userId: UserProvider.shared.currentUser!.objectId, sortFlag: sortingFlag, longitude: location.longitude, latitude: location.latitude)) { (result) in
+        if sortingFlag == .nearest {
+            sortingFlagString = "distance"
+        } else {
+            sortingFlagString = sortingFlag.APIPresentation
+        }
+        
+        APIService.performRequest(request: .getMatchedEvents(userId: UserProvider.shared.currentUser!.objectId, sortFlag: sortingFlagString, longitude: location.longitude, latitude: location.latitude)) { (result) in
             
             switch result {
             case .success(let response):
