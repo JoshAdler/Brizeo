@@ -13,6 +13,8 @@ import ChameleonFramework
 import GooglePlacesAutocomplete
 import SVProgressHUD
 
+let searchLocationChangedNotification = "searchLocationChangedNotification"
+
 class SettingsViewController: UIViewController {
 
     // MARK: - Types
@@ -546,6 +548,10 @@ extension SettingsViewController: GooglePlacesAutocompleteDelegate {
                 PreferencesProvider.updatePreferences(preferences: welf.preferences, completion: { (result) in
                     switch(result) {
                     case .success(_):
+                        
+                        // notify about changes
+                        Helper.sendNotification(with: searchLocationChangedNotification, object: nil, dict: nil)
+                        
                         welf.hideLoader()
                         welf.tableView.reloadRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
                         break

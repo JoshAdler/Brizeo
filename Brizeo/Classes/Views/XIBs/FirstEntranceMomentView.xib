@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -22,7 +22,7 @@
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.75" colorSpace="calibratedRGB"/>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2oU-Vg-JlL">
-                    <rect key="frame" x="294" y="207" width="46" height="46"/>
+                    <rect key="frame" x="293" y="207" width="46" height="46"/>
                     <state key="normal" image="camera-icon"/>
                     <connections>
                         <action selector="onCreateButtonClickedWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="ZRl-PU-1MC"/>
@@ -38,7 +38,7 @@
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_new_moment_initial" translatesAutoresizingMaskIntoConstraints="NO" id="MOM-Yn-wnv">
-                    <rect key="frame" x="94" y="269" width="233" height="172"/>
+                    <rect key="frame" x="93" y="269" width="233" height="172"/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_popup_events" translatesAutoresizingMaskIntoConstraints="NO" id="yxn-EV-KiW">
                     <rect key="frame" x="16.5" y="539" width="42.5" height="71"/>
@@ -81,7 +81,7 @@
                 <constraint firstItem="gPh-cr-rWS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Sec-QC-gee"/>
                 <constraint firstItem="MOM-Yn-wnv" firstAttribute="trailing" secondItem="2oU-Vg-JlL" secondAttribute="trailing" constant="-13" id="YFz-pI-AWb"/>
                 <constraint firstAttribute="trailing" secondItem="gPh-cr-rWS" secondAttribute="trailing" id="ava-k2-hEL"/>
-                <constraint firstAttribute="trailing" secondItem="2oU-Vg-JlL" secondAttribute="trailing" constant="35" id="cnG-UT-Pix"/>
+                <constraint firstAttribute="trailing" secondItem="2oU-Vg-JlL" secondAttribute="trailing" constant="36" id="cnG-UT-Pix"/>
                 <constraint firstAttribute="bottom" secondItem="yxn-EV-KiW" secondAttribute="bottom" constant="57" id="e5T-ts-xIg"/>
                 <constraint firstItem="4uE-ud-Xpc" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="57" id="eK1-tP-Bgx"/>
                 <constraint firstItem="LSH-dV-2v0" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="2" constant="-40" id="kVk-Bi-4NZ"/>

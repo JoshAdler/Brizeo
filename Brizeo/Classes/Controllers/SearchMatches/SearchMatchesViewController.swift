@@ -37,6 +37,12 @@ class SearchMatchesViewController: BasicViewController {
     
     // MARK: - Controller lifecycle
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(searchLocationWasChanged(notification:)), name: NSNotification.Name(rawValue: searchLocationChangedNotification), object: nil)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -48,8 +54,23 @@ class SearchMatchesViewController: BasicViewController {
         navigationController?.setNavigationBarHidden(false, animated: animated)
         Helper.mainTabBarController()?.tabBar.isHidden = false
         
+        //fetchMatchesList()
+        loadMatchesIfNeeds()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    // MARK: - Public methods
+    
+    func searchLocationWasChanged(notification: NSNotification) {
+        
+        swipeView?.removeFromSuperview()
+        swipeView = nil
+        
+        matches = nil
         fetchMatchesList()
-        //loadMatchesIfNeeds()
     }
     
     // MARK: - Private methods

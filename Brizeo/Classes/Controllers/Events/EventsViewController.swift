@@ -189,10 +189,10 @@ class EventsViewController: UIViewController {
                 showBlackLoader()
             }
             //            }
-        }
-        
-        if self.events == nil || self.events?.count == 0 || self.shouldReload {
-            self.loadEvents(true)
+        } else {
+            if self.events == nil || self.events?.count == 0 || self.shouldReload {
+                self.loadEvents(true)
+            }
         }
     }
     
