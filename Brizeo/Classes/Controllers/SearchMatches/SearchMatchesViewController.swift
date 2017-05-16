@@ -70,7 +70,7 @@ class SearchMatchesViewController: BasicViewController {
         swipeView = nil
         
         matches = nil
-        fetchMatchesList()
+//        fetchMatchesList()
     }
     
     // MARK: - Private methods

@@ -66,12 +66,12 @@ class PersonalTabsViewController: BasicViewController {
     @IBAction override func onBackButtonClicked(sender: UIBarButtonItem) {
         
         if FirstEntranceProvider.shared.isFirstEntrancePassed == false && FirstEntranceProvider.shared.currentStep == .profile {
+            
             // show force screen
             profileController.hideHelpView(isHidden: false)
             return
         }
         
-//        if settingsController.isSelected {
         if let preferences = settingsController.preferences {
          
             showBlackLoader()
@@ -80,6 +80,13 @@ class PersonalTabsViewController: BasicViewController {
                 switch(result) {
                     case .success(_):
                         self.hideLoader()
+                        
+                        if self.settingsController.isSearchLocationChanged {
+                            
+                            if Helper.currentTabBarItem() != 1 {
+                                Helper.selectedTabBarItem(with: 1)
+                            }
+                        }
                         
                         super.onBackButtonClicked(sender: sender)
                     break

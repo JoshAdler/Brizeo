@@ -149,6 +149,7 @@ class SettingsViewController: UIViewController {
     var user: User!
     var preferences: Preferences!
     var isSelected = false
+    var isSearchLocationChanged = false
     
     // for location
     var currentLocationString = LocalizableString.Location.localizedString
@@ -543,6 +544,8 @@ extension SettingsViewController: GooglePlacesAutocompleteDelegate {
             if let welf = self {
                 // set new values
                 welf.preferences.searchLocation = CLLocation(latitude: result.latitude, longitude: result.longitude)
+                
+                welf.isSearchLocationChanged = true
                 
                 // update preferences
                 PreferencesProvider.updatePreferences(preferences: welf.preferences, completion: { (result) in

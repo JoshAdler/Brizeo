@@ -104,7 +104,7 @@ class Helper: NSObject {
     
     // tab bar
     class func selectedTabBarItem(with index: Int) {
-        if let navigationController = AppDelegate.shared().window?.rootViewController as? UINavigationController, let tabBarController = navigationController.viewControllers.first as? MainTabBarController {
+        if let navigationController = AppDelegate.shared().window?.rootViewController as? UINavigationController, let tabBarController = navigationController.viewControllers[1] as? MainTabBarController {
             tabBarController.selectedIndex = index
         }
     }
@@ -125,6 +125,14 @@ class Helper: NSObject {
     
     class func carbonViewHeight() -> CGFloat {
         return ThemeConstants.carbonMenuHeight
+    }
+    
+    class func currentTabBarItem() -> Int {
+        if let navigationController = AppDelegate.shared().window?.rootViewController as? UINavigationController, let tabBarController = navigationController.viewControllers.first as? MainTabBarController {
+            return tabBarController.selectedIndex
+        }
+        
+        return -1
     }
     
     // MARK: - Navigation
