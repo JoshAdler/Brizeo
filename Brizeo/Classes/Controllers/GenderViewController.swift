@@ -8,6 +8,8 @@
 
 import UIKit
 
+let searchGenderWasChangedNotification = "searchGenderWasChangedNotification"
+
 class GenderViewController: BasicViewController {
 
     // MARK: - Types
@@ -139,6 +141,10 @@ extension GenderViewController: UITableViewDelegate {
             
             tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
             PreferencesProvider.updatePreferences(preferences: preferences, completion: nil)
+            
+            // notify about changes
+            Helper.sendNotification(with: searchLocationChangedNotification, object: nil, dict: nil)
+            Helper.sendNotification(with: searchGenderWasChangedNotification, object: nil, dict: nil)
         }
     }
 }

@@ -236,9 +236,17 @@ class MomentsViewController: UIViewController {
     
     fileprivate func addInfinityScroll() {
         
-        momentsTableView.addInfiniteScroll { [unowned self] (tableView) in
-            self.paginator.increaseCurrentPage()
-            self.loadMoments(with: false, removeOldMoments: false)
+        /* Add pagination only for all moments */
+        
+        switch listType {
+        case .allMoments:
+
+            momentsTableView.addInfiniteScroll { [unowned self] (tableView) in
+                self.paginator.increaseCurrentPage()
+                self.loadMoments(with: false, removeOldMoments: false)
+            }
+        default:
+            break
         }
     }
     
@@ -329,22 +337,6 @@ class MomentsViewController: UIViewController {
         // set default value
         filterButton.setTitle(Constants.defaultFilterTitle, for: .normal)
         filterButton.isEnabled = true
-        
-//        var handlers = [() -> Void]()
-//        
-//        // set 0 handler for "All" filter
-//        handlers.append({ [weak self] () -> (Void) in
-//            self?.onFilterButtonClicked(0)
-//        })
-//        
-//        for i in 1 ..< passions!.count + 1 {
-//            handlers.append({ [weak self] () -> (Void) in
-//                self?.onFilterButtonClicked(i)
-//            })
-//        }
-        
-//        let passionStrings = [Constants.defaultFilterTitle] + passions!.map({ $0.displayName })
-//        filterButton.initMenu(passionStrings, actions: handlers)
     }
     
     fileprivate func enableRadioForButton(button: UIButton) {

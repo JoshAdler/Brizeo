@@ -166,6 +166,9 @@ class SettingsViewController: UIViewController {
         registerHeaderViews()
         LocationManager.shared.updateLocation()
         loadPreferences()
+        
+        // add observer for gender
+        NotificationCenter.default.addObserver(self, selector: #selector(searchGenderWasChanged(notification:)), name: NSNotification.Name(rawValue: searchGenderWasChangedNotification), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -194,6 +197,17 @@ class SettingsViewController: UIViewController {
         
         // reload gender
         tableView.reloadRows(at: [IndexPath(row: 2, section: 2)], with: .automatic)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    // MARK: - Public methods
+    
+    func searchGenderWasChanged(notification: NSNotification) {
+        
+        isSearchLocationChanged = true
     }
     
     // MARK: - Private methods
@@ -489,11 +503,21 @@ extension SettingsViewController: SettingsRangeCellDelegate {
     
     func rangeCellDidSetDistanceValue(_ rangeCell: SettingsRangeCell, distanceValue: Int) {
         preferences?.maxSearchDistance = distanceValue
+        
+        isSearchLocationChanged = true
+        
+        // notify about changes
+        Helper.sendNotification(with: searchLocationChangedNotification, object: nil, dict: nil)
     }
     
     func rangeCellDidSetAgeValue(_ rangeCell: SettingsRangeCell, ageMinValue: Int, ageMaxValue: Int) {
         preferences?.ageLowerLimit = ageMinValue
         preferences?.ageUpperLimit = ageMaxValue
+        
+        isSearchLocationChanged = true
+        
+        // notify about changes
+        Helper.sendNotification(with: searchLocationChangedNotification, object: nil, dict: nil)
     }
 }
 
