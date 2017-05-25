@@ -102,6 +102,10 @@ class Helper: NSObject {
         }
     }
     
+    class func canOpenURL(url: URL) -> Bool {
+        return UIApplication.shared.canOpenURL(url)
+    }
+    
     // tab bar
     class func selectedTabBarItem(with index: Int) {
         if let navigationController = AppDelegate.shared().window?.rootViewController as? UINavigationController, let tabBarController = navigationController.viewControllers[1] as? MainTabBarController {

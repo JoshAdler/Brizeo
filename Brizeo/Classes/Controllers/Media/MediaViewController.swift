@@ -32,7 +32,12 @@ class MediaViewController: UIViewController {
     @IBOutlet fileprivate weak var locationButton: UIButton!
     @IBOutlet weak var captureLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
-    @IBOutlet weak var shareButton: UIButton!
+    @IBOutlet weak var linkButton: UIButton!
+    @IBOutlet weak var shareButton: UIButton! {
+        didSet {
+            shareButton.setImage(#imageLiteral(resourceName: "ic_share").withRenderingMode(.alwaysTemplate), for: .normal)
+        }
+    }
     
     fileprivate var willDisplayIndexPath: IndexPath?
     fileprivate var initialScrollDone = false
@@ -51,6 +56,7 @@ class MediaViewController: UIViewController {
         
         shareButton.isHidden = !isSharingEnabled
         locationButton.isHidden = !(moment != nil && moment!.hasLocation)
+        linkButton.isHidden = moment != nil ? !moment!.hasLink : true
         
         if moment != nil {
             media = [moment!.asFileObject]
@@ -139,7 +145,6 @@ class MediaViewController: UIViewController {
         _ = navigationController?.popViewController(animated: true)
     }
     
-    //TODO: place corrent moment url
     @IBAction func onSharingButtonClicked(_ sender: UIButton) {
         showBlackLoader()
         
@@ -164,6 +169,13 @@ class MediaViewController: UIViewController {
                     SVProgressHUD.showError(withStatus: "Sorry, you can't use iMessages on this device.")
                 }
             }
+        }
+    }
+    
+    @IBAction func onLinkButtonClicked(_ sender: UIButton) {
+        
+        if let moment = moment, let url = moment.url {
+            Helper.openURL(url: url)
         }
     }
 }

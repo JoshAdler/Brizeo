@@ -34,6 +34,7 @@ class Moment: Mappable, Equatable {
         case longitude = "currentLocation.longitude"
         case updatedAt = "updatedAt"
         case createdAt = "createdAt"
+        case link = "link"
     }
     
     struct Constants {
@@ -58,21 +59,54 @@ class Moment: Mappable, Equatable {
     var user: User!
     var updatedAt: Date? = Date()
     var createdAt: String?
+    var link: String?
     
     //variables for uploading
     var image: UIImage?
     var videoURL: URL?
     var thumbnailImage: UIImage?
     
+    var url: URL? {
+        
+        if let link = link {
+            
+            guard link.numberOfCharactersWithoutSpaces() > 0 else {
+                return nil
+            }
+            
+            let webURL: URL?
+            
+            if link.hasPrefix("http://") || link.hasPrefix("https://") {
+                webURL = URL(string: link)
+            } else {
+                webURL = URL(string: "http://\(link)")
+            }
+            
+            return webURL
+        } else {
+            return nil
+        }
+    }
+    
     var hasVideo: Bool {
         return file.isVideoInfo
     }
     
     var hasLocation: Bool {
+        
         if locationLongitude != nil && locationLatitude != nil {
             return true
         }
         return false
+    }
+    
+    var hasLink: Bool {
+        
+        guard let url = url else {
+            return false
+        }
+        
+        return Helper.canOpenURL(url: url)
     }
     
     var imageUrl: URL? {
@@ -121,11 +155,6 @@ class Moment: Mappable, Equatable {
     
     var asFileObject: FileObject {
         return FileObject(thumbnailImage: thumbnailFile, fileInfo: file)
-        /*if hasVideo {
-            return FileObject(thumbnailImage: thumbnailFile!, videoInfo: file)
-        } else {
-            return FileObject(thumbnailImage: thumbnailFile!, imageInfo: file)
-        }*/
     }
     
     var shortCapture: String {
@@ -166,6 +195,7 @@ class Moment: Mappable, Equatable {
         capture <- map[JSONKeys.momentDescription.rawValue]
         updatedAt <- (map[JSONKeys.updatedAt.rawValue], LastActiveDateTransform())
         createdAt <- map[JSONKeys.createdAt.rawValue]
+        link <- map[JSONKeys.link.rawValue]
         
         // location
         locationLongitude <- (map[JSONKeys.longitude.rawValue], LocationTransform())

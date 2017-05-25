@@ -67,6 +67,11 @@ class CreateMomentViewController: UIViewController {
             visibilityLabel.text = LocalizableString.ViewablebyAll.localizedString
         }
     }
+    @IBOutlet weak var urlTextField: UITextField! {
+        didSet {
+            urlTextField.placeholder = LocalizableString.TypeURLPlaceholder.localizedString
+        }
+    }
     
     var thumbnailImage: UIImage?
     var videoURL: URL?
@@ -118,6 +123,9 @@ class CreateMomentViewController: UIViewController {
         
         // set capture
         captionTextView.text = moment!.capture
+        
+        // link
+        urlTextField.text = moment!.link
         
         // viewable to All
         switcher.setOn(moment!.viewableByAll, animated: false)
@@ -207,6 +215,7 @@ class CreateMomentViewController: UIViewController {
         moment!.image = image
         moment!.videoURL = videoURL
         moment!.thumbnailImage = thumbnailImage
+        moment!.link = urlTextField.text
         
         MomentsProvider.updateMoment(moment: moment!) { (result) in
             switch(result) {
@@ -246,6 +255,7 @@ class CreateMomentViewController: UIViewController {
         moment.image = image
         moment.videoURL = videoURL
         moment.thumbnailImage = thumbnailImage
+        moment.link = urlTextField.text
         
         MomentsProvider.create(new: moment) { (result) in
             switch(result) {
@@ -355,34 +365,38 @@ extension CreateMomentViewController: UITextViewDelegate {
 extension CreateMomentViewController: UITextFieldDelegate {
 
     @IBAction func textFieldDidChange(_ textField: UITextField) {
-        guard (textField.text?.numberOfCharactersWithoutSpaces() ?? 0) >= 3 else {
-            suggestions = nil
-            autocompleteLocationsResults = nil
-            
-            return
-        }
         
-        LocationManager.requestLocation(with: textField.text, completionHandler: { [weak self] (response) in
-            if self != nil {
-                guard response != nil else {
-                    print("No response")
-                    return
-                }
+        if textField == addLocationTextField {
+            guard (textField.text?.numberOfCharactersWithoutSpaces() ?? 0) >= 3 else {
+                suggestions = nil
+                autocompleteLocationsResults = nil
                 
-                // save result
-                self!.autocompleteLocationsResults = response!.mapItems
-                self!.suggestions = [String]()
-                
-                for item in response!.mapItems {
-                    self!.suggestions!.append(item.placemark.asString())
-                }
-                
-                self!.addLocationTextField.dropDownTableView.reloadData()
+                return
             }
-        })
+            
+            LocationManager.requestLocation(with: textField.text, completionHandler: { [weak self] (response) in
+                if self != nil {
+                    guard response != nil else {
+                        print("No response")
+                        return
+                    }
+                    
+                    // save result
+                    self!.autocompleteLocationsResults = response!.mapItems
+                    self!.suggestions = [String]()
+                    
+                    for item in response!.mapItems {
+                        self!.suggestions!.append(item.placemark.asString())
+                    }
+                    
+                    self!.addLocationTextField.dropDownTableView.reloadData()
+                }
+            })
+        }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
         textField.resignFirstResponder()
         return true
     }

@@ -374,8 +374,7 @@ extension AppDelegate {
     }
     
     fileprivate func setupLocalytics(with launchOptions: [AnyHashable: Any]?) {
-        Localytics.autoIntegrate(Configurations.Localytics.appKey, launchOptions: launchOptions)
-        
+        Localytics.autoIntegrate(Configurations.Localytics.appKey, launchOptions: launchOptions)    
     }
     
     fileprivate func setupMixpanel() {
