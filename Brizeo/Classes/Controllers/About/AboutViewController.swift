@@ -109,17 +109,50 @@ class AboutViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureKeyboardBehaviour()
-        
         registerHeaderViews()
         
         fetchPassions()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        configureKeyboardBehaviour()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         UserProvider.updateUser(user: UserProvider.shared.currentUser!, completion: nil)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    // MARK: - Observers
+    
+    @objc func keyboardWillShowForResizing(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
+            let _ = self.view.window?.frame {
+            
+            self.passionsTableView.contentSize = CGSize(width: self.passionsTableView.contentSize.width, height: self.defaultTableViewContentHeight + keyboardSize.height)
+        } else {
+            
+            debugPrint("We're showing the keyboard and either the keyboard size or window is nil: panic widely.")
+        }
+    }
+    
+    @objc func keyboardWillHideForResizing(notification: NSNotification) {
+        if ((notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue) != nil {
+            
+            self.passionsTableView.contentSize = CGSize(width: self.passionsTableView.contentSize.width, height: self.defaultTableViewContentHeight)
+        } else {
+            
+            debugPrint("We're about to hide the keyboard and the keyboard size is nil. Now is the rapture.")
+        }
     }
     
     // MARK: - Private methods
@@ -129,34 +162,15 @@ class AboutViewController: UIViewController {
     }
     
     fileprivate func configureKeyboardBehaviour() {
-        keyboardTypist = Typist()
         
-        keyboardTypist
-            .on(event: .willHide, do: { (options) in
-                
-                if !self.isSelected {
-                    return
-                }
-                
-                print("Will hide on about")
-                UIView.animate(withDuration: options.animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(options.animationCurve.rawValue)), animations: {
-
-                    self.passionsTableView.contentSize = CGSize(width: self.passionsTableView.contentSize.width, height: self.defaultTableViewContentHeight)
-                }, completion: nil)
-            })
-            .on(event: .willShow, do: { (options) in
-                
-                if !self.isSelected {
-                    return
-                }
-                
-                print("Will show on about")
-                UIView.animate(withDuration: options.animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(options.animationCurve.rawValue)), animations: {
-                
-                    self.passionsTableView.contentSize = CGSize(width: self.passionsTableView.contentSize.width, height: self.defaultTableViewContentHeight + options.endFrame.height)
-                }, completion: nil)
-            })
-        .start()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillShowForResizing(notification:)),
+                                               name: NSNotification.Name.UIKeyboardWillShow,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHideForResizing(notification:)),
+                                               name: NSNotification.Name.UIKeyboardWillHide,
+                                               object: nil)
     }
     
     fileprivate func setSelectedPassions() {
