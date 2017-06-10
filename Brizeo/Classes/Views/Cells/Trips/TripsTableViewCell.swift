@@ -15,6 +15,16 @@ class TripsTableViewCell: SWTableViewCell {
     
     @IBOutlet weak var countryImageView: UIImageView!
     @IBOutlet weak var countryNameLabel: UILabel!
+    @IBOutlet weak var iconImageView: UIImageView!
+    
+    var isChecked: Bool {
+        set {
+            iconImageView.isHidden = !newValue
+        }
+        get {
+            return !iconImageView.isHidden
+        }
+    }
     
     // MARK: - Override methods
     

@@ -24,6 +24,7 @@ class OtherPersonAboutInfoTableViewCell: UITableViewCell {
     @IBOutlet weak var workLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var friendsLabel: UILabel!
+    @IBOutlet weak var nationalityLabel: UILabel!
     
     // MARK: - Public methods
     
@@ -66,6 +67,14 @@ class OtherPersonAboutInfoTableViewCell: UITableViewCell {
         
         // work
         workLabel.text = user.workInfo ?? "Not set"
+        
+        // nationality
+        if let nationalityCode = user.nationality {
+            let country = Country.initWith(nationalityCode)
+            nationalityLabel.text = country.name
+        } else {
+            nationalityLabel.text = "Not set"
+        }
     }
     
     func applyLocationWithUser(user: User, locationString: String?) {

@@ -19,6 +19,7 @@ class ProfileView: UIView {
     @IBOutlet weak var workLabel: UILabel!
     @IBOutlet weak var studyLabel: UILabel!
     @IBOutlet weak var friendsCountLabel: UILabel!
+    @IBOutlet weak var nationalityImageView: UIImageView!
     @IBOutlet weak var interestView: OtherPersonInterestView!
     var currentUserId: String?
     
@@ -65,6 +66,11 @@ class ProfileView: UIView {
             profileImageView.sd_setImage(with: user.profileUrl!)
         } else {
             profileImageView.image = nil
+        }
+        
+        if let code = user.nationality {
+            let country = Country.initWith(code)
+            nationalityImageView.image = country.flagImage
         }
         
         // study

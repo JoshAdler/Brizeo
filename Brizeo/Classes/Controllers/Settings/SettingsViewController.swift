@@ -14,6 +14,7 @@ import GooglePlacesAutocomplete
 import SVProgressHUD
 
 let searchLocationChangedNotification = "searchLocationChangedNotification"
+let searchNationalityChangedNotification = "searchNationalityChangedNotification"
 
 class SettingsViewController: UIViewController {
 
@@ -27,6 +28,7 @@ class SettingsViewController: UIViewController {
     
     struct StoryboardIds {
         static let genderController = "GenderViewController"
+        static let nationalityController = "OptionsNationalityViewController"
     }
     
     enum Sections: Int {
@@ -53,9 +55,10 @@ class SettingsViewController: UIViewController {
     
         var rowsCount: Int {
             switch self {
-            case .discovery,
-                 .notifications:
+            case .notifications:
                 return 3
+            case .discovery:
+                return 4
             default:
                 return 1
             }
@@ -169,6 +172,9 @@ class SettingsViewController: UIViewController {
         
         // add observer for gender
         NotificationCenter.default.addObserver(self, selector: #selector(searchGenderWasChanged(notification:)), name: NSNotification.Name(rawValue: searchGenderWasChangedNotification), object: nil)
+        
+        // add observer for nationality
+        NotificationCenter.default.addObserver(self, selector: #selector(searchNationalityWasChanged(notification:)), name: NSNotification.Name(rawValue: searchNationalityChangedNotification), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -197,6 +203,9 @@ class SettingsViewController: UIViewController {
         
         // reload gender
         tableView.reloadRows(at: [IndexPath(row: 2, section: 2)], with: .automatic)
+        
+        // reload nationality
+        tableView.reloadRows(at: [IndexPath(row: 3, section: 2)], with: .automatic)
     }
     
     deinit {
@@ -206,6 +215,11 @@ class SettingsViewController: UIViewController {
     // MARK: - Public methods
     
     func searchGenderWasChanged(notification: NSNotification) {
+        
+        isSearchLocationChanged = true
+    }
+    
+    func searchNationalityWasChanged(notification: NSNotification) {
         
         isSearchLocationChanged = true
     }
@@ -362,7 +376,7 @@ extension SettingsViewController: UITableViewDataSource {
 
                 typeCell.delegate = self
                 return typeCell
-            } else { // gender
+            } else if indexPath.row == 2 { // gender
                 let typeCell = cell as! SettingsInvitationCell
                 var genderString = ""
                 
@@ -382,6 +396,21 @@ extension SettingsViewController: UITableViewDataSource {
                 
                 typeCell.rightTextLabel.text = genderString
                 typeCell.titleLabel.text = LocalizableString.Gender.localizedString
+                
+                return typeCell
+            } else {
+                
+                let typeCell = cell as! SettingsInvitationCell
+                
+                if let nationalityCode = preferences.searchNationality {
+                    
+                    let country = Country.initWith(nationalityCode)
+                    typeCell.rightTextLabel.text = country.name.capitalized
+                } else {
+                    typeCell.rightTextLabel.text = "All"
+                }
+                
+                typeCell.titleLabel.text = LocalizableString.Nationality.localizedString
                 
                 return typeCell
             }
@@ -485,11 +514,20 @@ extension SettingsViewController: UITableViewDelegate {
             break
         case .discovery:
             if indexPath.row == 2 { // gender
+                
                 let genderController: GenderViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.genderController)!
                 genderController.user = user
                 genderController.preferences = preferences
                 
                 navigationController?.pushViewController(genderController, animated: true)
+            } else if indexPath.row == 3 { // nationality
+                
+                let optionsController: OptionsNationalityViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.nationalityController)!
+                optionsController.user = user
+                optionsController.preferences = preferences
+                optionsController.source = .search
+                
+                navigationController?.pushViewController(optionsController, animated: true)
             }
             break
         default:

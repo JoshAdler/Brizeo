@@ -23,6 +23,7 @@ class AboutViewController: UIViewController {
     
     enum Sections: Int {
         case passions = 0
+        case nationality
         case work
         case education
         case introduceYourself
@@ -31,6 +32,8 @@ class AboutViewController: UIViewController {
             switch self {
             case .passions:
                 return LocalizableString.SelectInterests.localizedString.uppercased()
+            case .nationality:
+                return LocalizableString.SelectNationality.localizedString.uppercased()
             case .introduceYourself:
                 return LocalizableString.IntroduceYourself.localizedString.uppercased()
             case .work:
@@ -62,7 +65,7 @@ class AboutViewController: UIViewController {
                 } else {
                     return 104.0
                 }
-            case .work, .education:
+            case .work, .education, .nationality:
                 return 55.0
             }
             
@@ -82,7 +85,7 @@ class AboutViewController: UIViewController {
                 } else {
                     return AboutSaveTableViewCell.identifier
                 }
-            case .work, .education:
+            case .work, .education, .nationality:
                 return SettingsInvitationCell.identifier
             }
         }
@@ -296,6 +299,19 @@ extension AboutViewController: UITableViewDataSource {
                 
                 return typeCell
             }
+        case .nationality:
+            let typeCell = cell as! SettingsInvitationCell
+            
+            if let nationalityCode = user.nationality {
+                
+                let country = Country.initWith(nationalityCode)
+                typeCell.titleLabel.text = country.name
+            } else {
+                
+                typeCell.titleLabel.text = "Not set."
+            }
+            
+            return typeCell
         case .introduceYourself:
             if indexPath.row == 0 {
                 let typeCell = cell as! AboutInputTableViewCell
@@ -363,25 +379,33 @@ extension AboutViewController: UITableViewDelegate {
             return
         }
         
-        if section != .work && section != .education {
+        if section != .work && section != .education && section != .nationality {
             return
         }
         
-        let controller: OptionsViewController = Helper.controllerFromStoryboard(controllerId: "OptionsViewController")!
-        
-        switch section {
-        case .work:
-            controller.type = .work
-            break
-        case .education:
-            controller.type = .education
-            break
-        default:
-            break
+        if section == .nationality {
+            
+            let controller: OptionsNationalityViewController = Helper.controllerFromStoryboard(controllerId: "OptionsNationalityViewController")!
+            controller.user = user
+            
+            Helper.currentTabNavigationController()?.pushViewController(controller, animated: true)
+        } else {
+            let controller: OptionsViewController = Helper.controllerFromStoryboard(controllerId: "OptionsViewController")!
+            
+            switch section {
+            case .work:
+                controller.type = .work
+                break
+            case .education:
+                controller.type = .education
+                break
+            default:
+                break
+            }
+            
+            controller.user = user
+            Helper.currentTabNavigationController()?.pushViewController(controller, animated: true)
         }
-        
-        controller.user = user
-        Helper.currentTabNavigationController()?.pushViewController(controller, animated: true)
     }
 }
 

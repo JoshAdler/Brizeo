@@ -23,6 +23,7 @@ class Preferences: Mappable {
         case maxSearchDistance = "maxSearchDistance"
         case searchLocationLatitude = "searchLocation.latitude"
         case searchLocationLongitude = "searchLocation.longitude"
+        case searchNationality = "searchNationality"
         case isNotificationsNewMatchesOn = "isNotificationsNewMatchesOn"
         case isNotificationsMessagesOn = "isNotificationsMessagesOn"
         case isNotificationsMomentsLikesOn = "isNotificationsMomentsLikesOn"
@@ -37,6 +38,7 @@ class Preferences: Mappable {
     var maxSearchDistance: Int = 100
     var longitude: Double?
     var latitude: Double?
+    var searchNationality: String?
     var isNotificationsNewMatchesOn: Bool = true
     var isNotificationsMomentsLikeOn: Bool = true
     var isNotificationsMessagesOn: Bool = true {
@@ -79,6 +81,7 @@ class Preferences: Mappable {
         maxSearchDistance <- map[JSONKeys.maxSearchDistance.rawValue]
         longitude <- map[JSONKeys.searchLocationLongitude.rawValue]
         latitude <- map[JSONKeys.searchLocationLatitude.rawValue]
+        searchNationality <- map[JSONKeys.searchNationality.rawValue]
         isNotificationsNewMatchesOn <- map[JSONKeys.isNotificationsNewMatchesOn.rawValue]
         isNotificationsMessagesOn <- map[JSONKeys.isNotificationsMessagesOn.rawValue]
         isNotificationsMomentsLikeOn <- map[JSONKeys.isNotificationsMomentsLikesOn.rawValue]

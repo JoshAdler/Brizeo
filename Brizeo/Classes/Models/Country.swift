@@ -17,12 +17,17 @@ class Country: Mappable, Equatable {
 
     // MARK: - Properties
     
-    var code: String = ""
+    var code: String? = ""
     var name: String = ""
     var sortingIndex: Int = 0
     
     var flagImage: UIImage? {
-        let imagePath = String(format: "CountryPicker.bundle/%@", code.uppercased())
+        
+        guard code != nil else {
+            return nil
+        }
+        
+        let imagePath = String(format: "CountryPicker.bundle/%@", code!.uppercased())
         guard let image = UIImage(named: imagePath) else {
             return nil
         }
@@ -31,6 +36,11 @@ class Country: Mappable, Equatable {
     }
     
     // MARK: - Init
+    
+    init() {
+        name = "All"
+        code = nil
+    }
     
     required init?(map: Map) { }
     
@@ -47,5 +57,11 @@ class Country: Mappable, Equatable {
     class func initWith(_ code: String) -> Country {
         let locale = Locale(identifier: "en_US")
         return Country(code: code, name: (locale as NSLocale).displayName(forKey: NSLocale.Key.countryCode, value: code)!)
+    }
+    
+    class func emptyCoutry() -> Country {
+        
+        let country = Country()
+        return country
     }
 }

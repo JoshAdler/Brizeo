@@ -39,6 +39,11 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var detailsButton: UIButton!
     @IBOutlet weak var actionsButton: UIButton!
+    @IBOutlet weak var nationalityImageView: UIImageView! {
+        didSet {
+            nationalityImageView.layer.cornerRadius = nationalityImageView.frame.width / 2.0
+        }
+    }
     @IBOutlet weak var interestView: OtherPersonInterestView!
     @IBOutlet weak var bottomViewHeightConstraint: NSLayoutConstraint!
     
@@ -156,6 +161,14 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
         nameLabel.text = "\(user.shortName/*displayName*/), \(user.age)"
         studyLabel.text = user.studyInfo
         workLabel.text = user.workInfo
+        
+        // set nationality
+        if let nationalityCode = user.nationality {
+            let country = Country.initWith(nationalityCode)
+            nationalityImageView.image = country.flagImage
+        } else {
+            nationalityImageView.image = nil
+        }
         
         if user.hasProfileImage {
             profileImageView.sd_setImage(with: user.profileUrl!)

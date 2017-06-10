@@ -68,6 +68,7 @@ class User: Mappable {
         case thumbnailImages = "thumbnailImages"
         case otherProfileImages = "otherProfileImages"
         case picture = "picture"
+        case nationality = "nationality"
     }
     
     // MARK: - Properties
@@ -87,6 +88,7 @@ class User: Mappable {
     var isSuperUser: Bool = false
     var workInfo: String?
     var studyInfo: String?
+    var nationality: String?
     
     // motification info
     var deviceToken: String?
@@ -290,6 +292,7 @@ class User: Mappable {
         isSuperUser <- map[JSONKeys.isSuperUser.rawValue]
         workInfo <- map[JSONKeys.workInfo.rawValue]
         studyInfo <- map[JSONKeys.studyInfo.rawValue]
+        nationality <- map[JSONKeys.nationality.rawValue]
         
         // countries
         countries <- (map[JSONKeys.countries.rawValue], CountriesTransform())

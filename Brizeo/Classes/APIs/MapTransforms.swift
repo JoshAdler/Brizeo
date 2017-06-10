@@ -120,7 +120,10 @@ class CountriesTransform: TransformType {
             
             var JSONArray = [String]()
             for country in value {
-                JSONArray.append(country.code)
+                
+                if let code = country.code {
+                    JSONArray.append(code)
+                }
             }
             
             return JSONArray

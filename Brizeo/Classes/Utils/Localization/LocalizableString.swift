@@ -57,6 +57,7 @@ enum LocalizableString: String {
     case LocationDenied = "Warning!\nYou didn't granted the app to get your location. Please grant it to get better user experience."
     case Warning = "Warning"
     case Gender = "Gender"
+    case Nationality = "Nationality"
     case NewMatches = "New Matches"
     case Messages = "Messages"
     case MomentsLikes = "Moments Likes"
@@ -205,6 +206,7 @@ enum LocalizableString: String {
     case AgeRange = "Age Range"
     case SearchDistance = "Search distance:"
     case SelectInterests = "Select your primary passions:"
+    case SelectNationality = "Select Your Nationality:"
     case IntroduceYourself = "INTRODUCE YOURSELF:"
     case Education = "SELECT YOUR EDUCATION:"
     case Work = "SELECT YOUR WORK:"
@@ -217,7 +219,8 @@ enum LocalizableString: String {
     case Interests = "Passion"
     case SwipeLeftToChat = "Swipe left to chat"
     case MaximumDistance = "Maximum Distance"
-    
+    case SelectNationalitySearchBar = "Select Your Nationality"
+    case SelectNationalityToSearch = "Select a Nationality"
     
     // MARK: Match
     case ItsAMatch = "It's a Match!"

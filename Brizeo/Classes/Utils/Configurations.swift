@@ -92,6 +92,6 @@ class Configurations: NSObject {
     }
     
     class func baseServerURL() -> String {
-        return /*General.developmentServerURL*/General.productionServerURL
+        return General.developmentServerURL//*/General.productionServerURL
     }
 }
