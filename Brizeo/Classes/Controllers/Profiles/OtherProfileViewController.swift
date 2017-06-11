@@ -39,11 +39,7 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var detailsButton: UIButton!
     @IBOutlet weak var actionsButton: UIButton!
-    @IBOutlet weak var nationalityImageView: UIImageView! {
-        didSet {
-            nationalityImageView.layer.cornerRadius = nationalityImageView.frame.width / 2.0
-        }
-    }
+    @IBOutlet weak var nationalityImageView: UIImageView!
     @IBOutlet weak var interestView: OtherPersonInterestView!
     @IBOutlet weak var bottomViewHeightConstraint: NSLayoutConstraint!
     
