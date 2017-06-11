@@ -268,7 +268,7 @@ extension AboutViewController: UITextViewDelegate {
 extension AboutViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 4
+        return 5
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
