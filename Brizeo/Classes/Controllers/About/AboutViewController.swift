@@ -460,6 +460,9 @@ extension AboutViewController: AboutTableViewCellDelegate {
         
         user.assignPassionIds(dict: selectedPassion)
         UserProvider.updateUser(user: user, completion: nil)
+        
+        // notify about changes
+        Helper.sendNotification(with: searchLocationChangedNotification, object: nil, dict: nil)
     }
 }
 
