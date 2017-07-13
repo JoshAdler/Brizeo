@@ -111,6 +111,9 @@ class CategoriesViewController: BasicViewController {
         }
         
         navigationItem.leftBarButtonItem?.isEnabled = user.passionsIds.count == Configurations.General.requiredMinPassionsCount
+        
+        // notify about changes
+        Helper.sendNotification(with: searchLocationChangedNotification, object: nil, dict: nil)
     }
 }
 

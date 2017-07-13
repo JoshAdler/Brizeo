@@ -72,6 +72,15 @@ class PersonalTabsViewController: BasicViewController {
             return
         }
         
+        if let user = UserProvider.shared.currentUser, user.passionsIds.count != Configurations.General.requiredMinPassionsCount {
+            
+            // show dialog box
+            let toManyPassionsView: NoDescriptionView = NoDescriptionView.loadFromNib()
+            toManyPassionsView.present(on: Helper.initialNavigationController().view)
+            
+            return
+        }
+        
         if let preferences = settingsController.preferences {
          
             showBlackLoader()

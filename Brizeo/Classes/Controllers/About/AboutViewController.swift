@@ -119,6 +119,13 @@ class AboutViewController: UIViewController {
         fetchPassions()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // reload passions
+        passionsTableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -214,12 +221,11 @@ class AboutViewController: UIViewController {
         }
     
         user.assignPassionIds(dict: selectedPassion)
-        
-        var idss = [String]()
-        for i in 0 ..< 4 {
-            idss.append(passions![i].objectId)
-        }
-        user.passionsIds = idss
+//        var idss = [String]()
+//        for i in 0 ..< 4 {
+//            idss.append(passions![i].objectId)
+//        }
+//        user.passionsIds = idss
         UserProvider.updateUser(user: user, completion: nil)
     }
     
