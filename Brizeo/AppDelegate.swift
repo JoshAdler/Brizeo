@@ -138,6 +138,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     class func shared() -> AppDelegate {
         return originalAppDelegate
     }
+    
+    // MARK: - Private methods
+    
+    fileprivate func loadNotificationsToSetBadge() {
+        
+        NotificationProvider.getNotification(for: UserProvider.shared.currentUser!.objectId) { (result) in
+            
+            switch result {
+            case .success(let notifications):
+                
+                let unreadNotifications = notifications.filter({ return !$0.isAlreadyViewed })
+                
+                Helper.sendNotification(with: notificationsBadgeNumberWasChanged, object: nil, dict: ["number": unreadNotifications.count])
+            case .failure(let error):
+                print("Failure with getting notifications: \(error.localizedDescription)")
+            default:
+                break
+            }
+        }
+    }
 }
 
 //MARK: - Utils
@@ -410,6 +430,7 @@ extension AppDelegate {
             // save user/preferences
             if let currentUser = UserProvider.shared.currentUser {
                 UserProvider.updateUser(user: currentUser, completion: nil)
+                self.loadNotificationsToSetBadge()
             }
             
             // update preferences

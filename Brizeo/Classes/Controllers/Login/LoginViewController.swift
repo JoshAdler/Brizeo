@@ -109,6 +109,27 @@ class LoginViewController: UIViewController {
         
         // run timer to reset action counter
         ActionCounter.runResetTimer()
+        
+        // load notifications to set badge number
+        loadNotifications()
+    }
+    
+    fileprivate func loadNotifications() {
+        
+        NotificationProvider.getNotification(for: UserProvider.shared.currentUser!.objectId) { (result) in
+            
+            switch result {
+            case .success(let notifications):
+                
+                let unreadNotifications = notifications.filter({ return !$0.isAlreadyViewed })
+                
+                Helper.sendNotification(with: notificationsBadgeNumberWasChanged, object: nil, dict: ["number": unreadNotifications.count])
+            case .failure(let error):
+                print("Failure with getting notifications: \(error.localizedDescription)")
+            default:
+                break
+            }
+        }
     }
     
     fileprivate func signUpWithFacebook() {

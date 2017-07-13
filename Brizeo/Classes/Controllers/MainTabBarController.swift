@@ -9,6 +9,8 @@
 import UIKit
 import Applozic
 
+let notificationsBadgeNumberWasChanged = "notificationsBadgeNumberWasChanged"
+
 class MainTabBarController: UITabBarController {
     
     // MARK: - Types
@@ -34,6 +36,8 @@ class MainTabBarController: UITabBarController {
                 item.selectedImage = item.selectedImage!.withRenderingMode(.alwaysOriginal)
             }
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(notificationsBadgeNumberWasChanged(notification:)), name: notificationsBadgeNumberWasChanged, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,6 +58,23 @@ class MainTabBarController: UITabBarController {
     }
     
     // MARK: - Public methods
+    
+    func notificationsBadgeNumberWasChanged(notification: NSNotification) {
+        
+        guard let items = tabBar.items else {
+            return
+        }
+        
+        guard let notificationItem = items[3] else {
+            return
+        }
+        
+        guard let number = notification.userInfo["number"] as? Int else {
+            return
+        }
+        
+        item.badgeValue = "\(number)"
+    }
     
     func shouldShowLogo() -> Bool {
         return true

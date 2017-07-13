@@ -207,6 +207,11 @@ extension NotificationsViewController: NotificationsTableViewCellDelegate {
         let notification = notifications![indexPath.row]
         if notification.isAlreadyViewed == false {
             NotificationProvider.markNotificationAsAlreadyViewed(notification, completion: nil)
+            
+            // decrease the badge number
+            if let badgeNumberStr = tabBarItem.badgeValue, let badgeNumber = Int(badgeNumberStr) {
+                Helper.sendNotification(with: notificationsBadgeNumberWasChanged, object: nil, dict: ["number": badgeNumber - 1])
+            }
         }
         
         let mediaController: MediaViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.mediaControllerId)!
@@ -226,6 +231,11 @@ extension NotificationsViewController: NotificationsTableViewCellDelegate {
         
         if notification.isAlreadyViewed == false {
             NotificationProvider.markNotificationAsAlreadyViewed(notification, completion: nil)
+            
+            // decrease the badge number
+            if let badgeNumberStr = tabBarItem.badgeValue, let badgeNumber = Int(badgeNumberStr) {
+                Helper.sendNotification(with: notificationsBadgeNumberWasChanged, object: nil, dict: ["number": badgeNumber - 1])
+            }
         }
         
         guard let senderUser = notification.senderUser else {
