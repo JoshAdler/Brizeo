@@ -9,7 +9,10 @@
 import UIKit
 import Applozic
 
-let notificationsBadgeNumberWasChanged = "notificationsBadgeNumberWasChanged"
+extension Swift.Notification.Name {
+    
+    static let notificationsBadgeNumberWasChanged = Notification.Name("notificationsBadgeNumberWasChanged")
+}
 
 class MainTabBarController: UITabBarController {
     
@@ -37,7 +40,7 @@ class MainTabBarController: UITabBarController {
             }
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(notificationsBadgeNumberWasChanged(notification:)), name: notificationsBadgeNumberWasChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(notificationsBadgeNumberWasChanged(notification:)), name: .notificationsBadgeNumberWasChanged, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,15 +68,13 @@ class MainTabBarController: UITabBarController {
             return
         }
         
-        guard let notificationItem = items[3] else {
+        let notificationItem = items[3]
+        
+        guard let number = notification.userInfo?["number"] as? Int else {
             return
         }
         
-        guard let number = notification.userInfo["number"] as? Int else {
-            return
-        }
-        
-        item.badgeValue = "\(number)"
+        notificationItem.badgeValue = "\(number)"
     }
     
     func shouldShowLogo() -> Bool {
