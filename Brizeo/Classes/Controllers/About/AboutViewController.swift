@@ -423,13 +423,19 @@ extension AboutViewController: UITableViewDelegate {
             return
         }
         
-        if section != .work && section != .education && section != .nationality {
+        if section == .introduceYourself {
             return
         }
         
         if section == .nationality {
             
             let controller: OptionsNationalityViewController = Helper.controllerFromStoryboard(controllerId: "OptionsNationalityViewController")!
+            controller.user = user
+            
+            Helper.currentTabNavigationController()?.pushViewController(controller, animated: true)
+        } else if section == .passions {
+            
+            let controller: CategoriesViewController = Helper.controllerFromStoryboard(controllerId: "CategoriesViewController")!
             controller.user = user
             
             Helper.currentTabNavigationController()?.pushViewController(controller, animated: true)

@@ -81,6 +81,9 @@
 		BB22CF9D1E5081790096A3D3 /* BranchProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB22CF9C1E5081790096A3D3 /* BranchProvider.swift */; };
 		BB2A5C9A1F175F1E003E9095 /* ActionCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2A5C991F175F1E003E9095 /* ActionCounter.swift */; };
 		BB2A5C9E1F17818F003E9095 /* AboutPassionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2A5C9D1F17818F003E9095 /* AboutPassionsTableViewCell.swift */; };
+		BB2A5CA31F1798D2003E9095 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2A5CA21F1798D2003E9095 /* CategoriesViewController.swift */; };
+		BB2A5CA61F179B85003E9095 /* CategoriesTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2A5CA51F179B85003E9095 /* CategoriesTextTableViewCell.swift */; };
+		BB2A5CA81F179BB0003E9095 /* CategoriesPassionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2A5CA71F179BB0003E9095 /* CategoriesPassionTableViewCell.swift */; };
 		BB3B95001E44C3CD002298AF /* InviteFriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B94FF1E44C3CD002298AF /* InviteFriendTableViewCell.swift */; };
 		BB3B95041E463A4B002298AF /* BasicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B95031E463A4B002298AF /* BasicViewController.swift */; };
 		BB3EF57D1E696CE4006FB2ED /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3EF57C1E696CE4006FB2ED /* Gender.swift */; };
@@ -317,6 +320,9 @@
 		BB22CF9C1E5081790096A3D3 /* BranchProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BranchProvider.swift; sourceTree = "<group>"; };
 		BB2A5C991F175F1E003E9095 /* ActionCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCounter.swift; sourceTree = "<group>"; };
 		BB2A5C9D1F17818F003E9095 /* AboutPassionsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutPassionsTableViewCell.swift; sourceTree = "<group>"; };
+		BB2A5CA21F1798D2003E9095 /* CategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
+		BB2A5CA51F179B85003E9095 /* CategoriesTextTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesTextTableViewCell.swift; sourceTree = "<group>"; };
+		BB2A5CA71F179BB0003E9095 /* CategoriesPassionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesPassionTableViewCell.swift; sourceTree = "<group>"; };
 		BB3B94FF1E44C3CD002298AF /* InviteFriendTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendTableViewCell.swift; sourceTree = "<group>"; };
 		BB3B95031E463A4B002298AF /* BasicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicViewController.swift; sourceTree = "<group>"; };
 		BB3EF57C1E696CE4006FB2ED /* Gender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
@@ -551,6 +557,7 @@
 				BB1FB6C91E3FEC20008F2614 /* Moments */,
 				BB104CEC1E3F889D0082411E /* UserMatches */,
 				BB104CE11E3F7F120082411E /* Trips */,
+				BB2A5CA11F1798A9003E9095 /* ChooseCategories */,
 				BB099F081E3F4BA200133794 /* About */,
 				BB4ED5E91E3BA334005B3487 /* Personal */,
 				BB4ED5BE1E3AB636005B3487 /* NavigationViewController */,
@@ -836,6 +843,7 @@
 		BB1EF4771E3AA54600231ACC /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				BB2A5CA41F179B71003E9095 /* Categories */,
 				BBF64E351E9234A7001A9B77 /* Options */,
 				BB1FF6FA1E52047A002343CE /* ChooseView */,
 				BB7AD2621E48C3C200502AE2 /* Likes */,
@@ -879,6 +887,23 @@
 				BB1FF6FB1E52048B002343CE /* ChooseTableViewCell.swift */,
 			);
 			path = ChooseView;
+			sourceTree = "<group>";
+		};
+		BB2A5CA11F1798A9003E9095 /* ChooseCategories */ = {
+			isa = PBXGroup;
+			children = (
+				BB2A5CA21F1798D2003E9095 /* CategoriesViewController.swift */,
+			);
+			name = ChooseCategories;
+			sourceTree = "<group>";
+		};
+		BB2A5CA41F179B71003E9095 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				BB2A5CA51F179B85003E9095 /* CategoriesTextTableViewCell.swift */,
+				BB2A5CA71F179BB0003E9095 /* CategoriesPassionTableViewCell.swift */,
+			);
+			name = Categories;
 			sourceTree = "<group>";
 		};
 		BB3B94FE1E44C3C3002298AF /* InviteFriends */ = {
@@ -1444,6 +1469,7 @@
 				BB3EF5861E6C714A006FB2ED /* APIService.swift in Sources */,
 				BB516F011E7C399A00A7FB46 /* NoMatchesView.swift in Sources */,
 				8873F72B1CBFFE9C0053EAB8 /* LocalizableString.swift in Sources */,
+				BB2A5CA81F179BB0003E9095 /* CategoriesPassionTableViewCell.swift in Sources */,
 				BBCDA9331E6DF16500DCBB5D /* MapTransforms.swift in Sources */,
 				BBA2DB351E7157760066B84B /* NSDate+Kogi.m in Sources */,
 				BBBA1DD51E74BCF8000C55B8 /* FirstEntranceMomentView.swift in Sources */,
@@ -1514,12 +1540,14 @@
 				BB099F041E3EA35F00133794 /* ProfileViewController.swift in Sources */,
 				BB40EC8B1E7FDDE4001DEA35 /* Event.swift in Sources */,
 				BB099F071E3F3AE500133794 /* ProfileImageCollectionViewCell.swift in Sources */,
+				BB2A5CA61F179B85003E9095 /* CategoriesTextTableViewCell.swift in Sources */,
 				BB104CE51E3F81390082411E /* Country.swift in Sources */,
 				BB7873BC1E81B50600F2C8C8 /* OptionsViewController.swift in Sources */,
 				BB4ED5C01E3AB657005B3487 /* MainNavigationViewController.swift in Sources */,
 				BBD428191E41DDFD00DA6E6C /* OtherPersonAboutInviteTableViewCell.swift in Sources */,
 				BBD428101E41CCC400DA6E6C /* MediaViewController.swift in Sources */,
 				756EAB6C1E1E37C400E81221 /* EventsProvider.swift in Sources */,
+				BB2A5CA31F1798D2003E9095 /* CategoriesViewController.swift in Sources */,
 				BBFBBB861E3CCAD70002BF4B /* SettingsLocationCell.swift in Sources */,
 				BBD4281D1E41EEF100DA6E6C /* SearchMatchesViewController.swift in Sources */,
 				BB4ED5FF1E3C0B69005B3487 /* SettingsBigHeaderView.swift in Sources */,
