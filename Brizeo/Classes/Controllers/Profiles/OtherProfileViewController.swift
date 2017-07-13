@@ -76,7 +76,7 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
         loadUserIfNeeds()
         
         // set action counter
-        counterLabel.text = "\(ActionCounter.shared.totalCount) of \(Configurations.General.actionLimit)"
+        counterLabel.text = "\(ActionCounter.shared.totalCount + 1) of \(Configurations.General.actionLimit)"
         
         //add mutual friends observer
         NotificationCenter.default.addObserver(self, selector: #selector(didReceivedMutualFriendsNotification(notification:)), name: NSNotification.Name(rawValue: mutualFriendsNotification), object: nil)
@@ -136,6 +136,7 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
                 if !welf.user!.shouldBeAction || welf.user!.isSuperUser || welf.user!.isCurrent {
                     welf.decreaseProfileViewHeight(true)
                 } else {
+                    welf.counterLabel.isHidden = false
                     welf.setActionButtonsHidden(false)
                 }
                 

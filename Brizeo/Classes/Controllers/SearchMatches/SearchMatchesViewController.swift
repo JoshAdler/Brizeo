@@ -43,7 +43,7 @@ class SearchMatchesViewController: BasicViewController {
         super.viewDidLoad()
         
         // set action counter
-        counterLabel.text = "\(ActionCounter.shared.totalCount) of \(Configurations.General.actionLimit)"
+        counterLabel.text = "\(ActionCounter.shared.totalCount + 1) of \(Configurations.General.actionLimit)"
         
         NotificationCenter.default.addObserver(self, selector: #selector(searchLocationWasChanged(notification:)), name: NSNotification.Name(rawValue: searchLocationChangedNotification), object: nil)
         
