@@ -35,6 +35,10 @@ class ActionCounter: NSObject {
         return Defaults[.lastSessionDate]
     }
     
+    var totalCount: Int {
+        return Defaults[.approveCount] + Defaults[.declineCount]
+    }
+    
     // MARK: - Private methods
     
     fileprivate func userDidAction() {
@@ -75,7 +79,7 @@ class ActionCounter: NSObject {
     }
     
     class func canDoAction(fromSearchController: Bool) -> Bool {
-        return false
+        
         if Configurations.General.shouldCountOnlySearch && !fromSearchController {
             return true
         }

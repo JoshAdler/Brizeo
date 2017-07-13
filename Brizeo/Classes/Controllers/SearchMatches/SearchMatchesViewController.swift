@@ -29,6 +29,7 @@ class SearchMatchesViewController: BasicViewController {
     @IBOutlet weak var approveButton: UIButton!
     @IBOutlet weak var declineButton: UIButton!
     @IBOutlet weak var timerDialogView: TimerDialogView!
+    @IBOutlet weak var counterLabel: UILabel!
     
     var swipeView: DMSwipeCardsView<Any>?
     var matches: [User]?
@@ -40,6 +41,9 @@ class SearchMatchesViewController: BasicViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // set action counter
+        counterLabel.text = "\(ActionCounter.shared.totalCount) of \(Configurations.General.actionLimit)"
         
         NotificationCenter.default.addObserver(self, selector: #selector(searchLocationWasChanged(notification:)), name: NSNotification.Name(rawValue: searchLocationChangedNotification), object: nil)
         
@@ -90,6 +94,9 @@ class SearchMatchesViewController: BasicViewController {
     
     func actionLimitIsReset(notification: NSNotification) {
         
+        // set correct number 
+        counterLabel.text = "1 of \(Configurations.General.actionLimit)"
+        
         timerDialogView.isHidden = true
         
         // load matches
@@ -97,6 +104,10 @@ class SearchMatchesViewController: BasicViewController {
     }
     
     func actionCountWasChanged(notification: NSNotification) {
+        
+        // set correct number
+        let currentCount = ActionCounter.shared.totalCount
+        counterLabel.text = "\(currentCount + 1) of \(Configurations.General.actionLimit)"
         
         if !ActionCounter.canDoAction(fromSearchController: true) {
             timerDialogView.isHidden = false

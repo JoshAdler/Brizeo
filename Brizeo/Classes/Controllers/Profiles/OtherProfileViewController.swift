@@ -51,6 +51,8 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
         }
     }
     
+    @IBOutlet weak var counterLabel: UILabel!
+    
     var user: User?
     var userId: String?
     var mutualFriends: [User]?
@@ -73,11 +75,18 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
         
         loadUserIfNeeds()
         
+        // set action counter
+        counterLabel.text = "\(ActionCounter.shared.totalCount) of \(Configurations.General.actionLimit)"
+        
         //add mutual friends observer
         NotificationCenter.default.addObserver(self, selector: #selector(didReceivedMutualFriendsNotification(notification:)), name: NSNotification.Name(rawValue: mutualFriendsNotification), object: nil)
         
         //add observer for action counter
         NotificationCenter.default.addObserver(self, selector: #selector(actionCounterIsReset(notification:)), name: NSNotification.Name(rawValue: actionCounterIsResetNotification), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(actionCountWasChanged(notification:)), name: NSNotification.Name(rawValue: approveCountChangedNotification), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(actionCountWasChanged(notification:)), name: NSNotification.Name(rawValue: declineCountChangedNotification), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -399,6 +408,15 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
     
     func actionCounterIsReset(notification: UIKit.Notification) {
 
+        // set correct number
+        counterLabel.text = "1 of \(Configurations.General.actionLimit)"
+    }
+    
+    func actionCountWasChanged(notification: NSNotification) {
+        
+        // set correct number
+        let currentCount = ActionCounter.shared.totalCount
+        counterLabel.text = "\(currentCount + 1) of \(Configurations.General.actionLimit)"
     }
     
     // MARK: - Actions

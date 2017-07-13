@@ -47,7 +47,7 @@ class Configurations: NSObject {
         static let termsOfUseURL = "http://brizeo.com/terms/"
         static let photosCountToLoadAtStart = 5
         static let timeToReset = 86400.0
-        static let actionLimit = 15 /* how many time use can click approve/decline */
+        static let actionLimit = 20 /* how many time use can click approve/decline */
         static let shouldCountOnlySearch = false
         static let requiredMinPassionsCount = 4
     }
