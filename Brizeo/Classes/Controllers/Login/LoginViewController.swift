@@ -106,6 +106,9 @@ class LoginViewController: UIViewController {
         
         // fetch initial data to cache
         PassionsProvider.shared.retrieveAllPassions(false, nil)
+        
+        // run timer to reset action counter
+        ActionCounter.runResetTimer()
     }
     
     fileprivate func signUpWithFacebook() {

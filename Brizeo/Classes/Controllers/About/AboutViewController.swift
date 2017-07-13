@@ -221,6 +221,7 @@ class AboutViewController: UIViewController {
         }
     
         user.assignPassionIds(dict: selectedPassion)
+        
 //        var idss = [String]()
 //        for i in 0 ..< 4 {
 //            idss.append(passions![i].objectId)

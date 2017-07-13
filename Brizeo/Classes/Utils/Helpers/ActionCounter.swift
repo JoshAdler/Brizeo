@@ -17,34 +17,65 @@ extension DefaultsKeys {
 
 let approveCountChangedNotification = "approveCountChangedNotification"
 let declineCountChangedNotification = "declineCountChangedNotification"
+let actionCounterIsResetNotification = "actionCounterIsResetNotification"
 
 class ActionCounter: NSObject {
 
     // MARK: - Properties
     
-     static let shared = ActionCounter()
+    static let shared = ActionCounter()
+    
+    fileprivate var timer: Timer?
     
     // MARK: - Init
     
     private override init() {}
     
+    var sessionDate: Date? {
+        return Defaults[.lastSessionDate]
+    }
+    
     // MARK: - Private methods
     
     fileprivate func userDidAction() {
         
-        if Defaults[.lastSessionDate] == nil {
+        guard sessionDate != nil, sessionDate!.timeIntervalSinceNow <= Configurations.General.timeToReset else { // set default values
             Defaults[.lastSessionDate] = Date()
             
             //reset counter
             Defaults[.approveCount] = 0
             Defaults[.declineCount] = 0
+            
+            // run reset timer
+            ActionCounter.runResetTimer()
+            
+            return
         }
     }
     
     // MARK: - Class methods
     
-    class func canDoAction(fromSearchController: Bool) -> Bool {
+    class func runResetTimer() {
         
+        guard let sessionDate = shared.sessionDate else {
+            return
+        }
+        
+        guard sessionDate.timeIntervalSinceNow <= Configurations.General.timeToReset else {
+            return
+        }
+        
+//        let resetDate = Calendar.current.date(byAdding: .day, value: 1, to: sessionDate)
+        let interval = Configurations.General.timeToReset - sessionDate.timeIntervalSinceNow
+        
+        shared.timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: false, block: { (timer) in
+            
+            Helper.sendNotification(with: actionCounterIsResetNotification, object: nil, dict: nil)
+        })
+    }
+    
+    class func canDoAction(fromSearchController: Bool) -> Bool {
+        return false
         if Configurations.General.shouldCountOnlySearch && !fromSearchController {
             return true
         }
@@ -55,7 +86,7 @@ class ActionCounter: NSObject {
         }
         
         // check date
-        if lastSessionDate.timeIntervalSinceNow > 86400 { // should be reset
+        if lastSessionDate.timeIntervalSinceNow > Configurations.General.timeToReset { // should be reset
             return true
         }
         

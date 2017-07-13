@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Brizeo/Classes/Controllers/About/AboutViewController.swift"
-            timestampString = "521648334.098822"
+            timestampString = "521660386.546207"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "216"
-            endingLineNumber = "216"
+            startingLineNumber = "223"
+            endingLineNumber = "223"
             landmarkName = "setSelectedPassions()"
             landmarkType = "7">
          </BreakpointContent>

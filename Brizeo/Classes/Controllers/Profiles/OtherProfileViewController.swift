@@ -75,6 +75,9 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
         
         //add mutual friends observer
         NotificationCenter.default.addObserver(self, selector: #selector(didReceivedMutualFriendsNotification(notification:)), name: NSNotification.Name(rawValue: mutualFriendsNotification), object: nil)
+        
+        //add observer for action counter
+        NotificationCenter.default.addObserver(self, selector: #selector(actionCounterIsReset(notification:)), name: NSNotification.Name(rawValue: actionCounterIsResetNotification), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -394,6 +397,10 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
         }
     }
     
+    func actionCounterIsReset(notification: UIKit.Notification) {
+
+    }
+    
     // MARK: - Actions
     
     @IBAction func onProfilePictureButtonClicked(sender: UIButton) {
@@ -410,7 +417,10 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
     @IBAction func onDeclineButtonClicked(_ sender: UIButton) {
         
         guard ActionCounter.canDoAction(fromSearchController: false) else {
-            print("Place alert view")
+            
+            let timerView: TimerDialogView = TimerDialogView.loadFromNib()
+            timerView.present(on: Helper.initialNavigationController().view, withAnimation: true)
+
             return
         }
         
@@ -420,7 +430,10 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
     @IBAction func onAcceptButtonClicked(_ sender: UIButton) {
         
         guard ActionCounter.canDoAction(fromSearchController: false) else {
-            print("Place alert view")
+            
+            let timerView: TimerDialogView = TimerDialogView.loadFromNib()
+            timerView.present(on: Helper.initialNavigationController().view, withAnimation: true)
+            
             return
         }
         

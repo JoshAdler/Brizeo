@@ -84,6 +84,8 @@
 		BB2A5CA31F1798D2003E9095 /* CategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2A5CA21F1798D2003E9095 /* CategoriesViewController.swift */; };
 		BB2A5CA61F179B85003E9095 /* CategoriesTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2A5CA51F179B85003E9095 /* CategoriesTextTableViewCell.swift */; };
 		BB2A5CA81F179BB0003E9095 /* CategoriesPassionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2A5CA71F179BB0003E9095 /* CategoriesPassionTableViewCell.swift */; };
+		BB2A5CAA1F17BDD9003E9095 /* TimerDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2A5CA91F17BDD9003E9095 /* TimerDialogView.swift */; };
+		BB2A5CC91F17BDFB003E9095 /* TimerDialogView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB2A5CC81F17BDFB003E9095 /* TimerDialogView.xib */; };
 		BB3B95001E44C3CD002298AF /* InviteFriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B94FF1E44C3CD002298AF /* InviteFriendTableViewCell.swift */; };
 		BB3B95041E463A4B002298AF /* BasicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B95031E463A4B002298AF /* BasicViewController.swift */; };
 		BB3EF57D1E696CE4006FB2ED /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3EF57C1E696CE4006FB2ED /* Gender.swift */; };
@@ -323,6 +325,8 @@
 		BB2A5CA21F1798D2003E9095 /* CategoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesViewController.swift; sourceTree = "<group>"; };
 		BB2A5CA51F179B85003E9095 /* CategoriesTextTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesTextTableViewCell.swift; sourceTree = "<group>"; };
 		BB2A5CA71F179BB0003E9095 /* CategoriesPassionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoriesPassionTableViewCell.swift; sourceTree = "<group>"; };
+		BB2A5CA91F17BDD9003E9095 /* TimerDialogView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerDialogView.swift; sourceTree = "<group>"; };
+		BB2A5CC81F17BDFB003E9095 /* TimerDialogView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TimerDialogView.xib; sourceTree = "<group>"; };
 		BB3B94FF1E44C3CD002298AF /* InviteFriendTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendTableViewCell.swift; sourceTree = "<group>"; };
 		BB3B95031E463A4B002298AF /* BasicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicViewController.swift; sourceTree = "<group>"; };
 		BB3EF57C1E696CE4006FB2ED /* Gender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
@@ -836,6 +840,7 @@
 				BBBA1DD41E74BCF8000C55B8 /* FirstEntranceMomentView.swift */,
 				BBBA1DDA1E74CEB6000C55B8 /* FirstEntranceUserView.swift */,
 				BBA0DC731E79408800F2BA6E /* CustomSearchBar.swift */,
+				BB2A5CA91F17BDD9003E9095 /* TimerDialogView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1030,6 +1035,7 @@
 		BB4ED6001E3C0BCA005B3487 /* XIBs */ = {
 			isa = PBXGroup;
 			children = (
+				BB2A5CC81F17BDFB003E9095 /* TimerDialogView.xib */,
 				BB1FF6F01E51EC05002343CE /* ConfirmationView.xib */,
 				BB1FF6F11E51EC05002343CE /* InviteFriendsView.xib */,
 				BB22CF941E50721E0096A3D3 /* ParticipantView.xib */,
@@ -1328,6 +1334,7 @@
 			files = (
 				BB4ED5E31E3B4F81005B3487 /* SourceSansPro-Regular.otf in Resources */,
 				69D2DB961CEA0A4A00150256 /* GoogleService-Info.plist in Resources */,
+				BB2A5CC91F17BDFB003E9095 /* TimerDialogView.xib in Resources */,
 				BB5186271E4B5C89001C749E /* ProfileView.xib in Resources */,
 				BB4ED6021E3C0BDA005B3487 /* SettingsBigHeaderView.xib in Resources */,
 				88CA7A711CBEF06A00231AB2 /* LaunchScreen.storyboard in Resources */,
@@ -1553,6 +1560,7 @@
 				BB4ED5FF1E3C0B69005B3487 /* SettingsBigHeaderView.swift in Sources */,
 				BB3EF5881E6CB4D8006FB2ED /* CountriesProvider.swift in Sources */,
 				BB1FF6E91E51C3B6002343CE /* RateUsView.swift in Sources */,
+				BB2A5CAA1F17BDD9003E9095 /* TimerDialogView.swift in Sources */,
 				8873F72D1CBFFF520053EAB8 /* BrizeoImage.swift in Sources */,
 				BB22CF9B1E5072290096A3D3 /* ParticipantView.swift in Sources */,
 				88C1886B1CDB9D440011F3A6 /* Moment.swift in Sources */,

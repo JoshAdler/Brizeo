@@ -28,6 +28,7 @@ class SearchMatchesViewController: BasicViewController {
     @IBOutlet weak var actionsButton: UIButton!
     @IBOutlet weak var approveButton: UIButton!
     @IBOutlet weak var declineButton: UIButton!
+    @IBOutlet weak var timerDialogView: TimerDialogView!
     
     var swipeView: DMSwipeCardsView<Any>?
     var matches: [User]?
@@ -41,6 +42,12 @@ class SearchMatchesViewController: BasicViewController {
         super.viewDidLoad()
         
         NotificationCenter.default.addObserver(self, selector: #selector(searchLocationWasChanged(notification:)), name: NSNotification.Name(rawValue: searchLocationChangedNotification), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(actionLimitIsReset(notification:)), name: NSNotification.Name(rawValue: actionCounterIsResetNotification), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(actionCountWasChanged(notification:)), name: NSNotification.Name(rawValue: approveCountChangedNotification), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(actionCountWasChanged(notification:)), name: NSNotification.Name(rawValue: declineCountChangedNotification), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,8 +61,16 @@ class SearchMatchesViewController: BasicViewController {
         navigationController?.setNavigationBarHidden(false, animated: animated)
         Helper.mainTabBarController()?.tabBar.isHidden = false
         
-        //fetchMatchesList()
-        loadMatchesIfNeeds()
+        // check whether timer dialog box is required
+        if !ActionCounter.canDoAction(fromSearchController: true) {
+            timerDialogView.isHidden = false
+            timerDialogView.present(on: view, withAnimation: false)
+            timerDialogView.isOkButtonEnabled = false
+            view.bringSubview(toFront: timerDialogView)
+        } else {
+            //fetchMatchesList()
+            loadMatchesIfNeeds()
+        }
     }
     
     deinit {
@@ -71,6 +86,24 @@ class SearchMatchesViewController: BasicViewController {
         
         matches = nil
 //        fetchMatchesList()
+    }
+    
+    func actionLimitIsReset(notification: NSNotification) {
+        
+        timerDialogView.isHidden = true
+        
+        // load matches
+        loadMatchesIfNeeds()
+    }
+    
+    func actionCountWasChanged(notification: NSNotification) {
+        
+        if !ActionCounter.canDoAction(fromSearchController: true) {
+            timerDialogView.isHidden = false
+            timerDialogView.present(on: view, withAnimation: false)
+            view.bringSubview(toFront: timerDialogView)
+            timerDialogView.isOkButtonEnabled = false
+        }
     }
     
     // MARK: - Private methods
@@ -338,11 +371,6 @@ class SearchMatchesViewController: BasicViewController {
             return
         }
         
-        guard ActionCounter.canDoAction(fromSearchController: false) else {
-            print("Place alert view")
-            return
-        }
-        
         approveUser(user: currentUser, true)
     }
     
@@ -350,11 +378,6 @@ class SearchMatchesViewController: BasicViewController {
         
         guard let currentUser = matches?.first else {
             print("Can't decline anybody because there is no users")
-            return
-        }
-        
-        guard ActionCounter.canDoAction(fromSearchController: false) else {
-            print("Place alert view")
             return
         }
         
@@ -451,21 +474,11 @@ extension SearchMatchesViewController: DMSwipeCardsViewDelegate {
     func swipedLeft(_ object: Any) {
         print("left")
         
-        guard ActionCounter.canDoAction(fromSearchController: false) else {
-            print("Place alert view")
-            return
-        }
-        
         declineUser(user: object as! User, false)
     }
     
     func swipedRight(_ object: Any) {
         print("right")
-        
-        guard ActionCounter.canDoAction(fromSearchController: false) else {
-            print("Place alert view")
-            return
-        }
         
         approveUser(user: object as! User, false)
     }
