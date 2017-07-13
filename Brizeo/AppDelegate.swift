@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: - AppDelegate livecycle
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
+
         AppDelegate.originalAppDelegate = self
     
         // apply main theme for the app

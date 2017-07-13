@@ -52,6 +52,21 @@ class Helper: NSObject {
     
     static var player: AVAudioPlayer?
     
+    // MARK: - General
+    
+    class func arrayOfCommonElements <T, U> (lhs: T, rhs: U) -> [T.Iterator.Element] where T: Sequence, U: Sequence, T.Iterator.Element: Equatable, T.Iterator.Element == U.Iterator.Element {
+        
+        var returnArray:[T.Iterator.Element] = []
+        for lhsItem in lhs {
+            for rhsItem in rhs {
+                if lhsItem == rhsItem {
+                    returnArray.append(lhsItem)
+                }
+            }
+        }
+        return returnArray
+    }
+    
     // MARK: - Storyboard
     
     // storyboard

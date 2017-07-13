@@ -79,6 +79,7 @@
 		BB22CF9A1E5072290096A3D3 /* DropMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB22CF971E5072290096A3D3 /* DropMenuButton.swift */; };
 		BB22CF9B1E5072290096A3D3 /* ParticipantView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB22CF981E5072290096A3D3 /* ParticipantView.swift */; };
 		BB22CF9D1E5081790096A3D3 /* BranchProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB22CF9C1E5081790096A3D3 /* BranchProvider.swift */; };
+		BB2A5C9A1F175F1E003E9095 /* ActionCounter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB2A5C991F175F1E003E9095 /* ActionCounter.swift */; };
 		BB3B95001E44C3CD002298AF /* InviteFriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B94FF1E44C3CD002298AF /* InviteFriendTableViewCell.swift */; };
 		BB3B95041E463A4B002298AF /* BasicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3B95031E463A4B002298AF /* BasicViewController.swift */; };
 		BB3EF57D1E696CE4006FB2ED /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3EF57C1E696CE4006FB2ED /* Gender.swift */; };
@@ -313,6 +314,7 @@
 		BB22CF971E5072290096A3D3 /* DropMenuButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropMenuButton.swift; sourceTree = "<group>"; };
 		BB22CF981E5072290096A3D3 /* ParticipantView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantView.swift; sourceTree = "<group>"; };
 		BB22CF9C1E5081790096A3D3 /* BranchProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BranchProvider.swift; sourceTree = "<group>"; };
+		BB2A5C991F175F1E003E9095 /* ActionCounter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionCounter.swift; sourceTree = "<group>"; };
 		BB3B94FF1E44C3CD002298AF /* InviteFriendTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteFriendTableViewCell.swift; sourceTree = "<group>"; };
 		BB3B95031E463A4B002298AF /* BasicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicViewController.swift; sourceTree = "<group>"; };
 		BB3EF57C1E696CE4006FB2ED /* Gender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
@@ -586,6 +588,7 @@
 				8873F72C1CBFFF520053EAB8 /* BrizeoImage.swift */,
 				88B568F91CCA77A6003A21EE /* Helper.swift */,
 				88C188661CDB85240011F3A6 /* PaginationHelper.swift */,
+				BB2A5C991F175F1E003E9095 /* ActionCounter.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1544,6 +1547,7 @@
 				BB4ED5E81E3BA27B005B3487 /* SettingsViewController.swift in Sources */,
 				BBFBBB8D1E3CDB750002BF4B /* SettingsCheckmarkCell.swift in Sources */,
 				BB09A6AE1E66C08E0020F8C5 /* ChatProvider.swift in Sources */,
+				BB2A5C9A1F175F1E003E9095 /* ActionCounter.swift in Sources */,
 				BB22CF9A1E5072290096A3D3 /* DropMenuButton.swift in Sources */,
 				BB7AD2641E48C3CC00502AE2 /* LikesTableViewCell.swift in Sources */,
 				BBA0DC741E79408800F2BA6E /* CustomSearchBar.swift in Sources */,

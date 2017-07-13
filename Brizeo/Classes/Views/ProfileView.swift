@@ -79,7 +79,12 @@ class ProfileView: UIView {
         // work
         workLabel.text = user.workInfo ?? "Not set"
     }
-    
+
+    func setSharedPassionsCount(_ count: Int) {
+        
+        interestView.showSharedCount(count)
+    }
+    /* RB Comment: Old functionality
     func setInterest(with color: UIColor?, title: String?, image: UIImage?) {
         if let color = color {
             interestView.interestColor = color
@@ -103,7 +108,7 @@ class ProfileView: UIView {
         if let imageURL = imageURL {
             interestView.interestImageView.sd_setImage(with: URL(string: imageURL)!)
         }
-    }
+    }*/
     
     func setMutualFriendsCount(count: Int) {
         friendsCountLabel.text = "\(count)"

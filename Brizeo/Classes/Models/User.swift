@@ -69,6 +69,7 @@ class User: Mappable {
         case otherProfileImages = "otherProfileImages"
         case picture = "picture"
         case nationality = "nationality"
+        case passionsIds = "passions"
     }
     
     // MARK: - Properties
@@ -97,6 +98,7 @@ class User: Mappable {
     var primaryPassionId: String?
     var secondaryPassionId: String?
     var thirdPassionId: String?
+    var passionsIds: [String] = []
     
     var numberOfMatches: Int = 0
     var lastActiveTime: Date?
@@ -194,7 +196,8 @@ class User: Mappable {
         
         return media
     }
-    
+
+    /* RB Comment: Old functionality
     var passionsIds: [String] {
         var ids = [String]()
         
@@ -212,6 +215,7 @@ class User: Mappable {
         
         return ids
     }
+ */
     
     var topPassionId: String? {
         
@@ -259,7 +263,7 @@ class User: Mappable {
     }
     
     required init?(map: Map) { }
-    //TODO: there is a bug here with profileImageURL
+    
     init(objectId: String, facebookId: String, displayName: String?, email: String, gender: Gender, profileImageURL: String?, workInfo: String?, studyInfo: String?, uploadedURLs: [String], lastActiveDate: Date?) {
         self.objectId = objectId
         self.facebookId = facebookId
@@ -301,6 +305,7 @@ class User: Mappable {
         primaryPassionId <- map[JSONKeys.primaryPassionId.rawValue]
         secondaryPassionId <- map[JSONKeys.secondaryPassionId.rawValue]
         thirdPassionId <- map[JSONKeys.thirdPassionId.rawValue]
+        passionsIds <- map[JSONKeys.passionsIds.rawValue]
         
         // addiotional info
         numberOfMatches <- map[JSONKeys.numberOfMatches.rawValue]

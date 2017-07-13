@@ -258,9 +258,10 @@ extension UserMatchesViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let user = matches[indexPath.row]
         
+        let user = (filteredUsers ?? matches)[indexPath.row]
         let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
+        
         otherPersonProfileController.user = user
         
         let navigation = navigationController ?? Helper.currentTabNavigationController()

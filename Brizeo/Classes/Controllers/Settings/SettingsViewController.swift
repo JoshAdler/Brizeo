@@ -58,7 +58,7 @@ class SettingsViewController: UIViewController {
             case .notifications:
                 return 3
             case .discovery:
-                return 4
+                return 3
             default:
                 return 1
             }
@@ -201,11 +201,11 @@ class SettingsViewController: UIViewController {
             self.tableView.reloadRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
         }
         
-        // reload gender
-        tableView.reloadRows(at: [IndexPath(row: 2, section: 2)], with: .automatic)
+//        // reload gender
+//        tableView.reloadRows(at: [IndexPath(row: 2, section: 2)], with: .automatic)
         
         // reload nationality
-        tableView.reloadRows(at: [IndexPath(row: 3, section: 2)], with: .automatic)
+        tableView.reloadRows(at: [IndexPath(row: 2, section: 2)], with: .automatic)
     }
     
     deinit {
@@ -376,28 +376,28 @@ extension SettingsViewController: UITableViewDataSource {
 
                 typeCell.delegate = self
                 return typeCell
-            } else if indexPath.row == 2 { // gender
-                let typeCell = cell as! SettingsInvitationCell
-                var genderString = ""
-                
-                if let preferences = preferences {
-                    for gender in [Gender.Man, Gender.Woman, Gender.Couple] {
-                        if preferences.genders.contains(gender) {
-                            genderString += gender.titlePlural
-                            genderString += " and "
-                        }
-                    }
-                    
-                    if genderString.characters.count > 0 {
-                        let endIndex = genderString.index(genderString.endIndex, offsetBy: -4)
-                        genderString = genderString.substring(to: endIndex)
-                    }
-                }
-                
-                typeCell.rightTextLabel.text = genderString
-                typeCell.titleLabel.text = LocalizableString.Gender.localizedString
-                
-                return typeCell
+//            } else if indexPath.row == 2 { // gender
+//                let typeCell = cell as! SettingsInvitationCell
+//                var genderString = ""
+//                
+//                if let preferences = preferences {
+//                    for gender in [Gender.Man, Gender.Woman, Gender.Couple] {
+//                        if preferences.genders.contains(gender) {
+//                            genderString += gender.titlePlural
+//                            genderString += " and "
+//                        }
+//                    }
+//                    
+//                    if genderString.characters.count > 0 {
+//                        let endIndex = genderString.index(genderString.endIndex, offsetBy: -4)
+//                        genderString = genderString.substring(to: endIndex)
+//                    }
+//                }
+//                
+//                typeCell.rightTextLabel.text = genderString
+//                typeCell.titleLabel.text = LocalizableString.Gender.localizedString
+//                
+//                return typeCell
             } else {
                 
                 let typeCell = cell as! SettingsInvitationCell
@@ -513,14 +513,15 @@ extension SettingsViewController: UITableViewDelegate {
             Helper.goToInitialController(true)
             break
         case .discovery:
-            if indexPath.row == 2 { // gender
-                
-                let genderController: GenderViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.genderController)!
-                genderController.user = user
-                genderController.preferences = preferences
-                
-                navigationController?.pushViewController(genderController, animated: true)
-            } else if indexPath.row == 3 { // nationality
+//            if indexPath.row == 2 { // gender
+//                
+//                let genderController: GenderViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.genderController)!
+//                genderController.user = user
+//                genderController.preferences = preferences
+//                
+//                navigationController?.pushViewController(genderController, animated: true)
+//            } else
+                if indexPath.row == 2 { // nationality
                 
                 let optionsController: OptionsNationalityViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.nationalityController)!
                 optionsController.user = user

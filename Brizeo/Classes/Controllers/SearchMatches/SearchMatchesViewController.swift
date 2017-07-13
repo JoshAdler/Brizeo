@@ -141,23 +141,32 @@ class SearchMatchesViewController: BasicViewController {
             
             let viewGenerator = { (element: Any, frame: CGRect) -> (UIView) in
                 let profileView: ProfileView = ProfileView.loadFromNib()
+                let user = element as! User
                 
                 profileView.frame = frame
-                profileView.applyUser(user: element as! User)
+                profileView.applyUser(user: user)
                 
+                // current user passions
+                let currentUserPassionsIds = self.currentUser.passionsIds
+                let userPassionsIds = user.passionsIds
+                let sharedPassions = Helper.arrayOfCommonElements(lhs: currentUserPassionsIds, rhs: userPassionsIds)
+                
+                profileView.setSharedPassionsCount(sharedPassions.count)
+                
+                /* RB Comment: Old functionality
                 // passion
                 if let passionId = (element as! User).topPassionId {
                     let passion = PassionsProvider.shared.getPassion(by: passionId)
                     profileView.setInterest(with: passion?.color, title: passion?.displayName, imageURL: passion?.iconURL)
                 }
-                
+                */
                 return profileView
             }
             
             let overlayGenerator: (SwipeMode, CGRect) -> (UIView) = { (mode: SwipeMode, frame: CGRect) -> (UIView) in
                 let imageView = UIImageView()
-                imageView.image = mode == .left ? #imageLiteral(resourceName: "no") : #imageLiteral(resourceName: "ok")
-                imageView.frame.size = CGSize(width: 100, height: 100)
+                imageView.image = mode == .left ?  #imageLiteral(resourceName: "ic_pass") : #imageLiteral(resourceName: "ic_connect")
+                imageView.frame.size = CGSize(width: 114 , height: 38.5)
                 imageView.center = CGPoint(x: (mode == .left ? frame.width * (2.0 / 3.0): frame.width / 3.0), y: frame.height * 0.2)
                 
                 return imageView
@@ -208,8 +217,8 @@ class SearchMatchesViewController: BasicViewController {
     
     fileprivate func setButtonsHidden(isHidden: Bool) {
         detailsButton.isHidden = isHidden
-        actionsButton.isHidden = isHidden
-        shareButton.isHidden = isHidden
+//        actionsButton.isHidden = isHidden
+//        shareButton.isHidden = isHidden
         approveButton.isHidden = isHidden
         declineButton.isHidden = isHidden
     }
@@ -250,6 +259,7 @@ class SearchMatchesViewController: BasicViewController {
                     welf.hideLoader()
                     welf.loadMatchesIfNeeds()
                     
+                    ActionCounter.didDecline(fromSearchController: true)
                     LocalyticsProvider.trackUserDidDeclined()
                     
                     break
@@ -294,6 +304,7 @@ class SearchMatchesViewController: BasicViewController {
                         welf.fetchMutualFriends(for: nextUser)
                     }
                     
+                    ActionCounter.didApprove(fromSearchController: true)
                     LocalyticsProvider.trackUserDidApproved()
                     
                     if user.status == .isMatched {
@@ -327,6 +338,11 @@ class SearchMatchesViewController: BasicViewController {
             return
         }
         
+        guard ActionCounter.canDoAction(fromSearchController: false) else {
+            print("Place alert view")
+            return
+        }
+        
         approveUser(user: currentUser, true)
     }
     
@@ -334,6 +350,11 @@ class SearchMatchesViewController: BasicViewController {
         
         guard let currentUser = matches?.first else {
             print("Can't decline anybody because there is no users")
+            return
+        }
+        
+        guard ActionCounter.canDoAction(fromSearchController: false) else {
+            print("Place alert view")
             return
         }
         
@@ -430,11 +451,21 @@ extension SearchMatchesViewController: DMSwipeCardsViewDelegate {
     func swipedLeft(_ object: Any) {
         print("left")
         
+        guard ActionCounter.canDoAction(fromSearchController: false) else {
+            print("Place alert view")
+            return
+        }
+        
         declineUser(user: object as! User, false)
     }
     
     func swipedRight(_ object: Any) {
         print("right")
+        
+        guard ActionCounter.canDoAction(fromSearchController: false) else {
+            print("Place alert view")
+            return
+        }
         
         approveUser(user: object as! User, false)
     }

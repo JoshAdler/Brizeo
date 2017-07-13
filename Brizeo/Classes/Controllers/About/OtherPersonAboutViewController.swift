@@ -102,7 +102,12 @@ extension OtherPersonAboutViewController: UITableViewDataSource {
             return mutualFriends?.count ?? 0
         }
         
-        return 1
+        // RB Comment: When personal text is empty
+        if user.personalText.numberOfCharactersWithoutSpaces() == 0 {
+            return 0
+        } else {
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -152,18 +157,20 @@ extension OtherPersonAboutViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let user = mutualFriends![indexPath.row]
-        
-        if user.facebookId == nil { // invite friend
-            return
+        if indexPath.section == 2 { // mutual friends
+            let user = mutualFriends![indexPath.row]
+            
+            if user.facebookId == nil { // invite friend
+                return
+            }
+            
+            let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
+            
+            otherPersonProfileController.user = user
+            otherPersonProfileController.userId = user.objectId
+            
+            Helper.currentTabNavigationController()?.pushViewController(otherPersonProfileController, animated: true)
         }
-        
-        let otherPersonProfileController: OtherProfileViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.otherProfileControllerId)!
-        
-        otherPersonProfileController.user = user
-        otherPersonProfileController.userId = user.objectId
-        
-        Helper.currentTabNavigationController()?.pushViewController(otherPersonProfileController, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

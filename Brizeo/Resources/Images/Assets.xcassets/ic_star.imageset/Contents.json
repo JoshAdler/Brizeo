@@ -2,12 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "fb-about page.png",
+      "filename" : "ic_star.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "fb-about page@2x.png",
+      "filename" : "ic_star@2x.png",
       "scale" : "2x"
     },
     {

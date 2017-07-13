@@ -198,6 +198,7 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
     }
     
     fileprivate func fetchPassions() {
+        
         guard user != nil else {
             return
         }
@@ -207,17 +208,28 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
             if let weak = self {
                 switch result {
                 case .success(let passions):
+                    
                     weak.passions = passions
                     //TODO: add delete button to matches
                     // try to get top passion
+                    
+                    // current user passions
+                    let currentUserPassionsIds = UserProvider.shared.currentUser!.passionsIds
+                    let userPassionsIds = weak.user!.passionsIds
+                    let sharedPassions = Helper.arrayOfCommonElements(lhs: currentUserPassionsIds, rhs: userPassionsIds)
+                    
+                    weak.interestView.showSharedCount(sharedPassions.count)
+                    
+                    /* RB Comment: Old functionality
                     if let topPassionId = weak.user!.topPassionId, let userPassion = weak.passions?.filter({ topPassionId == $0.objectId! }).first {
                         
-                        if let iconLink = userPassion.iconLink {
+                     
+                         if let iconLink = userPassion.iconLink {
                             weak.interestView.interestImageView.sd_setImage(with: iconLink)
-                        }
-                        
-                        weak.interestView.title = userPassion.displayName
-                        weak.interestView.interestColor = userPassion.color
+                         }
+                         
+                         weak.interestView.title = userPassion.displayName
+                         weak.interestView.interestColor = userPassion.color
                     }
                     else { // set default passion "Travel"
                         if let defaultPassion = weak.passions?.filter({ $0.displayName == "Travel" }).first {
@@ -231,7 +243,7 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
                         } else {
                             weak.interestView.isHidden = true
                         }
-                    }
+                    }*/
                     break
                 case .failure(let error):
                     weak.showAlert(LocalizableString.Error.localizedString, message: error.localizedDescription, dismissTitle: LocalizableString.Dismiss.localizedString, completion: nil)
@@ -248,6 +260,8 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
             self.approveButton.alpha = isHidden ? 0.0 : 1.0
             self.declineButton.alpha = isHidden ? 0.0 : 1.0
         }
+        self.actionsButton.alpha = isHidden ? 1.0 : 0.0
+        self.shareButton.alpha = isHidden ? 1.0 : 0.0
     }
     
     fileprivate func decreaseProfileViewHeight(_ animated: Bool) {
@@ -311,6 +325,9 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
                 switch(result) {
                 case .success(_):
                     
+                    // save decline action
+                    ActionCounter.didDecline(fromSearchController: false)
+                    
                     welf.hideLoader()
                     welf.decreaseProfileViewHeight(true)
                     
@@ -335,6 +352,9 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
                 
                 switch(result) {
                 case .success(_):
+                    
+                    // save approve action
+                    ActionCounter.didApprove(fromSearchController: false)
                     
                     welf.hideLoader()
                     welf.decreaseProfileViewHeight(true)
@@ -388,10 +408,22 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
     }
     
     @IBAction func onDeclineButtonClicked(_ sender: UIButton) {
+        
+        guard ActionCounter.canDoAction(fromSearchController: false) else {
+            print("Place alert view")
+            return
+        }
+        
         declineUser()
     }
     
     @IBAction func onAcceptButtonClicked(_ sender: UIButton) {
+        
+        guard ActionCounter.canDoAction(fromSearchController: false) else {
+            print("Place alert view")
+            return
+        }
+        
         approveUser()
     }
     

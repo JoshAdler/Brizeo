@@ -46,6 +46,8 @@ class Configurations: NSObject {
         static let developmentServerURL = "http://34.208.151.167:4000"
         static let termsOfUseURL = "http://brizeo.com/terms/"
         static let photosCountToLoadAtStart = 5
+        static let actionLimit = 15 /* how many time use can click approve/decline */
+        static let shouldCountOnlySearch = true
     }
     
     // MARK: - Localytics

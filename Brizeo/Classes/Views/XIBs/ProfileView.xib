@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -31,22 +31,21 @@
                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WLC-rv-DVa" customClass="OtherPersonInterestView" customModule="Brizeo" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="477.5" width="375" height="68"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zwd-lB-RaE">
-                            <rect key="frame" x="143.5" y="12.5" width="44.5" height="44"/>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_star" translatesAutoresizingMaskIntoConstraints="NO" id="Zwd-lB-RaE">
+                            <rect key="frame" x="170" y="26" width="18" height="17.5"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="Zwd-lB-RaE" secondAttribute="height" multiplier="1:1" id="a28-b1-Mua"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="huO-Gz-eAv">
                             <rect key="frame" x="198" y="0.0" width="0.0" height="68"/>
-                            <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="18"/>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="14"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.65000000000000002" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="Zwd-lB-RaE" firstAttribute="height" secondItem="WLC-rv-DVa" secondAttribute="height" multiplier="0.65" id="5Yr-tc-NTP"/>
                         <constraint firstItem="Zwd-lB-RaE" firstAttribute="centerY" secondItem="WLC-rv-DVa" secondAttribute="centerY" id="Ejx-VY-8Cf"/>
                         <constraint firstItem="huO-Gz-eAv" firstAttribute="centerY" secondItem="WLC-rv-DVa" secondAttribute="centerY" id="Pp0-al-nHa"/>
                         <constraint firstItem="huO-Gz-eAv" firstAttribute="leading" secondItem="Zwd-lB-RaE" secondAttribute="trailing" constant="10" id="Vi8-ru-f3g"/>
@@ -86,13 +85,13 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r5b-2n-hGM">
-                    <rect key="frame" x="340.5" y="558.5" width="9.5" height="23"/>
+                    <rect key="frame" x="340.5" y="559" width="9.5" height="23"/>
                     <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="18"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_social" translatesAutoresizingMaskIntoConstraints="NO" id="7ls-zJ-Tqm">
-                    <rect key="frame" x="312.5" y="563.5" width="20" height="16"/>
+                    <rect key="frame" x="312.5" y="564" width="20" height="16"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="20" id="YI2-Sc-1aI"/>
                     </constraints>
@@ -165,5 +164,6 @@
     </objects>
     <resources>
         <image name="ic_social" width="20" height="16"/>
+        <image name="ic_star" width="18" height="17"/>
     </resources>
 </document>
