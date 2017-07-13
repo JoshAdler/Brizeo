@@ -19,6 +19,7 @@ class OtherPersonAboutViewController: UIViewController {
         static let inviteCellHeight: CGFloat = 70.0
         static let infoCellHeight: CGFloat = 231.5
         static let invitedByCellHeight: CGFloat = 60.0
+        static let passionsCellHeight: CGFloat = 114.0
         static let headerViewHeight: CGFloat = 53.5
     }
     
@@ -89,16 +90,20 @@ class OtherPersonAboutViewController: UIViewController {
 extension OtherPersonAboutViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if section == 1 { // details
+        if section == 1 { // passions
+            return 1
+        }
+        
+        if section == 2 { // details
             return user.hasInvitedByPerson ? 2 : 1 /* details with/out invited by */
         }
         
-        if section == 2 { // mutual friends
+        if section == 3 { // mutual friends
             return mutualFriends?.count ?? 0
         }
         
@@ -116,7 +121,17 @@ extension OtherPersonAboutViewController: UITableViewDataSource {
             
             cell.titleLabel.text = user.personalText
             return cell
-        } else if indexPath.section == 1 { // info cell
+        } else if indexPath.section == 1 { // passions
+            
+            let cell: AboutPassionsTableViewCell = tableView.dequeueCell(withIdentifier: AboutPassionsTableViewCell.identifier, for: indexPath)
+            let passions = user.passions
+            
+            if [passions].count >= Configurations.General.requiredMinPassionsCount {
+                cell.setPassions(passions)
+            }
+            
+            return cell
+        } else if indexPath.section == 2 { // info cell
             if indexPath.row == 0 { // detail cell
                 let cell = tableView.dequeueReusableCell(withIdentifier: OtherPersonAboutInfoTableViewCell.identifier, for: indexPath) as! OtherPersonAboutInfoTableViewCell
                 
@@ -157,7 +172,7 @@ extension OtherPersonAboutViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        if indexPath.section == 2 { // mutual friends
+        if indexPath.section == 3 { // mutual friends
             let user = mutualFriends![indexPath.row]
             
             if user.facebookId == nil { // invite friend
@@ -177,7 +192,9 @@ extension OtherPersonAboutViewController: UITableViewDelegate {
         
         if indexPath.section == 0 { // text cell
             return UITableViewAutomaticDimension
-        } else if indexPath.section == 1 { // info cell
+        } else if indexPath.section == 1 { // passions
+            return Constants.passionsCellHeight
+        } else if indexPath.section == 2 { // info cell
             if indexPath.row == 0 { // details
                 return UITableViewAutomaticDimension
                 //return Constants.infoCellHeight
@@ -198,13 +215,14 @@ extension OtherPersonAboutViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
         if section == 0 {
             return nil
         }
         
         let headerView: SettingsBigHeaderView = tableView.dequeueReusableHeaderFooterView(withIdentifier: SettingsBigHeaderView.nibName)
         headerView.titleLabel.textColor = HexColor("5f5f5f")!
-        headerView.titleLabel.text = [LocalizableString.Details, LocalizableString.MutualFriends][section - 1].localizedString.uppercased()
+        headerView.titleLabel.text = [LocalizableString.Passions, LocalizableString.Details, LocalizableString.MutualFriends][section - 1].localizedString.uppercased()
         return headerView
     }
 }

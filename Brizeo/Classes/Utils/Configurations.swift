@@ -48,6 +48,7 @@ class Configurations: NSObject {
         static let photosCountToLoadAtStart = 5
         static let actionLimit = 15 /* how many time use can click approve/decline */
         static let shouldCountOnlySearch = true
+        static let requiredMinPassionsCount = 4
     }
     
     // MARK: - Localytics

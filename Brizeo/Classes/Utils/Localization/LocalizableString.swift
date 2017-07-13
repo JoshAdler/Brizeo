@@ -170,6 +170,7 @@ enum LocalizableString: String {
     case Matches = "Matches"
     case MyMap = "My Trips"
     case Map = "Trips"
+    case Passions = "Interest categories"
     case SelectInterest = "Select a Passion for this Moment"
     case SelectFitlerPassion = "Filter the Moments by Passions"
     case SelectEventFilter = "Filter the Events"

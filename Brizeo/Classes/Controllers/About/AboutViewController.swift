@@ -54,11 +54,14 @@ class AboutViewController: UIViewController {
         func cellHeight(for row: Int) -> CGFloat {
             switch self {
             case .passions:
+                return 104.0
+                /* RB Comment: old functionality
                 if row == 0 {
                     return 53.0
                 } else {
                     return 71.0
                 }
+ */
             case .introduceYourself:
                 if row == 0 {
                     return 189.0
@@ -74,11 +77,13 @@ class AboutViewController: UIViewController {
         func cellId(for row: Int) -> String {
             switch self {
             case .passions:
+                return AboutPassionsTableViewCell.identifier
+                /* RB Comment: Old functionality
                 if row == 0 {
                     return "AboutTitleTableViewCell"
                 } else {
                     return AboutTableViewCell.identifier
-                }
+                } */
             case .introduceYourself:
                 if row == 0 {
                     return AboutInputTableViewCell.identifier
@@ -209,6 +214,12 @@ class AboutViewController: UIViewController {
         }
     
         user.assignPassionIds(dict: selectedPassion)
+        
+        var idss = [String]()
+        for i in 0 ..< 4 {
+            idss.append(passions![i].objectId)
+        }
+        user.passionsIds = idss
         UserProvider.updateUser(user: user, completion: nil)
     }
     
@@ -280,7 +291,10 @@ extension AboutViewController: UITableViewDataSource {
         case .introduceYourself:
             return 2
         case .passions:
-            return passions?.count ?? 0 + 1
+            if passions != nil {
+                return 1
+            }
+            return 0
         default: return 1
         }
     }
@@ -296,6 +310,22 @@ extension AboutViewController: UITableViewDataSource {
         
         switch section {
         case .passions:
+            
+            let passionCell = cell as! AboutPassionsTableViewCell
+            var passions = [Passion]()
+            
+            _ = user.passionsIds.map({
+                if let passion = PassionsProvider.shared.getPassion(by: $0) {
+                    passions.append(passion)
+                }
+            })
+            
+            if passions.count == Configurations.General.requiredMinPassionsCount {
+                passionCell.setPassions(passions)
+            }
+            
+            return passionCell
+            /* RB Comment: old functionality
             if indexPath.row == 0 {
                 return cell
             } else {
@@ -312,7 +342,7 @@ extension AboutViewController: UITableViewDataSource {
                 }
                 
                 return typeCell
-            }
+            }*/
         case .nationality:
             let typeCell = cell as! SettingsInvitationCell
             

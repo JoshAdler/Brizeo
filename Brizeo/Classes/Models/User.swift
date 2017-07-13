@@ -125,6 +125,19 @@ class User: Mappable {
     
     // helper variables
     
+    var passions: [Passion] {
+        
+        var passions = [Passion]()
+        
+        for id in passionsIds {
+            if let passion = PassionsProvider.shared.getPassion(by: id) {
+                passions.append(passion)
+            }
+        }
+        
+        return passions
+    }
+    
     var shortName: String {
         let displayNameArray = displayName.components(separatedBy: " ")
         
