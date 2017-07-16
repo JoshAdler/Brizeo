@@ -156,4 +156,16 @@ class ChatProvider: NSObject {
             print("Successfully removed conversation with user with id \(user.objectId)")
         }
     }
+    
+    class func totalUnreadCount() -> Int {
+        
+        if ALUserDefaultsHandler.isLoggedIn() {
+            let userService = ALUserService()
+            let totalUnreadCount = userService.getTotalUnreadCount().intValue
+            
+            return totalUnreadCount
+        } else {
+            return 0
+        }
+    }
 }

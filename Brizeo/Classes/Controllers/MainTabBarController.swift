@@ -9,11 +9,6 @@
 import UIKit
 import Applozic
 
-extension Swift.Notification.Name {
-    
-    static let notificationsBadgeNumberWasChanged = Notification.Name("notificationsBadgeNumberWasChanged")
-}
-
 class MainTabBarController: UITabBarController {
     
     // MARK: - Types
@@ -40,7 +35,12 @@ class MainTabBarController: UITabBarController {
             }
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(notificationsBadgeNumberWasChanged(notification:)), name: .notificationsBadgeNumberWasChanged, object: nil)
+        // update badge number for unread messages
+        let number = ChatProvider.totalUnreadCount()
+        setMessageBadgeNumber(number)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(notificationsNumberWasChanged(notification:)), name: NSNotification.Name(rawValue: notificationsBadgeNumberWasChanged), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(unreadMessagesNumberWasChanged(notification:)), name: NSNotification.Name(rawValue: messagesBadgeNumberWasChanged), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,7 +62,7 @@ class MainTabBarController: UITabBarController {
     
     // MARK: - Public methods
     
-    func notificationsBadgeNumberWasChanged(notification: NSNotification) {
+    func notificationsNumberWasChanged(notification: NSNotification) {
         
         guard let items = tabBar.items else {
             return
@@ -75,6 +75,30 @@ class MainTabBarController: UITabBarController {
         }
         
         notificationItem.badgeValue = "\(number)"
+        
+        let messagesNumber = ChatProvider.totalUnreadCount()
+        UIApplication.shared.applicationIconBadgeNumber = number + messagesNumber
+    }
+    
+    func unreadMessagesNumberWasChanged(notification: NSNotification) {
+        
+        guard let items = tabBar.items else {
+            return
+        }
+        
+        let notificationItem = items[4]
+        
+        guard let number = notification.userInfo?["number"] as? Int else {
+            return
+        }
+        
+        notificationItem.badgeValue = "\(number)"
+        
+        if let messagesNumberStr = items[3].badgeValue, let messagesNumber = Int(messagesNumberStr) {
+            UIApplication.shared.applicationIconBadgeNumber = number + messagesNumber
+        } else {
+            UIApplication.shared.applicationIconBadgeNumber = number
+        }
     }
     
     func shouldShowLogo() -> Bool {
@@ -83,6 +107,22 @@ class MainTabBarController: UITabBarController {
     
     // MARK: - Private methods
     
+    fileprivate func setMessageBadgeNumber(_ number: Int) {
+        
+        guard let items = tabBar.items else {
+            return
+        }
+        
+        let notificationItem = items[4]
+        notificationItem.badgeValue = "\(number)"
+        
+        if let messagesNumberStr = items[3].badgeValue, let messagesNumber = Int(messagesNumberStr) {
+            UIApplication.shared.applicationIconBadgeNumber = number + messagesNumber
+        } else {
+            UIApplication.shared.applicationIconBadgeNumber = number
+        }
+    }
+
     fileprivate func showLogoIfNeeds() {
         if !shouldShowLogo() { return }
         

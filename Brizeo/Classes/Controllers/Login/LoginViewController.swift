@@ -11,6 +11,8 @@ import SVProgressHUD
 import Branch
 import Firebase
 
+let messagesBadgeNumberWasChanged = "messagesBadgeNumberWasChanged"
+
 class LoginViewController: UIViewController {
     
     // MARK: - Types
@@ -112,6 +114,10 @@ class LoginViewController: UIViewController {
         
         // load notifications to set badge number
         loadNotifications()
+        
+        // load number of unread messages
+        let unreadMessagesNumber = ChatProvider.totalUnreadCount()
+        Helper.sendNotification(with: messagesBadgeNumberWasChanged, object: nil, dict: ["number": unreadMessagesNumber])
     }
     
     fileprivate func loadNotifications() {

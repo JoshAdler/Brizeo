@@ -126,8 +126,7 @@ class UserProvider: NSObject {
                             completion?(.success(user))
                             
                             // load preferences
-                            PreferencesProvider.loadPreferences(for: user.objectId, fromCache: false, completion: nil)
-
+                            PreferencesProvider.loadPreferences(for: user.objectId, fromCache: false, completion: nil)                            
                         } else {
                             print("Can't register user in Chat")
                             completion?(.failure(APIError.unknown(message: "Error: Can't register Applozic user")))
@@ -233,6 +232,7 @@ class UserProvider: NSObject {
                                     
                                     ChatProvider.registerUserInChat(completionHandler: { (isSuccess) in
                                         if isSuccess {
+                                            
                                             print("Successfully created Applozic user")
                                             ChatProvider.createChatWithSuperuser()
                                             ChatProvider.createMatchingChat(with: Configurations.Applozic.superUserId)

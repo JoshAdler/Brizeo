@@ -12,6 +12,8 @@ import SwiftDate
 import FormatterKit
 import SVProgressHUD
 
+let notificationsBadgeNumberWasChanged = "notificationsBadgeNumberWasChanged"
+
 enum NotificationContentType {
     case likes
     case people
@@ -223,6 +225,7 @@ extension NotificationsViewController: NotificationsTableViewCellDelegate {
     }
     
     func notificationCellDidClickedOnProfile(cell: UITableViewCell) {
+        
         guard let indexPath = tableView.indexPath(for: cell) else {
             return
         }
