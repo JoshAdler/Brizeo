@@ -58,6 +58,11 @@ class PersonalTabsViewController: BasicViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        // reload data
+        if detailsController != nil {
+            detailsController.aboutController.reloadData()
+        }
+        
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     

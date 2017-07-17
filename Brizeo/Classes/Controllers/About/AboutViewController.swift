@@ -167,6 +167,12 @@ class AboutViewController: UIViewController {
         }
     }
     
+    // MARK: - Public methods
+    
+    func reloadData() {
+        passionsTableView.reloadData()
+    }
+    
     // MARK: - Private methods
     
     fileprivate func registerHeaderViews() { 
