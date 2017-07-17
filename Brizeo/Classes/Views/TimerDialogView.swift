@@ -75,7 +75,8 @@ class TimerDialogView: UIView {
         timer = Timer.scheduledTimer(withTimeInterval: Constants.timerInterval, repeats: true, block: { (timer) in
             
             guard let sessionDate = ActionCounter.shared.sessionDate else {
-                ActionCounter.didApprove(fromSearchController: false)
+                
+                timer.invalidate()
                 print("No session date in action counter")
                 return
             }
@@ -114,10 +115,11 @@ class TimerDialogView: UIView {
     // MARK: - Public methods
     
     func present(on view: UIView, withAnimation: Bool) {
-        frame = CGRect(origin: CGPoint.zero, size: view.frame.size)
-        view.addSubview(self)
-        
+
         if withAnimation {
+            frame = CGRect(origin: CGPoint.zero, size: view.frame.size)
+            view.addSubview(self)
+            
             UIView.animate(withDuration: Constants.animationDuration) {
                 self.centerView.transform = CGAffineTransform.identity
                 self.backgroundView?.alpha = 1.0

@@ -73,6 +73,11 @@ class ActionCounter: NSObject {
         
         shared.timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: false, block: { (timer) in
             
+            // reset counter
+            Defaults[.approveCount] = 0
+            Defaults[.declineCount] = 0
+            Defaults[.lastSessionDate] = nil
+            
             Helper.sendNotification(with: actionCounterIsResetNotification, object: nil, dict: nil)
         })
     }

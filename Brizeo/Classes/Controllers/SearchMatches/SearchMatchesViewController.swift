@@ -28,7 +28,7 @@ class SearchMatchesViewController: BasicViewController {
     @IBOutlet weak var actionsButton: UIButton!
     @IBOutlet weak var approveButton: UIButton!
     @IBOutlet weak var declineButton: UIButton!
-    @IBOutlet weak var timerDialogView: TimerDialogView!
+    @IBOutlet var timerDialogView: TimerDialogView!
     @IBOutlet weak var counterLabel: UILabel!
     
     var swipeView: DMSwipeCardsView<Any>?
@@ -123,6 +123,7 @@ class SearchMatchesViewController: BasicViewController {
         counterLabel.text = counterText
         
         if !ActionCounter.canDoAction(fromSearchController: true) {
+            timerDialogView.prepareView()
             timerDialogView.isHidden = false
             timerDialogView.present(on: view, withAnimation: false)
             view.bringSubview(toFront: timerDialogView)
@@ -409,6 +410,7 @@ class SearchMatchesViewController: BasicViewController {
     }
     
     @IBAction func onDetailButtonClicked(sender: UIButton) {
+        
         guard matches != nil else {
             assertionFailure("Can't get details for nobody")
             return
