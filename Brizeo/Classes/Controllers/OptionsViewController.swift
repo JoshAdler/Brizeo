@@ -33,6 +33,8 @@ class OptionsViewController: BasicViewController {
     var values: [String]?
     var keyboardTypist: Typist!
     
+    fileprivate var activeTextField: UITextField?
+    
     // MARK: - Controller lifecycle
     
     override func viewDidLoad() {
@@ -81,6 +83,19 @@ class OptionsViewController: BasicViewController {
         
         guard let tabsController = navigationController.viewControllers[navigationController.viewControllers.count - 2] as? PersonalTabsViewController else {
             return
+        }
+        
+        // apply new text
+        if let activeTextField = activeTextField, let text = activeTextField.text {
+            
+            if text.numberOfCharactersWithoutSpaces() > 0 {
+                if type == .work {
+                    user.workInfo = activeTextField.text
+                } else { // education
+                    user.studyInfo = activeTextField.text
+                }
+                tableView.reloadData()
+            }
         }
         
         let aboutController = tabsController.detailsController.aboutController
@@ -281,6 +296,14 @@ extension OptionsViewController: UITableViewDelegate {
 // MARK: - UITextFieldDelegate
 extension OptionsViewController: UITextFieldDelegate {
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        activeTextField = textField
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        activeTextField = nil
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         
@@ -293,7 +316,6 @@ extension OptionsViewController: UITextFieldDelegate {
                 }
                 
                 tableView.reloadData()
-                
                 onBackButtonClicked(sender: nil)
             }
         }
