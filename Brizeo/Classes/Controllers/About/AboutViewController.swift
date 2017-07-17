@@ -51,10 +51,14 @@ class AboutViewController: UIViewController {
             return "SettingsBigHeaderView"
         }
         
-        func cellHeight(for row: Int) -> CGFloat {
+        func cellHeight(for row: Int, hasPassions: Bool = true) -> CGFloat {
             switch self {
             case .passions:
-                return 104.0
+                if hasPassions {
+                    return 104.0
+                } else {
+                    return 55.0
+                }
                 /* RB Comment: old functionality
                 if row == 0 {
                     return 53.0
@@ -74,10 +78,11 @@ class AboutViewController: UIViewController {
             
         }
         
-        func cellId(for row: Int) -> String {
+        func cellId(for row: Int, hasPassions: Bool = true) -> String {
             switch self {
             case .passions:
-                return AboutPassionsTableViewCell.identifier
+                
+                return hasPassions ? AboutPassionsTableViewCell.identifier : SettingsInvitationCell.identifier
                 /* RB Comment: Old functionality
                 if row == 0 {
                     return "AboutTitleTableViewCell"
@@ -232,7 +237,7 @@ class AboutViewController: UIViewController {
 //        for i in 0 ..< 4 {
 //            idss.append(passions![i].objectId)
 //        }
-//        user.passionsIds = idss
+//        user.passionsIds = [String]()
         UserProvider.updateUser(user: user, completion: nil)
     }
     
@@ -318,11 +323,19 @@ extension AboutViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let cellId = section.cellId(for: indexPath.row)
+        let cellId = section.cellId(for: indexPath.row, hasPassions: user.passions.count == Configurations.General.requiredMinPassionsCount)
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath)
         
         switch section {
         case .passions:
+            
+            if user.passions.count != Configurations.General.requiredMinPassionsCount {
+                
+                let passionCell = cell as! SettingsInvitationCell
+                passionCell.titleLabel.text = LocalizableString.Select.localizedString
+                
+                return passionCell
+            }
             
             let passionCell = cell as! AboutPassionsTableViewCell
             var passions = [Passion]()
@@ -403,10 +416,12 @@ extension AboutViewController: UITableViewDataSource {
 extension AboutViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
         guard let section = Sections(rawValue: indexPath.section) else {
             return 0.0
         }
-        return section.cellHeight(for: indexPath.row)
+        
+        return section.cellHeight(for: indexPath.row, hasPassions: user.passions.count == Configurations.General.requiredMinPassionsCount)
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

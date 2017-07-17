@@ -192,6 +192,7 @@ enum LocalizableString: String {
     case First = "First"
     case Second = "Second"
     case Third = "Third"
+    case Select = "Select..."
     
     // MARK: Settings
     case CategoriesViewSelectCategories = "Please select\n 4 categories in total"
