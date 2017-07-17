@@ -45,6 +45,26 @@ class CategoriesViewController: BasicViewController {
         return false
     }
     
+    // MARK: - Override methods
+    
+    override func onBackButtonClicked(sender: UIBarButtonItem) {
+        
+        if user.passionsIds.count == Configurations.General.requiredMinPassionsCount {
+            super.onBackButtonClicked(sender: sender)
+        } else {
+            
+            // show dialog box
+            let toManyPassionsView: NoCategoriesView = NoCategoriesView.loadFromNib()
+            
+            toManyPassionsView.topTextLabel.text = LocalizableString.CategoriesViewSelectCategories.localizedString
+            toManyPassionsView.textLabel.text = LocalizableString.CategoriesViewSelectCategoriesDescription.localizedString
+            
+            toManyPassionsView.present(on: Helper.initialNavigationController().view)
+            
+            return
+        }
+    }
+    
     // MARK: - Private methods
     
     fileprivate func fetchPassions() {
@@ -110,7 +130,7 @@ class CategoriesViewController: BasicViewController {
             selectPassion(passion)
         }
         
-        navigationItem.leftBarButtonItem?.isEnabled = user.passionsIds.count == Configurations.General.requiredMinPassionsCount
+//        navigationItem.leftBarButtonItem?.isEnabled = user.passionsIds.count == Configurations.General.requiredMinPassionsCount
         
         // notify about changes
         Helper.sendNotification(with: searchLocationChangedNotification, object: nil, dict: nil)
