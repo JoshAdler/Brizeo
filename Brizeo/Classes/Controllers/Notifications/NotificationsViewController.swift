@@ -211,7 +211,7 @@ extension NotificationsViewController: NotificationsTableViewCellDelegate {
             NotificationProvider.markNotificationAsAlreadyViewed(notification, completion: nil)
             
             // decrease the badge number
-            if let badgeNumberStr = tabBarItem.badgeValue, let badgeNumber = Int(badgeNumberStr) {
+            if let badgeNumberStr = tabBarController?.tabBar.items?[3].badgeValue, let badgeNumber = Int(badgeNumberStr) {
                 Helper.sendNotification(with: notificationsBadgeNumberWasChanged, object: nil, dict: ["number": badgeNumber - 1])
             }
         }
@@ -236,7 +236,7 @@ extension NotificationsViewController: NotificationsTableViewCellDelegate {
             NotificationProvider.markNotificationAsAlreadyViewed(notification, completion: nil)
             
             // decrease the badge number
-            if let badgeNumberStr = tabBarItem.badgeValue, let badgeNumber = Int(badgeNumberStr) {
+            if let badgeNumberStr = tabBarController?.tabBar.items?[3].badgeValue, let badgeNumber = Int(badgeNumberStr) {
                 Helper.sendNotification(with: notificationsBadgeNumberWasChanged, object: nil, dict: ["number": badgeNumber - 1])
             }
         }

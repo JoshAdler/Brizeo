@@ -2,4 +2,70 @@
 <Bucket
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Brizeo/Classes/Controllers/Notifications/NotificationsViewController.swift"
+            timestampString = "521970154.008034"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "239"
+            endingLineNumber = "239"
+            landmarkName = "notificationCellDidClickedOnProfile(cell:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Brizeo.NotificationsViewController.notificationCellDidClickedOnProfile (cell : __ObjC.UITableViewCell) -&gt; ()"
+                  moduleName = "Brizeo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Brizeo/Classes/Controllers/Notifications/NotificationsViewController.swift"
+                  timestampString = "521970550.912548"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "239"
+                  endingLineNumber = "239"
+                  offsetFromSymbolStart = "876">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Brizeo.NotificationsViewController.notificationCellDidClickedOnProfile (cell : __ObjC.UITableViewCell) -&gt; ()"
+                  moduleName = "Brizeo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Brizeo/Classes/Controllers/Notifications/NotificationsViewController.swift"
+                  timestampString = "521970550.914875"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "239"
+                  endingLineNumber = "239"
+                  offsetFromSymbolStart = "1787">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Brizeo/Classes/Controllers/MainTabBarController.swift"
+            timestampString = "521970532.765087"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
+            landmarkName = "unreadMessagesNumberWasChangedFromApplozic(notification:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

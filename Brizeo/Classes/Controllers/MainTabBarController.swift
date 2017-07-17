@@ -77,7 +77,7 @@ class MainTabBarController: UITabBarController {
             return
         }
         
-        notificationItem.badgeValue = "\(number)"
+        notificationItem.badgeValue = number == 0 ? nil : "\(number)"
         
         let messagesNumber = ChatProvider.totalUnreadCount()
         if messagesNumber == -1 { // dont use message number
@@ -99,7 +99,7 @@ class MainTabBarController: UITabBarController {
             return
         }
         
-        notificationItem.badgeValue = "\(number)"
+        notificationItem.badgeValue = number == 0 ? nil : "\(number)"
         
         if let messagesNumberStr = items[3].badgeValue, let messagesNumber = Int(messagesNumberStr) {
             UIApplication.shared.applicationIconBadgeNumber = number + messagesNumber
@@ -131,7 +131,8 @@ class MainTabBarController: UITabBarController {
         }
         
         let notificationItem = items[4]
-        notificationItem.badgeValue = "\(number)"
+        
+        notificationItem.badgeValue = number == 0 ? nil : "\(number)"
         
         if let messagesNumberStr = items[3].badgeValue, let messagesNumber = Int(messagesNumberStr) {
             UIApplication.shared.applicationIconBadgeNumber = number + messagesNumber
