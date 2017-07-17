@@ -128,7 +128,7 @@ extension OtherPersonAboutViewController: UITableViewDataSource {
             let cell: AboutPassionsTableViewCell = tableView.dequeueCell(withIdentifier: AboutPassionsTableViewCell.identifier, for: indexPath)
             let passions = user.passions
             
-            if [passions].count >= Configurations.General.requiredMinPassionsCount {
+            if passions.count >= Configurations.General.requiredMinPassionsCount {
                 cell.setPassions(passions)
             }
             
