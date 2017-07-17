@@ -37,10 +37,13 @@ class MainTabBarController: UITabBarController {
         
         // update badge number for unread messages
         let number = ChatProvider.totalUnreadCount()
-        setMessageBadgeNumber(number)
+        if number != -1 {
+            setMessageBadgeNumber(number)
+        }
         
         NotificationCenter.default.addObserver(self, selector: #selector(notificationsNumberWasChanged(notification:)), name: NSNotification.Name(rawValue: notificationsBadgeNumberWasChanged), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(unreadMessagesNumberWasChanged(notification:)), name: NSNotification.Name(rawValue: messagesBadgeNumberWasChanged), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(unreadMessagesNumberWasChangedFromApplozic(notification:)), name: NSNotification.Name(rawValue: NEW_MESSAGE_NOTIFICATION), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -77,7 +80,11 @@ class MainTabBarController: UITabBarController {
         notificationItem.badgeValue = "\(number)"
         
         let messagesNumber = ChatProvider.totalUnreadCount()
-        UIApplication.shared.applicationIconBadgeNumber = number + messagesNumber
+        if messagesNumber == -1 { // dont use message number
+            UIApplication.shared.applicationIconBadgeNumber = number
+        } else {
+            UIApplication.shared.applicationIconBadgeNumber = number + messagesNumber
+        }
     }
     
     func unreadMessagesNumberWasChanged(notification: NSNotification) {
@@ -98,6 +105,16 @@ class MainTabBarController: UITabBarController {
             UIApplication.shared.applicationIconBadgeNumber = number + messagesNumber
         } else {
             UIApplication.shared.applicationIconBadgeNumber = number
+        }
+    }
+    
+    func unreadMessagesNumberWasChangedFromApplozic(notification: NSNotification) {
+        
+        let number = ChatProvider.totalUnreadCount()
+        
+        if number != -1 {
+            setMessageBadgeNumber(number)
+            loadNotificationsToSetBadge()
         }
     }
     
@@ -134,6 +151,24 @@ class MainTabBarController: UITabBarController {
         titleView.addSubview(imageView)
         
         navigationItem.titleView = titleView
+    }
+    
+    fileprivate func loadNotificationsToSetBadge() {
+        
+        NotificationProvider.getNotification(for: UserProvider.shared.currentUser!.objectId) { (result) in
+            
+            switch result {
+            case .success(let notifications):
+                
+                let unreadNotifications = notifications.filter({ return !$0.isAlreadyViewed })
+                
+                Helper.sendNotification(with: notificationsBadgeNumberWasChanged, object: nil, dict: ["number": unreadNotifications.count])
+            case .failure(let error):
+                print("Failure with getting notifications: \(error.localizedDescription)")
+            default:
+                break
+            }
+        }
     }
     
     // MARK: - Actions

@@ -165,7 +165,7 @@ class ChatProvider: NSObject {
             
             return totalUnreadCount
         } else {
-            return 0
+            return -1
         }
     }
 }

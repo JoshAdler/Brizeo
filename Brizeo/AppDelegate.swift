@@ -98,6 +98,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "APP_ENTER_IN_FOREGROUND"), object: nil)
         UIApplication.shared.applicationIconBadgeNumber = 0
+        
+        // update badge number
+        loadNotificationsToSetBadge()
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -335,7 +338,8 @@ extension AppDelegate {
         
         if (applozicProcessed) {
             
-            //Note: notification for app
+            // try to update badge number
+            self.loadNotificationsToSetBadge()
             return
         }
 
