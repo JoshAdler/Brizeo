@@ -19,7 +19,6 @@ class OtherPersonAboutInfoTableViewCell: UITableViewCell {
     
     // MARK: - Properties
     
-    @IBOutlet weak var interestLabel: UILabel!
     @IBOutlet weak var educationLabel: UILabel!
     @IBOutlet weak var workLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
@@ -50,11 +49,8 @@ class OtherPersonAboutInfoTableViewCell: UITableViewCell {
                         let endIndex = passionText.index(passionText.endIndex, offsetBy: -2)
                         passionText = passionText.substring(to: endIndex)
                     }
-                    
-                    welf.interestLabel.text = passionText
                     break
                 case .failure(_):
-                    welf.interestLabel.text = nil
                     break
                 default:
                     break

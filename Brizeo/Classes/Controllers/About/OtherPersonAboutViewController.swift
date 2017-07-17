@@ -55,7 +55,8 @@ class OtherPersonAboutViewController: UIViewController {
         // load user location
         LocationManager.getLocationString(for: user) { (location) in
             self.locationString = location
-            self.passionsTableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+            //self.passionsTableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+            self.passionsTableView.reloadData()
         }
     }
     
@@ -76,7 +77,8 @@ class OtherPersonAboutViewController: UIViewController {
                 NotificationCenter.default.post(notification)
                 
                 self.mutualFriends = users
-                self.passionsTableView.reloadSections(IndexSet(integer: 2), with: .automatic)
+                self.passionsTableView.reloadData()
+//                self.passionsTableView.reloadSections(IndexSet(integer: 2), with: .automatic)
             case .failure(_):
                 print("Failing mutual friends")
             default:
