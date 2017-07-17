@@ -75,7 +75,11 @@ class PersonalTabsViewController: BasicViewController {
         if let user = UserProvider.shared.currentUser, user.passionsIds.count != Configurations.General.requiredMinPassionsCount {
             
             // show dialog box
-            let toManyPassionsView: NoDescriptionView = NoDescriptionView.loadFromNib()
+            let toManyPassionsView: NoCategoriesView = NoCategoriesView.loadFromNib()
+            
+            toManyPassionsView.topTextLabel.text = LocalizableString.SelectCategoriesAlert.localizedString
+            toManyPassionsView.textLabel.text = LocalizableString.SelectCategoriesBottomTextAlert.localizedString
+            
             toManyPassionsView.present(on: Helper.initialNavigationController().view)
             
             return

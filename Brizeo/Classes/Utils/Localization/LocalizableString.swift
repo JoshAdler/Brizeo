@@ -210,6 +210,8 @@ enum LocalizableString: String {
     case AgeRange = "Age Range"
     case SearchDistance = "Search distance:"
     case SelectCategories = "Please select 4 categories:"
+    case SelectCategoriesAlert = "Please select\n 4 interest categories"
+    case SelectCategoriesBottomTextAlert = "This will be used to match you with other Brizeo Members that share your interests. Add your Nationality, introduce yourself, then click Save!"
     case SelectInterests = "Select your primary passions:"
     case SelectNationality = "Select Your Nationality:"
     case IntroduceYourself = "INTRODUCE YOURSELF:"
