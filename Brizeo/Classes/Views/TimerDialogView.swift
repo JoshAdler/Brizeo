@@ -52,9 +52,25 @@ class TimerDialogView: UIView {
         okButton.layer.cornerRadius = 8.0
     }
     
+    // MARK: - Public methods
+    
+    func prepareView() {
+        
+        startTimer()
+    }
+    
     // MARK: - Timer methods
     
     fileprivate func startTimer() {
+        
+        // check whether we need to run timer
+        guard let sessionDate = ActionCounter.shared.sessionDate else {
+            return
+        }
+        
+        guard sessionDate.timeIntervalSinceNow <= Configurations.General.timeToReset else {
+            return
+        }
         
         timer = Timer.scheduledTimer(withTimeInterval: Constants.timerInterval, repeats: true, block: { (timer) in
             

@@ -43,7 +43,13 @@ class SearchMatchesViewController: BasicViewController {
         super.viewDidLoad()
         
         // set action counter
-        counterLabel.text = "\(ActionCounter.shared.totalCount + 1) of \(Configurations.General.actionLimit)"
+        var counterText: String
+        if ActionCounter.shared.totalCount == Configurations.General.actionLimit {
+            counterText = "\(Configurations.General.actionLimit) of \(Configurations.General.actionLimit)"
+        } else {
+            counterText = "\(ActionCounter.shared.totalCount + 1) of \(Configurations.General.actionLimit)"
+        }
+        counterLabel.text = counterText
         
         NotificationCenter.default.addObserver(self, selector: #selector(searchLocationWasChanged(notification:)), name: NSNotification.Name(rawValue: searchLocationChangedNotification), object: nil)
         
@@ -67,6 +73,7 @@ class SearchMatchesViewController: BasicViewController {
         
         // check whether timer dialog box is required
         if !ActionCounter.canDoAction(fromSearchController: true) {
+            timerDialogView.prepareView()
             timerDialogView.isHidden = false
             timerDialogView.present(on: view, withAnimation: false)
             timerDialogView.isOkButtonEnabled = false
@@ -107,7 +114,13 @@ class SearchMatchesViewController: BasicViewController {
         
         // set correct number
         let currentCount = ActionCounter.shared.totalCount
-        counterLabel.text = "\(currentCount + 1) of \(Configurations.General.actionLimit)"
+        var counterText: String
+        if currentCount == Configurations.General.actionLimit {
+            counterText = "\(Configurations.General.actionLimit) of \(Configurations.General.actionLimit)"
+        } else {
+            counterText = "\(currentCount + 1) of \(Configurations.General.actionLimit)"
+        }
+        counterLabel.text = counterText
         
         if !ActionCounter.canDoAction(fromSearchController: true) {
             timerDialogView.isHidden = false

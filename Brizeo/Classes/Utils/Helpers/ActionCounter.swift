@@ -69,7 +69,6 @@ class ActionCounter: NSObject {
             return
         }
         
-//        let resetDate = Calendar.current.date(byAdding: .day, value: 1, to: sessionDate)
         let interval = Configurations.General.timeToReset - sessionDate.timeIntervalSinceNow
         
         shared.timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: false, block: { (timer) in
