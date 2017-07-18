@@ -187,7 +187,7 @@ enum LocalizableString: String {
     case TakeAPhotoFromInstagram = "Instagram"
     case PassionAlertTitle = "Please Select Your Primary Passion"
     case PassionAlertContent = ""
-    case SelectPassion = "Select passion"
+    case SelectPassion = "Select Interest"
     case ViewablebyAll = "Viewable by ALL"
     case First = "First"
     case Second = "Second"

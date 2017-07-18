@@ -426,7 +426,8 @@ extension AppDelegate {
                 return
             }
             
-            PassionsProvider.shared.getAllPassions(completion: nil)
+            PassionsProvider.shared.getAllPassions(for: .normal, completion: nil)
+            PassionsProvider.shared.getAllPassions(for: .extended, completion: nil)
             
             // save token
             NotificationProvider.updateCurrentUserToken()

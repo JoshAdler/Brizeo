@@ -30,7 +30,7 @@ class OtherPersonAboutInfoTableViewCell: UITableViewCell {
     func applyUser(user: User) {
         
         // passions
-        PassionsProvider.shared.retrieveAllPassions(true) { [weak self] (result) in
+        PassionsProvider.shared.retrieveAllPassions(true, type: .extended) { [weak self] (result) in
             
             if let welf = self {
                 switch result {

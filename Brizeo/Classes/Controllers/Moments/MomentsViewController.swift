@@ -314,7 +314,7 @@ class MomentsViewController: UIViewController {
     }
     
     fileprivate func fetchPassions() {
-        PassionsProvider.shared.retrieveAllPassions(true) { (result) in
+        PassionsProvider.shared.retrieveAllPassions(true, type: .normal) { (result) in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let passions):

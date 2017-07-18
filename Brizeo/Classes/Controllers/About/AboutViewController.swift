@@ -120,7 +120,6 @@ class AboutViewController: UIViewController {
         super.viewDidLoad()
         
         registerHeaderViews()
-        
         fetchPassions()
     }
     
@@ -254,7 +253,7 @@ class AboutViewController: UIViewController {
  */
     
     fileprivate func fetchPassions() {
-        PassionsProvider.shared.retrieveAllPassions(true) { [weak self] (result) in
+        PassionsProvider.shared.retrieveAllPassions(true, type: .extended) { [weak self] (result) in
             if let welf = self {
                 
                 DispatchQueue.main.async {
@@ -355,7 +354,7 @@ extension AboutViewController: UITableViewDataSource {
             var passions = [Passion]()
             
             _ = user.passionsIds.map({
-                if let passion = PassionsProvider.shared.getPassion(by: $0) {
+                if let passion = PassionsProvider.shared.getPassion(by: $0, with: .extended) {
                     passions.append(passion)
                 }
             })

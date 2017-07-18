@@ -74,7 +74,7 @@ class CategoriesViewController: BasicViewController {
     // MARK: - Private methods
     
     fileprivate func fetchPassions() {
-        PassionsProvider.shared.retrieveAllPassions(true) { [weak self] (result) in
+        PassionsProvider.shared.retrieveAllPassions(true, type: .extended) { [weak self] (result) in
             if let welf = self {
                 
                 DispatchQueue.main.async {

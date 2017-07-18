@@ -107,7 +107,8 @@ class LoginViewController: UIViewController {
         LocalyticsProvider.trackCurrentUser()
         
         // fetch initial data to cache
-        PassionsProvider.shared.retrieveAllPassions(false, nil)
+        PassionsProvider.shared.retrieveAllPassions(false, type: .normal, nil)
+        PassionsProvider.shared.retrieveAllPassions(false, type: .extended, nil)
         
         // run timer to reset action counter
         ActionCounter.runResetTimer()

@@ -222,7 +222,7 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
             return
         }
         
-        PassionsProvider.shared.retrieveAllPassions(true) { [weak self] (result) in
+        PassionsProvider.shared.retrieveAllPassions(true, type: .extended) { [weak self] (result) in
             
             if let weak = self {
                 switch result {

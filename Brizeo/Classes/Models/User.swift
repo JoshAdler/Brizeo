@@ -130,7 +130,7 @@ class User: Mappable {
         var passions = [Passion]()
         
         for id in passionsIds {
-            if let passion = PassionsProvider.shared.getPassion(by: id) {
+            if let passion = PassionsProvider.shared.getPassion(by: id, with: .extended) {
                 passions.append(passion)
             }
         }

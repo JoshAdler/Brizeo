@@ -11,12 +11,18 @@ import ObjectMapper
 import Moya
 import SDWebImage
 
+enum PassionType {
+    case normal
+    case extended
+}
+
 struct PassionsProvider {
     
     // MARK: - Properties
     
     static var shared = PassionsProvider()
     var passions: [Passion]? {
+        
         didSet {
             if passions != nil {
                 let urls = passions!.filter({ $0.iconURL != nil }).map({ $0.iconURL })
@@ -24,25 +30,29 @@ struct PassionsProvider {
             }
         }
     }
+    var extendedPassions: [Passion]?
     
     // MARK: - Public methods
     
-    func retrieveAllPassions(_ fromCache: Bool, _ completion: ((Result<[Passion]>) -> Void)?) {
+    func retrieveAllPassions(_ fromCache: Bool, type: PassionType, _ completion: ((Result<[Passion]>) -> Void)?) {
         
-        let isCacheUsed = fromCache && passions != nil
+        let passionArray = type == .normal ? passions : extendedPassions
+        let isCacheUsed = fromCache && passionArray != nil
+        
         if isCacheUsed {
-            completion?(.success(passions!))
+            completion?(.success(passionArray!))
         }
         
         if isCacheUsed {
-            getAllPassions(completion: nil)
+            getAllPassions(for: type, completion: nil)
         } else {
-            getAllPassions { (result) in
+            getAllPassions(for: type) { (result) in
                 completion?(result)
             }
         }
     }
     
+    /* RB Comment: Unused method
     func getPassion(with objectId: String,_ withUsingCache: Bool, completion: @escaping (Result<Passion>) -> Void) {
         
         // get passion from cache
@@ -54,7 +64,7 @@ struct PassionsProvider {
         }
         
         // load passions from web api
-        getAllPassions { (result) in
+        getAllPassions(for: ) { (result) in
             switch(result) {
             case .success(let passions):
                 if let passion = passions.filter({ $0.objectId == objectId }).first {
@@ -70,26 +80,42 @@ struct PassionsProvider {
             }
         }
     }
+ */
     
-    func getAllPassions(completion: ((Result<[Passion]>) -> Void)?) {
+    func getAllPassions(for type: PassionType, completion: ((Result<[Passion]>) -> Void)?) {
+        var request: APIService
         
-        APIService.performRequest(request: .getAllPassions) { (result) in
+        switch type {
+        case .normal:
+            request = .getAllPassions
+        case .extended:
+            request = .getAllExtendedPassions
+        }
+        
+        APIService.performRequest(request: request) { (result) in
             switch result {
             case .success(let response):
+                
                 guard response.statusCode == 200 else {
                     completion?(.failure(APIError(code: response.statusCode, message: nil)))
                     return
                 }
                 
                 do {
-                if let passionsDict = Mapper<Passion>().mapDictionary(JSONObject: try response.mapJSON()) {
-                    let passions = Array(passionsDict.values)
                     
-                    PassionsProvider.shared.passions = passions
-                    completion?(.success(passions))
-                    //self.passions = passions.sorted(by: {$0.displayOrder < $1.displayOrder})
-                } else {
-                    completion?(.failure(APIError(code: 0, message: "Can't parse passion data")))
+                    if let passionsDict = Mapper<Passion>().mapDictionary(JSONObject: try response.mapJSON()) {
+                        let passions = Array(passionsDict.values)
+                        
+                        if type == .normal {
+                            PassionsProvider.shared.passions = passions
+                        } else {
+                            PassionsProvider.shared.extendedPassions = passions
+                        }
+                        
+                        completion?(.success(passions))
+                        //self.passions = passions.sorted(by: {$0.displayOrder < $1.displayOrder})
+                    } else {
+                        completion?(.failure(APIError(code: 0, message: "Can't parse passion data")))
                     }
                 } catch (let error) {
                     completion?(.failure(APIError(error: error)))
@@ -103,8 +129,9 @@ struct PassionsProvider {
         }
     }
     
-    func getPassion(by id: String) -> Passion? {
-        guard let passions = passions else {
+    func getPassion(by id: String, with type: PassionType) -> Passion? {
+        
+        guard let passions = (type == .normal ? passions : extendedPassions) else {
             return nil
         }
         

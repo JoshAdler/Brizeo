@@ -54,6 +54,7 @@ enum APIService {
     
     // passions
     case getAllPassions
+    case getAllExtendedPassions
     
     // notifications
     case getNotifications(userId: String)
@@ -118,6 +119,8 @@ extension APIService: TargetType {
             return "/moments/\(userId)/\(moment.objectId)"
         case .getAllPassions:
             return "/passions"
+        case .getAllExtendedPassions:
+            return "/getExtendedPassions"
         case .getNotifications(let userId):
             return "/notifications/\(userId)"
         case .notifyAdminAboutDownloads(let userId, let count):

@@ -148,7 +148,7 @@ class CreateMomentViewController: UIViewController {
     fileprivate func fetchPassions() {
         showBlackLoader()
         
-        PassionsProvider.shared.retrieveAllPassions(true) { [weak self] (result) in
+        PassionsProvider.shared.retrieveAllPassions(true, type: .normal) { [weak self] (result) in
             if let welf = self {
                 DispatchQueue.main.async {
                     welf.hideLoader()
