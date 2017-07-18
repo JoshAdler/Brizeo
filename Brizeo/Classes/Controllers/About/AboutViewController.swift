@@ -196,6 +196,17 @@ class AboutViewController: UIViewController {
                                                object: nil)
     }
     
+    fileprivate func normalizeUsersPassions() {
+        
+        // we need to check whether user has their selected passions that are not available on the database
+        let availableIds = passions!.map({ return $0.objectId! })
+        let availablePassions = user.passionsIds.filter({ return availableIds.contains($0) })
+        
+        user.passionsIds = availablePassions
+        UserProvider.updateUser(user: user, completion: nil)
+    }
+    
+    /* RB Comment: Old functionality
     fileprivate func setSelectedPassions() {
         
         guard (passions?.count)! >= 3 else {
@@ -240,6 +251,7 @@ class AboutViewController: UIViewController {
 //        user.passionsIds = [String]()
         UserProvider.updateUser(user: user, completion: nil)
     }
+ */
     
     fileprivate func fetchPassions() {
         PassionsProvider.shared.retrieveAllPassions(true) { [weak self] (result) in
@@ -250,7 +262,9 @@ class AboutViewController: UIViewController {
                     case .success(let passions):
                         
                         welf.passions = passions
-                        welf.setSelectedPassions()
+                        //welf.setSelectedPassions()
+                        welf.normalizeUsersPassions()
+                        
                         welf.passionsTableView.reloadData()
                         
                         break

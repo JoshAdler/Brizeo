@@ -54,6 +54,12 @@ class CategoriesViewController: BasicViewController {
         } else {
             
             // show dialog box
+//            let toManyPassionsView: NoCategoriesView = NoCategoriesView.loadFromNib()
+//            
+//            toManyPassionsView.topTextLabel.text = LocalizableString.SelectCategoriesAlert.localizedString
+//            toManyPassionsView.textLabel.text = LocalizableString.SelectCategoriesBottomTextAlert.localizedString
+//            
+//            toManyPassionsView.present(on: Helper.initialNavigationController().view)
             let toManyPassionsView: NoCategoriesView = NoCategoriesView.loadFromNib()
             
             toManyPassionsView.topTextLabel.text = LocalizableString.CategoriesViewSelectCategories.localizedString
@@ -107,7 +113,11 @@ class CategoriesViewController: BasicViewController {
         } else {
             
             // show dialog box
-            let toManyPassionsView: NoDescriptionView = NoDescriptionView.loadFromNib()
+            let toManyPassionsView: NoCategoriesView = NoCategoriesView.loadFromNib()
+            
+            toManyPassionsView.topTextLabel.text = LocalizableString.CategoriesViewSelectCategories.localizedString
+            toManyPassionsView.textLabel.text = LocalizableString.CategoriesViewSelectCategoriesDescription.localizedString
+            
             toManyPassionsView.present(on: Helper.initialNavigationController().view)
             return
         }
