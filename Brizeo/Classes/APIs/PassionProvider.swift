@@ -30,7 +30,16 @@ struct PassionsProvider {
             }
         }
     }
-    var extendedPassions: [Passion]?
+    var extendedPassions: [Passion]? {
+        
+        didSet {
+            if extendedPassions != nil {
+                extendedPassions!.sort(by: { (leftObj, rightObj) -> Bool in
+                    return leftObj.displayName < rightObj.displayName
+                })
+            }
+        }
+    }
     
     // MARK: - Public methods
     
