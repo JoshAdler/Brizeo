@@ -63,6 +63,14 @@ class ChatListViewController: ALSubViewController {//BasicViewController {
         let unreadMessagesNumber = ChatProvider.totalUnreadCount()
         Helper.sendNotification(with: messagesBadgeNumberWasChanged, object: nil, dict: ["number": unreadMessagesNumber])
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // reload badge number
+        let unreadMessagesNumber = ChatProvider.totalUnreadCount()
+        Helper.sendNotification(with: messagesBadgeNumberWasChanged, object: nil, dict: ["number": unreadMessagesNumber])
+    }
 
     deinit {
         NotificationCenter.default.removeObserver(self)
