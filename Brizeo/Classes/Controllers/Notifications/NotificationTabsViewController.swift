@@ -104,6 +104,11 @@ extension NotificationTabsViewController: NotificationsViewControllerDelegate {
                     let filteredNotifications = notifications.filter({ $0.pushType == type })
                     completionHandler(filteredNotifications)
                 }
+                
+                let unreadNotifications = notifications.filter({ return !$0.isAlreadyViewed })
+                
+                Helper.sendNotification(with: notificationsBadgeNumberWasChanged, object: nil, dict: ["number": unreadNotifications.count])
+                
             case .failure(let error):
                 
                 if withLoading {

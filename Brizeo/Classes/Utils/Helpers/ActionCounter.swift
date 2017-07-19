@@ -94,7 +94,16 @@ class ActionCounter: NSObject {
         }
         
         // check date
-        if lastSessionDate.timeIntervalSinceNow > Configurations.General.timeToReset { // should be reset
+        if Date().timeIntervalSince(lastSessionDate) > Configurations.General.timeToReset { // should be reset
+            
+            // reset counter
+            Defaults[.approveCount] = 0
+            Defaults[.declineCount] = 0
+            Defaults[.lastSessionDate] = nil
+            
+            Helper.sendNotification(with: approveCountChangedNotification, object: nil, dict: nil)
+            Helper.sendNotification(with: declineCountChangedNotification, object: nil, dict: nil)
+            
             return true
         }
         

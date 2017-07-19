@@ -45,13 +45,13 @@
                                     <rect key="frame" x="0.0" y="30.5" width="277" height="96.5"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="17: 47:05" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rtu-VV-b1T">
-                                            <rect key="frame" x="55.5" y="1.5" width="166" height="57"/>
+                                            <rect key="frame" x="55.5" y="2" width="166" height="57"/>
                                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="45"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="until you can connect with more members" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gml-tP-BPy">
-                                            <rect key="frame" x="25" y="58.5" width="227" height="15.5"/>
+                                            <rect key="frame" x="25" y="59" width="227" height="15.5"/>
                                             <fontDescription key="fontDescription" name="SourceSansPro-Regular" family="Source Sans Pro" pointSize="12"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -63,8 +63,9 @@
                                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Rtu-VV-b1T" secondAttribute="trailing" constant="5" id="RX4-Dh-D70"/>
                                         <constraint firstItem="Gml-tP-BPy" firstAttribute="top" secondItem="Rtu-VV-b1T" secondAttribute="bottom" id="iN3-fk-6HX"/>
                                         <constraint firstItem="Rtu-VV-b1T" firstAttribute="centerX" secondItem="h1m-VD-6zW" secondAttribute="centerX" id="nPs-0z-imw"/>
+                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Gml-tP-BPy" secondAttribute="bottom" constant="4" id="wKp-2r-h1l"/>
                                         <constraint firstAttribute="trailing" secondItem="Gml-tP-BPy" secondAttribute="trailing" constant="25" id="xod-bf-HHG"/>
-                                        <constraint firstAttribute="bottom" secondItem="Gml-tP-BPy" secondAttribute="bottom" constant="23" id="xx3-Kt-l5g"/>
+                                        <constraint firstAttribute="bottom" secondItem="Gml-tP-BPy" secondAttribute="bottom" priority="750" constant="23" id="xx3-Kt-l5g"/>
                                         <constraint firstItem="Gml-tP-BPy" firstAttribute="leading" secondItem="h1m-VD-6zW" secondAttribute="leading" constant="25" id="zam-sQ-kIK"/>
                                     </constraints>
                                 </view>
@@ -77,6 +78,7 @@
                                 <constraint firstItem="h1m-VD-6zW" firstAttribute="top" secondItem="LFr-V3-ovr" secondAttribute="bottom" id="NKo-e3-Adm"/>
                                 <constraint firstItem="h1m-VD-6zW" firstAttribute="centerX" secondItem="cg6-iu-uUa" secondAttribute="centerX" id="jIV-3n-5nb"/>
                                 <constraint firstItem="h1m-VD-6zW" firstAttribute="width" secondItem="cg6-iu-uUa" secondAttribute="width" id="o4b-Mz-KJG"/>
+                                <constraint firstItem="Rtu-VV-b1T" firstAttribute="top" relation="greaterThanOrEqual" secondItem="LFr-V3-ovr" secondAttribute="bottom" constant="2" id="umt-ip-Ldy"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EwO-Bt-fsN">

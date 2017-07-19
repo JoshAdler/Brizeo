@@ -86,7 +86,7 @@ class MainTabBarController: UITabBarController {
             UIApplication.shared.applicationIconBadgeNumber = number + messagesNumber
             
             // update message badge number
-            items[4].badgeValue = "\(messagesNumber)"
+            items[4].badgeValue = messagesNumber == 0 ? nil : "\(messagesNumber)"
         }
     }
     

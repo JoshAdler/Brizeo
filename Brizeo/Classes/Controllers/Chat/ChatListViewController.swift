@@ -58,6 +58,10 @@ class ChatListViewController: ALSubViewController {//BasicViewController {
         msgView = storyboard.instantiateViewController(withIdentifier: "ALViewController") as? ALMessagesViewController
         
         showViewControllerInContainerView(msgView)
+        
+        // reload badge number
+        let unreadMessagesNumber = ChatProvider.totalUnreadCount()
+        Helper.sendNotification(with: messagesBadgeNumberWasChanged, object: nil, dict: ["number": unreadMessagesNumber])
     }
 
     deinit {
