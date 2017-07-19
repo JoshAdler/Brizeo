@@ -8,6 +8,7 @@
 
 import UIKit
 import ChameleonFramework
+import SVProgressHUD
 
 class CategoriesViewController: BasicViewController {
 
@@ -28,7 +29,9 @@ class CategoriesViewController: BasicViewController {
     @IBOutlet weak var tableView: UITableView!
     
     var user: User!
+    
     fileprivate var passions: [Passion]?
+    fileprivate var wasChanges = false
     
     // MARK: - Controller
     
@@ -50,16 +53,33 @@ class CategoriesViewController: BasicViewController {
     override func onBackButtonClicked(sender: UIBarButtonItem) {
         
         if user.passionsIds.count == Configurations.General.requiredMinPassionsCount {
+            
+            showBlackLoader()
+            
+            // update user firstly
+            UserProvider.updateUser(user: user, completion: { (result) in
+                switch (result) {
+                case .success(_):
+                    self.hideLoader()
+                    
+                    if self.wasChanges {
+                        Helper.sendNotification(with: searchLocationChangedNotification, object: nil, dict: nil)
+                    }
+                    
+                    super.onBackButtonClicked(sender: sender)
+                    break
+                case .failure(let error):
+                    print("Error during saving preferences")
+                    
+                    SVProgressHUD.showError(withStatus: error.localizedDescription)
+                    break
+                default:
+                    break
+                }
+            })
             super.onBackButtonClicked(sender: sender)
         } else {
             
-            // show dialog box
-//            let toManyPassionsView: NoCategoriesView = NoCategoriesView.loadFromNib()
-//            
-//            toManyPassionsView.topTextLabel.text = LocalizableString.SelectCategoriesAlert.localizedString
-//            toManyPassionsView.textLabel.text = LocalizableString.SelectCategoriesBottomTextAlert.localizedString
-//            
-//            toManyPassionsView.present(on: Helper.initialNavigationController().view)
             let toManyPassionsView: NoCategoriesView = NoCategoriesView.loadFromNib()
             
             toManyPassionsView.topTextLabel.text = LocalizableString.CategoriesViewSelectCategories.localizedString
@@ -143,7 +163,7 @@ class CategoriesViewController: BasicViewController {
 //        navigationItem.leftBarButtonItem?.isEnabled = user.passionsIds.count == Configurations.General.requiredMinPassionsCount
         
         // notify about changes
-        Helper.sendNotification(with: searchLocationChangedNotification, object: nil, dict: nil)
+        wasChanges = true
     }
 }
 
