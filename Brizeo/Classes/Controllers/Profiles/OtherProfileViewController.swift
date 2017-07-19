@@ -58,6 +58,7 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
     var mutualFriends: [User]?
     var passions: [Passion]?
     var detailsController: OtherPersonDetailsTabsViewController!
+    var timerView: TimerDialogView?
     
     // MARK: - Controller lifecycles
     
@@ -417,6 +418,10 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
 
         // set correct number
         counterLabel.text = "1 of \(Configurations.General.actionLimit)"
+        
+        if timerView?.superview != nil {
+            timerView?.removeFromSuperview()
+        }
     }
     
     func actionCountWasChanged(notification: NSNotification) {
@@ -450,8 +455,8 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
         
         guard ActionCounter.canDoAction(fromSearchController: false) else {
             
-            let timerView: TimerDialogView = TimerDialogView.loadFromNib()
-            timerView.present(on: Helper.initialNavigationController().view, withAnimation: true)
+            timerView = TimerDialogView.loadFromNib()
+            timerView?.present(on: Helper.initialNavigationController().view, withAnimation: true)
 
             return
         }
@@ -463,8 +468,8 @@ class OtherProfileViewController: ALReceiverProfile {//BasicViewController {
         
         guard ActionCounter.canDoAction(fromSearchController: false) else {
             
-            let timerView: TimerDialogView = TimerDialogView.loadFromNib()
-            timerView.present(on: Helper.initialNavigationController().view, withAnimation: true)
+            timerView = TimerDialogView.loadFromNib()
+            timerView?.present(on: Helper.initialNavigationController().view, withAnimation: true)
             
             return
         }

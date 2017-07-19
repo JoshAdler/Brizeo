@@ -115,6 +115,7 @@ class SearchMatchesViewController: BasicViewController {
         // set correct number
         let currentCount = ActionCounter.shared.totalCount
         var counterText: String
+        
         if currentCount == Configurations.General.actionLimit {
             counterText = "\(Configurations.General.actionLimit) of \(Configurations.General.actionLimit)"
         } else {

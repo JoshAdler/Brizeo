@@ -69,7 +69,7 @@ class ActionCounter: NSObject {
             return
         }
         
-        let interval = Configurations.General.timeToReset - sessionDate.timeIntervalSinceNow
+        let interval = Configurations.General.timeToReset - Date().timeIntervalSince(sessionDate)
         
         shared.timer = Timer.scheduledTimer(withTimeInterval: interval, repeats: false, block: { (timer) in
             

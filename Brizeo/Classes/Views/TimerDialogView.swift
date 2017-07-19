@@ -127,6 +127,10 @@ class TimerDialogView: UIView {
         } else {
             self.centerView.transform = CGAffineTransform.identity
             self.backgroundView?.alpha = 1.0
+            
+            if self.superview == nil {
+                view.addSubview(self)
+            }
         }
     }
     
