@@ -98,10 +98,38 @@ extension NotificationTabsViewController: NotificationsViewControllerDelegate {
             case .success(let notifications):
                 
                 if type == nil { // all matches types
-                    let filteredNotifications = notifications.filter({ $0.pushType != NotificationType.momentsLikes })
+                    let filteredNotifications = notifications.filter({ $0.pushType != NotificationType.momentsLikes }).sorted(by: { (leftNot, rightNot) -> Bool in
+                        
+                        let leftDate = leftNot.createDate
+                        let rightDate = rightNot.createDate
+                        
+                        if leftDate == nil && rightDate == nil {
+                            return true
+                        } else if leftDate != nil && rightDate != nil {
+                            return leftDate! > rightDate!
+                        } else if leftDate != nil {
+                            return true
+                        } else {
+                            return false
+                        }
+                    })
                     completionHandler(filteredNotifications)
                 } else {
-                    let filteredNotifications = notifications.filter({ $0.pushType == type })
+                    let filteredNotifications = notifications.filter({ $0.pushType == type }).sorted(by: { (leftNot, rightNot) -> Bool in
+                        
+                        let leftDate = leftNot.createDate
+                        let rightDate = rightNot.createDate
+                        
+                        if leftDate == nil && rightDate == nil {
+                            return true
+                        } else if leftDate != nil && rightDate != nil {
+                            return leftDate! > rightDate!
+                        } else if leftDate != nil {
+                            return true
+                        } else {
+                            return false
+                        }
+                    })
                     completionHandler(filteredNotifications)
                 }
                 
