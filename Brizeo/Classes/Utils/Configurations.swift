@@ -46,7 +46,7 @@ class Configurations: NSObject {
         static let developmentServerURL = "http://34.208.151.167:4000"
         static let termsOfUseURL = "http://brizeo.com/terms/"
         static let photosCountToLoadAtStart = 5
-        static let timeToReset = 120.0//86400.0
+        static let timeToReset = /*120.0*/68400.0
         static let actionLimit = 20 /* how many time use can click approve/decline */
         static let shouldCountOnlySearch = false
         static let requiredMinPassionsCount = 4
@@ -96,6 +96,6 @@ class Configurations: NSObject {
     }
     
     class func baseServerURL() -> String {
-        return General.developmentServerURL//General.productionServerURL
+        return /*General.developmentServerURL*/General.productionServerURL
     }
 }
