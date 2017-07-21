@@ -56,6 +56,7 @@ class TimerDialogView: UIView {
     
     func prepareView() {
         
+        timerLabel.text = nil
         startTimer()
     }
     
@@ -77,6 +78,7 @@ class TimerDialogView: UIView {
             guard let sessionDate = ActionCounter.shared.sessionDate else {
                 
                 timer.invalidate()
+                self.timerLabel.text = nil
                 print("No session date in action counter")
                 return
             }
