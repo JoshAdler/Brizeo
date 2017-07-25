@@ -146,7 +146,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     fileprivate func loadNotificationsToSetBadge() {
         
-        NotificationProvider.getNotification(for: UserProvider.shared.currentUser!.objectId) { (result) in
+        guard let currentUser = UserProvider.shared.currentUser else {
+            return
+        }
+        
+        NotificationProvider.getNotification(for: currentUser.objectId) { (result) in
             
             switch result {
             case .success(let notifications):
