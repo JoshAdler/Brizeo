@@ -120,7 +120,7 @@ class BranchProvider: NSObject {
         //TODO: remove before release
         //#if PRODUCTION
         //#else
-            branch.setDebug()
+            //branch.setDebug()
         //#endif
         
         branch.initSession(launchOptions: launchOptions) { (params, error) in
