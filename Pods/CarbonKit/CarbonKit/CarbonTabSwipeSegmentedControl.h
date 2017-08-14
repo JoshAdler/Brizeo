@@ -49,6 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, strong, nullable) UIColor *imageSelectedColor;
 @property(nonatomic, strong, nonnull) UIImageView *indicator;
 @property(nonatomic, weak, readonly) NSArray<UIView *> *segments;
+    @property(nonatomic, strong, nonnull) UILabel *badgeLabel;
 
 - (instancetype)initWithItems:(nullable NSArray *)items;
 

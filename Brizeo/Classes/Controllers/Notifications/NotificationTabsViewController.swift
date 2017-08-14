@@ -23,6 +23,7 @@ class NotificationTabsViewController: BasicViewController {
     
     var likesController: NotificationsViewController!
     var peopleController: NotificationsViewController!
+    var carbonTabSwipeNavigation: CarbonTabSwipeNavigation!
     
     // MARK: - Controller lifecycle
     
@@ -37,11 +38,12 @@ class NotificationTabsViewController: BasicViewController {
         peopleController = Helper.controllerFromStoryboard(controllerId: Constants.notificationsControllerId)!
         peopleController.delegate = self
         
-        let carbonTabSwipeNavigation = Helper.createCarbonController(with: Constants.titles, self)
+        carbonTabSwipeNavigation = Helper.createCarbonController(with: Constants.titles, self)
         carbonTabSwipeNavigation.insert(intoRootViewController: self)
         carbonTabSwipeNavigation.pagesScrollView?.isScrollEnabled = false
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadNotifications(notification:)), name: NSNotification.Name(rawValue: shouldReloadNotifications), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateNotificationsBadgeNumbers(notification:)), name: NSNotification.Name(rawValue: notificationsBadgeNumberWasChanged), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,6 +55,10 @@ class NotificationTabsViewController: BasicViewController {
         LocalyticsProvider.userViewNotifications()
     }
     
+    deinit {
+         NotificationCenter.default.removeObserver(self)
+    }
+    
     // MARK: - Public methods
     
     func reloadNotifications(notification: NSNotification) {
@@ -62,6 +68,57 @@ class NotificationTabsViewController: BasicViewController {
                 likesController.reloadContent()
             } else if type == .newMatches && peopleController.isViewLoaded {
                 peopleController.reloadContent()
+            }
+        }
+    }
+    
+    func updateNotificationsBadgeNumbers(notification: NSNotification) {
+        
+        guard let info = notification.userInfo else {
+            return
+        }
+        
+        if let likesNumber = info["likesNumber"] as? Int {
+            let likesNumberStr = likesNumber == 0 ? nil : "\(likesNumber)"
+            let likesTitle = "Likes" + ((likesNumberStr != nil) ? " (\(likesNumberStr!))" : "")
+
+            (carbonTabSwipeNavigation.carbonSegmentedControl!).setTitle(likesTitle, forSegmentAt: 0)
+        }
+        
+        if let peopleNumber = info["peopleNumber"] as? Int {
+            let peopleNumberStr = peopleNumber == 0 ? nil : "\(peopleNumber)"
+            
+            let likesTitle = "People" + ((peopleNumberStr != nil) ? " (\(peopleNumberStr!))" : "")
+            
+            (carbonTabSwipeNavigation.carbonSegmentedControl!).setTitle(likesTitle, forSegmentAt: 1)
+        }
+        
+        if let needToDecreaseLikesNumber = info["decreaseNotificationNumber"] as? Bool {
+            
+            if needToDecreaseLikesNumber { // decrease likes number
+                
+                let title = (carbonTabSwipeNavigation.carbonSegmentedControl!).titleForSegment(at: 0)!
+                var components = title.components(separatedBy: "(")
+                if components.count > 1 {
+                    var currentNumberString = components[1]
+                    currentNumberString.remove(at: currentNumberString.index(before: currentNumberString.endIndex))
+                    let currentNumber = (Int(currentNumberString) ?? 0) - 1
+                    let likesTitle = "Likes" + ((currentNumber > 0) ? " (\(currentNumber))" : "")
+                    
+                    (carbonTabSwipeNavigation.carbonSegmentedControl!).setTitle(likesTitle, forSegmentAt: 0)
+                }
+            } else { // decrease people number
+                
+                let title = (carbonTabSwipeNavigation.carbonSegmentedControl!).titleForSegment(at: 1)!
+                var components = title.components(separatedBy: "(")
+                if components.count > 1 {
+                    var currentNumberString = components[1]
+                    currentNumberString.remove(at: currentNumberString.index(before: currentNumberString.endIndex))
+                    let currentNumber = (Int(currentNumberString) ?? 0) - 1
+                    let likesTitle = "People" + ((currentNumber > 0) ? " (\(currentNumber))" : "")
+                    
+                    (carbonTabSwipeNavigation.carbonSegmentedControl!).setTitle(likesTitle, forSegmentAt: 1)
+                }
             }
         }
     }
@@ -134,8 +191,13 @@ extension NotificationTabsViewController: NotificationsViewControllerDelegate {
                 }
                 
                 let unreadNotifications = notifications.filter({ return !$0.isAlreadyViewed })
+                let likesNotifications = unreadNotifications.filter({ $0.pushType == .momentsLikes })
                 
-                Helper.sendNotification(with: notificationsBadgeNumberWasChanged, object: nil, dict: ["number": unreadNotifications.count])
+                Helper.sendNotification(with: notificationsBadgeNumberWasChanged, object: nil, dict: [
+                    "number": unreadNotifications.count,
+                    "likesNumber": likesNotifications.count,
+                    "peopleNumber": unreadNotifications.count - likesNotifications.count
+                    ])
                 
             case .failure(let error):
                 

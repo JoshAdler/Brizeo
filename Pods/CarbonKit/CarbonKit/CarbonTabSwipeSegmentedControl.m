@@ -42,6 +42,12 @@
         self.indicator.backgroundColor = self.tintColor;
         self.indicator.autoresizingMask = UIViewAutoresizingNone;
         [self addSubview:self.indicator];
+        
+        // Create badge label
+        self.badgeLabel = [UILabel new];
+        self.badgeLabel.backgroundColor = [UIColor clearColor];
+        self.badgeLabel.textAlignment = NSTextAlignmentRight;
+        [self addSubview:self.badgeLabel];
 
         // Support RTL
         if ([UIApplication sharedApplication].userInterfaceLayoutDirection ==
@@ -114,6 +120,14 @@
         self.indicatorMinX = [self getMinXForSegmentAtIndex:self.selectedSegmentIndex];
         self.indicatorWidth = [self getWidthForSegmentAtIndex:self.selectedSegmentIndex];
         [self updateIndicatorWithAnimation:NO];
+        
+        // place badge label
+        CGRect rect = self.badgeLabel.frame;
+        rect.origin.x = self.frame.size.width - 30.0;
+        rect.origin.y = 0;
+        rect.size.width = 30.0;
+        rect.size.height = self.frame.size.height;
+        self.badgeLabel.frame = rect;
     });
 }
 

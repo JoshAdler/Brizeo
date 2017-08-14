@@ -156,8 +156,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             case .success(let notifications):
                 
                 let unreadNotifications = notifications.filter({ return !$0.isAlreadyViewed })
+                let likesNotifications = unreadNotifications.filter({ $0.pushType == .momentsLikes })
                 
-                Helper.sendNotification(with: notificationsBadgeNumberWasChanged, object: nil, dict: ["number": unreadNotifications.count])
+                Helper.sendNotification(with: notificationsBadgeNumberWasChanged, object: nil, dict: [
+                    "number": unreadNotifications.count,
+                    "likesNumber": likesNotifications.count,
+                    "peopleNumber": unreadNotifications.count - likesNotifications.count
+                    ])
             case .failure(let error):
                 print("Failure with getting notifications: \(error.localizedDescription)")
             default:

@@ -236,8 +236,12 @@ extension NotificationsViewController: NotificationsTableViewCellDelegate {
             NotificationProvider.markNotificationAsAlreadyViewed(notification, completion: nil)
             
             // decrease the badge number
+            let isNotificationLike = notification.pushType == NotificationType.momentsLikes
             if let badgeNumberStr = tabBarController?.tabBar.items?[3].badgeValue, let badgeNumber = Int(badgeNumberStr) {
-                Helper.sendNotification(with: notificationsBadgeNumberWasChanged, object: nil, dict: ["number": badgeNumber - 1])
+                Helper.sendNotification(with: notificationsBadgeNumberWasChanged, object: nil, dict: [
+                    "number": badgeNumber - 1,
+                    "decreaseNotificationNumber": isNotificationLike /* if true = likes, if false = people  */
+                    ])
             }
         }
         
