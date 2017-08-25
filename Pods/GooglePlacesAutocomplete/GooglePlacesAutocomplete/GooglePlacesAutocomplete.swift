@@ -152,7 +152,7 @@ open class PlaceDetails: CustomStringConvertible {
 
 @objc public protocol GooglePlacesAutocompleteDelegate {
     @objc optional func placesFound(_ places: [Place])
-    @objc optional func placeSelected(_ place: Place)
+    @objc optional func placeSelected(_ place: Place?)
     @objc optional func placeViewClosed()
 }
 
@@ -219,6 +219,19 @@ open class GooglePlacesAutocompleteContainer: UIViewController {
     var placeType: PlaceType = .all
     var locationBias: LocationBias?
     
+    var isAutocomplete: Bool {
+        
+        var isAutocompleteValue = true
+        if let navigationController = navigationController as? GooglePlacesAutocomplete {
+            
+            if !navigationController.isAutocomplete {
+                isAutocompleteValue = false
+            }
+        }
+        
+        return isAutocompleteValue
+    }
+    
     convenience init(apiKey: String, placeType: PlaceType = .all) {
         let bundle = Bundle(for: GooglePlacesAutocompleteContainer.self)
         
@@ -272,7 +285,12 @@ open class GooglePlacesAutocompleteContainer: UIViewController {
             tableView.isHidden = true
             
             if locationBias != nil {
-                getNearbyPlaces()
+                
+                if isAutocomplete {
+                    getNearbyPlaces()
+                } else {
+                    getNearbyUniversities()
+                }
             }
         } else {
             getPlaces(searchText)
@@ -283,26 +301,39 @@ open class GooglePlacesAutocompleteContainer: UIViewController {
 // MARK: - GooglePlacesAutocompleteContainer (UITableViewDataSource / UITableViewDelegate)
 extension GooglePlacesAutocompleteContainer: UITableViewDataSource, UITableViewDelegate {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return places.count
+        
+        return places.count + (isAutocomplete ? 0 : 1)
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
-        // Get the corresponding candy from our candies array
-        let place = self.places[(indexPath as NSIndexPath).row]
-        
-        // Configure the cell
-        cell.textLabel!.text = place.description
+        if indexPath.row == 0 && !isAutocomplete {
+            
+            cell.textLabel!.text = "All"
+        } else {
+            
+            // Get the corresponding candy from our candies array
+            let place = self.places[(indexPath as NSIndexPath).row]
+            
+            // Configure the cell
+            cell.textLabel!.text = place.description
+        }
         cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         
         return cell
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let place = self.places[(indexPath as NSIndexPath).row]
         
-        delegate?.placeSelected?(place)
+        if !isAutocomplete && indexPath.row == 0 { // "All" row
+            
+            delegate?.placeSelected?(nil)
+        } else {
+            
+            let place = self.places[(indexPath as NSIndexPath).row]
+            delegate?.placeSelected?(place)
+        }
     }
 }
 
@@ -320,15 +351,7 @@ extension GooglePlacesAutocompleteContainer: UISearchBarDelegate {
     
     fileprivate func getPlaces(_ searchString: String) {
         
-        var url = "https://maps.googleapis.com/maps/api/place/autocomplete/json"
-        var isAutocomplete = true
-        if let navigationController = navigationController as? GooglePlacesAutocomplete {
-            
-            if !navigationController.isAutocomplete {
-                url = "https://maps.googleapis.com/maps/api/place/textsearch/json"
-                isAutocomplete = false
-            }
-        }
+        let url = isAutocomplete ? "https://maps.googleapis.com/maps/api/place/autocomplete/json" : "https://maps.googleapis.com/maps/api/place/textsearch/json"
         
         var params = isAutocomplete ? [
             "input": searchString,
@@ -355,15 +378,7 @@ extension GooglePlacesAutocompleteContainer: UISearchBarDelegate {
         ) { json, error in
             if let json = json {
                 
-                var isAutocomplete = true
-                if let navigationController = self.navigationController as? GooglePlacesAutocomplete {
-                    
-                    if !navigationController.isAutocomplete {
-                        isAutocomplete = false
-                    }
-                }
-                
-                if isAutocomplete { // parse autocomplete
+                if self.isAutocomplete { // parse autocomplete
                     if let predictions = json["predictions"] as? Array<[String: AnyObject]> {
                         self.places = predictions.map { (prediction: [String: AnyObject]) -> Place in
                             return Place(prediction: prediction, apiKey: self.apiKey)
@@ -383,6 +398,38 @@ extension GooglePlacesAutocompleteContainer: UISearchBarDelegate {
                         self.tableView.isHidden = false
                         self.delegate?.placesFound?(self.places)
                     }
+                }
+            }
+        }
+    }
+    
+    fileprivate func getNearbyUniversities() {
+        
+        var params = [
+            "key": apiKey ?? "",
+            "rankby": "prominence",
+            "sensor": "true",
+            "type": placeType.description
+        ]
+        
+        if let bias = locationBias {
+            params["location"] = bias.location
+            params["radius"] = bias.radius.description
+        }
+        
+        GooglePlacesRequestHelpers.doRequest(
+            "https://maps.googleapis.com/maps/api/place/nearbysearch/json",
+            params: params
+        ) { json, error in
+            if let json = json {
+                if let results = json["results"] as? [[String: AnyObject]] {
+                    
+                    self.places = results.map { (result: [String: AnyObject]) -> Place in
+                        return Place.initialize(result: result, apiKey: self.apiKey)
+                    }
+                    self.tableView.reloadData()
+                    self.tableView.isHidden = false
+                    self.delegate?.placesFound?(self.places)
                 }
             }
         }

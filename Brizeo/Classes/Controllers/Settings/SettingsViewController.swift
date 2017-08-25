@@ -426,7 +426,7 @@ extension SettingsViewController: UITableViewDataSource {
                 if let searchUniversity = preferences.searchUniversity {
                     typeCell.rightTextLabel.text = searchUniversity
                 } else {
-                    typeCell.rightTextLabel.text = LocalizableString.Choose.localizedString
+                    typeCell.rightTextLabel.text = LocalizableString.All.localizedString
                 }
                 
                 typeCell.titleLabel.text = LocalizableString.University.localizedString
@@ -564,7 +564,11 @@ extension SettingsViewController: UITableViewDelegate {
                     universityViewController!.isAutocomplete = false
                 }
                 
-                universityViewController!.reset()
+                let location = LocationManager.shared.currentLocationCoordinates?.coordinate
+                if let location = location {
+                    universityViewController!.locationBias = LocationBias(latitude: location.latitude, longitude: location.longitude, radius: 20000)
+                    universityViewController!.reset()
+                }
                 
                 ThemeManager.placeLogo(on: universityViewController!.navigationItem)
                 present(universityViewController!, animated: true, completion: nil)
@@ -637,15 +641,15 @@ extension SettingsViewController: SettingsNotificationCellDelegate {
 // MARK: - GooglePlacesAutocompleteDelegate
 extension SettingsViewController: GooglePlacesAutocompleteDelegate {
     
-    func placeSelected(_ place: Place) {
+    func placeSelected(_ place: Place?) {
         
         if isSearchingLocation {
             
-            searchLocationString = place.description
+            searchLocationString = place!.description
             
             showBlackLoader()
             
-            place.getDetails { [weak self] (result) in
+            place!.getDetails { [weak self] (result) in
                 if let welf = self {
                     // set new values
                     welf.preferences.searchLocation = CLLocation(latitude: result.latitude, longitude: result.longitude)
@@ -679,7 +683,7 @@ extension SettingsViewController: GooglePlacesAutocompleteDelegate {
         } else { // university
             
             showBlackLoader()
-            preferences.searchUniversity = place.desc
+            preferences.searchUniversity = place?.desc
             
             isSearchLocationChanged = true
             

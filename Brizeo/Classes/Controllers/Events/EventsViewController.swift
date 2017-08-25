@@ -443,7 +443,11 @@ extension EventsViewController: EventTableViewCellDelegate {
 // MARK: - GooglePlacesAutocompleteDelegate
 extension EventsViewController: GooglePlacesAutocompleteDelegate {
     
-    func placeSelected(_ place: Place) {
+    func placeSelected(_ place: Place?) {
+        
+        guard let place = place else {
+            return
+        }
         
         locationTextField.text = place.description
         

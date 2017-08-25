@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pods/GooglePlacesAutocomplete/GooglePlacesAutocomplete/GooglePlacesAutocomplete.swift"
-            timestampString = "525182348.128841"
+            timestampString = "525361891.549407"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "432"
-            endingLineNumber = "432"
+            startingLineNumber = "479"
+            endingLineNumber = "479"
             landmarkName = "request(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -138,27 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pods/GooglePlacesAutocomplete/GooglePlacesAutocomplete/GooglePlacesAutocomplete.swift"
-            timestampString = "525180495.657595"
+            timestampString = "525361891.549407"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "278"
-            endingLineNumber = "278"
-            landmarkName = "runSearch(searchText:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Pods/GooglePlacesAutocomplete/GooglePlacesAutocomplete/GooglePlacesAutocomplete.swift"
-            timestampString = "525180495.657595"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "343"
-            endingLineNumber = "343"
+            startingLineNumber = "366"
+            endingLineNumber = "366"
             landmarkName = "getPlaces(_:)"
             landmarkType = "7">
             <Locations>
@@ -170,11 +154,11 @@
                   moduleName = "GooglePlacesAutocomplete"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Pods/GooglePlacesAutocomplete/GooglePlacesAutocomplete/GooglePlacesAutocomplete.swift"
-                  timestampString = "525171921.509873"
+                  timestampString = "525360878.557076"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "318"
-                  endingLineNumber = "318"
+                  startingLineNumber = "356"
+                  endingLineNumber = "356"
                   offsetFromSymbolStart = "2087">
                </Location>
                <Location
@@ -185,11 +169,11 @@
                   moduleName = "GooglePlacesAutocomplete"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Pods/GooglePlacesAutocomplete/GooglePlacesAutocomplete/GooglePlacesAutocomplete.swift"
-                  timestampString = "525171921.511348"
+                  timestampString = "525360878.558973"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "318"
-                  endingLineNumber = "318"
+                  startingLineNumber = "356"
+                  endingLineNumber = "356"
                   offsetFromSymbolStart = "2223">
                </Location>
             </Locations>
@@ -202,11 +186,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pods/GooglePlacesAutocomplete/GooglePlacesAutocomplete/GooglePlacesAutocomplete.swift"
-            timestampString = "525182348.128841"
+            timestampString = "525361891.549407"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "478"
-            endingLineNumber = "478"
+            startingLineNumber = "525"
+            endingLineNumber = "525"
             landmarkName = "doRequest(_:params:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -218,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pods/GooglePlacesAutocomplete/GooglePlacesAutocomplete/GooglePlacesAutocomplete.swift"
-            timestampString = "525182348.128841"
+            timestampString = "525361891.549407"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "487"
-            endingLineNumber = "487"
+            startingLineNumber = "534"
+            endingLineNumber = "534"
             landmarkName = "handleResponse(_:response:error:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -234,11 +218,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pods/GooglePlacesAutocomplete/GooglePlacesAutocomplete/GooglePlacesAutocomplete.swift"
-            timestampString = "525182348.128841"
+            timestampString = "525361891.549407"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "489"
-            endingLineNumber = "489"
+            startingLineNumber = "536"
+            endingLineNumber = "536"
             landmarkName = "handleResponse(_:response:error:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -250,11 +234,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pods/GooglePlacesAutocomplete/GooglePlacesAutocomplete/GooglePlacesAutocomplete.swift"
-            timestampString = "525182348.128841"
+            timestampString = "525361891.549407"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "490"
-            endingLineNumber = "490"
+            startingLineNumber = "537"
+            endingLineNumber = "537"
             landmarkName = "handleResponse(_:response:error:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -266,11 +250,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pods/GooglePlacesAutocomplete/GooglePlacesAutocomplete/GooglePlacesAutocomplete.swift"
-            timestampString = "525182348.128841"
+            timestampString = "525361891.549407"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "494"
-            endingLineNumber = "494"
+            startingLineNumber = "541"
+            endingLineNumber = "541"
             landmarkName = "handleResponse(_:response:error:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -282,11 +266,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pods/GooglePlacesAutocomplete/GooglePlacesAutocomplete/GooglePlacesAutocomplete.swift"
-            timestampString = "525180495.657595"
+            timestampString = "525361891.549407"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "367"
-            endingLineNumber = "367"
+            startingLineNumber = "382"
+            endingLineNumber = "382"
             landmarkName = "getPlaces(_:)"
             landmarkType = "7">
             <Locations>
@@ -298,12 +282,12 @@
                   moduleName = "GooglePlacesAutocomplete"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Pods/GooglePlacesAutocomplete/GooglePlacesAutocomplete/GooglePlacesAutocomplete.swift"
-                  timestampString = "525171921.535961"
+                  timestampString = "525360878.578866"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "334"
-                  endingLineNumber = "334"
-                  offsetFromSymbolStart = "138">
+                  startingLineNumber = "380"
+                  endingLineNumber = "380"
+                  offsetFromSymbolStart = "488">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -313,12 +297,12 @@
                   moduleName = "GooglePlacesAutocomplete"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Pods/GooglePlacesAutocomplete/GooglePlacesAutocomplete/GooglePlacesAutocomplete.swift"
-                  timestampString = "525171921.537194"
+                  timestampString = "525360878.581005"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "334"
-                  endingLineNumber = "334"
-                  offsetFromSymbolStart = "781">
+                  startingLineNumber = "380"
+                  endingLineNumber = "380"
+                  offsetFromSymbolStart = "1208">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -330,11 +314,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pods/GooglePlacesAutocomplete/GooglePlacesAutocomplete/GooglePlacesAutocomplete.swift"
-            timestampString = "525182348.128841"
+            timestampString = "525361891.549407"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "526"
-            endingLineNumber = "526"
+            startingLineNumber = "573"
+            endingLineNumber = "573"
             landmarkName = "handleResponse(_:response:error:completion:)"
             landmarkType = "7">
             <Locations>
@@ -346,11 +330,11 @@
                   moduleName = "GooglePlacesAutocomplete"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Pods/GooglePlacesAutocomplete/GooglePlacesAutocomplete/GooglePlacesAutocomplete.swift"
-                  timestampString = "525171921.539267"
+                  timestampString = "525360878.586188"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "481"
-                  endingLineNumber = "481"
+                  startingLineNumber = "571"
+                  endingLineNumber = "571"
                   offsetFromSymbolStart = "3870">
                </Location>
                <Location
@@ -361,11 +345,11 @@
                   moduleName = "GooglePlacesAutocomplete"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Pods/GooglePlacesAutocomplete/GooglePlacesAutocomplete/GooglePlacesAutocomplete.swift"
-                  timestampString = "525171921.541035"
+                  timestampString = "525360878.588214"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "481"
-                  endingLineNumber = "481"
+                  startingLineNumber = "571"
+                  endingLineNumber = "571"
                   offsetFromSymbolStart = "4753">
                </Location>
             </Locations>
@@ -378,11 +362,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pods/GooglePlacesAutocomplete/GooglePlacesAutocomplete/GooglePlacesAutocomplete.swift"
-            timestampString = "525182348.128841"
+            timestampString = "525361891.549407"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "477"
-            endingLineNumber = "477"
+            startingLineNumber = "524"
+            endingLineNumber = "524"
             landmarkName = "doRequest(_:params:completion:)"
             landmarkType = "7">
             <Locations>
@@ -394,11 +378,11 @@
                   moduleName = "GooglePlacesAutocomplete"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Pods/GooglePlacesAutocomplete/GooglePlacesAutocomplete/GooglePlacesAutocomplete.swift"
-                  timestampString = "525171921.542939"
+                  timestampString = "525360878.590953"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "432"
-                  endingLineNumber = "432"
+                  startingLineNumber = "522"
+                  endingLineNumber = "522"
                   offsetFromSymbolStart = "706">
                </Location>
                <Location
@@ -409,11 +393,11 @@
                   moduleName = "GooglePlacesAutocomplete"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/romanbayik/Documents/Kborn/Outsource/Joshua%20Adler/OriginalProject/Pods/GooglePlacesAutocomplete/GooglePlacesAutocomplete/GooglePlacesAutocomplete.swift"
-                  timestampString = "525171921.544123"
+                  timestampString = "525360878.593023"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "433"
-                  endingLineNumber = "433"
+                  startingLineNumber = "523"
+                  endingLineNumber = "523"
                   offsetFromSymbolStart = "35">
                </Location>
             </Locations>

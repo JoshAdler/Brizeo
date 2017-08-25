@@ -137,7 +137,6 @@
 		BBA73FD11E7CAC2200777E1B /* sound_likes.wav in Resources */ = {isa = PBXBuildFile; fileRef = BBA73FCF1E7CAC2200777E1B /* sound_likes.wav */; };
 		BBA73FD21E7CAC2200777E1B /* sound_matches.wav in Resources */ = {isa = PBXBuildFile; fileRef = BBA73FD01E7CAC2200777E1B /* sound_matches.wav */; };
 		BBA73FD41E7CADCD00777E1B /* sound_messages.wav in Resources */ = {isa = PBXBuildFile; fileRef = BBA73FD31E7CADCD00777E1B /* sound_messages.wav */; };
-		BBAA14181E744056002585C5 /* LocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBAA14171E744056002585C5 /* LocationViewController.swift */; };
 		BBBA1DD31E74B07A000C55B8 /* FirstEntranceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBA1DD21E74B07A000C55B8 /* FirstEntranceProvider.swift */; };
 		BBBA1DD51E74BCF8000C55B8 /* FirstEntranceMomentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBA1DD41E74BCF8000C55B8 /* FirstEntranceMomentView.swift */; };
 		BBBA1DDB1E74CEB6000C55B8 /* FirstEntranceUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBBA1DDA1E74CEB6000C55B8 /* FirstEntranceUserView.swift */; };
@@ -381,7 +380,6 @@
 		BBA73FCF1E7CAC2200777E1B /* sound_likes.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sound_likes.wav; sourceTree = "<group>"; };
 		BBA73FD01E7CAC2200777E1B /* sound_matches.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sound_matches.wav; sourceTree = "<group>"; };
 		BBA73FD31E7CADCD00777E1B /* sound_messages.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = sound_messages.wav; sourceTree = "<group>"; };
-		BBAA14171E744056002585C5 /* LocationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationViewController.swift; sourceTree = "<group>"; };
 		BBBA1DD21E74B07A000C55B8 /* FirstEntranceProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstEntranceProvider.swift; sourceTree = "<group>"; };
 		BBBA1DD41E74BCF8000C55B8 /* FirstEntranceMomentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstEntranceMomentView.swift; sourceTree = "<group>"; };
 		BBBA1DDA1E74CEB6000C55B8 /* FirstEntranceUserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstEntranceUserView.swift; sourceTree = "<group>"; };
@@ -997,7 +995,6 @@
 			isa = PBXGroup;
 			children = (
 				BB4ED5E71E3BA27B005B3487 /* SettingsViewController.swift */,
-				BBAA14171E744056002585C5 /* LocationViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1515,7 +1512,6 @@
 				BB49F9511E412C26009EE6A0 /* SettingsHeaderView.swift in Sources */,
 				BBFBBB8B1E3CD5FA0002BF4B /* ThemeManager.swift in Sources */,
 				BB4ED5BD1E3AB42B005B3487 /* EventTableViewCell.swift in Sources */,
-				BBAA14181E744056002585C5 /* LocationViewController.swift in Sources */,
 				BB104CEE1E3F889D0082411E /* UserMatchesViewController.swift in Sources */,
 				BB4ED5C51E3B3B12005B3487 /* NotificationTabsViewController.swift in Sources */,
 				BB099F0F1E3F6E0500133794 /* AboutTableViewCell.swift in Sources */,
