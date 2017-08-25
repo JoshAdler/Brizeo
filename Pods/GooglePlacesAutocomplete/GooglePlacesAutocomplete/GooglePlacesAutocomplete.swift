@@ -363,9 +363,11 @@ extension GooglePlacesAutocompleteContainer: UISearchBarDelegate {
             "key": apiKey ?? ""
         ]
         
-        if let bias = locationBias {
-            params["location"] = bias.location
-            params["radius"] = bias.radius.description
+        if isAutocomplete {
+            if let bias = locationBias {
+                params["location"] = bias.location
+                params["radius"] = bias.radius.description
+            }
         }
         
         if (searchString == ""){
