@@ -314,7 +314,7 @@ extension GooglePlacesAutocompleteContainer: UITableViewDataSource, UITableViewD
         } else {
             
             // Get the corresponding candy from our candies array
-            let place = self.places[(indexPath as NSIndexPath).row]
+            let place = self.places[indexPath.row - (isAutocomplete ? 0 : 1)]
             
             // Configure the cell
             cell.textLabel!.text = place.description
@@ -331,7 +331,7 @@ extension GooglePlacesAutocompleteContainer: UITableViewDataSource, UITableViewD
             delegate?.placeSelected?(nil)
         } else {
             
-            let place = self.places[(indexPath as NSIndexPath).row]
+            let place = self.places[indexPath.row - (isAutocomplete ? 0 : 1)]
             delegate?.placeSelected?(place)
         }
     }
