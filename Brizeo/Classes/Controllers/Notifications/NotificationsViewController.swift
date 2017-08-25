@@ -71,7 +71,13 @@ class NotificationsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        loadNotifications(true)
+        guard notifications != nil, notifications!.count > 0 else {
+            
+            loadNotifications(true)
+            return
+        }
+        
+        refreshTableView()
     }
     
     // MARK: - Public method
@@ -97,14 +103,14 @@ class NotificationsViewController: UIViewController {
     
     fileprivate func loadNotifications(_ withLoading: Bool) {
         
-        delegate?.loadNotifications(for: contentType, withLoading, completionHandler: { (loadedNotifications) in
+        delegate?.loadNotifications(for: contentType, withLoading, completionHandler: { [weak self] (loadedNotifications) in
             
             if let loadedNotifications = loadedNotifications {
-                self.notifications = loadedNotifications
-                self.tableView.reloadData()
+                self?.notifications = loadedNotifications
+                self?.tableView.reloadData()
             }
             
-            self.topRefresher.endRefreshing()
+            self?.topRefresher.endRefreshing()
         })
     }
     

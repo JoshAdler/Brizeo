@@ -34,6 +34,8 @@ public enum PlaceType: CustomStringConvertible {
     case establishment
     case regions
     case cities
+    case university
+    case school
     
     public var description : String {
         switch self {
@@ -43,6 +45,8 @@ public enum PlaceType: CustomStringConvertible {
         case .establishment: return "establishment"
         case .regions: return "(regions)"
         case .cities: return "(cities)"
+        case .university: return "university"
+        case .school: return "school"
         }
     }
 }
@@ -71,9 +75,34 @@ open class Place: NSObject {
         self.apiKey = apiKey
     }
     
+    public convenience init(result: [String: AnyObject], apiKey: String?) {
+        self.init(
+            id: result["id"] as! String,
+            description: result["name"] as! String
+        )
+        
+        self.apiKey = apiKey
+    }
+    
     class func initialize(result: [String: AnyObject], apiKey: String?) -> Place {
         var place = Place(
             id: result["place_id"] as! String,
+            description: result["name"] as! String
+        )
+        
+        place.apiKey = apiKey
+        
+        // location
+        if let location = result["geometry"]?["location"] as? [String: Double], let latitude = location["lat"], let longitude = location["lng"] {
+            place.location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        }
+        
+        return place
+    }
+    
+    class func initializeSearch(result: [String: AnyObject], apiKey: String?) -> Place {
+        var place = Place(
+            id: result["id"] as! String,
             description: result["name"] as! String
         )
         
@@ -129,6 +158,8 @@ open class PlaceDetails: CustomStringConvertible {
 
 // MARK: - GooglePlacesAutocomplete
 open class GooglePlacesAutocomplete: UINavigationController {
+    
+    open var isAutocomplete: Bool = true
     open var gpaViewController: GooglePlacesAutocompleteContainer!
     open var closeButton: UIBarButtonItem!
     
@@ -288,9 +319,24 @@ extension GooglePlacesAutocompleteContainer: UISearchBarDelegate {
      */
     
     fileprivate func getPlaces(_ searchString: String) {
-        var params = [
+        
+        var url = "https://maps.googleapis.com/maps/api/place/autocomplete/json"
+        var isAutocomplete = true
+        if let navigationController = navigationController as? GooglePlacesAutocomplete {
+            
+            if !navigationController.isAutocomplete {
+                url = "https://maps.googleapis.com/maps/api/place/textsearch/json"
+                isAutocomplete = false
+            }
+        }
+        
+        var params = isAutocomplete ? [
             "input": searchString,
             "types": placeType.description,
+            "key": apiKey ?? ""
+        ] : [
+            "query": searchString,
+            "type": placeType.description,
             "key": apiKey ?? ""
         ]
         
@@ -304,17 +350,39 @@ extension GooglePlacesAutocompleteContainer: UISearchBarDelegate {
         }
         
         GooglePlacesRequestHelpers.doRequest(
-            "https://maps.googleapis.com/maps/api/place/autocomplete/json",
+            url,
             params: params
         ) { json, error in
-            if let json = json{
-                if let predictions = json["predictions"] as? Array<[String: AnyObject]> {
-                    self.places = predictions.map { (prediction: [String: AnyObject]) -> Place in
-                        return Place(prediction: prediction, apiKey: self.apiKey)
+            if let json = json {
+                
+                var isAutocomplete = true
+                if let navigationController = self.navigationController as? GooglePlacesAutocomplete {
+                    
+                    if !navigationController.isAutocomplete {
+                        isAutocomplete = false
                     }
-                    self.tableView.reloadData()
-                    self.tableView.isHidden = false
-                    self.delegate?.placesFound?(self.places)
+                }
+                
+                if isAutocomplete { // parse autocomplete
+                    if let predictions = json["predictions"] as? Array<[String: AnyObject]> {
+                        self.places = predictions.map { (prediction: [String: AnyObject]) -> Place in
+                            return Place(prediction: prediction, apiKey: self.apiKey)
+                        }
+                        self.tableView.reloadData()
+                        self.tableView.isHidden = false
+                        self.delegate?.placesFound?(self.places)
+                    }
+                } else { // parse search text
+                    if let results = json["results"] as? Array<[String: AnyObject]> {
+                        self.places = results.map { (result: [String: AnyObject]) -> Place in
+                            return Place(result: result, apiKey: self.apiKey)
+                        }
+                        
+                        self.places.sort(by: { return $0.desc < $1.desc })
+                        self.tableView.reloadData()
+                        self.tableView.isHidden = false
+                        self.delegate?.placesFound?(self.places)
+                    }
                 }
             }
         }

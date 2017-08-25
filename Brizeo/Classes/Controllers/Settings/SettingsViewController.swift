@@ -58,7 +58,7 @@ class SettingsViewController: UIViewController {
             case .notifications:
                 return 3
             case .discovery:
-                return 3
+                return 4
             default:
                 return 1
             }
@@ -159,6 +159,11 @@ class SettingsViewController: UIViewController {
     var searchLocationString = ""
     var gpaViewController: GooglePlacesAutocomplete?
     
+    // for university
+    var universityViewController: GooglePlacesAutocomplete?
+    
+    fileprivate var isSearchingLocation = false
+    
     // MARK: - Controller lifecycle
     
     override func viewDidLoad() {
@@ -201,6 +206,7 @@ class SettingsViewController: UIViewController {
             self.tableView.reloadRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
         }
         
+        // RB Comment: unneccessary code
 //        // reload gender
 //        tableView.reloadRows(at: [IndexPath(row: 2, section: 2)], with: .automatic)
         
@@ -398,7 +404,7 @@ extension SettingsViewController: UITableViewDataSource {
 //                typeCell.titleLabel.text = LocalizableString.Gender.localizedString
 //                
 //                return typeCell
-            } else {
+            } else if indexPath.row == 2 { // nationality
                 
                 let typeCell = cell as! SettingsInvitationCell
                 
@@ -411,6 +417,19 @@ extension SettingsViewController: UITableViewDataSource {
                 }
                 
                 typeCell.titleLabel.text = LocalizableString.Nationality.localizedString
+                
+                return typeCell
+            } else { // university
+                
+                let typeCell = cell as! SettingsInvitationCell
+                
+                if let searchUniversity = preferences.searchUniversity {
+                    typeCell.rightTextLabel.text = searchUniversity
+                } else {
+                    typeCell.rightTextLabel.text = LocalizableString.Choose.localizedString
+                }
+                
+                typeCell.titleLabel.text = LocalizableString.University.localizedString
                 
                 return typeCell
             }
@@ -489,6 +508,8 @@ extension SettingsViewController: UITableViewDelegate {
         case .searchLocation:
             if indexPath.row == 0 {
                 
+                isSearchingLocation = true
+                
                 if gpaViewController == nil {
                     gpaViewController = GooglePlacesAutocomplete(
                         apiKey: Configurations.GooglePlaces.key,
@@ -513,15 +534,15 @@ extension SettingsViewController: UITableViewDelegate {
             Helper.goToInitialController(true)
             break
         case .discovery:
-//            if indexPath.row == 2 { // gender
-//                
-//                let genderController: GenderViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.genderController)!
-//                genderController.user = user
-//                genderController.preferences = preferences
-//                
-//                navigationController?.pushViewController(genderController, animated: true)
-//            } else
-                if indexPath.row == 2 { // nationality
+            //            if indexPath.row == 2 { // gender
+            //
+            //                let genderController: GenderViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.genderController)!
+            //                genderController.user = user
+            //                genderController.preferences = preferences
+            //
+            //                navigationController?.pushViewController(genderController, animated: true)
+            //            } else
+            if indexPath.row == 2 { // nationality
                 
                 let optionsController: OptionsNationalityViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.nationalityController)!
                 optionsController.user = user
@@ -529,6 +550,24 @@ extension SettingsViewController: UITableViewDelegate {
                 optionsController.source = .search
                 
                 navigationController?.pushViewController(optionsController, animated: true)
+            } else if indexPath.row == 3 { // university
+                
+                isSearchingLocation = false
+                
+                if universityViewController == nil {
+                    universityViewController = GooglePlacesAutocomplete(
+                        apiKey: Configurations.GooglePlaces.key,
+                        placeType: .university
+                    )
+                    
+                    universityViewController!.placeDelegate = self
+                    universityViewController!.isAutocomplete = false
+                }
+                
+                universityViewController!.reset()
+                
+                ThemeManager.placeLogo(on: universityViewController!.navigationItem)
+                present(universityViewController!, animated: true, completion: nil)
             }
             break
         default:
@@ -599,44 +638,90 @@ extension SettingsViewController: SettingsNotificationCellDelegate {
 extension SettingsViewController: GooglePlacesAutocompleteDelegate {
     
     func placeSelected(_ place: Place) {
-        searchLocationString = place.description
         
-        showBlackLoader()
-        
-        place.getDetails { [weak self] (result) in
-            if let welf = self {
-                // set new values
-                welf.preferences.searchLocation = CLLocation(latitude: result.latitude, longitude: result.longitude)
-                
-                welf.isSearchLocationChanged = true
-                
-                // update preferences
-                PreferencesProvider.updatePreferences(preferences: welf.preferences, completion: { (result) in
-                    switch(result) {
-                    case .success(_):
-                        
-                        // notify about changes
-                        Helper.sendNotification(with: searchLocationChangedNotification, object: nil, dict: nil)
-                        
-                        welf.hideLoader()
-                        welf.tableView.reloadRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
-                        break
-                    case .failure(let error):
-                        SVProgressHUD.showError(withStatus: error.localizedDescription)
-                        break
-                    default: break
-                    }
+        if isSearchingLocation {
+            
+            searchLocationString = place.description
+            
+            showBlackLoader()
+            
+            place.getDetails { [weak self] (result) in
+                if let welf = self {
+                    // set new values
+                    welf.preferences.searchLocation = CLLocation(latitude: result.latitude, longitude: result.longitude)
                     
-                    welf.dismiss(animated: true) {
-                        welf.gpaViewController?.reset()
-                    }
-                })
+                    welf.isSearchLocationChanged = true
+                    
+                    // update preferences
+                    PreferencesProvider.updatePreferences(preferences: welf.preferences, completion: { (result) in
+                        switch(result) {
+                        case .success(_):
+                            
+                            // notify about changes
+                            Helper.sendNotification(with: searchLocationChangedNotification, object: nil, dict: nil)
+                            
+                            welf.hideLoader()
+                            welf.tableView.reloadRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
+                            break
+                        case .failure(let error):
+                            SVProgressHUD.showError(withStatus: error.localizedDescription)
+                            break
+                        default: break
+                        }
+                        
+                        welf.dismiss(animated: true) {
+                            welf.gpaViewController?.reset()
+                            welf.isSearchingLocation = false
+                        }
+                    })
+                }
             }
+        } else { // university
+            
+            showBlackLoader()
+            preferences.searchUniversity = place.desc
+            
+            isSearchLocationChanged = true
+            
+            // update preferences
+            PreferencesProvider.updatePreferences(preferences: preferences, completion: { (result) in
+                
+                switch(result) {
+                case .success(_):
+                    
+                    // notify about changes
+                    Helper.sendNotification(with: searchLocationChangedNotification, object: nil, dict: nil)
+                    
+                    self.hideLoader()
+                    self.tableView.reloadRows(at: [IndexPath(row: 3, section: 2)], with: .automatic)
+                    break
+                case .failure(let error):
+                    SVProgressHUD.showError(withStatus: error.localizedDescription)
+                    break
+                default: break
+                }
+                
+                self.dismiss(animated: true) {
+                    self.universityViewController?.reset()
+                    self.isSearchingLocation = false
+                }
+            })
         }
     }
     
     func placeViewClosed() {
-        gpaViewController?.view.endEditing(true)
-        gpaViewController?.dismiss(animated: true, completion: nil)
+        
+        var controller: UIViewController?
+        
+        if isSearchingLocation {
+            controller = gpaViewController
+        } else {
+            controller = universityViewController
+        }
+        
+        controller?.view.endEditing(true)
+        controller?.dismiss(animated: true, completion: nil)
+        
+        isSearchingLocation = false
     }
 }
