@@ -187,8 +187,9 @@ open class GooglePlacesAutocomplete: UINavigationController {
         self.init(rootViewController: gpaViewController)
         self.gpaViewController = gpaViewController
         
-        closeButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.stop, target: self, action: #selector(GooglePlacesAutocomplete.close))
-        closeButton.style = UIBarButtonItemStyle.done
+        closeButton = UIBarButtonItem(image: #imageLiteral(resourceName: "ic_back_button"), style: .done, target: self, action: #selector(GooglePlacesAutocomplete.close))
+//        closeButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.stop, target: self, action: #selector(GooglePlacesAutocomplete.close))
+//        closeButton.style = UIBarButtonItemStyle.done
         
         gpaViewController.navigationItem.leftBarButtonItem = closeButton
         gpaViewController.navigationItem.title = "Enter Address"
@@ -254,6 +255,7 @@ open class GooglePlacesAutocompleteContainer: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(GooglePlacesAutocompleteContainer.keyboardWasShown(_:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(GooglePlacesAutocompleteContainer.keyboardWillBeHidden(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
+        searchBar.placeholder = isAutocomplete ? "Select a Location" : "Select a University"
         searchBar.becomeFirstResponder()
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         
@@ -360,7 +362,8 @@ extension GooglePlacesAutocompleteContainer: UISearchBarDelegate {
         ] : [
             "query": searchString,
             "type": placeType.description,
-            "key": apiKey ?? ""
+            "key": apiKey ?? "",
+            
         ]
         
         if isAutocomplete {
@@ -410,7 +413,6 @@ extension GooglePlacesAutocompleteContainer: UISearchBarDelegate {
         var params = [
             "key": apiKey ?? "",
             "rankby": "prominence",
-            "sensor": "true",
             "type": placeType.description
         ]
         
