@@ -78,6 +78,7 @@ class UserProvider: NSObject {
         loginManager.logOut()
         
         ChatProvider.logout()
+        BranchProvider.logout()
         
         // erase token for pushes
         if shared.currentUser != nil {

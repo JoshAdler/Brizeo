@@ -423,10 +423,8 @@ extension AppDelegate {
     
     fileprivate func setupReachability() {
         
-        // Allocate a reachability object
         self.reach = Reachability.forInternetConnection()
         
-        // Set the blocks
         self.reach!.reachableBlock = {
             (reach: Reachability?) -> Void in
             
@@ -459,6 +457,9 @@ extension AppDelegate {
             
             // update facebook events for current user
             EventsProvider.updateUserEventsIfNeeds()
+            
+            // be sure user is identified
+            BranchProvider.operateCurrentUserLogin()
             
             // keep in mind this is called on a background thread
             // and if you are updating the UI it needs to happen

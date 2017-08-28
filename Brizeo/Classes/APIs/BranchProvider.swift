@@ -53,6 +53,10 @@ class BranchProvider: NSObject {
     
     // MARK: - Class methods
     
+    class func logout() {
+        Branch.getInstance().logout()
+    }
+    
     class func inviteByParams(otherParams: [MetadataKeys: String]?) -> [MetadataKeys: String] {
         var params = [
             MetadataKeys.invitedByUserId: UserProvider.shared.currentUser!.objectId,
@@ -185,7 +189,27 @@ class BranchProvider: NSObject {
         }
     }
     
+    class func operateCurrentUserLogin() {
+    
+        guard let currentUser = UserProvider.shared.currentUser else {
+            return
+        }
+        
+        if !Branch.currentInstance.isUserIdentified() {
+            Branch.currentInstance.setIdentity("\(currentUser.objectId)-\(currentUser.displayName)") { (params, error) in
+                
+                guard error == nil else {
+                    print("Error in Branch login: \(error!.localizedDescription)")
+                    return
+                }
+                
+                BranchProvider.checkUserReward()
+            }
+        }
+    }
+    
     class func operateFirstEntrance(with user: User) {
+        
         // identify current user
         Branch.currentInstance.setIdentity("\(user.objectId)-\(user.displayName)")
         

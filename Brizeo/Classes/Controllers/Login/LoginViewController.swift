@@ -94,8 +94,9 @@ class LoginViewController: UIViewController {
     }
     
     fileprivate func operateCurrentUser() {
+        
         LocationManager.updateUserLocation()
-        BranchProvider.checkUserReward()
+        BranchProvider.operateCurrentUserLogin()
         
         // save token for push notifications
         NotificationProvider.updateCurrentUserToken()
