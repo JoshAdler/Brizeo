@@ -155,8 +155,8 @@ class SettingsViewController: UIViewController {
     var isSearchLocationChanged = false
     
     // for location
-    var currentLocationString = LocalizableString.Location.localizedString
-    var searchLocationString = ""
+    var currentLocationString = LocalizableString.Searching.localizedString
+    var searchLocationString = LocalizableString.Global.localizedString
     var gpaViewController: GooglePlacesAutocomplete?
     
     // for university
@@ -288,11 +288,12 @@ class SettingsViewController: UIViewController {
         if let preferences = preferences {
             let geocoder = CLGeocoder()
             
-            if !preferences.hasLocation {
+            guard preferences.hasLocation else {
                 
                 // place current location
-                searchLocationString = currentLocationString
-                preferences.searchLocation = LocationManager.shared.currentLocationCoordinates
+                searchLocationString = LocalizableString.Global.localizedString
+                // RB Comment: now we don't need to set current location for searching
+//                preferences.searchLocation = LocationManager.shared.currentLocationCoordinates
                 
                 // update tableview
                 tableView.reloadRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
@@ -358,7 +359,7 @@ extension SettingsViewController: UITableViewDataSource {
             return typeCell
         case .searchLocation:
             let typeCell = cell as! SettingsSearchLocationCell
-            typeCell.delegate = self
+//            typeCell.delegate = self
             typeCell.textField.text = searchLocationString
             return typeCell
         case .discovery:
@@ -517,6 +518,7 @@ extension SettingsViewController: UITableViewDelegate {
                     )
                     
                     gpaViewController!.placeDelegate = self
+                    gpaViewController!.isAdditionalRow = true
                 }
                 
                 let location = preferences.searchLocation?.coordinate ?? LocationManager.shared.currentLocationCoordinates?.coordinate
@@ -562,6 +564,7 @@ extension SettingsViewController: UITableViewDelegate {
                     
                     universityViewController!.placeDelegate = self
                     universityViewController!.isAutocomplete = false
+                    universityViewController!.isAdditionalRow = true
                 }
                 
                 let location = LocationManager.shared.currentLocationCoordinates?.coordinate
@@ -603,26 +606,26 @@ extension SettingsViewController: SettingsRangeCellDelegate {
     }
 }
 
-// MARK: - SettingsSearchLocationCellDelegate
-extension SettingsViewController: SettingsSearchLocationCellDelegate {
-    
-    func searchLocationCell(_ searchLocationCell: SettingsSearchLocationCell, didSelectText text: String) {
-        searchLocationString = text
-        LocationManager.shared.getLocationCoordinateForText(text) { (location) in
-            
-            if let location = location {
-                self.preferences?.searchLocation = location
-            }
-        }
-    }
-    
-    func searchLocationCell(_ searchLocationCell: SettingsSearchLocationCell, textSuggestionsForText text: String, completion: (([String]) -> Void)?) {
-        
-        LocationManager.shared.getLocationsForText(text) { (suggestions) in
-            completion?(suggestions)
-        }
-    }
-}
+//// MARK: - SettingsSearchLocationCellDelegate
+//extension SettingsViewController: SettingsSearchLocationCellDelegate {
+//    
+//    func searchLocationCell(_ searchLocationCell: SettingsSearchLocationCell, didSelectText text: String) {
+//        searchLocationString = text
+//        LocationManager.shared.getLocationCoordinateForText(text) { (location) in
+//            
+//            if let location = location {
+//                self.preferences?.searchLocation = location
+//            }
+//        }
+//    }
+//    
+//    func searchLocationCell(_ searchLocationCell: SettingsSearchLocationCell, textSuggestionsForText text: String, completion: (([String]) -> Void)?) {
+//        
+//        LocationManager.shared.getLocationsForText(text) { (suggestions) in
+//            completion?(suggestions)
+//        }
+//    }
+//}
 
 // MARK: - SettingsNotificationCellDelegate
 extension SettingsViewController: SettingsNotificationCellDelegate {
@@ -645,14 +648,20 @@ extension SettingsViewController: GooglePlacesAutocompleteDelegate {
         
         if isSearchingLocation {
             
-            searchLocationString = place!.description
+            searchLocationString = place?.description ?? LocalizableString.Global.localizedString
             
             showBlackLoader()
             
-            place!.getDetails { [weak self] (result) in
+            let finalizeBlock: (PlaceDetails?) -> Void = { [weak self] (result) in
+                
                 if let welf = self {
+                    
                     // set new values
-                    welf.preferences.searchLocation = CLLocation(latitude: result.latitude, longitude: result.longitude)
+                    if result != nil {
+                        welf.preferences.searchLocation = CLLocation(latitude: result!.latitude, longitude: result!.longitude)
+                    } else {
+                        welf.preferences.searchLocation = nil
+                    }
                     
                     welf.isSearchLocationChanged = true
                     
@@ -678,6 +687,20 @@ extension SettingsViewController: GooglePlacesAutocompleteDelegate {
                             welf.isSearchingLocation = false
                         }
                     })
+                }
+            }
+            
+            
+            guard let place = place else {
+                
+                finalizeBlock(nil)
+                return
+            }
+            
+            place.getDetails { [weak self] (result) in
+                
+                if self != nil {
+                    finalizeBlock(result)
                 }
             }
         } else { // university

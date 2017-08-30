@@ -105,12 +105,15 @@ class NotificationsViewController: UIViewController {
         
         delegate?.loadNotifications(for: contentType, withLoading, completionHandler: { [weak self] (loadedNotifications) in
             
-            if let loadedNotifications = loadedNotifications {
-                self?.notifications = loadedNotifications
-                self?.tableView.reloadData()
+            DispatchQueue.main.async {
+                
+                if let loadedNotifications = loadedNotifications {
+                    self?.notifications = loadedNotifications
+                    self?.tableView.reloadData()
+                }
+                
+                self?.topRefresher.endRefreshing()
             }
-            
-            self?.topRefresher.endRefreshing()
         })
     }
     

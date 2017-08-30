@@ -61,12 +61,18 @@ class ChatProvider: NSObject {
     }
     
     class func startChat(with userId: String?, from controller: UIViewController) {
-        let chatManager : ALChatManager = ALChatManager(applicationKey: Configurations.Applozic.appKey as NSString)
-//        if userId != nil {
-            chatManager.registerUserAndLaunchChat(nil, fromController: controller, forUser: userId)
-//        } else {
-//            chatManager.registerUserAndLaunchChat(nil, fromController: controller, forUser: userId)
-//        }
+        // RB Comment: Old version
+         let chatManager : ALChatManager = ALChatManager(applicationKey: Configurations.Applozic.appKey as NSString)
+         chatManager.registerUserAndLaunchChat(nil, fromController: controller, forUser: userId)
+ 
+        
+        // RB Comment: new version
+//
+//        [userService getUserDetail:userId withCompletion:^(ALContact *contact) {
+//            ALChatManager * chatManager = [[ALChatManager alloc] init];
+//            [chatManager launchChatForUserWithDisplayName:userId withGroupId:nil
+//            andwithDisplayName:nil andFromViewController:self];
+//            }];
     }
     
     class func createChatWithSuperuser() {

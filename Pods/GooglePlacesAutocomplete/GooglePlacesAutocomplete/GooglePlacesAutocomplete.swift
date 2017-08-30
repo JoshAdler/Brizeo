@@ -160,6 +160,7 @@ open class PlaceDetails: CustomStringConvertible {
 open class GooglePlacesAutocomplete: UINavigationController {
     
     open var isAutocomplete: Bool = true
+    open var isAdditionalRow: Bool = false
     open var gpaViewController: GooglePlacesAutocompleteContainer!
     open var closeButton: UIBarButtonItem!
     
@@ -233,6 +234,15 @@ open class GooglePlacesAutocompleteContainer: UIViewController {
         return isAutocompleteValue
     }
     
+    var isAdditionalRow: Bool {
+        
+        if let navigationController = navigationController as? GooglePlacesAutocomplete {
+            return navigationController.isAdditionalRow
+        }
+        
+        return false
+    }
+    
     convenience init(apiKey: String, placeType: PlaceType = .all) {
         let bundle = Bundle(for: GooglePlacesAutocompleteContainer.self)
         
@@ -304,19 +314,19 @@ open class GooglePlacesAutocompleteContainer: UIViewController {
 extension GooglePlacesAutocompleteContainer: UITableViewDataSource, UITableViewDelegate {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return places.count + (isAutocomplete ? 0 : 1)
+        return places.count + (isAdditionalRow ? 1 : 0)
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
-        if indexPath.row == 0 && !isAutocomplete {
+        if indexPath.row == 0 && isAdditionalRow {
             
             cell.textLabel!.text = "All"
         } else {
             
             // Get the corresponding candy from our candies array
-            let place = self.places[indexPath.row - (isAutocomplete ? 0 : 1)]
+            let place = self.places[indexPath.row - (isAdditionalRow ? 1 : 0)]
             
             // Configure the cell
             cell.textLabel!.text = place.description
@@ -328,12 +338,12 @@ extension GooglePlacesAutocompleteContainer: UITableViewDataSource, UITableViewD
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if !isAutocomplete && indexPath.row == 0 { // "All" row
+        if isAdditionalRow && indexPath.row == 0 { // "All" row
             
             delegate?.placeSelected?(nil)
         } else {
             
-            let place = self.places[indexPath.row - (isAutocomplete ? 0 : 1)]
+            let place = self.places[indexPath.row - (isAdditionalRow ? 1 : 0)]
             delegate?.placeSelected?(place)
         }
     }

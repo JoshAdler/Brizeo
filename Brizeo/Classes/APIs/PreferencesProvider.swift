@@ -43,10 +43,11 @@ class PreferencesProvider: NSObject {
                 
                 do {
                     let preferences = try response.mapObject(Preferences.self)
-                    
-                    if !preferences.hasLocation {
-                        preferences.searchLocation = LocationManager.shared.currentLocationCoordinates
-                    }
+
+                    // RB Comment: now you don't need to set current location in case of no search location
+//                    if !preferences.hasLocation {
+//                        preferences.searchLocation = LocationManager.shared.currentLocationCoordinates
+//                    }
                     
                     shared.currentUserPreferences = preferences
                     completion?(.success(preferences))

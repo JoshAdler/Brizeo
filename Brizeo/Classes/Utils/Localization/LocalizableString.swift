@@ -10,6 +10,7 @@ import Foundation
 
 enum LocalizableString: String {
     
+    case Global = "Global"
     case CategoriesIntroText = "This will be used to match you with other Brizeo members that share your interests. You can change this anytime."
     case CustomWorkPlaceholder = "You can type your custom occupation."
     case CustomEducationPlaceholder = "You can type your custom school."
@@ -201,6 +202,7 @@ enum LocalizableString: String {
     case CategoriesViewSelectCategoriesDescription = "If you have already selected 4 and want to change, click one of the categories to deselect it and choose another"
     case Settings = "Settings"
     case Location = "Location"
+    case Searching = "Searching..." 
     case AddLocation = "Add location"
     case IamA = "I am a"
     case Logout = "Log Out"
