@@ -464,6 +464,8 @@ extension OptionsEducationViewController {
         
         tableView.deselectRow(at: indexPath, animated: true)
         
+        view.endEditing(true)
+        
         if indexPath.section == 0 {
             super.tableView(tableView, didSelectRowAt: indexPath)
         } else { // input cell
@@ -494,7 +496,7 @@ extension OptionsEducationViewController {
             let sectionTitle = "General School (Click Return to Add)"
             
             headerView.delegate = self
-            headerView.searchField.placeholder = LocalizableString.SelectLocationToSearch.rawValue
+            headerView.searchField.placeholder = LocalizableString.SelectUniversityToSearch.rawValue
             headerView.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: tableView.frame.width, height: Constants.headerHeight))
             headerView.contentView.backgroundColor = HexColor("224EA3")
             headerView.titleLabel.text = sectionTitle
