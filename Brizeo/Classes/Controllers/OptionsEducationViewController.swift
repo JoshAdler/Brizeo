@@ -462,8 +462,8 @@ extension OptionsEducationViewController {
             let place = places![indexPath.row]
             var text = place.description
             
-            if let address = place.address {
-                text += "at \(address)"
+            if let address = place.address, address.numberOfCharactersWithoutSpaces() > 0 {
+                text += " at \(address)"
             }
             
             cell.titleLabel.text = text
