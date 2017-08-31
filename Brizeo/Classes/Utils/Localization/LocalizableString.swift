@@ -235,6 +235,7 @@ enum LocalizableString: String {
     case MaximumDistance = "Maximum Distance"
     case SelectNationalitySearchBar = "Select Your Nationality"
     case SelectNationalityToSearch = "Select a Nationality"
+    case SelectLocationToSearch = "Select a Location"
     
     // MARK: Match
     case ItsAMatch = "It's a Match!"

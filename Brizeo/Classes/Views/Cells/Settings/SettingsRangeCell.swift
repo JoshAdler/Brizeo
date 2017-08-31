@@ -8,6 +8,7 @@
 
 import UIKit
 import MSRangeSlider
+import ChameleonFramework
 
 protocol SettingsRangeCellDelegate: class {
     
@@ -48,6 +49,14 @@ class SettingsRangeCell: UITableViewCell {
     }
  
     // MARK: - Public methods
+    
+    func setDistanceEnable(_ isEnabled: Bool) {
+        
+        distanceSlider?.isEnabled = isEnabled
+        
+        distanceLabel?.textColor = isEnabled ? .black : .lightGray
+        distanceValueLabel?.textColor = isEnabled ? HexColor("818181") : .lightGray
+    }
     
     func setupWithRange(_ minAgeRange: Int, maxAgeRange: Int, distanceRange: Int) {
     

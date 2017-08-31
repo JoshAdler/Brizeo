@@ -90,6 +90,9 @@
 		BB40EC8B1E7FDDE4001DEA35 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB40EC8A1E7FDDE4001DEA35 /* Event.swift */; };
 		BB49F94E1E409E16009EE6A0 /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB49F94D1E409E16009EE6A0 /* ChatListViewController.swift */; };
 		BB49F9511E412C26009EE6A0 /* SettingsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB49F9501E412C26009EE6A0 /* SettingsHeaderView.swift */; };
+		BB4ABF881F56AB3900B90149 /* OptionsEducationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4ABF871F56AB3900B90149 /* OptionsEducationViewController.swift */; };
+		BB4ABF8A1F56BDC400B90149 /* SearchHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB4ABF891F56BDC400B90149 /* SearchHeaderView.xib */; };
+		BB4ABF8C1F56BE0D00B90149 /* SearchHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4ABF8B1F56BE0D00B90149 /* SearchHeaderView.swift */; };
 		BB4ED5BD1E3AB42B005B3487 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4ED5BC1E3AB42B005B3487 /* EventTableViewCell.swift */; };
 		BB4ED5C01E3AB657005B3487 /* MainNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4ED5BF1E3AB657005B3487 /* MainNavigationViewController.swift */; };
 		BB4ED5C51E3B3B12005B3487 /* NotificationTabsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4ED5C41E3B3B12005B3487 /* NotificationTabsViewController.swift */; };
@@ -332,6 +335,9 @@
 		BB40EC8A1E7FDDE4001DEA35 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		BB49F94D1E409E16009EE6A0 /* ChatListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
 		BB49F9501E412C26009EE6A0 /* SettingsHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsHeaderView.swift; sourceTree = "<group>"; };
+		BB4ABF871F56AB3900B90149 /* OptionsEducationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsEducationViewController.swift; sourceTree = "<group>"; };
+		BB4ABF891F56BDC400B90149 /* SearchHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchHeaderView.xib; sourceTree = "<group>"; };
+		BB4ABF8B1F56BE0D00B90149 /* SearchHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchHeaderView.swift; sourceTree = "<group>"; };
 		BB4ED5BC1E3AB42B005B3487 /* EventTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
 		BB4ED5BF1E3AB657005B3487 /* MainNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainNavigationViewController.swift; sourceTree = "<group>"; };
 		BB4ED5C41E3B3B12005B3487 /* NotificationTabsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTabsViewController.swift; sourceTree = "<group>"; };
@@ -844,6 +850,7 @@
 				BBA0DC731E79408800F2BA6E /* CustomSearchBar.swift */,
 				BB2A5CA91F17BDD9003E9095 /* TimerDialogView.swift */,
 				BBEDA7DD1F1CA8400083211B /* NoCategoriesView.swift */,
+				BB4ABF8B1F56BE0D00B90149 /* SearchHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1039,6 +1046,7 @@
 			children = (
 				BB7873BB1E81B50600F2C8C8 /* OptionsViewController.swift */,
 				BBF975811EEB49A000BB36AB /* OptionsNationalityViewController.swift */,
+				BB4ABF871F56AB3900B90149 /* OptionsEducationViewController.swift */,
 			);
 			name = Options;
 			sourceTree = "<group>";
@@ -1137,6 +1145,7 @@
 		BBEDA7BE1F1CA8270083211B /* XIBs */ = {
 			isa = PBXGroup;
 			children = (
+				BB4ABF891F56BDC400B90149 /* SearchHeaderView.xib */,
 				BBEDA7BF1F1CA8270083211B /* ChooseTableViewCell.xib */,
 				BBEDA7C01F1CA8270083211B /* ChooseView.xib */,
 				BBEDA7C11F1CA8270083211B /* ConfirmationView.xib */,
@@ -1350,6 +1359,7 @@
 				BBEDA7DB1F1CA8270083211B /* SettingsNormalHeaderView.xib in Resources */,
 				BBEDA7D31F1CA8270083211B /* InviteFriendsView.xib in Resources */,
 				BBA73FD41E7CADCD00777E1B /* sound_messages.wav in Resources */,
+				BB4ABF8A1F56BDC400B90149 /* SearchHeaderView.xib in Resources */,
 				BB4ED5DD1E3B4F81005B3487 /* SourceSansPro-BoldIt.otf in Resources */,
 				BBEDA7DA1F1CA8270083211B /* SettingsBigHeaderView.xib in Resources */,
 				BBEDA7D11F1CA8270083211B /* FirstEntranceMomentView.xib in Resources */,
@@ -1529,6 +1539,7 @@
 				BB7EAEAF1E607848007986CD /* ALChatManager.swift in Sources */,
 				BB1FF6F51E51ECDC002343CE /* ConfirmationView.swift in Sources */,
 				BBFBBB821E3CBD460002BF4B /* SettingsSearchLocationCell.swift in Sources */,
+				BB4ABF8C1F56BE0D00B90149 /* SearchHeaderView.swift in Sources */,
 				BB1FF6E11E51A050002343CE /* MatchViewController.swift in Sources */,
 				BB4ED5C71E3B3CE4005B3487 /* NotificationsViewController.swift in Sources */,
 				BBF64E371E9234BC001A9B77 /* OptionsInputTableViewCell.swift in Sources */,
@@ -1576,6 +1587,7 @@
 				88B569021CD904E3003A21EE /* PreferencesProvider.swift in Sources */,
 				BB104CE81E3F87370082411E /* TripsTableViewCell.swift in Sources */,
 				88B568FF1CD904D0003A21EE /* UserProvider.swift in Sources */,
+				BB4ABF881F56AB3900B90149 /* OptionsEducationViewController.swift in Sources */,
 				BB099F0A1E3F4BAB00133794 /* AboutViewController.swift in Sources */,
 				BBD1257D1E407AD100E17750 /* OtherPersonInterestView.swift in Sources */,
 				BB104CE31E3F7F1E0082411E /* TripsViewController.swift in Sources */,

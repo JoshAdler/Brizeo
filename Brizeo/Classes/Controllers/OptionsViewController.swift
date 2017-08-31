@@ -8,7 +8,6 @@
 
 import UIKit
 import SVProgressHUD
-import Typist
 import ChameleonFramework
 
 class OptionsViewController: BasicViewController {
@@ -31,7 +30,6 @@ class OptionsViewController: BasicViewController {
     var user: User!
     var type: ContentType!
     var values: [String]?
-    var keyboardTypist: Typist!
     
     fileprivate var activeTextField: UITextField?
     
@@ -55,18 +53,6 @@ class OptionsViewController: BasicViewController {
         if values == nil || values?.count == 0 {
             loadContent()
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        keyboardTypist.start()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        keyboardTypist.stop()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -106,6 +92,35 @@ class OptionsViewController: BasicViewController {
         _ = self.navigationController?.popViewController(animated: true)
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    // MARK: - Observers
+    
+    @objc func keyboardWillShowForResizing(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
+            let _ = self.view.window?.frame {
+
+            self.tableView.contentSize = CGSize(width: self.tableView.contentSize.width, height: self.tableView.contentSize.height + keyboardSize.height)
+//            self.passionsTableView.contentSize = CGSize(width: self.passionsTableView.contentSize.width, height: self.defaultTableViewContentHeight + keyboardSize.height)
+        } else {
+            
+            debugPrint("We're showing the keyboard and either the keyboard size or window is nil: panic widely.")
+        }
+    }
+    
+    @objc func keyboardWillHideForResizing(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+
+            self.tableView.contentSize = CGSize(width: self.tableView.contentSize.width, height: self.tableView.contentSize.height - keyboardSize.height)
+//            self.passionsTableView.contentSize = CGSize(width: self.passionsTableView.contentSize.width, height: self.defaultTableViewContentHeight)
+        } else {
+            
+            debugPrint("We're about to hide the keyboard and the keyboard size is nil. Now is the rapture.")
+        }
+    }
+    
     // MARK: - Private methods
     
     fileprivate func registerHeaderViews() {
@@ -113,25 +128,37 @@ class OptionsViewController: BasicViewController {
     }
     
     fileprivate func configureKeyboardBehaviour() {
-        keyboardTypist = Typist()
         
-        keyboardTypist
-            .on(event: .willHide, do: { (options) in
-                print("will hide options")
-                UIView.animate(withDuration: options.animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(options.animationCurve.rawValue)), animations: {
-                    
-                    self.tableView.contentSize = CGSize(width: self.tableView.contentSize.width, height: self.tableView.contentSize.height - options.endFrame.height)
-                }, completion: nil)
-            })
-            .on(event: .willShow, do: { (options) in
-                print("will show options")
-                UIView.animate(withDuration: options.animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(options.animationCurve.rawValue)), animations: {
-                    
-                    self.tableView.contentSize = CGSize(width: self.tableView.contentSize.width, height: self.tableView.contentSize.height + options.endFrame.height)
-                }, completion: nil)
-            })
-            .start()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillShowForResizing(notification:)),
+                                               name: NSNotification.Name.UIKeyboardWillShow,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillHideForResizing(notification:)),
+                                               name: NSNotification.Name.UIKeyboardWillHide,
+                                               object: nil)
     }
+    
+//    fileprivate func configureKeyboardBehaviour() {
+//        keyboardTypist = Typist()
+//        
+//        keyboardTypist
+//            .on(event: .willHide, do: { (options) in
+//                print("will hide options")
+//                UIView.animate(withDuration: options.animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(options.animationCurve.rawValue)), animations: {
+//                    
+//                    self.tableView.contentSize = CGSize(width: self.tableView.contentSize.width, height: self.tableView.contentSize.height - options.endFrame.height)
+//                }, completion: nil)
+//            })
+//            .on(event: .willShow, do: { (options) in
+//                print("will show options")
+//                UIView.animate(withDuration: options.animationDuration, delay: 0.0, options: UIViewAnimationOptions(rawValue: UInt(options.animationCurve.rawValue)), animations: {
+//                    
+//                    self.tableView.contentSize = CGSize(width: self.tableView.contentSize.width, height: self.tableView.contentSize.height + options.endFrame.height)
+//                }, completion: nil)
+//            })
+//            .start()
+//    }
     
     fileprivate func loadContent() {
         showBlackLoader()

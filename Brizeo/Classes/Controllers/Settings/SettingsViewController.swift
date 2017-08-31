@@ -369,6 +369,8 @@ extension SettingsViewController: UITableViewDataSource {
                 
                 if let preferences = preferences {
                     typeCell.setupWithRange(preferences.ageLowerLimit, maxAgeRange: preferences.ageUpperLimit, distanceRange: preferences.maxSearchDistance)
+                    
+                    typeCell.setDistanceEnable(preferences.hasLocation)
                 }
                 
                 typeCell.delegate = self
@@ -674,7 +676,8 @@ extension SettingsViewController: GooglePlacesAutocompleteDelegate {
                             Helper.sendNotification(with: searchLocationChangedNotification, object: nil, dict: nil)
                             
                             welf.hideLoader()
-                            welf.tableView.reloadRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
+                            welf.tableView.reloadData()
+//                            welf.tableView.reloadRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
                             break
                         case .failure(let error):
                             SVProgressHUD.showError(withStatus: error.localizedDescription)

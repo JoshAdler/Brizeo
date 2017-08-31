@@ -481,21 +481,26 @@ extension AboutViewController: UITableViewDelegate {
             
             Helper.currentTabNavigationController()?.pushViewController(controller, animated: true)
         } else {
-            let controller: OptionsViewController = Helper.controllerFromStoryboard(controllerId: "OptionsViewController")!
             
             switch section {
             case .work:
+                
+                let controller: OptionsViewController = Helper.controllerFromStoryboard(controllerId: "OptionsViewController")!
                 controller.type = .work
+                controller.user = user
+                
+                Helper.currentTabNavigationController()?.pushViewController(controller, animated: true)
                 break
             case .education:
-                controller.type = .education
+                
+                let controller: OptionsEducationViewController = Helper.controllerFromStoryboard(controllerId: "OptionsEducationViewController")!
+                controller.user = user
+                
+                Helper.currentTabNavigationController()?.pushViewController(controller, animated: true)
                 break
             default:
                 break
             }
-            
-            controller.user = user
-            Helper.currentTabNavigationController()?.pushViewController(controller, animated: true)
         }
     }
 }
