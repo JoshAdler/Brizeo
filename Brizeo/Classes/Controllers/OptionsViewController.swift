@@ -26,10 +26,11 @@ class OptionsViewController: BasicViewController {
     
     // MARK: - Properties
     
+    @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
     var user: User!
     var type: ContentType!
-    var values: [String]?
+    var values: [(String, String)]?
     
     fileprivate var activeTextField: UITextField?
     
@@ -58,8 +59,7 @@ class OptionsViewController: BasicViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        UserProvider.updateUser(user: user, completion: nil)
-    }
+        UserProvider.updateUser(user: user, completion: nil)    }
     
     override func onBackButtonClicked(sender: UIBarButtonItem?) {
         
@@ -102,8 +102,7 @@ class OptionsViewController: BasicViewController {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
             let _ = self.view.window?.frame {
 
-            self.tableView.contentSize = CGSize(width: self.tableView.contentSize.width, height: self.tableView.contentSize.height + keyboardSize.height)
-//            self.passionsTableView.contentSize = CGSize(width: self.passionsTableView.contentSize.width, height: self.defaultTableViewContentHeight + keyboardSize.height)
+            tableViewBottomConstraint.constant = keyboardSize.height
         } else {
             
             debugPrint("We're showing the keyboard and either the keyboard size or window is nil: panic widely.")
@@ -111,10 +110,9 @@ class OptionsViewController: BasicViewController {
     }
     
     @objc func keyboardWillHideForResizing(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+        if ((notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue) != nil {
 
-            self.tableView.contentSize = CGSize(width: self.tableView.contentSize.width, height: self.tableView.contentSize.height - keyboardSize.height)
-//            self.passionsTableView.contentSize = CGSize(width: self.passionsTableView.contentSize.width, height: self.defaultTableViewContentHeight)
+            tableViewBottomConstraint.constant = 0.0
         } else {
             
             debugPrint("We're about to hide the keyboard and the keyboard size is nil. Now is the rapture.")
@@ -170,8 +168,11 @@ class OptionsViewController: BasicViewController {
                 switch (result) {
                 case .success(let workPlaces):
                     
-                    self.values = workPlaces
-                    self.tableView.reloadData()
+                    DispatchQueue.main.async {
+                        let transformedPlaces = workPlaces.map({ return ($0, "") })
+                        self.values = transformedPlaces
+                        self.tableView.reloadData()
+                    }
                     
                     break
                 case .failure(let error):
@@ -189,8 +190,10 @@ class OptionsViewController: BasicViewController {
                 switch (result) {
                 case .success(let educationPlaces):
                     
-                    self.values = educationPlaces
-                    self.tableView.reloadData()
+                    DispatchQueue.main.async {
+                        self.values = educationPlaces
+                        self.tableView.reloadData()
+                    }
                     
                     break
                 case .failure(let error):
@@ -224,12 +227,18 @@ extension OptionsViewController: UITableViewDataSource {
         if indexPath.section == 0 {
             let cell: SettingsCheckmarkCell = tableView.dequeueCell(withIdentifier: SettingsCheckmarkCell.identifier, for: indexPath)
             
-            let value = values![indexPath.row]
             
-            cell.titleLabel.text = value
+            let value = values![indexPath.row]
+            var text = value.0
+            
+            if value.1.numberOfCharactersWithoutSpaces() > 0 {
+                text += ", \(value.1)"
+            }
+            
+            cell.titleLabel.text = text
             
             let selectedValue = (type == .education) ? user.studyInfo : user.workInfo
-            cell.isChecked = value == selectedValue
+            cell.isChecked = value.0 == selectedValue
             
             return cell
         } else { // input cell
@@ -241,7 +250,7 @@ extension OptionsViewController: UITableViewDataSource {
             if selectedValue == nil {
                 cell.isChecked = true
                 cell.textField.text = selectedValue
-            } else if values != nil && !values!.contains(selectedValue!) {
+            } else if values != nil && !values!.map({ return $0.0 }).contains(selectedValue!) {
                 cell.isChecked = true
                 cell.textField.text = selectedValue
             }
@@ -288,9 +297,9 @@ extension OptionsViewController: UITableViewDelegate {
             let value = values![indexPath.row]
             
             if type == .education {
-                user.studyInfo = value
+                user.studyInfo = value.0
             } else { // work
-                user.workInfo = value
+                user.workInfo = value.0
             }
             
             tableView.reloadData()

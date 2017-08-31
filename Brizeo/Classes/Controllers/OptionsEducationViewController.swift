@@ -31,6 +31,7 @@ fileprivate struct LocationBias {
 fileprivate class Place: NSObject {
     open let id: String
     open let desc: String
+    open var address: String?
     open var apiKey: String?
     open var location: CLLocationCoordinate2D?
     
@@ -73,6 +74,11 @@ fileprivate class Place: NSObject {
         // location
         if let location = result["geometry"]?["location"] as? [String: Double], let latitude = location["lat"], let longitude = location["lng"] {
             place.location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        }
+        
+        // if address 
+        if let address = result["formatted_address"] as? String {
+            place.address = address
         }
         
         return place
@@ -353,7 +359,8 @@ class OptionsEducationViewController: OptionsViewController {
                 if let results = json["results"] as? [[String: AnyObject]] {
                     
                     self!.places = results.map { (result: [String: AnyObject]) -> Place in
-                        return Place.initialize(result: result, apiKey: Configurations.GooglePlaces.key)
+                        let place = Place.initialize(result: result, apiKey: Configurations.GooglePlaces.key)
+                        return place
                     }
                     
                     self!.tableView.reloadData()
@@ -395,7 +402,9 @@ class OptionsEducationViewController: OptionsViewController {
                 
                 if let results = json["results"] as? Array<[String: AnyObject]> {
                     self!.places = results.map { (result: [String: AnyObject]) -> Place in
-                        return Place(result: result, apiKey: Configurations.GooglePlaces.key)
+                        
+                        let place = Place.initialize(result: result, apiKey: Configurations.GooglePlaces.key)
+                        return place
                     }
                     
                     self!.places?.sort(by: { return $0.desc < $1.desc })
@@ -451,10 +460,23 @@ extension OptionsEducationViewController {
             let cell: SettingsCheckmarkCell = tableView.dequeueCell(withIdentifier: SettingsCheckmarkCell.identifier, for: indexPath)
             
             let place = places![indexPath.row]
-            let placeTitle = place.description
+            var text = place.description
             
-            cell.titleLabel.text = placeTitle
-            cell.isChecked = placeTitle == user.studyInfo
+            if let address = place.address {
+                text += "at \(address)"
+            }
+            
+            cell.titleLabel.text = text
+            
+            var isChecked = false
+            
+            if let placeId = user.studyPlaceId {
+                isChecked = placeId == place.id
+            } else {
+                isChecked = place.description == user.studyInfo
+            }
+            
+            cell.isChecked = isChecked
             
             return cell
         }
@@ -466,12 +488,15 @@ extension OptionsEducationViewController {
         
         view.endEditing(true)
         
+        user.studyPlaceId = nil
+        
         if indexPath.section == 0 {
             super.tableView(tableView, didSelectRowAt: indexPath)
         } else { // input cell
             
             let place = places![indexPath.row]
             user.studyInfo = place.description
+            user.studyPlaceId = place.id
             
             tableView.reloadData()
         }

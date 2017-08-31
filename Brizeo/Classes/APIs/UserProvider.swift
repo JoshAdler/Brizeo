@@ -295,7 +295,7 @@ class UserProvider: NSObject {
         }
     }
     
-    class func loadEducationPlaces(completion: @escaping (Result<[String]>) -> Void) {
+    class func loadEducationPlaces(completion: @escaping (Result<[(String, String)]>) -> Void) {
         
         guard UserProvider.shared.currentUser != nil else {
             return
@@ -599,9 +599,9 @@ class UserProvider: NSObject {
         return educationInfo
     }
     
-    fileprivate class func parseAllEducationHistory(from dict: [String: Any]) -> [String] {
+    fileprivate class func parseAllEducationHistory(from dict: [String: Any]) -> [(String, String)] {
         
-        var educationPlaces = [String]()
+        var educationPlaces = [(String, String)]()
         
         if let educationDataArray = dict["education"] as? [[String: Any]] {
             
@@ -614,14 +614,15 @@ class UserProvider: NSObject {
                 }
                 
                 // year
+                var educationYear = ""
                 if let yearDict = educationDict["year"] as? [String: Any], let  year = yearDict["name"] as? String {
                     if educationInfo.numberOfCharactersWithoutSpaces() > 0 {
-                        educationInfo += ", \(year)"
+                        educationYear = year
                     }
                 }
                 
                 if educationInfo.numberOfCharactersWithoutSpaces() > 0 {
-                    educationPlaces.append(educationInfo)
+                    educationPlaces.append((educationInfo, educationYear))
                 }
             }
         }
