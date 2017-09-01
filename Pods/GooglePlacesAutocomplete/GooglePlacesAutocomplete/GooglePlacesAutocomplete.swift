@@ -323,6 +323,7 @@ extension GooglePlacesAutocompleteContainer: UITableViewDataSource, UITableViewD
         if indexPath.row == 0 && isAdditionalRow {
             
             cell.textLabel!.text = isAutocomplete ? "Global" : "All"
+            cell.textLabel?.textColor = UIColor.init(colorLiteralRed: 34.0 / 255.0, green: 78.0 / 255.0, blue: 163.0 / 255.0, alpha: 1.0)
         } else {
             
             // Get the corresponding candy from our candies array
@@ -330,6 +331,7 @@ extension GooglePlacesAutocompleteContainer: UITableViewDataSource, UITableViewD
             
             // Configure the cell
             cell.textLabel!.text = place.description
+            cell.textLabel?.textColor = UIColor.black
         }
         cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         
