@@ -121,6 +121,15 @@ class MomentsViewController: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        if FirstEntranceProvider.shared.currentStep == .moments {
+            FirstEntranceProvider.shared.isFirstEntrancePassed = true
+            hideHelpView(isHidden: true)
+        }
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -212,7 +221,7 @@ class MomentsViewController: UIViewController {
     func hideHelpView(isHidden: Bool) {
         if uploadMomentHelpView == nil {
             uploadMomentHelpView = FirstEntranceMomentView.loadFromNib()
-            uploadMomentHelpView?.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+            uploadMomentHelpView?.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 49))
             uploadMomentHelpView?.isHidden = true
             uploadMomentHelpView?.delegate = self
             

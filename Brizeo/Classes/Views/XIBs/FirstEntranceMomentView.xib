@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -38,28 +38,28 @@
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_new_moment_initial" translatesAutoresizingMaskIntoConstraints="NO" id="MOM-Yn-wnv">
-                    <rect key="frame" x="93" y="269" width="233" height="172"/>
+                    <rect key="frame" x="35" y="269" width="291" height="148"/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_popup_events" translatesAutoresizingMaskIntoConstraints="NO" id="yxn-EV-KiW">
-                    <rect key="frame" x="16.5" y="539" width="42.5" height="71"/>
+                    <rect key="frame" x="16.5" y="588" width="42.5" height="71"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="yxn-EV-KiW" secondAttribute="height" multiplier="42:71" id="iMJ-sb-uSn"/>
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_popup_search" translatesAutoresizingMaskIntoConstraints="NO" id="lmZ-P1-85b">
-                    <rect key="frame" x="91" y="523" width="43" height="87"/>
+                    <rect key="frame" x="91" y="572" width="43" height="87"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="lmZ-P1-85b" secondAttribute="height" multiplier="43:87" id="2Kl-vW-UvR"/>
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_popup_notifications" translatesAutoresizingMaskIntoConstraints="NO" id="v7a-lR-Ck1">
-                    <rect key="frame" x="222" y="524" width="81" height="86"/>
+                    <rect key="frame" x="222" y="573" width="81" height="86"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="v7a-lR-Ck1" secondAttribute="height" multiplier="81:86" id="vU5-Sg-WDd"/>
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_popup_message" translatesAutoresizingMaskIntoConstraints="NO" id="LSH-dV-2v0">
-                    <rect key="frame" x="305" y="553" width="60" height="57"/>
+                    <rect key="frame" x="305" y="602" width="60" height="57"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="LSH-dV-2v0" secondAttribute="height" multiplier="60:57" id="l4F-JQ-PYk"/>
                     </constraints>
@@ -82,7 +82,7 @@
                 <constraint firstItem="MOM-Yn-wnv" firstAttribute="trailing" secondItem="2oU-Vg-JlL" secondAttribute="trailing" constant="-13" id="YFz-pI-AWb"/>
                 <constraint firstAttribute="trailing" secondItem="gPh-cr-rWS" secondAttribute="trailing" id="ava-k2-hEL"/>
                 <constraint firstAttribute="trailing" secondItem="2oU-Vg-JlL" secondAttribute="trailing" constant="36" id="cnG-UT-Pix"/>
-                <constraint firstAttribute="bottom" secondItem="yxn-EV-KiW" secondAttribute="bottom" constant="57" id="e5T-ts-xIg"/>
+                <constraint firstAttribute="bottom" secondItem="yxn-EV-KiW" secondAttribute="bottom" constant="8" id="e5T-ts-xIg"/>
                 <constraint firstItem="4uE-ud-Xpc" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="57" id="eK1-tP-Bgx"/>
                 <constraint firstItem="LSH-dV-2v0" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="2" constant="-40" id="kVk-Bi-4NZ"/>
                 <constraint firstItem="v7a-lR-Ck1" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="1.4" id="nzr-dk-ELj"/>
@@ -103,6 +103,6 @@
         <image name="bg_popup_search" width="43" height="86"/>
         <image name="bg_popup_settings" width="58" height="37"/>
         <image name="camera-icon" width="46" height="46"/>
-        <image name="ic_new_moment_initial" width="233" height="172"/>
+        <image name="ic_new_moment_initial" width="291" height="148"/>
     </resources>
 </document>
