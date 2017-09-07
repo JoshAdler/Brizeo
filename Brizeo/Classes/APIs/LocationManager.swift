@@ -138,19 +138,6 @@ class LocationManager: NSObject {
             switch(CLLocationManager.authorizationStatus()) {
             case .notDetermined, .restricted, .denied:
                 
-                /*
-                let alert = UIAlertController(title: LocalizableString.Warning.localizedString, message: LocalizableString.LocationDenied.localizedString, preferredStyle: .alert)
-                
-                alert.addAction(UIAlertAction(title: LocalizableString.Ok.localizedString, style: .default, handler: { (action) in
-                    Helper.openURL(url: URL(string:UIApplicationOpenSettingsURLString)!)
-                }))
-                
-                alert.addAction(UIAlertAction(title: LocalizableString.Later.localizedString, style: .default, handler: nil))
-                */
-                
-                
-                //Helper.initialNavigationController().present(alert, animated: true, completion: nil)
-                
                 let confirmationView: ConfirmationView = ConfirmationView.loadFromNib()
                 confirmationView.title = LocalizableString.LocationDenied.localizedString
                 confirmationView.heightConstraint.constant += 50.0
