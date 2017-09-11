@@ -32,6 +32,31 @@
 {
     NSString * paramString;
 }
+
+// RB Comment: new method (based on email from Applozic
+
+- (void)getUserDetail:(NSString*)userId withCompletion:(void(^)(ALContact *contact))completion {
+    
+    ALContactService *contactService = [ALContactService new];
+    ALContactDBService *contactDBService = [ALContactDBService new];
+    
+    if(![contactService isContactExist:userId]) {
+        NSLog(@"###contact is not found");
+        
+        [ALUserService userDetailServerCall:userId withCompletion:^(ALUserDetail *alUserDetail) {
+            
+            [contactDBService updateUserDetail:alUserDetail];
+            ALContact * alContact = [contactDBService loadContactByKey:@"userId" value:userId];
+            completion(alContact);
+        }];
+    } else {
+        NSLog(@" contact is found");
+        
+        ALContact * alContact = [contactDBService loadContactByKey:@"userId" value:userId];
+        completion(alContact);
+    }
+}
+
 //1. call this when each message comes
 
 + (void)processContactFromMessages:(NSArray *) messagesArr withCompletion:(void(^)())completionMark

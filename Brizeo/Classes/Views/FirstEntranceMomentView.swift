@@ -10,6 +10,7 @@ import UIKit
 
 protocol FirstEntranceMomentViewDelegate: class {
     func momentView(view: FirstEntranceMomentView, didClickedOnCreate button: UIButton)
+    func momentView(view: FirstEntranceMomentView, didClickedOnHide button: UIButton)
 }
 
 class FirstEntranceMomentView: UIView {
@@ -43,5 +44,9 @@ class FirstEntranceMomentView: UIView {
     
     @IBAction func onCreateButtonClicked(sender: UIButton) {
         delegate?.momentView(view: self, didClickedOnCreate: sender)
+    }
+    
+    @IBAction func onHideButtonClicked(sender: UIButton) {
+        delegate?.momentView(view: self, didClickedOnHide: sender)
     }
 }

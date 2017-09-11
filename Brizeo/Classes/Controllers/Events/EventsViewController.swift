@@ -127,7 +127,7 @@ class EventsViewController: UIViewController {
         }
     }
     
-    var parentController: EventTabsViewController!
+    weak var parentController: EventTabsViewController?
     var gpaViewController: GooglePlacesAutocomplete?
     var events: [Event]?
     var selectedflag = SortingFlag.earliest//SortingFlag.nearest
@@ -229,7 +229,7 @@ class EventsViewController: UIViewController {
                 // hide/show popup arrow if needs
                 if let firstEvent = events.first {
                     let contentURL = firstEvent.ownerUser.profileUrl
-                    self.parentController.popupView?.setContentURL(contentURL)
+                    self.parentController?.popupView?.setContentURL(contentURL)
                 }
                 
                 break

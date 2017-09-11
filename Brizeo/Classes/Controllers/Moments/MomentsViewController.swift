@@ -219,7 +219,9 @@ class MomentsViewController: UIViewController {
     }
     
     func hideHelpView(isHidden: Bool) {
+        
         if uploadMomentHelpView == nil {
+            
             uploadMomentHelpView = FirstEntranceMomentView.loadFromNib()
             uploadMomentHelpView?.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 49))
             uploadMomentHelpView?.isHidden = true
@@ -667,7 +669,14 @@ extension MomentsViewController: MomentTableViewCellDelegate {
 extension MomentsViewController: FirstEntranceMomentViewDelegate {
     
     func momentView(view: FirstEntranceMomentView, didClickedOnCreate button: UIButton) {
+        
         hideHelpView(isHidden: true)
         onCreateButtonClicked(addMomentButton)
+    }
+    
+    func momentView(view: FirstEntranceMomentView, didClickedOnHide button: UIButton) {
+        
+        FirstEntranceProvider.shared.isFirstEntrancePassed = true
+        hideHelpView(isHidden: true)
     }
 }

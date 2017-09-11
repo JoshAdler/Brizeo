@@ -20,8 +20,8 @@ class EventTabsViewController: BasicViewController {
     
     // MARK: - Properties
     
-    weak var allEventsController: EventsViewController!
-    weak var myMatchesController: EventsViewController!
+    var allEventsController: EventsViewController!
+    var myMatchesController: EventsViewController!
     var isControllerReady = false
     var popupView: FirstEntranceEventsView?
     

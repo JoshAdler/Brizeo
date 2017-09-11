@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -21,13 +21,6 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.75" colorSpace="calibratedRGB"/>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2oU-Vg-JlL">
-                    <rect key="frame" x="293" y="207" width="46" height="46"/>
-                    <state key="normal" image="camera-icon"/>
-                    <connections>
-                        <action selector="onCreateButtonClickedWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="ZRl-PU-1MC"/>
-                    </connections>
-                </button>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_popup_settings" translatesAutoresizingMaskIntoConstraints="NO" id="4uE-ud-Xpc">
                     <rect key="frame" x="57" y="31" width="58" height="37"/>
                 </imageView>
@@ -64,10 +57,24 @@
                         <constraint firstAttribute="width" secondItem="LSH-dV-2v0" secondAttribute="height" multiplier="60:57" id="l4F-JQ-PYk"/>
                     </constraints>
                 </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="47M-de-7dp">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <connections>
+                        <action selector="onHideButtonClickedWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="ioM-vx-Fis"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2oU-Vg-JlL">
+                    <rect key="frame" x="293" y="207" width="46" height="46"/>
+                    <state key="normal" image="camera-icon"/>
+                    <connections>
+                        <action selector="onCreateButtonClickedWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="ZRl-PU-1MC"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="MOM-Yn-wnv" firstAttribute="top" secondItem="2oU-Vg-JlL" secondAttribute="bottom" constant="16" id="0Wz-oX-sgs"/>
+                <constraint firstAttribute="bottom" secondItem="47M-de-7dp" secondAttribute="bottom" id="2vO-lG-gz1"/>
                 <constraint firstItem="lmZ-P1-85b" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="6/10" id="6We-dW-NTP"/>
                 <constraint firstItem="Am4-U6-3X3" firstAttribute="top" secondItem="4uE-ud-Xpc" secondAttribute="top" id="7BX-kH-3Kf"/>
                 <constraint firstItem="gPh-cr-rWS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="7Ra-Xc-8AH"/>
@@ -75,8 +82,10 @@
                 <constraint firstItem="v7a-lR-Ck1" firstAttribute="bottom" secondItem="yxn-EV-KiW" secondAttribute="bottom" id="KUB-0y-5mg"/>
                 <constraint firstItem="yxn-EV-KiW" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="0.2" id="LKc-9I-2Yf"/>
                 <constraint firstAttribute="bottom" secondItem="gPh-cr-rWS" secondAttribute="bottom" id="Lel-Ow-V1b"/>
+                <constraint firstItem="47M-de-7dp" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Mdz-Zw-cKx"/>
                 <constraint firstItem="LSH-dV-2v0" firstAttribute="bottom" secondItem="yxn-EV-KiW" secondAttribute="bottom" id="NPd-Dy-HVy"/>
                 <constraint firstItem="2oU-Vg-JlL" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="207" id="Rdi-sV-JVV"/>
+                <constraint firstItem="47M-de-7dp" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Rek-m5-WLq"/>
                 <constraint firstAttribute="trailing" secondItem="Am4-U6-3X3" secondAttribute="trailing" constant="57" id="SQX-61-gXN"/>
                 <constraint firstItem="gPh-cr-rWS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Sec-QC-gee"/>
                 <constraint firstItem="MOM-Yn-wnv" firstAttribute="trailing" secondItem="2oU-Vg-JlL" secondAttribute="trailing" constant="-13" id="YFz-pI-AWb"/>
@@ -87,6 +96,7 @@
                 <constraint firstItem="LSH-dV-2v0" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="2" constant="-40" id="kVk-Bi-4NZ"/>
                 <constraint firstItem="v7a-lR-Ck1" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="1.4" id="nzr-dk-ELj"/>
                 <constraint firstItem="lmZ-P1-85b" firstAttribute="bottom" secondItem="yxn-EV-KiW" secondAttribute="bottom" id="rCn-43-NFV"/>
+                <constraint firstAttribute="trailing" secondItem="47M-de-7dp" secondAttribute="trailing" id="wLO-zW-roa"/>
             </constraints>
             <connections>
                 <outlet property="createButton" destination="2oU-Vg-JlL" id="HEw-3g-LPb"/>

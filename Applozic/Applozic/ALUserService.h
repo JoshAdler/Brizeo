@@ -19,6 +19,9 @@
 
 @interface ALUserService : NSObject
 
+// RB Comment: new method from email
+- (void)getUserDetail:(NSString*)userId withCompletion:(void(^)(ALContact *contact))completion;
+
 +(void)processContactFromMessages:(NSArray *) messagesArr withCompletion:(void(^)())completionMark;
 
 +(void)getLastSeenUpdateForUsers:(NSNumber *)lastSeenAt withCompletion:(void(^)(NSMutableArray *))completionMark;
