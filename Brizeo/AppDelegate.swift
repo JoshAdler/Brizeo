@@ -40,9 +40,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
         
-        FirstEntranceProvider.shared.isAlreadyViewedSearch = false
-        FirstEntranceProvider.shared.isAlreadyViewedEvents = false
-        FirstEntranceProvider.shared.isAlreadyViewedSettings = false
+//        FirstEntranceProvider.shared.isAlreadyViewedSearch = false
+//        FirstEntranceProvider.shared.isAlreadyViewedEvents = false
+//        FirstEntranceProvider.shared.isAlreadyViewedSettings = false
         
         AppDelegate.originalAppDelegate = self
     

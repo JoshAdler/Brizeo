@@ -85,12 +85,4 @@ class FirstEntranceProvider {
             Defaults[.isAlreadyViewedSettings] = newValue
         }
     }
-    
-    // MARK: - Init 
-    
-    private init() {
-        isAlreadyViewedSearch = false
-        isAlreadyViewedEvents = false
-        isAlreadyViewedSettings = false
-    }
 }
