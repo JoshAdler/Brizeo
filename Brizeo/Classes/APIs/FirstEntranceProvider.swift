@@ -13,6 +13,9 @@ extension DefaultsKeys {
     static let isFirstEntrancePassed = DefaultsKey<Bool>("isFirstEntrancePassed")
     static let currentStep = DefaultsKey<Int>("currentStep")
     static let goingToCreateMoment = DefaultsKey<Bool>("goingToCreateMoment")
+    static let isAlreadyViewedEvents = DefaultsKey<Bool>("isAlreadyViewedEvents")
+    static let isAlreadyViewedSearch = DefaultsKey<Bool>("isAlreadyViewedSearch")
+    static let isAlreadyViewedSettings = DefaultsKey<Bool>("isAlreadyViewedSettings")
 }
 
 enum FirstEntranceLogicStep: Int {
@@ -56,12 +59,38 @@ class FirstEntranceProvider {
         }
     }
     
+    var isAlreadyViewedEvents: Bool {
+        get {
+            return Defaults[.isAlreadyViewedEvents]
+        }
+        set {
+            Defaults[.isAlreadyViewedEvents] = newValue
+        }
+    }
+    
+    var isAlreadyViewedSearch: Bool {
+        get {
+            return Defaults[.isAlreadyViewedSearch]
+        }
+        set {
+            Defaults[.isAlreadyViewedSearch] = newValue
+        }
+    }
+    
+    var isAlreadyViewedSettings: Bool {
+        get {
+            return Defaults[.isAlreadyViewedSettings]
+        }
+        set {
+            Defaults[.isAlreadyViewedSettings] = newValue
+        }
+    }
+    
     // MARK: - Init 
     
-    private init() {}
-    
-    // MARK: - Class methods
-    
-
-    
+    private init() {
+        isAlreadyViewedSearch = false
+        isAlreadyViewedEvents = false
+        isAlreadyViewedSettings = false
+    }
 }

@@ -36,6 +36,7 @@ class SearchMatchesViewController: BasicViewController {
     var currentUser: User! = UserProvider.shared.currentUser!
     var detailsController: OtherPersonDetailsTabsViewController!
     var mutualFriends: [User]?
+    var popupView: FirstEntranceSearchView?
     
     // MARK: - Controller lifecycle
     
@@ -82,6 +83,22 @@ class SearchMatchesViewController: BasicViewController {
             //fetchMatchesList()
             loadMatchesIfNeeds()
         }
+        
+        // show popup if needs
+        if !FirstEntranceProvider.shared.isAlreadyViewedSearch {
+            
+            // load popup
+            presentPopup()
+            
+            // mark first entrance for event screen
+            FirstEntranceProvider.shared.isAlreadyViewedSearch = true
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        // hide popup
     }
     
     deinit {
@@ -133,6 +150,14 @@ class SearchMatchesViewController: BasicViewController {
     }
     
     // MARK: - Private methods
+    
+    fileprivate func presentPopup() {
+        
+        popupView = FirstEntranceSearchView.loadFromNib()
+        popupView?.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        
+        AppDelegate.shared().window?.addSubview(popupView!)
+    }
     
     fileprivate func presentErrorAlert(message: String?) {
         let alert = UIAlertController(title: LocalizableString.Error.localizedString, message: message, preferredStyle: .alert)
@@ -242,35 +267,43 @@ class SearchMatchesViewController: BasicViewController {
     }
     
     fileprivate func operateMatches() {
-        if let matches = matches {
-            if matches.count == 0 { // no matches for review
-                
-                // show confirmation
-                let confirmationView: NoMatchesView = NoMatchesView.loadFromNib()
-                confirmationView.present(on: Helper.initialNavigationController().view, confirmAction: {
-                    
-                    let personalController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.personalTabsController)!
-                    personalController.selectedIndex = 1
-                    self.navigationController?.pushViewController(personalController, animated: true)
-                }, declineAction: {
-                    self.tabBarController?.selectedIndex = 2 /* go to moments */
-                })
-                
-                return
-            }
+        
+        // hide popup elements
+        popupView?.setContentAvailable(false)
+        
+        guard let matches = matches else { // no matches
             
-            setupSwipeViewIfNeeds()
-            swipeView?.addCards(matches)
-            
-            setButtonsHidden(isHidden: false)
-            
-            // load mutual friends
-            if let user = matches.first {
-                fetchMutualFriends(for: user)
-            }
-            
-        } else {
             print("No matches")
+            return
+        }
+        
+        guard matches.count > 0 else { // no matches for review
+            
+            // show confirmation
+            let confirmationView: NoMatchesView = NoMatchesView.loadFromNib()
+            confirmationView.present(on: Helper.initialNavigationController().view, confirmAction: {
+                
+                let personalController: PersonalTabsViewController = Helper.controllerFromStoryboard(controllerId: StoryboardIds.personalTabsController)!
+                personalController.selectedIndex = 1
+                self.navigationController?.pushViewController(personalController, animated: true)
+            }, declineAction: {
+                self.tabBarController?.selectedIndex = 2 /* go to moments */
+            })
+            return
+        }
+        
+        // show full popup
+        popupView?.setContentAvailable(true)
+        
+        setupSwipeViewIfNeeds()
+        swipeView?.addCards(matches)
+        
+        setButtonsHidden(isHidden: false)
+        
+        // load mutual friends
+        if let user = matches.first {
+            
+            fetchMutualFriends(for: user)
         }
     }
     

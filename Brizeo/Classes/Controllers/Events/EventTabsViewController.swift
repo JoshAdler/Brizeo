@@ -20,9 +20,10 @@ class EventTabsViewController: BasicViewController {
     
     // MARK: - Properties
     
-    var allEventsController: EventsViewController!
-    var myMatchesController: EventsViewController!
+    weak var allEventsController: EventsViewController!
+    weak var myMatchesController: EventsViewController!
     var isControllerReady = false
+    var popupView: FirstEntranceEventsView?
     
     // MARK: - Controller lifecycle
     
@@ -39,16 +40,43 @@ class EventTabsViewController: BasicViewController {
         
         // update facebook events for current user
         EventsProvider.updateUserEventsIfNeeds()
+        
+        // show popup if needs
+        if !FirstEntranceProvider.shared.isAlreadyViewedEvents {
+            
+            // load popup
+            presentPopup()
+
+            // mark first entrance for event screen
+            FirstEntranceProvider.shared.isAlreadyViewedEvents = true
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        // hide popup
+        popupView?.hide()
     }
     
     // MARK: - Private methods
     
+    fileprivate func presentPopup() {
+        
+        popupView = FirstEntranceEventsView.loadFromNib()
+        popupView?.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        
+        AppDelegate.shared().window?.addSubview(popupView!)
+    }
+    
     fileprivate func prepareController() {
         // load controller
         allEventsController = Helper.controllerFromStoryboard(controllerId: Constants.eventControllerId)!
+        allEventsController.parentController = self
         allEventsController.type = .all
         
         myMatchesController = Helper.controllerFromStoryboard(controllerId: Constants.eventControllerId)!
+        myMatchesController.parentController = self
         myMatchesController.shouldHideLocation = true
         myMatchesController.type = .matches
         

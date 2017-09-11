@@ -88,6 +88,10 @@
 		BB3EF58A1E6D55E5006FB2ED /* NotificationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3EF5891E6D55E4006FB2ED /* NotificationProvider.swift */; };
 		BB3EF58C1E6D672F006FB2ED /* InfoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3EF58B1E6D672F006FB2ED /* InfoProvider.swift */; };
 		BB40EC8B1E7FDDE4001DEA35 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB40EC8A1E7FDDE4001DEA35 /* Event.swift */; };
+		BB42D4011F6695E5002937C9 /* FirstEntranceEventsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB42D4001F6695E5002937C9 /* FirstEntranceEventsView.xib */; };
+		BB42D4A31F6696B5002937C9 /* FirstEntranceEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB42D4A21F6696B5002937C9 /* FirstEntranceEventsView.swift */; };
+		BB42D4A51F66BA54002937C9 /* FirstEntranceSearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BB42D4A41F66BA54002937C9 /* FirstEntranceSearchView.xib */; };
+		BB42D4A71F66BB9F002937C9 /* FirstEntranceSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB42D4A61F66BB9F002937C9 /* FirstEntranceSearchView.swift */; };
 		BB49F94E1E409E16009EE6A0 /* ChatListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB49F94D1E409E16009EE6A0 /* ChatListViewController.swift */; };
 		BB49F9511E412C26009EE6A0 /* SettingsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB49F9501E412C26009EE6A0 /* SettingsHeaderView.swift */; };
 		BB4ABF881F56AB3900B90149 /* OptionsEducationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB4ABF871F56AB3900B90149 /* OptionsEducationViewController.swift */; };
@@ -333,6 +337,10 @@
 		BB3EF5891E6D55E4006FB2ED /* NotificationProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationProvider.swift; sourceTree = "<group>"; };
 		BB3EF58B1E6D672F006FB2ED /* InfoProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoProvider.swift; sourceTree = "<group>"; };
 		BB40EC8A1E7FDDE4001DEA35 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		BB42D4001F6695E5002937C9 /* FirstEntranceEventsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstEntranceEventsView.xib; sourceTree = "<group>"; };
+		BB42D4A21F6696B5002937C9 /* FirstEntranceEventsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstEntranceEventsView.swift; sourceTree = "<group>"; };
+		BB42D4A41F66BA54002937C9 /* FirstEntranceSearchView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstEntranceSearchView.xib; sourceTree = "<group>"; };
+		BB42D4A61F66BB9F002937C9 /* FirstEntranceSearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstEntranceSearchView.swift; sourceTree = "<group>"; };
 		BB49F94D1E409E16009EE6A0 /* ChatListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatListViewController.swift; sourceTree = "<group>"; };
 		BB49F9501E412C26009EE6A0 /* SettingsHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsHeaderView.swift; sourceTree = "<group>"; };
 		BB4ABF871F56AB3900B90149 /* OptionsEducationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsEducationViewController.swift; sourceTree = "<group>"; };
@@ -827,6 +835,10 @@
 			children = (
 				BBEDA7BE1F1CA8270083211B /* XIBs */,
 				BB1EF4771E3AA54600231ACC /* Cells */,
+				BB42D4A61F66BB9F002937C9 /* FirstEntranceSearchView.swift */,
+				BB42D4A21F6696B5002937C9 /* FirstEntranceEventsView.swift */,
+				BBBA1DD41E74BCF8000C55B8 /* FirstEntranceMomentView.swift */,
+				BBBA1DDA1E74CEB6000C55B8 /* FirstEntranceUserView.swift */,
 				BB4ED5FA1E3C0B38005B3487 /* SettingsNormalHeaderView.swift */,
 				BB4ED5FE1E3C0B69005B3487 /* SettingsBigHeaderView.swift */,
 				BB49F9501E412C26009EE6A0 /* SettingsHeaderView.swift */,
@@ -845,8 +857,6 @@
 				BB1FF6EC1E51E4D2002343CE /* InviteFriendsView.swift */,
 				BB1FF6F41E51ECDC002343CE /* ConfirmationView.swift */,
 				BB1FF6FD1E5204F8002343CE /* ChooseView.swift */,
-				BBBA1DD41E74BCF8000C55B8 /* FirstEntranceMomentView.swift */,
-				BBBA1DDA1E74CEB6000C55B8 /* FirstEntranceUserView.swift */,
 				BBA0DC731E79408800F2BA6E /* CustomSearchBar.swift */,
 				BB2A5CA91F17BDD9003E9095 /* TimerDialogView.swift */,
 				BBEDA7DD1F1CA8400083211B /* NoCategoriesView.swift */,
@@ -1145,12 +1155,14 @@
 		BBEDA7BE1F1CA8270083211B /* XIBs */ = {
 			isa = PBXGroup;
 			children = (
+				BB42D4A41F66BA54002937C9 /* FirstEntranceSearchView.xib */,
+				BB42D4001F6695E5002937C9 /* FirstEntranceEventsView.xib */,
+				BBEDA7C21F1CA8270083211B /* FirstEntranceMomentView.xib */,
+				BBEDA7C31F1CA8270083211B /* FirstEntranceUserView.xib */,
 				BB4ABF891F56BDC400B90149 /* SearchHeaderView.xib */,
 				BBEDA7BF1F1CA8270083211B /* ChooseTableViewCell.xib */,
 				BBEDA7C01F1CA8270083211B /* ChooseView.xib */,
 				BBEDA7C11F1CA8270083211B /* ConfirmationView.xib */,
-				BBEDA7C21F1CA8270083211B /* FirstEntranceMomentView.xib */,
-				BBEDA7C31F1CA8270083211B /* FirstEntranceUserView.xib */,
 				BBEDA7C41F1CA8270083211B /* InviteFriendsView.xib */,
 				BBEDA7C51F1CA8270083211B /* NoCategoriesView.xib */,
 				BBEDA7C61F1CA8270083211B /* NoDescriptionView.xib */,
@@ -1372,10 +1384,12 @@
 				BBA73FD21E7CAC2200777E1B /* sound_matches.wav in Resources */,
 				BB4ED5DF1E3B4F81005B3487 /* SourceSansPro-ExtraLightIt.otf in Resources */,
 				BB4ED5E41E3B4F81005B3487 /* SourceSansPro-Semibold.otf in Resources */,
+				BB42D4011F6695E5002937C9 /* FirstEntranceEventsView.xib in Resources */,
 				8873F7291CBFFE570053EAB8 /* Localizable.strings in Resources */,
 				BB4ED5E21E3B4F81005B3487 /* SourceSansPro-LightIt.otf in Resources */,
 				69722BA91CDC05D70064E0B5 /* Localizable.stringsdict in Resources */,
 				BB4ED5E51E3B4F81005B3487 /* SourceSansPro-SemiboldIt.otf in Resources */,
+				BB42D4A51F66BA54002937C9 /* FirstEntranceSearchView.xib in Resources */,
 				BBEDA7D71F1CA8270083211B /* ParticipantView.xib in Resources */,
 				BB4ED5DA1E3B4F81005B3487 /* SourceSansPro-Black.otf in Resources */,
 				BB8B6AD61E51047A00417D54 /* Main.storyboard in Resources */,
@@ -1503,6 +1517,7 @@
 				BB1EF48C1E3AAAAC00231ACC /* EventsViewController.swift in Sources */,
 				BB22CF911E4CBFDD0096A3D3 /* VerticallyCenteredTextView.swift in Sources */,
 				BB3EF58C1E6D672F006FB2ED /* InfoProvider.swift in Sources */,
+				BB42D4A31F6696B5002937C9 /* FirstEntranceEventsView.swift in Sources */,
 				BB3EF5821E69A037006FB2ED /* FileObject.swift in Sources */,
 				BBD125771E3FF4D900E17750 /* MomentTableViewCell.swift in Sources */,
 				88C188651CDB82CF0011F3A6 /* MomentsProvider.swift in Sources */,
@@ -1546,6 +1561,7 @@
 				BB4ED5CA1E3B3F24005B3487 /* LikesNotificationTableViewCell.swift in Sources */,
 				BB4ED5F91E3C06D8005B3487 /* SettingsNotificationCell.swift in Sources */,
 				BB1FB6CB1E3FED48008F2614 /* MomentsViewController.swift in Sources */,
+				BB42D4A71F66BB9F002937C9 /* FirstEntranceSearchView.swift in Sources */,
 				88B569001CD904D0003A21EE /* MatchesProvider.swift in Sources */,
 				BBFBBB801E3CBCAA0002BF4B /* AutoCompleteTextField.swift in Sources */,
 				BBD4281B1E41DE5100DA6E6C /* OtherPersonAboutInfoTableViewCell.swift in Sources */,

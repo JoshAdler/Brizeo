@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="FirstEntranceSearchView" customModule="Brizeo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ff9-vt-JPE">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.75" colorSpace="calibratedRGB"/>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_popup_settings" translatesAutoresizingMaskIntoConstraints="NO" id="4uE-ud-Xpc">
+                    <rect key="frame" x="57" y="31" width="58" height="37"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_popup_invite" translatesAutoresizingMaskIntoConstraints="NO" id="Am4-U6-3X3">
+                    <rect key="frame" x="234" y="31" width="84" height="34"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="Am4-U6-3X3" secondAttribute="height" multiplier="42:17" id="tOk-mj-rC2"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_popup_pass" translatesAutoresizingMaskIntoConstraints="NO" id="MzU-TT-dGa">
+                    <rect key="frame" x="36" y="272" width="47" height="11"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_popup_connect" translatesAutoresizingMaskIntoConstraints="NO" id="Gwl-RF-oYj">
+                    <rect key="frame" x="266" y="272" width="73" height="11"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_popup_events" translatesAutoresizingMaskIntoConstraints="NO" id="yxn-EV-KiW">
+                    <rect key="frame" x="16.5" y="535" width="42.5" height="71"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="yxn-EV-KiW" secondAttribute="height" multiplier="42:71" id="iMJ-sb-uSn"/>
+                    </constraints>
+                </imageView>
+                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_popup_search_moreDetails" translatesAutoresizingMaskIntoConstraints="NO" id="gQf-2u-aLj">
+                    <rect key="frame" x="91" y="440.5" width="189" height="112"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_popup_notifications" translatesAutoresizingMaskIntoConstraints="NO" id="v7a-lR-Ck1">
+                    <rect key="frame" x="222" y="520" width="81" height="86"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="v7a-lR-Ck1" secondAttribute="height" multiplier="81:86" id="vU5-Sg-WDd"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_popup_message" translatesAutoresizingMaskIntoConstraints="NO" id="LSH-dV-2v0">
+                    <rect key="frame" x="305" y="549" width="60" height="57"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="LSH-dV-2v0" secondAttribute="height" multiplier="60:57" id="l4F-JQ-PYk"/>
+                    </constraints>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VYI-CH-Rhu">
+                    <rect key="frame" x="-0.5" y="547" width="375" height="71"/>
+                    <subviews>
+                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_down_arrow" translatesAutoresizingMaskIntoConstraints="NO" id="CaD-bZ-ClT">
+                            <rect key="frame" x="170" y="17.5" width="35" height="35"/>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="71" id="Nw5-8s-xQw"/>
+                        <constraint firstItem="CaD-bZ-ClT" firstAttribute="centerY" secondItem="VYI-CH-Rhu" secondAttribute="centerY" id="jNq-VU-cSU"/>
+                        <constraint firstItem="CaD-bZ-ClT" firstAttribute="centerX" secondItem="VYI-CH-Rhu" secondAttribute="centerX" id="qDF-NQ-uAy"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5e8-Gb-ZlV">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <connections>
+                        <action selector="onHideButtonClickedWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="uvv-ty-kCy"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="MzU-TT-dGa" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="272" id="0f1-YT-994"/>
+                <constraint firstItem="ff9-vt-JPE" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="6vy-VI-KmR"/>
+                <constraint firstItem="Am4-U6-3X3" firstAttribute="top" secondItem="4uE-ud-Xpc" secondAttribute="top" id="7BX-kH-3Kf"/>
+                <constraint firstItem="5e8-Gb-ZlV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="8pK-Cv-jTo"/>
+                <constraint firstAttribute="trailing" secondItem="ff9-vt-JPE" secondAttribute="trailing" id="Ddg-GU-6v8"/>
+                <constraint firstItem="VYI-CH-Rhu" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="Er1-Tf-qJy"/>
+                <constraint firstItem="ff9-vt-JPE" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="FAB-6v-1P4"/>
+                <constraint firstItem="MzU-TT-dGa" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="36" id="G30-7g-4z2"/>
+                <constraint firstItem="4uE-ud-Xpc" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="31" id="Hfh-Za-3nB"/>
+                <constraint firstItem="v7a-lR-Ck1" firstAttribute="bottom" secondItem="yxn-EV-KiW" secondAttribute="bottom" id="KUB-0y-5mg"/>
+                <constraint firstAttribute="bottom" secondItem="VYI-CH-Rhu" secondAttribute="bottom" constant="49" id="Ksb-VV-aeZ"/>
+                <constraint firstItem="yxn-EV-KiW" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="0.2" id="LKc-9I-2Yf"/>
+                <constraint firstItem="gQf-2u-aLj" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" constant="-2" id="LhS-aq-D9Y"/>
+                <constraint firstItem="LSH-dV-2v0" firstAttribute="bottom" secondItem="yxn-EV-KiW" secondAttribute="bottom" id="NPd-Dy-HVy"/>
+                <constraint firstAttribute="trailing" secondItem="5e8-Gb-ZlV" secondAttribute="trailing" id="Qou-cH-gFc"/>
+                <constraint firstAttribute="trailing" secondItem="Am4-U6-3X3" secondAttribute="trailing" constant="57" id="SQX-61-gXN"/>
+                <constraint firstAttribute="bottom" secondItem="yxn-EV-KiW" secondAttribute="bottom" constant="61" id="e5T-ts-xIg"/>
+                <constraint firstItem="4uE-ud-Xpc" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="57" id="eK1-tP-Bgx"/>
+                <constraint firstItem="CaD-bZ-ClT" firstAttribute="top" secondItem="gQf-2u-aLj" secondAttribute="bottom" constant="12" id="eej-3j-k2G"/>
+                <constraint firstItem="Gwl-RF-oYj" firstAttribute="centerY" secondItem="MzU-TT-dGa" secondAttribute="centerY" id="hEk-sd-Bd6"/>
+                <constraint firstAttribute="trailing" secondItem="Gwl-RF-oYj" secondAttribute="trailing" constant="36" id="kHL-Ji-d9r"/>
+                <constraint firstItem="LSH-dV-2v0" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="2" constant="-40" id="kVk-Bi-4NZ"/>
+                <constraint firstAttribute="bottom" secondItem="ff9-vt-JPE" secondAttribute="bottom" id="ldx-xu-khB"/>
+                <constraint firstItem="v7a-lR-Ck1" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="1.4" id="nzr-dk-ELj"/>
+                <constraint firstItem="VYI-CH-Rhu" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="vPn-ak-KWx"/>
+                <constraint firstItem="5e8-Gb-ZlV" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="w4u-Hb-hpw"/>
+                <constraint firstAttribute="bottom" secondItem="5e8-Gb-ZlV" secondAttribute="bottom" id="w6O-Of-p02"/>
+            </constraints>
+            <connections>
+                <outlet property="connectImageView" destination="Gwl-RF-oYj" id="uf8-aQ-lBq"/>
+                <outlet property="moreDetailsImageView" destination="gQf-2u-aLj" id="jog-G8-hmR"/>
+                <outlet property="moreInfoImageView" destination="CaD-bZ-ClT" id="hEC-Vg-zIZ"/>
+                <outlet property="passImageView" destination="MzU-TT-dGa" id="rrj-if-8pP"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="bg_popup_events" width="42" height="71"/>
+        <image name="bg_popup_invite" width="84" height="33"/>
+        <image name="bg_popup_message" width="60" height="56"/>
+        <image name="bg_popup_notifications" width="81" height="86"/>
+        <image name="bg_popup_search_moreDetails" width="189" height="112"/>
+        <image name="bg_popup_settings" width="58" height="37"/>
+        <image name="ic_down_arrow" width="35" height="35"/>
+        <image name="ic_popup_connect" width="73" height="11"/>
+        <image name="ic_popup_pass" width="47" height="11"/>
+    </resources>
+</document>

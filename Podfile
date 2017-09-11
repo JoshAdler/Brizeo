@@ -20,7 +20,6 @@ target 'Brizeo' do
     pod 'Branch', '~> 0.12'
     pod 'Fabric'
     pod 'Crashlytics'
-#    pod 'Google/Analytics'
 
     pod 'NYTPhotoViewer', '~> 1.1'
     
@@ -45,9 +44,6 @@ target 'Brizeo' do
     
     # for managing user defaults
     pod 'SwiftyUserDefaults'
-    
-    # main chat
-#    pod 'Applozic', '~>3.8'
     
     # for keyboard management
     pod 'Typist'

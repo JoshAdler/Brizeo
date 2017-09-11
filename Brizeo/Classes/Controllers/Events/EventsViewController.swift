@@ -127,6 +127,7 @@ class EventsViewController: UIViewController {
         }
     }
     
+    var parentController: EventTabsViewController!
     var gpaViewController: GooglePlacesAutocomplete?
     var events: [Event]?
     var selectedflag = SortingFlag.earliest//SortingFlag.nearest
@@ -225,6 +226,12 @@ class EventsViewController: UIViewController {
                 self.events = events
                 self.tableView.reloadData()
                 
+                // hide/show popup arrow if needs
+                if let firstEvent = events.first {
+                    let contentURL = firstEvent.ownerUser.profileUrl
+                    self.parentController.popupView?.setContentURL(contentURL)
+                }
+                
                 break
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.errorDescription)
@@ -260,7 +267,7 @@ class EventsViewController: UIViewController {
     
     fileprivate func openEvent(_ event: Event) {
         
-        let url = URL(string: "fb://event?id=\(event.facebookId)") //fb://event?id={event-id}
+        let url = URL(string: "fb://event?id=\(event.facebookId)")
         
         // open facebook event on FB app
         if UIApplication.shared.canOpenURL(url!) {
