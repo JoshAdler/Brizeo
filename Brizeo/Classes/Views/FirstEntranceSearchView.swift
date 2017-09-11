@@ -10,13 +10,6 @@ import UIKit
 import ChameleonFramework
 
 class FirstEntranceSearchView: UIView {
-
-    // MARK: - Types
-    
-    struct Constants {
-        static let cornerRadius: CGFloat = 5.0
-        static let borderWidth: CGFloat = 1.0
-    }
     
     // MARK: - Properties
 

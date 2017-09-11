@@ -85,7 +85,7 @@ open class Place: NSObject {
     }
     
     class func initialize(result: [String: AnyObject], apiKey: String?) -> Place {
-        var place = Place(
+        let place = Place(
             id: result["place_id"] as! String,
             description: result["name"] as! String
         )
@@ -101,7 +101,7 @@ open class Place: NSObject {
     }
     
     class func initializeSearch(result: [String: AnyObject], apiKey: String?) -> Place {
-        var place = Place(
+        let place = Place(
             id: result["id"] as! String,
             description: result["name"] as! String
         )

@@ -163,6 +163,7 @@ class SettingsViewController: UIViewController {
     var universityViewController: GooglePlacesAutocomplete?
     
     fileprivate var isSearchingLocation = false
+    fileprivate var popupView: FirstEntranceSettingsView?
     
     // MARK: - Controller lifecycle
     
@@ -212,6 +213,26 @@ class SettingsViewController: UIViewController {
         
         // reload nationality
         tableView.reloadRows(at: [IndexPath(row: 2, section: 2)], with: .automatic)
+        
+        // show popup if needs
+        if !FirstEntranceProvider.shared.isAlreadyViewedSettings {
+            
+            // scroll table view
+            tableView.scrollToRow(at: IndexPath(row: 0, section: 1), at: .top, animated: false)
+            
+            // load popup
+            presentPopup()
+            
+            // mark first entrance for settings screen
+            FirstEntranceProvider.shared.isAlreadyViewedSettings = true
+        }
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        // hide popup
+        popupView?.hide()
     }
     
     deinit {
@@ -231,6 +252,14 @@ class SettingsViewController: UIViewController {
     }
     
     // MARK: - Private methods
+    
+    fileprivate func presentPopup() {
+        
+        popupView = FirstEntranceSettingsView.loadFromNib()
+        popupView?.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        
+        AppDelegate.shared().window?.addSubview(popupView!)
+    }
     
     fileprivate func presentErrorAlert(message: String?) {
         let alert = UIAlertController(title: LocalizableString.Error.localizedString, message: message, preferredStyle: .alert)
