@@ -37,18 +37,20 @@ class FirstEntranceUserView: UIView {
     
     func update() {
         
-        // hide "settings" attributes if needs
-        if FirstEntranceProvider.shared.isAlreadyViewedSettings {
-            
-            settingView.isHidden = true
-            settingImageView.isHidden = true
-        }
+        settingView.isHidden = true
         
         // hide "profile" attributes if needs
         if FirstEntranceProvider.shared.isAlreadyViewedProfilePreferences {
             
             arrowUpButton.isHidden = true
             profileImageView.isHidden = true
+            settingView.isHidden = false
+        }
+        
+        // hide "settings" attributes if needs
+        if FirstEntranceProvider.shared.isAlreadyViewedSettings {
+            
+            settingImageView.isHidden = true
         }
     }
     // MARK: - Actions

@@ -82,8 +82,13 @@ class PersonalTabsViewController: BasicViewController {
                 }
             } else {
                 
-                // show force screen
-                profileController.hideHelpView(isHidden: false)
+                if detailsController != nil { // we need to dismiss it
+                    detailsController.onCloseButtonClicked(nil)
+                } else {
+                    
+                    // show force screen
+                    profileController.hideHelpView(isHidden: false)
+                }
             }
             
             return
@@ -175,6 +180,8 @@ extension PersonalTabsViewController: PersonalDetailsTabsViewControllerDelegate 
             // show settings
             carbonTabSwipeNavigation.setCurrentTabIndex(1, withAnimation: true)
         }
+        
+        detailsController = nil
     }
     
     func detailsControllerBeginToDismiss(_ controller: PersonalDetailsTabsViewController) {

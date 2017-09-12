@@ -100,7 +100,7 @@ class PersonalDetailsTabsViewController: BasicViewController {
     
     // MARK: - Actions
     
-    @IBAction func onCloseButtonClicked(_ sender: UIButton) {
+    @IBAction func onCloseButtonClicked(_ sender: UIButton?) {
         view.endEditing(true)
         
         delegate?.detailsControllerBeginToDismiss(self)
