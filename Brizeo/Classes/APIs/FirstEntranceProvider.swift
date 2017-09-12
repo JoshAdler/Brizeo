@@ -16,6 +16,7 @@ extension DefaultsKeys {
     static let isAlreadyViewedEvents = DefaultsKey<Bool>("isAlreadyViewedEvents")
     static let isAlreadyViewedSearch = DefaultsKey<Bool>("isAlreadyViewedSearch")
     static let isAlreadyViewedSettings = DefaultsKey<Bool>("isAlreadyViewedSettings")
+    static let isAlreadyViewedProfilePreferences = DefaultsKey<Bool>("isAlreadyViewedProfilePreferences")
 }
 
 enum FirstEntranceLogicStep: Int {
@@ -56,6 +57,19 @@ class FirstEntranceProvider {
         }
         set {
             Defaults[.goingToCreateMoment] = newValue
+        }
+    }
+    
+    var isProfileGuideCompleted: Bool {
+        return isAlreadyViewedSettings && isAlreadyViewedProfilePreferences
+    }
+    
+    var isAlreadyViewedProfilePreferences: Bool {
+        get {
+            return Defaults[.isAlreadyViewedProfilePreferences]
+        }
+        set {
+            Defaults[.isAlreadyViewedProfilePreferences] = newValue
         }
     }
     

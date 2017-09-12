@@ -10,6 +10,12 @@ import UIKit
 import CarbonKit
 import Typist
 
+protocol PersonalDetailsTabsViewControllerDelegate: class {
+    
+    func detailsControllerBeginToDismiss(_ controller: PersonalDetailsTabsViewController)
+    func detailsControllerIsDismissed(_ controller: PersonalDetailsTabsViewController)
+}
+
 class PersonalDetailsTabsViewController: BasicViewController {
 
     // MARK: - Types
@@ -26,6 +32,8 @@ class PersonalDetailsTabsViewController: BasicViewController {
     var aboutController: AboutViewController!
     var matchesController: UserMatchesViewController!
     var tripsController: TripsViewController!
+    
+    var delegate: PersonalDetailsTabsViewControllerDelegate?
 
     // MARK: - Properties
     
@@ -76,7 +84,7 @@ class PersonalDetailsTabsViewController: BasicViewController {
     func didControllerChangedPosition(isOpened: Bool, completionHandler: ((Void) -> Void)?) {
         
         if isOpened && FirstEntranceProvider.shared.isFirstEntrancePassed == false {
-            FirstEntranceProvider.shared.currentStep = .moments
+            FirstEntranceProvider.shared.isAlreadyViewedProfilePreferences = true
         }
         
         UIView.animate(withDuration: 0.5, animations: {
@@ -95,11 +103,15 @@ class PersonalDetailsTabsViewController: BasicViewController {
     @IBAction func onCloseButtonClicked(_ sender: UIButton) {
         view.endEditing(true)
         
+        delegate?.detailsControllerBeginToDismiss(self)
+        
         UIView.animate(withDuration: 0.5, animations: { 
             self.view.frame = CGRect(origin: CGPoint(x: 0, y: self.view.frame.height - self.topView.frame.height), size: CGSize(width: self.view.frame.width, height: self.view.frame.height))
         }) { (isFinished) in
             self.didControllerChangedPosition(isOpened: false) {
                 self.view.removeFromSuperview()
+                
+                self.delegate?.detailsControllerIsDismissed(self)
             }
         }
     }

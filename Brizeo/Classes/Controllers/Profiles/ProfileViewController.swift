@@ -17,6 +17,7 @@ import InstagramImagePicker
 
 protocol ProfileViewControllerDelegate: class {
     func shouldShowDetails()
+    func showSettings()
 }
 
 class ProfileViewController: UIViewController {
@@ -82,6 +83,7 @@ class ProfileViewController: UIViewController {
         delegate?.shouldShowDetails()
     }
     
+    
     @IBAction func onPhotoButtonClicked(_ sender: UIButton) {
         updateFileType = .main
         indexOfMediaToChange = 0 // profile media
@@ -105,7 +107,9 @@ class ProfileViewController: UIViewController {
     // MARK: - Public methods
     
     func hideHelpView(isHidden: Bool) {
+        
         if uploadUserHelpView == nil {
+            
             uploadUserHelpView = FirstEntranceUserView.loadFromNib()
             uploadUserHelpView?.frame = CGRect(origin: CGPoint.zero, size: CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
             uploadUserHelpView?.isHidden = true
@@ -118,6 +122,7 @@ class ProfileViewController: UIViewController {
             AppDelegate.shared().window?.addSubview(uploadUserHelpView!)
         }
         
+        uploadUserHelpView?.update()
         uploadUserHelpView?.isHidden = isHidden
     }
     
@@ -458,6 +463,12 @@ extension ProfileViewController: FirstEntranceUserViewDelegate {
     func userView(view: FirstEntranceUserView, didClickedOnArrowUp button: UIButton) {
         view.isHidden = true
         onBottomButtonClicked(arrowUpButton)
+    }
+    
+    func userView(view: FirstEntranceUserView, didClickedOnSettings button: UIButton) {
+        view.isHidden = true
+        
+        delegate?.showSettings()
     }
 }
 

@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SourceSansPro-Semibold.otf">
+            <string>SourceSansPro-Semibold</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -20,6 +25,33 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gPh-cr-rWS">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.75" colorSpace="calibratedRGB"/>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fz5-2J-heg">
+                    <rect key="frame" x="187.5" y="65" width="187.5" height="39"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Settings" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p1N-IE-enp">
+                            <rect key="frame" x="64.5" y="9.5" width="60" height="21.5"/>
+                            <fontDescription key="fontDescription" name="SourceSansPro-Semibold" family="Source Sans Pro" pointSize="17"/>
+                            <color key="textColor" red="0.69803921568627447" green="0.69803921568627447" blue="0.69803921568627447" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bUJ-OT-pQD">
+                            <rect key="frame" x="0.0" y="0.0" width="187.5" height="39"/>
+                            <connections>
+                                <action selector="onSettingsButtonClickedWithSender:" destination="iN0-l3-epB" eventType="touchUpInside" id="McG-yx-JLg"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="bUJ-OT-pQD" secondAttribute="bottom" id="8QN-U5-cUW"/>
+                        <constraint firstAttribute="trailing" secondItem="bUJ-OT-pQD" secondAttribute="trailing" id="BIN-zI-J1Z"/>
+                        <constraint firstItem="bUJ-OT-pQD" firstAttribute="leading" secondItem="fz5-2J-heg" secondAttribute="leading" id="LDH-Md-wib"/>
+                        <constraint firstAttribute="height" constant="39" id="LlW-B7-RLG"/>
+                        <constraint firstItem="p1N-IE-enp" firstAttribute="centerX" secondItem="fz5-2J-heg" secondAttribute="centerX" id="Njt-86-7OE"/>
+                        <constraint firstItem="p1N-IE-enp" firstAttribute="centerY" secondItem="fz5-2J-heg" secondAttribute="centerY" id="r3P-EL-t2Y"/>
+                        <constraint firstItem="bUJ-OT-pQD" firstAttribute="top" secondItem="fz5-2J-heg" secondAttribute="top" id="tLo-vI-ekY"/>
+                    </constraints>
                 </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2oU-Vg-JlL">
                     <rect key="frame" x="170" y="612" width="35" height="35"/>
@@ -35,7 +67,7 @@
                     </constraints>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_new_user_initial" translatesAutoresizingMaskIntoConstraints="NO" id="MOM-Yn-wnv">
-                    <rect key="frame" x="57.5" y="306" width="266" height="281"/>
+                    <rect key="frame" x="48.5" y="340" width="284" height="247"/>
                 </imageView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -43,23 +75,29 @@
                 <constraint firstItem="gPh-cr-rWS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="7Ra-Xc-8AH"/>
                 <constraint firstItem="2oU-Vg-JlL" firstAttribute="top" secondItem="MOM-Yn-wnv" secondAttribute="bottom" constant="25" id="DcT-gW-my6"/>
                 <constraint firstAttribute="bottom" secondItem="gPh-cr-rWS" secondAttribute="bottom" id="Lel-Ow-V1b"/>
+                <constraint firstItem="fz5-2J-heg" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="65" id="MPA-li-oUq"/>
                 <constraint firstItem="gPh-cr-rWS" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Sec-QC-gee"/>
                 <constraint firstAttribute="trailing" secondItem="gPh-cr-rWS" secondAttribute="trailing" id="ava-k2-hEL"/>
+                <constraint firstAttribute="trailing" secondItem="fz5-2J-heg" secondAttribute="trailing" id="bvy-J2-dM3"/>
                 <constraint firstItem="7oC-9D-OIA" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="116" id="jJH-G9-jRs"/>
                 <constraint firstItem="MOM-Yn-wnv" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" constant="3" id="klS-pW-EUP"/>
                 <constraint firstItem="7oC-9D-OIA" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" multiplier="1.5" id="rLq-ie-iK4"/>
                 <constraint firstAttribute="bottom" secondItem="2oU-Vg-JlL" secondAttribute="bottom" constant="20" id="sU6-4K-utL"/>
+                <constraint firstItem="fz5-2J-heg" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.5" id="v2a-S5-cps"/>
                 <constraint firstItem="2oU-Vg-JlL" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="xRK-US-eWY"/>
             </constraints>
             <connections>
                 <outlet property="arrowUpButton" destination="2oU-Vg-JlL" id="a4p-Tn-GIA"/>
                 <outlet property="arrowUpButtonBottomConstraint" destination="sU6-4K-utL" id="5O1-F5-l4M"/>
+                <outlet property="profileImageView" destination="MOM-Yn-wnv" id="t0e-zb-TxP"/>
+                <outlet property="settingImageView" destination="7oC-9D-OIA" id="0IB-WQ-rGd"/>
+                <outlet property="settingView" destination="fz5-2J-heg" id="C3P-Kq-6hI"/>
             </connections>
         </view>
     </objects>
     <resources>
         <image name="bg_popup_change_settings" width="119" height="76"/>
         <image name="ic_down_arrow" width="35" height="35"/>
-        <image name="ic_new_user_initial" width="266" height="281"/>
+        <image name="ic_new_user_initial" width="284" height="247"/>
     </resources>
 </document>

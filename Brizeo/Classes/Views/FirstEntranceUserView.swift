@@ -10,13 +10,17 @@ import UIKit
 
 protocol FirstEntranceUserViewDelegate: class {
     func userView(view: FirstEntranceUserView, didClickedOnArrowUp button: UIButton)
+    func userView(view: FirstEntranceUserView, didClickedOnSettings button: UIButton)
 }
 
 class FirstEntranceUserView: UIView {
 
     // MARK: - Properties
     
+    @IBOutlet fileprivate weak var settingView: UIView!
+    @IBOutlet fileprivate weak var settingImageView: UIView!
     @IBOutlet fileprivate weak var arrowUpButton: UIButton!
+    @IBOutlet fileprivate weak var profileImageView: UIView!
     @IBOutlet fileprivate weak var arrowUpButtonBottomConstraint: NSLayoutConstraint!
     weak var delegate: FirstEntranceUserViewDelegate?
     
@@ -28,10 +32,32 @@ class FirstEntranceUserView: UIView {
             return arrowUpButtonBottomConstraint.constant
         }
     }
+
+    // MARK: - Public methods
     
+    func update() {
+        
+        // hide "settings" attributes if needs
+        if FirstEntranceProvider.shared.isAlreadyViewedSettings {
+            
+            settingView.isHidden = true
+            settingImageView.isHidden = true
+        }
+        
+        // hide "profile" attributes if needs
+        if FirstEntranceProvider.shared.isAlreadyViewedProfilePreferences {
+            
+            arrowUpButton.isHidden = true
+            profileImageView.isHidden = true
+        }
+    }
     // MARK: - Actions
     
     @IBAction func onArrowUpButtonClicked(sender: UIButton) {
         delegate?.userView(view: self, didClickedOnArrowUp: sender)
+    }
+    
+    @IBAction func onSettingsButtonClicked(sender: UIButton) {
+        delegate?.userView(view: self, didClickedOnSettings: sender)
     }
 }

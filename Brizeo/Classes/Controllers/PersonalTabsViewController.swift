@@ -70,12 +70,27 @@ class PersonalTabsViewController: BasicViewController {
     
     @IBAction override func onBackButtonClicked(sender: UIBarButtonItem) {
         
-        if FirstEntranceProvider.shared.isFirstEntrancePassed == false && FirstEntranceProvider.shared.currentStep == .profile {
+        guard FirstEntranceProvider.shared.isProfileGuideCompleted else {
             
-            // show force screen
-            profileController.hideHelpView(isHidden: false)
+            if carbonTabSwipeNavigation.currentTabIndex == 1 {
+                carbonTabSwipeNavigation.setCurrentTabIndex(0, withAnimation: true)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    
+                    // show force screen
+                    self.profileController.hideHelpView(isHidden: false)
+                }
+            } else {
+                
+                // show force screen
+                profileController.hideHelpView(isHidden: false)
+            }
+            
             return
         }
+        
+        // move guide to "moment" screen if needs
+        FirstEntranceProvider.shared.currentStep = .moments
         
         if let user = UserProvider.shared.currentUser, user.passionsIds.count != Configurations.General.requiredMinPassionsCount {
             
@@ -125,6 +140,7 @@ class PersonalTabsViewController: BasicViewController {
     // MARK: - Private methods
     
     fileprivate func initBlockButton() {
+        
         blockButton = UIButton(type: .custom)
         blockButton?.backgroundColor = .clear
         blockButton?.addTarget(self, action: #selector(onBlockButtonClicked(sender:)), for: .touchUpInside)
@@ -134,6 +150,7 @@ class PersonalTabsViewController: BasicViewController {
     }
     
     fileprivate func removeBlockButton() {
+        
         if blockButton != nil {
             blockButton?.removeFromSuperview()
             blockButton = nil
@@ -141,9 +158,27 @@ class PersonalTabsViewController: BasicViewController {
     }
     
     @objc fileprivate func onBlockButtonClicked(sender: UIButton) {
+        
         if FirstEntranceProvider.shared.isFirstEntrancePassed == false && FirstEntranceProvider.shared.currentStep == .profile {
             profileController.hideHelpView(isHidden: false)
         }
+    }
+}
+
+// MARK: - PersonalDetailsTabsViewControllerDelegate
+extension PersonalTabsViewController: PersonalDetailsTabsViewControllerDelegate {
+    
+    func detailsControllerIsDismissed(_ controller: PersonalDetailsTabsViewController) {
+        
+        if !FirstEntranceProvider.shared.isAlreadyViewedSettings {
+            
+            // show settings
+            carbonTabSwipeNavigation.setCurrentTabIndex(1, withAnimation: true)
+        }
+    }
+    
+    func detailsControllerBeginToDismiss(_ controller: PersonalDetailsTabsViewController) {
+        
     }
 }
 
@@ -151,9 +186,11 @@ class PersonalTabsViewController: BasicViewController {
 extension PersonalTabsViewController: ProfileViewControllerDelegate {
     
     func shouldShowDetails() {
+        
         if detailsController == nil {
             detailsController = Helper.controllerFromStoryboard(controllerId: Constants.detailsControllerId)!
             detailsController.view.frame = CGRect(origin: CGPoint(x: 0, y: view.frame.height - profileController.bottomSpaceHeight), size: CGSize(width: view.frame.width, height: view.frame.height))
+            detailsController.delegate = self
         }
         
         view.addSubview(detailsController.view)
@@ -165,16 +202,22 @@ extension PersonalTabsViewController: ProfileViewControllerDelegate {
             self.removeBlockButton()
         }
     }
+    
+    func showSettings() {
+        
+        carbonTabSwipeNavigation.setCurrentTabIndex(1, withAnimation: true)
+    }
 }
 
 // MARK: - CarbonTabSwipeNavigationDelegate
 extension PersonalTabsViewController: CarbonTabSwipeNavigationDelegate {
     
     func carbonTabSwipeNavigation(_ carbonTabSwipeNavigation: CarbonTabSwipeNavigation, shouldMoveAt index: UInt) -> Bool {
-        if index == 1 && FirstEntranceProvider.shared.isFirstEntrancePassed == false && FirstEntranceProvider.shared.currentStep == .profile {
-            profileController.hideHelpView(isHidden: false)
-            return false
-        }
+        
+//        if index == 1 && FirstEntranceProvider.shared.isFirstEntrancePassed == false && FirstEntranceProvider.shared.currentStep == .profile {
+//            profileController.hideHelpView(isHidden: false)
+//            return false
+//        }
         return true
     }
     

@@ -62,28 +62,30 @@ class ChatProvider: NSObject {
     
     class func startChat(with userId: String?, from controller: UIViewController) {
         // RB Comment: Old version
-         let chatManager : ALChatManager = ALChatManager(applicationKey: Configurations.Applozic.appKey as NSString)
-         chatManager.registerUserAndLaunchChat(nil, fromController: controller, forUser: userId)
+//         let chatManager : ALChatManager = ALChatManager(applicationKey: Configurations.Applozic.appKey as NSString)
+//         chatManager.registerUserAndLaunchChat(nil, fromController: controller, forUser: userId)
  
         
         // RB Comment: new version
 
-//        let userService = ALUserService()
-//        
-//        userService.getUserDetail(userId) { (contact) in
-//            
-//            if contact != nil {
-//                
-//                let chatManager : ALChatManager = ALChatManager(applicationKey: Configurations.Applozic.appKey as NSString)
-//                chatManager.laun
-//
-//                [chatManager launchChatForUserWithDisplayName:userId withGroupId:nil
-//                andwithDisplayName:nil andFromViewController:self];
-//                
-//            }];
-//        } else {
-//            print("Error during initializing chat with user with id: \(userId)")
-//        }
+        guard userId != nil else {
+            
+            print("ChatProvider: startChat: no user id")
+            return
+        }
+        
+        let userService = ALUserService()
+        userService.getUserDetail(userId!) { (contact) in
+            
+            guard contact != nil else {
+                print("Error during initializing chat with user with id: \(userId!)")
+                return
+            }
+            
+            let chatLauncher = ALChatLauncher(applicationId: Configurations.Applozic.appKey)
+            
+            chatLauncher?.launchIndividualChat(userId!, withGroupId: nil, andViewControllerObject: controller, andWithText: nil)
+        }
     }
     
     class func createChatWithSuperuser() {
